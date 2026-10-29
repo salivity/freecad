@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Memory Leaks in FreeCAD Python Scripts - freecad</title>
+    <meta name="description" content="Long-running FreeCAD Python automation scripts often suffer from memory bloat due to the boundary between Python and FreeCAD&#39;s underlying C++ core (OpenCASCADE and Coin3D). This article covers how to identify, profile, and resolve memory leaks in FreeCAD">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/fix-memory-leaks-in-free-cad-python-scripts">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fix Memory Leaks in FreeCAD Python Scripts - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/fix-memory-leaks-in-free-cad-python-scripts" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Long-running FreeCAD Python automation scripts often suffer from memory bloat due to the boundary between Python and FreeCAD&#39;s underlying C++ core (OpenCASCADE and Coin3D). This article covers how to identify, profile, and resolve memory leaks in FreeCAD" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fix-memory-leaks-in-freecad-python-scripts">Fix Memory Leaks in
+FreeCAD Python Scripts</h1>
+<p>Long-running FreeCAD Python automation scripts often suffer from
+memory bloat due to the boundary between Python and FreeCAD's underlying
+C++ core (OpenCASCADE and Coin3D). This article covers how to identify,
+profile, and resolve memory leaks in FreeCAD Python scripts. You will
+learn how to monitor memory usage using Python’s built-in tools,
+eliminate hidden document history caches, manage object references
+correctly, and implement isolation strategies for large batch
+processes.</p>
+<h2 id="1-disable-the-undo-stack-and-transaction-history">1. Disable the
+Undo Stack and Transaction History</h2>
+<p>FreeCAD documents record undo and redo actions by default. During
+long batch loops (such as generating hundreds of shapes), this history
+persists in memory even if objects are deleted from the tree.</p>
+<p>Disable the undo mechanism at the start of your script or batch
+function:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> App.ActiveDocument</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>doc.disableUndo()</span></code></pre></div>
+<p>If you must keep the document open, periodically clear the undo
+buffer:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>doc.clearUndos()</span></code></pre></div>
+<h2 id="2-properly-close-and-clear-documents">2. Properly Close and
+Clear Documents</h2>
+<p>Deleting an object via <code>doc.removeObject("ObjectName")</code>
+does not always immediately free the underlying C++ geometry from RAM.
+When processing multiple models sequentially, close each document
+completely rather than continually modifying a single active
+document.</p>
+<p>Use this sequence to fully purge a document from memory:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gc</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>doc_name <span class="op">=</span> <span class="st">&quot;BatchJob&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> App.newDocument(doc_name)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ... run your processing operations here ...</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Properly close and release</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>App.closeDocument(doc_name)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> doc</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>gc.collect()</span></code></pre></div>
+<p>Calling <code>gc.collect()</code> forces Python's garbage collector
+to resolve circular references that often trap FreeCAD's C++
+bindings.</p>
+<h2 id="3-profile-memory-with-tracemalloc-and-objgraph">3. Profile
+Memory with <code>tracemalloc</code> and <code>objgraph</code></h2>
+<p>To pinpoint the exact line or object type causing memory growth, use
+Python's native profiling tools inside the FreeCAD environment.</p>
+<h3 id="using-tracemalloc">Using <code>tracemalloc</code></h3>
+<p>Place snapshots around your loop to detect memory growth:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tracemalloc</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>tracemalloc.start()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>snapshot1 <span class="op">=</span> tracemalloc.take_snapshot()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Run a single iteration of your processing loop</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>run_iteration()</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>snapshot2 <span class="op">=</span> tracemalloc.take_snapshot()</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>top_stats <span class="op">=</span> snapshot2.compare_to(snapshot1, <span class="st">&#39;lineno&#39;</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;[ Top 5 Memory Consuming Lines ]&quot;</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> stat <span class="kw">in</span> top_stats[:<span class="dv">5</span>]:</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(stat)</span></code></pre></div>
+<h3 id="using-objgraph">Using <code>objgraph</code></h3>
+<p>If OpenCASCADE wrapper objects (such as <code>Part.Shape</code> or
+<code>Part.TopoShape</code>) are lingering, inspect the object
+counts:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> objgraph</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect top object types currently living in memory</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>objgraph.show_most_common_types(limit<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div>
+<p>If the count of <code>Part.Shape</code> or
+<code>App.DocumentObject</code> continues to rise after each loop,
+references are lingering in global variables, lists, or event
+callbacks.</p>
+<h2 id="4-avoid-lingering-viewprovider-and-coin3d-references">4. Avoid
+Lingering ViewProvider and Coin3D References</h2>
+<p>Running scripts in GUI mode creates Coin3D scene graph nodes for
+every visual representation. These nodes often fail to release properly
+during high-throughput automation.</p>
+<ul>
+<li><strong>Run in CLI/Headless Mode:</strong> Always use
+<code>freecadcmd</code> instead of <code>freecad</code> for long-running
+batch jobs to prevent the GUI layer from allocating scene graphs.</li>
+<li><strong>Avoid GUI Calls in Scripts:</strong> If running inside the
+GUI is required, avoid using <code>FreeCADGui.updateGui()</code> inside
+tight loops.</li>
+</ul>
+<h2 id="5-isolate-tasks-via-subprocessing">5. Isolate Tasks via
+Subprocessing</h2>
+<p>The most robust architectural solution for massive batch jobs (e.g.,
+thousands of STEP/IGES exports or mesh operations) is process isolation.
+Because C++ libraries like OpenCASCADE can fragment heap memory over
+time, Python's garbage collector cannot always return that allocated
+memory to the operating system.</p>
+<p>Instead of running a single script that processes 10,000 files:</p>
+<ol type="1">
+<li>Create a worker script that processes a small batch (e.g., 50 files)
+and exits.</li>
+<li>Use a master Python script using the <code>subprocess</code> module
+to call FreeCAD repeatedly:</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>files_to_process <span class="op">=</span> [<span class="st">&quot;part1.step&quot;</span>, <span class="st">&quot;part2.step&quot;</span>, <span class="st">&quot;part3.step&quot;</span>]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> target_file <span class="kw">in</span> files_to_process:</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    subprocess.run([<span class="st">&quot;freecadcmd&quot;</span>, <span class="st">&quot;worker_script.py&quot;</span>, target_file], check<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<p>When each sub-process terminates, the operating system
+unconditionally reclaims all memory allocated by both Python and
+OpenCASCADE.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/fix-memory-leaks-in-free-cad-python-scripts';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

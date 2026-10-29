@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Create a Draft Angle in FreeCAD Part Design - freecad</title>
+    <meta name="description" content="Adding a draft angle to extruded walls is an essential modeling step for designing parts intended for injection molding, casting, or 3D printing with overhangs. In the FreeCAD Part Design workbench, you can apply draft angles either directly during the ex">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-create-a-draft-angle-in-free-cad-part-design">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Create a Draft Angle in FreeCAD Part Design - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-create-a-draft-angle-in-free-cad-part-design" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Adding a draft angle to extruded walls is an essential modeling step for designing parts intended for injection molding, casting, or 3D printing with overhangs. In the FreeCAD Part Design workbench, you can apply draft angles either directly during the ex" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-create-a-draft-angle-in-freecad-part-design">How to
+Create a Draft Angle in FreeCAD Part Design</h1>
+<p>Adding a draft angle to extruded walls is an essential modeling step
+for designing parts intended for injection molding, casting, or 3D
+printing with overhangs. In the FreeCAD Part Design workbench, you can
+apply draft angles either directly during the extrusion process using
+the Pad tool's taper setting or after the fact using the dedicated Draft
+feature. This guide explains both methods step-by-step so you can easily
+taper vertical walls in your solid models.</p>
+<h2
+id="method-1-using-the-built-in-taper-setting-in-the-pad-tool">Method 1:
+Using the Built-In Taper Setting in the Pad Tool</h2>
+<p>The quickest way to draft extruded walls is directly within the
+initial Pad command.</p>
+<ol type="1">
+<li>Open your model in the <strong>Part Design</strong> workbench.</li>
+<li>Create and constrain a sketch on your desired plane.</li>
+<li>With the sketch selected, click the <strong>Pad</strong> tool.</li>
+<li>In the Pad parameters panel on the left (Tasks tab), locate the
+<strong>Taper angle</strong> field.</li>
+<li>Enter your desired draft angle in degrees:
+<ul>
+<li>A positive value widens the extrusion outward as it grows.</li>
+<li>A negative value tapers the extrusion inward.</li>
+</ul></li>
+<li>Set the extrusion length and click <strong>OK</strong> to apply the
+draft.</li>
+</ol>
+<h2 id="method-2-using-the-dedicated-draft-tool">Method 2: Using the
+Dedicated Draft Tool</h2>
+<p>If your extrusion has already been created, or if you only need to
+draft specific faces rather than the entire perimeter, use the Part
+Design Draft tool.</p>
+<h3 id="step-1-select-the-faces-to-draft">Step 1: Select the Faces to
+Draft</h3>
+<p>Click to select the vertical wall face (or hold <code>Ctrl</code> and
+click multiple faces) that requires tapering.</p>
+<h3 id="step-2-activate-the-draft-feature">Step 2: Activate the Draft
+Feature</h3>
+<p>Click the <strong>Draft</strong> icon in the Part Design toolbar
+(represented by a yellow tapered cylinder or block), or go to
+<strong>Part Design &gt; Apply a dress-up feature &gt;
+Draft</strong>.</p>
+<h3 id="step-3-set-the-neutral-plane">Step 3: Set the Neutral Plane</h3>
+<p>The neutral plane defines the reference plane where the dimensions of
+the part will not change when the draft is applied:</p>
+<ol type="1">
+<li>In the Draft task panel, click the <strong>Neutral plane</strong>
+button.</li>
+<li>In the 3D view, select the base face from which the draft should
+hinge (typically the bottom face or top face of the extrusion).</li>
+</ol>
+<h3 id="step-4-define-pull-direction-and-angle">Step 4: Define Pull
+Direction and Angle</h3>
+<ol type="1">
+<li>Set the <strong>Draft angle</strong> value (e.g., 1.5° to 3° for
+standard injection molding).</li>
+<li>If the taper is slanting inward instead of outward, check or uncheck
+the <strong>Reverse pull direction</strong> box.</li>
+<li>If the draft angle is not moving in the expected axis, click
+<strong>Pull direction</strong> and select a reference edge or datum
+line aligned with your mold draw direction.</li>
+</ol>
+<h3 id="step-5-finalize-the-feature">Step 5: Finalize the Feature</h3>
+<p>Click <strong>OK</strong> in the Tasks panel. The Draft feature will
+be added to your model tree, and the selected walls will now be
+tapered.</p>
+<h2 id="best-practices-for-draft-angles-in-freecad">Best Practices for
+Draft Angles in FreeCAD</h2>
+<ul>
+<li><strong>Feature Order:</strong> Always apply drafts before adding
+edge dress-up features such as fillets and chamfers. Applying fillets
+before a draft often causes the draft operation to fail or break
+geometric continuity.</li>
+<li><strong>Complex Profiles:</strong> If the dedicated Draft tool fails
+on complex geometries with tangent arcs, use Method 1 (Pad Taper angle)
+or create the taper manually using a <strong>Loft</strong> or a
+<strong>Groove/Pocket</strong> with a drafted sketch.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-create-a-draft-angle-in-free-cad-part-design';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

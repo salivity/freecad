@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Moving a Sketch Element Distorts Others in FreeCAD - freecad</title>
+    <meta name="description" content="When you move a sketch element in FreeCAD and another part of the geometry shifts, twists, or collapses, the issue is almost always caused by an under-constrained sketch interacting with the software’s parametric solver. Because FreeCAD computes sketches">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/why-moving-a-sketch-element-distorts-others-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Moving a Sketch Element Distorts Others in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/why-moving-a-sketch-element-distorts-others-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When you move a sketch element in FreeCAD and another part of the geometry shifts, twists, or collapses, the issue is almost always caused by an under-constrained sketch interacting with the software’s parametric solver. Because FreeCAD computes sketches" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-moving-a-sketch-element-distorts-others-in-freecad">Why
+Moving a Sketch Element Distorts Others in FreeCAD</h1>
+<p>When you move a sketch element in FreeCAD and another part of the
+geometry shifts, twists, or collapses, the issue is almost always caused
+by an under-constrained sketch interacting with the software’s
+parametric solver. Because FreeCAD computes sketches based on
+mathematical relationships rather than static coordinate drawing, moving
+one entity forces the solver to recalculate the positions of all
+connected elements. Without enough geometric and dimensional constraints
+to lock their shapes, the solver adjusts unconstrained elements freely,
+leading to unwanted distortion.</p>
+<h3 id="how-the-constraint-solver-works">How the Constraint Solver
+Works</h3>
+<p>FreeCAD’s Sketcher workbench relies on a solver that continuously
+balances every rule you apply to the geometry. When you drag a line,
+arc, or vertex, you are not simply translating a static drawing; you are
+feeding new coordinate data into the solver. The solver must keep all
+existing rules intact while accommodating the new position of your
+cursor. If the sketch has multiple "degrees of freedom" remaining, the
+solver finds the mathematically easiest way to fulfill the rules, which
+often stretches or rotates unsecured entities in unpredictable ways.</p>
+<h3 id="shared-vertices-and-coincident-constraints">Shared Vertices and
+Coincident Constraints</h3>
+<p>By default, when lines are connected end-to-end, FreeCAD applies a
+coincident constraint to merge the vertices. This makes the elements
+behave like a physical linkage system or a chain. If two lines share a
+vertex and you drag one line, the shared vertex must move along with it.
+If the adjacent line does not have a fixed angle, length, or
+orientation, it will stretch, tilt, or swing around its other endpoint
+to maintain the connection.</p>
+<h3 id="lack-of-defined-dimensions-and-orientations">Lack of Defined
+Dimensions and Orientations</h3>
+<p>A shape that looks rigid on your screen is not rigid to the solver
+unless specifically defined. For example, a drawn rectangle without
+horizontal or vertical constraints is technically just four connected
+lines that can deform into an irregular parallelogram. If you do not
+assign constraints such as:</p>
+<ul>
+<li><strong>Horizontal and Vertical:</strong> Restricting lines to
+purely horizontal or vertical axes.</li>
+<li><strong>Length and Distance:</strong> Explicitly defining how long a
+line is or the exact distance between two points.</li>
+<li><strong>Angles:</strong> Locking the angular relationship between
+intersecting elements.</li>
+<li><strong>Equality:</strong> Ensuring symmetrical lines maintain
+identical lengths.</li>
+</ul>
+<p>Without these parameters, the solver treats the size and orientation
+of those entities as variable.</p>
+<h3 id="how-to-prevent-sketch-distortion">How to Prevent Sketch
+Distortion</h3>
+<p>To keep sketches stable while repositioning or shaping elements:</p>
+<ol type="1">
+<li><strong>Constrain Progressively:</strong> Rather than drawing an
+entire complex profile and attempting to reshape it later, apply basic
+geometric constraints (parallel, perpendicular, tangent, horizontal,
+vertical) as you draw.</li>
+<li><strong>Anchor to the Origin:</strong> Constrain at least one
+critical vertex or center point directly to the sketch origin or axes
+using dimensional or coincident constraints. This anchors the sketch in
+3D space.</li>
+<li><strong>Monitor Degrees of Freedom:</strong> Check the solver
+messages in the Tasks panel. A fully constrained sketch turns green and
+has zero degrees of freedom, meaning no element can distort when
+selected.</li>
+<li><strong>Use Temporary Lock Constraints:</strong> If you need to
+manipulate one section of a sketch without altering another, temporarily
+apply a Lock constraint (fixing X and Y coordinates) to the vertices you
+want to stay static, make your adjustments, and replace the lock with
+proper parametric dimensions afterward.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/why-moving-a-sketch-element-distorts-others-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Architectural Section Cuts in FreeCAD - freecad</title>
+    <meta name="description" content="Creating section cuts through an architectural model in FreeCAD allows you to inspect interior details and generate 2D construction drawings like plans, elevations, and cross-sections. This guide covers how to set up and position a Section Plane using the">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/create-architectural-section-cuts-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Create Architectural Section Cuts in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/create-architectural-section-cuts-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Creating section cuts through an architectural model in FreeCAD allows you to inspect interior details and generate 2D construction drawings like plans, elevations, and cross-sections. This guide covers how to set up and position a Section Plane using the" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="create-architectural-section-cuts-in-freecad">Create
+Architectural Section Cuts in FreeCAD</h1>
+<p>Creating section cuts through an architectural model in FreeCAD
+allows you to inspect interior details and generate 2D construction
+drawings like plans, elevations, and cross-sections. This guide covers
+how to set up and position a Section Plane using the BIM workbench,
+configure its cut properties, and output the result to 2D views or
+documentation sheets, as well as how to perform quick 3D visual cuts
+using clipping planes.</p>
+<h3
+id="method-1-using-the-section-plane-tool-for-2d-drawings-and-documentation">Method
+1: Using the Section Plane Tool (For 2D Drawings and Documentation)</h3>
+<p>The primary way to create permanent, exportable section cuts in
+architectural projects is through the Section Plane tool.</p>
+<ol type="1">
+<li><strong>Switch to the BIM Workbench</strong>
+<ul>
+<li>Open your architectural project in FreeCAD.</li>
+<li>In the workbench dropdown menu, select <strong>BIM</strong> (or
+<strong>Arch</strong> if using an older version of FreeCAD).</li>
+</ul></li>
+<li><strong>Insert a Section Plane</strong>
+<ul>
+<li>Ensure no objects are selected, or select the specific
+building/objects you want to slice.</li>
+<li>Click the <strong>Section Plane</strong> button on the BIM toolbar
+(or navigate to <strong>BIM &gt; Section Plane</strong>).</li>
+<li>A transparent rectangular plane appears in your 3D view, indicating
+the cut plane and the viewing direction (represented by an arrow).</li>
+</ul></li>
+<li><strong>Position and Rotate the Cut</strong>
+<ul>
+<li>Select the Section Plane in the tree view.</li>
+<li>In the <strong>Property View</strong> panel under the
+<strong>Data</strong> tab, expand the <strong>Placement</strong>
+property.</li>
+<li>Adjust the <strong>Position</strong> (X, Y, Z coordinates) to place
+the cut at the desired elevation or room location.</li>
+<li>Adjust the <strong>Rotation</strong> or use the <strong>Draft
+Move</strong> and <strong>Draft Rotate</strong> tools to orient the
+plane horizontally for floor plans or vertically for
+cross-sections.</li>
+</ul></li>
+<li><strong>Adjust Cut Settings</strong>
+<ul>
+<li>In the <strong>Data</strong> tab of the Section Plane, modify key
+parameters:
+<ul>
+<li><strong>Cut</strong>: Set to <code>True</code> if you want the 3D
+model itself to appear visually cut in the viewport.</li>
+<li><strong>Objects</strong>: Specify which objects are included in the
+cut (leave blank to include all visible elements).</li>
+<li><strong>Depth</strong>: Define how far past the section plane
+objects should remain visible (set to <code>0</code> for infinite
+depth).</li>
+</ul></li>
+</ul></li>
+<li><strong>Generate a 2D Drawing from the Section</strong>
+<ul>
+<li><strong>For 2D Line Art in 3D Space:</strong> Select the Section
+Plane and run the <strong>Draft Shape2DView</strong> tool to create a
+flattened 2D projection on the working plane.</li>
+<li><strong>For TechDraw Sheets:</strong> Switch to the <strong>TechDraw
+Workbench</strong>, create or open a drawing page, select the Section
+Plane in the tree, and click <strong>Insert Arch View</strong> to
+project the cross-section directly onto your printable title sheet.</li>
+</ul></li>
+</ol>
+<hr />
+<h3 id="method-2-using-the-3d-clipping-plane-for-fast-inspection">Method
+2: Using the 3D Clipping Plane (For Fast Inspection)</h3>
+<p>If you only need a temporary visual cut to inspect internal geometry
+without creating drawing outputs:</p>
+<ol type="1">
+<li>Go to the top menu and select <strong>View &gt; Clipping
+plane</strong>.</li>
+<li>In the Clipping Plane panel on the left, check the axis you want to
+cut along (X, Y, or Z), or choose <strong>Custom</strong>.</li>
+<li>Use the slider or enter a value in the distance field to shift the
+plane through the model.</li>
+<li>Click <strong>Flip</strong> to invert which side of the model is
+hidden.</li>
+<li>Click <strong>Close</strong> when finished to restore the normal
+view.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/create-architectural-section-cuts-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

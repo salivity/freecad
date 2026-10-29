@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Custom Property Editors Using PySide - freecad</title>
+    <meta name="description" content="This article explains how to build custom property editors in FreeCAD using Python and PySide. You will learn the architectural relationship between FreeCAD document objects, their ViewProviders, and the Qt-based user interface. The guide covers designing">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-custom-property-editors-using-py-side">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Custom Property Editors Using PySide - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-custom-property-editors-using-py-side" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how to build custom property editors in FreeCAD using Python and PySide. You will learn the architectural relationship between FreeCAD document objects, their ViewProviders, and the Qt-based user interface. The guide covers designing" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-custom-property-editors-using-pyside">FreeCAD Custom
+Property Editors Using PySide</h1>
+<p>This article explains how to build custom property editors in FreeCAD
+using Python and PySide. You will learn the architectural relationship
+between FreeCAD document objects, their ViewProviders, and the Qt-based
+user interface. The guide covers designing PySide input widgets, binding
+them to FreeCAD feature properties, handling two-way data
+synchronization, and embedding custom controls into FreeCAD's Task Panel
+to manage properties that standard input fields cannot effectively
+represent.</p>
+<hr />
+<h3 id="understanding-freecad-properties-and-the-gui">Understanding
+FreeCAD Properties and the GUI</h3>
+<p>In FreeCAD, objects in a document are divided into two components
+following the Model-View-Controller (MVC) pattern:</p>
+<ul>
+<li><strong>App Object (<code>App::FeaturePython</code>):</strong>
+Stores geometry, data, and parameters as properties (e.g.,
+<code>App::PropertyFloat</code>, <code>App::PropertyString</code>,
+<code>App::PropertyEnumeration</code>).</li>
+<li><strong>Gui Object
+(<code>Gui::ViewProviderDocumentObject</code>):</strong> Manages how the
+object is visualized in the 3D viewport and provides interface elements,
+including task panels and contextual actions.</li>
+</ul>
+<p>While FreeCAD automatically generates controls in the
+<strong>Data</strong> tab of the Property View for standard property
+types, complex data structures, validated inputs, or interactive
+controls (such as sliders, file pickers, or color pickers) require
+custom GUI elements built with PySide.</p>
+<hr />
+<h3 id="architecture-of-a-custom-property-editor">Architecture of a
+Custom Property Editor</h3>
+<p>Because direct injection of custom PySide delegates into the native
+FreeCAD Property View tree is constrained by C++ core internals, the
+standard and supported method to provide a custom property editing
+experience is through a <strong>Task Panel</strong> managed by the
+object's <code>ViewProvider</code>.</p>
+<p>When a user double-clicks an object in the Tree View, the
+<code>ViewProvider</code> activates a custom PySide task panel that
+serves as the dedicated editor.</p>
+<p>A functional custom property editor requires:</p>
+<ol type="1">
+<li>A <strong>PySide Widget</strong> containing the input controls.</li>
+<li>A <strong>Data Synchronization Mechanism</strong> to read property
+values from the object and write changes back.</li>
+<li>Transaction handling via
+<code>App.ActiveDocument.openTransaction()</code> and
+<code>commitTransaction()</code> to support Undo/Redo.</li>
+</ol>
+<hr />
+<h3 id="step-by-step-implementation">Step-by-Step Implementation</h3>
+<h4 id="1-define-the-feature-object">1. Define the Feature Object</h4>
+<p>Create an <code>App::FeaturePython</code> object with the properties
+you want to manipulate:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ParametricBox:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, obj):</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        obj.Proxy <span class="op">=</span> <span class="va">self</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add properties to be controlled by the custom editor</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        obj.addProperty(<span class="st">&quot;App::PropertyFloat&quot;</span>, <span class="st">&quot;Width&quot;</span>, <span class="st">&quot;Parameters&quot;</span>, <span class="st">&quot;Width of the box&quot;</span>).Width <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        obj.addProperty(<span class="st">&quot;App::PropertyFloat&quot;</span>, <span class="st">&quot;Height&quot;</span>, <span class="st">&quot;Parameters&quot;</span>, <span class="st">&quot;Height of the box&quot;</span>).Height <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        obj.addProperty(<span class="st">&quot;App::PropertyString&quot;</span>, <span class="st">&quot;LabelText&quot;</span>, <span class="st">&quot;Parameters&quot;</span>, <span class="st">&quot;Custom text&quot;</span>).LabelText <span class="op">=</span> <span class="st">&quot;Default&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> execute(<span class="va">self</span>, obj):</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Recompute the feature geometry when properties change.&quot;&quot;&quot;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span></code></pre></div>
+<h4 id="2-create-the-pyside-editor-widget">2. Create the PySide Editor
+Widget</h4>
+<p>Design a PySide widget containing the custom controls. Use
+<code>PySide.QtWidgets</code> controls such as <code>QSlider</code>,
+<code>QSpinBox</code>, or custom layout managers:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PySide <span class="im">import</span> QtCore, QtWidgets</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> PropertyEditorWidget(QtWidgets.QWidget):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, obj, parent<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(PropertyEditorWidget, <span class="va">self</span>).<span class="fu">__init__</span>(parent)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.obj <span class="op">=</span> obj</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.initUI()</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.loadProperties()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> initUI(<span class="va">self</span>):</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        layout <span class="op">=</span> QtWidgets.QFormLayout(<span class="va">self</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Custom slider and spinbox for the &#39;Width&#39; property</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSlider <span class="op">=</span> QtWidgets.QSlider(QtCore.Qt.Horizontal)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSlider.setRange(<span class="dv">1</span>, <span class="dv">100</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSpin <span class="op">=</span> QtWidgets.QDoubleSpinBox()</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSpin.setRange(<span class="fl">1.0</span>, <span class="fl">100.0</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Custom text field</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.textEdit <span class="op">=</span> QtWidgets.QLineEdit()</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        layout.addRow(QtWidgets.QLabel(<span class="st">&quot;Width (Slider):&quot;</span>), <span class="va">self</span>.widthSlider)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        layout.addRow(QtWidgets.QLabel(<span class="st">&quot;Width (Exact):&quot;</span>), <span class="va">self</span>.widthSpin)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        layout.addRow(QtWidgets.QLabel(<span class="st">&quot;Custom Label:&quot;</span>), <span class="va">self</span>.textEdit)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Connect signals for two-way synchronization</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSlider.valueChanged.<span class="ex">connect</span>(<span class="va">self</span>.onSliderChanged)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSpin.valueChanged.<span class="ex">connect</span>(<span class="va">self</span>.onSpinChanged)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.textEdit.textChanged.<span class="ex">connect</span>(<span class="va">self</span>.onTextChanged)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> loadProperties(<span class="va">self</span>):</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Populate widgets with current object property values.&quot;&quot;&quot;</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSpin.setValue(<span class="va">self</span>.obj.Width)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSlider.setValue(<span class="bu">int</span>(<span class="va">self</span>.obj.Width))</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.textEdit.setText(<span class="va">self</span>.obj.LabelText)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> onSliderChanged(<span class="va">self</span>, value):</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSpin.blockSignals(<span class="va">True</span>)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSpin.setValue(<span class="bu">float</span>(value))</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSpin.blockSignals(<span class="va">False</span>)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.applyChanges()</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> onSpinChanged(<span class="va">self</span>, value):</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSlider.blockSignals(<span class="va">True</span>)</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSlider.setValue(<span class="bu">int</span>(value))</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.widthSlider.blockSignals(<span class="va">False</span>)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.applyChanges()</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> onTextChanged(<span class="va">self</span>, text):</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.applyChanges()</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> applyChanges(<span class="va">self</span>):</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Write values back to the FreeCAD object properties.&quot;&quot;&quot;</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        App.ActiveDocument.openTransaction(<span class="st">&quot;Modify Properties&quot;</span>)</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.obj.Width <span class="op">=</span> <span class="va">self</span>.widthSpin.value()</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.obj.LabelText <span class="op">=</span> <span class="va">self</span>.textEdit.text()</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>        App.ActiveDocument.commitTransaction()</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>        App.ActiveDocument.recompute()</span></code></pre></div>
+<h4 id="3-integrate-with-viewprovider-and-task-panel">3. Integrate with
+ViewProvider and Task Panel</h4>
+<p>Embed the widget into FreeCAD's native Task Panel interface by
+subclassing <code>Gui::ViewProviderDocumentObject</code>:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCADGui <span class="im">as</span> Gui</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ViewProviderParametricBox:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, vobj):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        vobj.Proxy <span class="op">=</span> <span class="va">self</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> doubleClicked(<span class="va">self</span>, vobj):</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Triggered when the user double-clicks the object in the tree.&quot;&quot;&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> Gui.Control.activeDialog():</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            panel <span class="op">=</span> BoxTaskPanel(vobj.Object)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            Gui.Control.showDialog(panel)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">False</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> getIcon(<span class="va">self</span>):</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;&quot;&quot;/* XPM */</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="st">        static const char *test[] = {</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;16 16 2 1&quot;,</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;  c None&quot;,</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;. c #0000FF&quot;,</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;................&quot;,</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;................&quot;,</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;..            ..&quot;,</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;..            ..&quot;,</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;..            ..&quot;,</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;..            ..&quot;,</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;..            ..&quot;,</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;..            ..&quot;,</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;..            ..&quot;,</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;..            ..&quot;,</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;..            ..&quot;,</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;..            ..&quot;,</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;..            ..&quot;,</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;..            ..&quot;,</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;................&quot;,</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;................&quot;};&quot;&quot;&quot;</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BoxTaskPanel:</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, obj):</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.obj <span class="op">=</span> obj</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.form <span class="op">=</span> PropertyEditorWidget(obj)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.form.setWindowTitle(<span class="st">&quot;Custom Property Editor&quot;</span>)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> accept(<span class="va">self</span>):</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Called when the user clicks &#39;OK&#39; in the Task Panel.&quot;&quot;&quot;</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>        Gui.Control.closeDialog()</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> reject(<span class="va">self</span>):</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Called when the user clicks &#39;Cancel&#39; in the Task Panel.&quot;&quot;&quot;</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        Gui.Control.closeDialog()</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">True</span></span></code></pre></div>
+<hr />
+<h3 id="instantiation-and-testing">Instantiation and Testing</h3>
+<p>To deploy and test the custom object and editor within an open
+FreeCAD session:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> App.activeDocument() <span class="kw">or</span> App.newDocument()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the base FeaturePython object</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>box_obj <span class="op">=</span> doc.addObject(<span class="st">&quot;App::FeaturePython&quot;</span>, <span class="st">&quot;CustomBox&quot;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>ParametricBox(box_obj)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Attach the custom ViewProvider</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>ViewProviderParametricBox(box_obj.ViewObject)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>doc.recompute()</span></code></pre></div>
+<p>Double-clicking <code>CustomBox</code> in the Model Tree opens the
+custom PySide editor in the Task Panel, providing dedicated interactive
+control over <code>Width</code> and <code>LabelText</code> with
+real-time viewport updates and undo history integration.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-custom-property-editors-using-py-side';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

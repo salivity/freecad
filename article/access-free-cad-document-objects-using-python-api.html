@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access FreeCAD Document Objects Using Python API - freecad</title>
+    <meta name="description" content="Interacting with FreeCAD programmatically allows you to automate 3D modeling workflows, modify parametric features, and extract design data. This guide demonstrates how to access open documents, retrieve specific document objects using their internal name">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/access-free-cad-document-objects-using-python-api">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Access FreeCAD Document Objects Using Python API - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/access-free-cad-document-objects-using-python-api" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Interacting with FreeCAD programmatically allows you to automate 3D modeling workflows, modify parametric features, and extract design data. This guide demonstrates how to access open documents, retrieve specific document objects using their internal name" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="access-freecad-document-objects-using-python-api">Access FreeCAD
+Document Objects Using Python API</h1>
+<p>Interacting with FreeCAD programmatically allows you to automate 3D
+modeling workflows, modify parametric features, and extract design data.
+This guide demonstrates how to access open documents, retrieve specific
+document objects using their internal names or labels, inspect and
+modify their properties, and properly update the document using the
+FreeCAD Python API.</p>
+<h3 id="accessing-the-document">Accessing the Document</h3>
+<p>Before you can access individual objects, you must reference the
+containing document. The primary module used is <code>FreeCAD</code>
+(often accessible via <code>App</code> inside the FreeCAD Python
+console).</p>
+<p>To target the currently active document:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> FreeCAD.ActiveDocument</span></code></pre></div>
+<p>To target a specific document by its internal name:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> FreeCAD.getDocument(<span class="st">&quot;Unnamed&quot;</span>)</span></code></pre></div>
+<p>If you are running a script outside the interactive GUI, you can open
+an existing file:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> FreeCAD.openDocument(<span class="st">&quot;/path/to/your/file.FCStd&quot;</span>)</span></code></pre></div>
+<hr />
+<h3 id="retrieving-objects-from-the-document">Retrieving Objects from
+the Document</h3>
+<p>Once you have a reference to the document, you can access its objects
+using several methods depending on whether you know the object's
+internal name, user-facing label, or want to process all objects.</p>
+<h4 id="1-by-internal-name">1. By Internal Name</h4>
+<p>Every object in FreeCAD has a unique, internal <code>Name</code>
+property (e.g., <code>Box</code>, <code>Cylinder001</code>). You can
+retrieve it using <code>getObject()</code> or direct document attribute
+access:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using getObject()</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> doc.getObject(<span class="st">&quot;Box&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Direct attribute access</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> doc.Box</span></code></pre></div>
+<h4 id="2-by-user-label">2. By User Label</h4>
+<p>Users frequently change the object's <code>Label</code> in the tree
+view, which can differ from its internal <code>Name</code>. Multiple
+objects can share the same label. Use <code>getObjectsByLabel()</code>
+to find objects by their displayed name:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Returns a list of matching objects</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>matching_objects <span class="op">=</span> doc.getObjectsByLabel(<span class="st">&quot;Base Plate&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> matching_objects:</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    obj <span class="op">=</span> matching_objects[<span class="dv">0</span>]</span></code></pre></div>
+<h4 id="3-listing-all-objects">3. Listing All Objects</h4>
+<p>To iterate over every object contained in the document, access the
+<code>Objects</code> list attribute:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> obj <span class="kw">in</span> doc.Objects:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Name: </span><span class="sc">{</span>obj<span class="sc">.</span>Name<span class="sc">}</span><span class="ss">, Label: </span><span class="sc">{</span>obj<span class="sc">.</span>Label<span class="sc">}</span><span class="ss">, Type: </span><span class="sc">{</span>obj<span class="sc">.</span>TypeId<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<hr />
+<h3 id="filtering-objects-by-type">Filtering Objects by Type</h3>
+<p>In complex assemblies or models, you may only want to interact with
+specific types of features, such as solid shapes:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if the object is derived from Part::Feature</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>part_objects <span class="op">=</span> [obj <span class="cf">for</span> obj <span class="kw">in</span> doc.Objects <span class="cf">if</span> obj.isDerivedFrom(<span class="st">&quot;Part::Feature&quot;</span>)]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> part <span class="kw">in</span> part_objects:</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Volume of </span><span class="sc">{</span>part<span class="sc">.</span>Label<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>part<span class="sc">.</span>Shape<span class="sc">.</span>Volume<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<hr />
+<h3 id="inspecting-and-modifying-object-properties">Inspecting and
+Modifying Object Properties</h3>
+<p>FreeCAD objects expose properties dynamically based on their
+underlying feature type.</p>
+<h4 id="reading-and-writing-properties">Reading and Writing
+Properties</h4>
+<p>To view and adjust parameters such as dimensions, placements, or
+colors:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Accessing dimensions</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>box <span class="op">=</span> doc.getObject(<span class="st">&quot;Box&quot;</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Current Length:&quot;</span>, box.Length)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Modifying dimensions</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>box.Length <span class="op">=</span> <span class="fl">50.0</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>box.Width <span class="op">=</span> <span class="fl">30.0</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>box.Height <span class="op">=</span> <span class="fl">15.0</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Modifying placement</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>box.Placement.Base <span class="op">=</span> FreeCAD.Vector(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span></code></pre></div>
+<h4 id="inspecting-available-properties">Inspecting Available
+Properties</h4>
+<p>To programmatically inspect which properties an object supports:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List all property names supported by the object</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(box.PropertiesList)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the type of a specific property</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(box.getTypeOfProperty(<span class="st">&quot;Length&quot;</span>))</span></code></pre></div>
+<hr />
+<h3 id="recomputing-the-document">Recomputing the Document</h3>
+<p>After modifying properties of document objects, FreeCAD requires a
+recomputation step to update the geometry and dependency tree:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>doc.recompute()</span></code></pre></div>
+<p>If changes affect visual representation in the GUI, you can
+optionally refresh the view:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> FreeCAD.Gui:</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> FreeCADGui</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    FreeCADGui.updateGui()</span></code></pre></div></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/access-free-cad-document-objects-using-python-api';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

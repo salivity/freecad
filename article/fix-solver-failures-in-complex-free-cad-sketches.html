@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Solver Failures in Complex FreeCAD Sketches - freecad</title>
+    <meta name="description" content="Diagnosing solver failures in complex FreeCAD sketches requires a systematic approach to identify conflicting, redundant, or malformed constraints. When a sketch breaks, the Sketcher solver stops calculating degrees of freedom, turning elements orange or">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/fix-solver-failures-in-complex-free-cad-sketches">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fix Solver Failures in Complex FreeCAD Sketches - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/fix-solver-failures-in-complex-free-cad-sketches" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Diagnosing solver failures in complex FreeCAD sketches requires a systematic approach to identify conflicting, redundant, or malformed constraints. When a sketch breaks, the Sketcher solver stops calculating degrees of freedom, turning elements orange or" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fix-solver-failures-in-complex-freecad-sketches">Fix Solver
+Failures in Complex FreeCAD Sketches</h1>
+<p>Diagnosing solver failures in complex FreeCAD sketches requires a
+systematic approach to identify conflicting, redundant, or malformed
+constraints. When a sketch breaks, the Sketcher solver stops calculating
+degrees of freedom, turning elements orange or red and halting
+parametric updates. By leveraging FreeCAD's built-in diagnostic feedback
+in the Tasks tab, isolating constraints methodically, and using
+reference mode strategically, you can quickly locate the root cause of
+solver errors and restore your sketch to a stable, fully constrained
+state.</p>
+<h3 id="read-the-solver-messages-panel">Read the Solver Messages
+Panel</h3>
+<p>When a solver error occurs, open the <strong>Tasks</strong> panel on
+the left sidebar. The <strong>Solver messages</strong> section provides
+immediate clues about the current state:</p>
+<ul>
+<li><strong>Over-constrained / Conflicting constraints:</strong> FreeCAD
+will explicitly list the conflicting constraint numbers as clickable
+blue links. Clicking these links automatically highlights and selects
+the offending constraints in the 3D view.</li>
+<li><strong>Redundant constraints:</strong> The solver has detected
+duplicate rules (e.g., two horizontal constraints applied to parallel
+lines that are already bound by an equality constraint). Click the
+listed numbers to inspect and delete them.</li>
+<li><strong>Malformed constraints:</strong> Often caused by geometry
+that has collapsed to zero length, intersecting arcs that no longer have
+a mathematically valid intersection, or broken external geometry
+links.</li>
+</ul>
+<h3 id="use-the-toggle-reference-technique">Use the "Toggle Reference"
+Technique</h3>
+<p>Rather than deleting suspect constraints, switch them to reference
+mode:</p>
+<ol type="1">
+<li>Select the constraint causing the conflict.</li>
+<li>Click the <strong>Toggle to/from reference tool</strong> (or press
+the constraint toggle shortcut).</li>
+<li>Reference constraints turn blue and provide read-only measurements
+without driving geometry.</li>
+</ol>
+<p>If converting a constraint to reference mode resolves the conflict,
+that constraint was mathematically incompatible with earlier dimensional
+or geometric rules.</p>
+<h3 id="perform-the-drag-test">Perform the "Drag Test"</h3>
+<p>If the solver reports an error without pinpointing a single
+constraint—or if the sketch is behaving erratically:</p>
+<ol type="1">
+<li>Ensure the sketch is open in edit mode.</li>
+<li>Click and drag individual unconstrained vertices or line
+segments.</li>
+<li>Observe how the geometry deforms. If a segment snaps unexpectedly,
+flips inside out, or breaks the solver, the issue is usually an inverted
+tangential constraint, a point-on-object constraint bound to the wrong
+side of an arc, or an unintended coincidence.</li>
+</ol>
+<h3 id="check-external-geometry-dependencies">Check External Geometry
+Dependencies</h3>
+<p>Sketches relying heavily on external geometry (created via the
+<strong>Create external geometry</strong> tool) frequently fail when
+upstream features change.</p>
+<ul>
+<li>Look for magenta lines representing external references.</li>
+<li>If an underlying face, edge, or vertex in the 3D model was altered,
+renamed, or suppressed by the Topological Naming Problem, the sketch
+solver will fail.</li>
+<li>Delete the broken external reference line and re-link it to the
+updated solid edge.</li>
+</ul>
+<h3 id="inspect-for-zero-length-and-micro-geometry">Inspect for
+Zero-Length and Micro-Geometry</h3>
+<p>Complex sketches containing imported DXF files or extensive trimming
+operations often hide micro-segments:</p>
+<ul>
+<li>Zoom closely into corners where multiple lines intersect.</li>
+<li>Look for near-coincident points that have two separate coincidence
+constraints applied across microscopic distances.</li>
+<li>Delete micro-segments and merge vertices using a single Coincident
+constraint.</li>
+</ul>
+<h3 id="divide-the-sketch">Divide the Sketch</h3>
+<p>If a sketch contains dozens of constraints and repeatedly fails the
+solver, the sketch itself is overloaded. As a best practice, break the
+complex profile into multiple simpler sketches across separate features
+(such as combining multiple additive pads or subtractive pockets) rather
+than solving the entire cross-section in a single operation.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/fix-solver-failures-in-complex-free-cad-sketches';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

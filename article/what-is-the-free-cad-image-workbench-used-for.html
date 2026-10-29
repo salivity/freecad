@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is the FreeCAD Image Workbench Used For? - freecad</title>
+    <meta name="description" content="The FreeCAD Image workbench is a utility designed to import, manipulate, and manage 2D raster images directly within the 3D modeling environment. Its primary objective is to allow users to bring external visual data—such as scanned blueprints, technical d">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/what-is-the-free-cad-image-workbench-used-for">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Is the FreeCAD Image Workbench Used For? - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/what-is-the-free-cad-image-workbench-used-for" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The FreeCAD Image workbench is a utility designed to import, manipulate, and manage 2D raster images directly within the 3D modeling environment. Its primary objective is to allow users to bring external visual data—such as scanned blueprints, technical d" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-is-the-freecad-image-workbench-used-for">What Is the
+FreeCAD Image Workbench Used For?</h1>
+<p>The FreeCAD Image workbench is a utility designed to import,
+manipulate, and manage 2D raster images directly within the 3D modeling
+environment. Its primary objective is to allow users to bring external
+visual data—such as scanned blueprints, technical drawings, orthographic
+projections, or hand-drawn concept sketches—into FreeCAD to serve as
+visual references. By aligning and scaling these images to real-world
+dimensions, modelers can accurately trace profiles using FreeCAD's
+Sketcher or Draft workbenches to construct precise 3D geometry.</p>
+<h3 id="core-functions-and-capabilities">Core Functions and
+Capabilities</h3>
+<p>The Image workbench offers two distinct methods for handling bitmap
+formats (such as JPEG, PNG, BMP, and SVG):</p>
+<ol type="1">
+<li><strong>Creating Image Planes in 3D Space:</strong> The main tool,
+"Create a planar image," projects an image onto a flat plane placed
+directly into the 3D viewport. This allows the reference image to
+coexist with 3D parts, sketches, and coordinate axes. Users can position
+the plane along standard orthogonal orientations (XY, XZ, or YZ planes)
+or offset it to match specific cross-sections of a design.</li>
+<li><strong>2D Image Viewing:</strong> The workbench also allows images
+to be opened in a separate 2D viewport tab for direct inspection,
+inspection of pixel details, or simple reference outside the 3D
+canvas.</li>
+</ol>
+<h3 id="key-use-cases">Key Use Cases</h3>
+<ul>
+<li><strong>Reverse Engineering:</strong> When recreating an existing
+physical object without CAD files, users can photograph the object from
+orthogonal perspectives (top, front, side), import those photos, and
+trace the exterior contours directly.</li>
+<li><strong>Blueprint and Schematic Tracing:</strong> Architectural
+floor plans, mechanical patent drawings, or legacy paper blueprints can
+be imported as backdrops, allowing draftspeople to trace accurate vector
+sketches over historical documentation.</li>
+<li><strong>Concept Modeling:</strong> Industrial designers and artists
+can import preliminary sketches to guide complex curve creation and
+organic surfacing before refining the geometry into solids.</li>
+</ul>
+<h3 id="calibration-and-workflow-integration">Calibration and Workflow
+Integration</h3>
+<p>A critical feature of working with reference images is dimensional
+accuracy. The Image workbench allows users to scale and position images
+so that the pixels match actual CAD units (such as millimeters or
+inches).</p>
+<p>A standard workflow typically follows these steps:</p>
+<ol type="1">
+<li><strong>Import:</strong> Bring the raster file into the 3D space
+using the planar image tool.</li>
+<li><strong>Alignment:</strong> Adjust the placement, rotation, and
+offset of the plane using the property editor to match the active
+coordinate system.</li>
+<li><strong>Scaling:</strong> Calibrate the size of the image by
+measuring a known feature in the image and adjusting the width and
+height properties accordingly.</li>
+<li><strong>Tracing:</strong> Switch to the Sketcher or Draft workbench,
+place a sketch plane coplanar to the image, and trace the contours using
+lines, arcs, and B-splines.</li>
+<li><strong>Modeling:</strong> Transition to workbenches like PartDesign
+or Part to extrude, revolve, or loft the traced sketches into fully
+parametric 3D solids.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/what-is-the-free-cad-image-workbench-used-for';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

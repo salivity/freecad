@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Create a Counterbore Hole in FreeCAD - freecad</title>
+    <meta name="description" content="Creating a counterbore hole in FreeCAD is a straightforward process using the Part Design workbench. This guide covers how to set up your target geometry with a sketch point, open the dedicated Hole tool, configure counterbore specifications such as diame">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-create-a-counterbore-hole-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Create a Counterbore Hole in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-create-a-counterbore-hole-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Creating a counterbore hole in FreeCAD is a straightforward process using the Part Design workbench. This guide covers how to set up your target geometry with a sketch point, open the dedicated Hole tool, configure counterbore specifications such as diame" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-create-a-counterbore-hole-in-freecad">How to Create a
+Counterbore Hole in FreeCAD</h1>
+<p>Creating a counterbore hole in FreeCAD is a straightforward process
+using the Part Design workbench. This guide covers how to set up your
+target geometry with a sketch point, open the dedicated Hole tool,
+configure counterbore specifications such as diameter and depth, and
+finalize the parametric feature on your 3D model.</p>
+<h3 id="1-create-the-placement-sketch">1. Create the Placement
+Sketch</h3>
+<ol type="1">
+<li>Switch to the <strong>Part Design</strong> workbench.</li>
+<li>Ensure your model is an active <strong>Body</strong>.</li>
+<li>Select the flat face of your solid where you want the hole to be
+placed.</li>
+<li>Click <strong>Create Sketch</strong>.</li>
+<li>Place a point using the <strong>Create point</strong> tool (or
+sketch a circle) at the desired hole location.</li>
+<li>Apply constraints to position the point accurately relative to the
+geometry.</li>
+<li>Click <strong>Close</strong> to exit the Sketcher.</li>
+</ol>
+<h3 id="2-activate-the-hole-tool">2. Activate the Hole Tool</h3>
+<ol type="1">
+<li>In the tree view or 3D view, ensure your placement sketch is
+selected.</li>
+<li>In the toolbar or the <em>Part Design</em> menu, click the
+<strong>Hole</strong> feature icon.</li>
+<li>FreeCAD will generate a default hole and open the <strong>Hole
+parameters</strong> panel in the Tasks tab on the left.</li>
+</ol>
+<h3 id="3-configure-the-counterbore-profile">3. Configure the
+Counterbore Profile</h3>
+<ol type="1">
+<li>Locate the <strong>Hole Cut</strong> dropdown menu (typically set to
+<em>None</em> by default).</li>
+<li>Change this setting to <strong>Counterbore</strong>.</li>
+<li>Set your primary hole dimensions:
+<ul>
+<li><strong>Diameter:</strong> Enter the diameter for the through-hole
+or pilot hole.</li>
+<li><strong>Depth:</strong> Choose <em>Through all</em> for a complete
+pass-through, or select <em>Dimension</em> to specify a blind hole
+depth.</li>
+</ul></li>
+<li>Set the counterbore parameters:
+<ul>
+<li><strong>Counterbore diameter:</strong> Enter the outer diameter
+required to accommodate the screw head.</li>
+<li><strong>Counterbore depth:</strong> Enter the depth the screw head
+should sit below the surface.</li>
+</ul></li>
+</ol>
+<h3 id="4-review-and-apply">4. Review and Apply</h3>
+<ol type="1">
+<li>Check the 3D viewport to ensure the hole orientation and sizing
+match your design intent. If the hole is projecting in the wrong
+direction, toggle the <strong>Reversed</strong> checkbox.</li>
+<li>Click <strong>OK</strong> in the Tasks panel to complete the
+feature.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-create-a-counterbore-hole-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

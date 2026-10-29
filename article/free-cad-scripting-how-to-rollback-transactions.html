@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Scripting: How to Rollback Transactions - freecad</title>
+    <meta name="description" content="This article explains how to safely discard modifications made by Python scripts in FreeCAD using built-in transaction methods. When automating parametric modeling, scripts can encounter unexpected runtime exceptions or invalid geometries. By wrapping you">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-scripting-how-to-rollback-transactions">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Scripting: How to Rollback Transactions - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-scripting-how-to-rollback-transactions" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how to safely discard modifications made by Python scripts in FreeCAD using built-in transaction methods. When automating parametric modeling, scripts can encounter unexpected runtime exceptions or invalid geometries. By wrapping you" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-scripting-how-to-rollback-transactions">FreeCAD
+Scripting: How to Rollback Transactions</h1>
+<p>This article explains how to safely discard modifications made by
+Python scripts in FreeCAD using built-in transaction methods. When
+automating parametric modeling, scripts can encounter unexpected runtime
+exceptions or invalid geometries. By wrapping your code in a document
+transaction, you can ensure that any failing operation cleanly reverts
+the document to its original state rather than leaving behind orphaned
+or broken objects.</p>
+<h3 id="understanding-freecad-transactions">Understanding FreeCAD
+Transactions</h3>
+<p>FreeCAD's Application interface (<code>FreeCAD</code> or
+<code>App</code>) provides a transaction mechanism through the active
+document. Transactions group multiple modeling commands into an atomic
+operation. If the script finishes successfully, the transaction is
+committed; if an error occurs, the transaction can be aborted,
+effectively rolling back all modifications made since the transaction
+was opened.</p>
+<p>The primary methods used on the document object are:</p>
+<ul>
+<li><code>openTransaction(name)</code>: Starts recording changes under a
+specified transaction name.</li>
+<li><code>commitTransaction()</code>: Finalizes and saves all changes
+made during the open transaction.</li>
+<li><code>abortTransaction()</code>: Discards all changes made during
+the open transaction and restores the previous state.</li>
+</ul>
+<h3 id="implementation-pattern">Implementation Pattern</h3>
+<p>The most reliable way to implement transaction rollbacks is with a
+standard Python <code>try...except</code> block. This ensures that any
+unhandled exception triggers an immediate rollback.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> Part</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> App.activeDocument()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> doc <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    doc <span class="op">=</span> App.newDocument(<span class="st">&quot;TransactionDemo&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Open the transaction</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>transaction_name <span class="op">=</span> <span class="st">&quot;CreateParametricShape&quot;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>doc.openTransaction(transaction_name)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2. Perform document operations</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    box <span class="op">=</span> doc.addObject(<span class="st">&quot;Part::Box&quot;</span>, <span class="st">&quot;TempBox&quot;</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    box.Length <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    box.Width <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    box.Height <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    doc.recompute()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Simulate an error condition</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">&quot;An unexpected error occurred during processing.&quot;</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3. Commit if everything succeeds</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    doc.commitTransaction()</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Transaction committed successfully.&quot;</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> error:</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 4. Abort and rollback on failure</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    doc.abortTransaction()</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Error encountered: </span><span class="sc">{</span>error<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Transaction aborted. Changes have been rolled back.&quot;</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure document status is updated</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>doc.recompute()</span></code></pre></div>
+<h3 id="rolling-back-already-committed-changes">Rolling Back Already
+Committed Changes</h3>
+<p>If a transaction has already been committed using
+<code>commitTransaction()</code>, calling
+<code>abortTransaction()</code> will no longer affect it. To undo
+changes after committing, use the document's <code>undo()</code>
+method:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reverses the last committed transaction</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>doc.undo()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>doc.recompute()</span></code></pre></div>
+<h3 id="key-considerations">Key Considerations</h3>
+<ul>
+<li><strong>Nested Transactions:</strong> FreeCAD does not natively
+support nested transactions. Always ensure that an open transaction is
+either committed or aborted before opening a new one.</li>
+<li><strong>Recompute Timing:</strong> Changes aborted with
+<code>abortTransaction()</code> instantly remove temporary objects from
+the internal tree, but calling <code>doc.recompute()</code> afterward
+ensures the 3D view and tree view are fully synchronized with the
+rolled-back state.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-scripting-how-to-rollback-transactions';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

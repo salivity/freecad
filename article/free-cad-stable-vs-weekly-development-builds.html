@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Stable vs Weekly Development Builds - freecad</title>
+    <meta name="description" content="When choosing FreeCAD for parametric 3D modeling, users must decide between the official Stable release and the Weekly development builds. This article breaks down the primary differences between both versions, examining their stability, access to new fea">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-stable-vs-weekly-development-builds">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Stable vs Weekly Development Builds - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-stable-vs-weekly-development-builds" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When choosing FreeCAD for parametric 3D modeling, users must decide between the official Stable release and the Weekly development builds. This article breaks down the primary differences between both versions, examining their stability, access to new fea" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-stable-vs-weekly-development-builds">FreeCAD Stable vs
+Weekly Development Builds</h1>
+<p>When choosing FreeCAD for parametric 3D modeling, users must decide
+between the official Stable release and the Weekly development builds.
+This article breaks down the primary differences between both versions,
+examining their stability, access to new features, file compatibility,
+and overall suitability for production versus testing workflows, helping
+you determine which version best fits your design needs.</p>
+<h2 id="understanding-freecad-stable">Understanding FreeCAD Stable</h2>
+<p>FreeCAD Stable is the thoroughly tested, official release version
+intended for everyday production use. It represents a milestone in the
+software’s lifecycle where features are locked, tested extensively by
+the community, and patched to minimize critical errors and crashes.</p>
+<ul>
+<li><strong>Reliability:</strong> Stable releases prioritize predictable
+performance. While they are not entirely immune to bugs, they avoid the
+frequent regressions introduced by rapid code changes.</li>
+<li><strong>Update Frequency:</strong> Stable versions are released
+infrequently, often with many months or even over a year between major
+versions. Maintenance updates (e.g., 0.21.1 to 0.21.2) are issued
+occasionally to fix critical security issues and major bugs.</li>
+<li><strong>Best For:</strong> Professional work, commercial production
+environments, educational settings, and users who require a dependable
+workflow without unexpected interface changes or crashes.</li>
+</ul>
+<h2 id="understanding-weekly-development-builds">Understanding Weekly
+Development Builds</h2>
+<p>Weekly development builds (often referred to as "Weekly" or "Dev"
+builds) are automated snapshots compiled directly from the active
+FreeCAD source code repository. They showcase the current state of
+FreeCAD development in real time.</p>
+<ul>
+<li><strong>Cutting-Edge Features:</strong> Weekly builds include the
+newest tools, redesigned user interfaces, modern workbench improvements,
+and performance upgrades long before they arrive in an official stable
+release.</li>
+<li><strong>Rapid Bug Fixes:</strong> Bugs resolved by developers are
+immediately accessible in the next weekly build, eliminating the need to
+wait months for a stable maintenance release.</li>
+<li><strong>Instability and Regressions:</strong> Because these builds
+contain unvetted code, they carry a significantly higher risk of
+unexpected crashes, broken tools, or corrupted project files.</li>
+<li><strong>Best For:</strong> Enthusiasts, power users, community
+testers, and anyone looking to experiment with newly introduced features
+or test whether a specific bug has been resolved.</li>
+</ul>
+<h2 id="key-differences-at-a-glance">Key Differences at a Glance</h2>
+<ul>
+<li><strong>Feature Availability:</strong> Stable builds feature locked,
+older toolsets. Weekly builds feature the latest innovations, updated
+topological naming algorithms, and UI modernizations.</li>
+<li><strong>Crash Risk:</strong> Stable builds offer higher reliability.
+Weekly builds are prone to regressions and sudden crashes.</li>
+<li><strong>File Compatibility:</strong> Files saved in a newer weekly
+development build often cannot be opened or properly edited in older
+stable versions due to underlying schema and geometry changes.</li>
+<li><strong>Documentation and Tutorials:</strong> Most public tutorials
+and guides are based on stable versions. Weekly builds may alter tool
+locations, hotkeys, or menus, making external guides slightly harder to
+follow.</li>
+</ul>
+<h2 id="which-version-should-you-use">Which Version Should You Use?</h2>
+<p>If your priority is completing client work, manufacturing parts, or
+learning 3D CAD without technical disruptions, download <strong>FreeCAD
+Stable</strong>.</p>
+<p>If you want access to modern workflow improvements, want to help the
+community by submitting bug reports, or need a fix that has not yet made
+it to the stable channel, use the <strong>Weekly build</strong>. You can
+also safely install both versions side-by-side on your operating system,
+provided you back up your project files before testing them in the
+development build.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-stable-vs-weekly-development-builds';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

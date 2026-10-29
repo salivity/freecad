@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Custom UI Dialogs and Buttons to FreeCAD - freecad</title>
+    <meta name="description" content="Extending FreeCAD with custom user interface elements allows users and developers to automate workflows, solicit user input, and streamline complex modeling tasks. This guide explains how to build custom user interface dialogs using Python and PySide (Qt)">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/add-custom-ui-dialogs-and-buttons-to-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Add Custom UI Dialogs and Buttons to FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/add-custom-ui-dialogs-and-buttons-to-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Extending FreeCAD with custom user interface elements allows users and developers to automate workflows, solicit user input, and streamline complex modeling tasks. This guide explains how to build custom user interface dialogs using Python and PySide (Qt)" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="add-custom-ui-dialogs-and-buttons-to-freecad">Add Custom UI
+Dialogs and Buttons to FreeCAD</h1>
+<p>Extending FreeCAD with custom user interface elements allows users
+and developers to automate workflows, solicit user input, and streamline
+complex modeling tasks. This guide explains how to build custom user
+interface dialogs using Python and PySide (Qt) and how to integrate them
+into FreeCAD as clickable toolbar buttons using FreeCAD’s native command
+architecture.</p>
+<hr />
+<h3 id="understanding-the-architecture">Understanding the
+Architecture</h3>
+<p>FreeCAD's graphical interface is built on the Qt framework, exposed
+to Python through the PySide library (<code>PySide2</code> in FreeCAD
+0.19–0.21, and transitioning to <code>PySide6</code> in FreeCAD
+1.0).</p>
+<p>Adding custom UI functionality involves two main components:</p>
+<ol type="1">
+<li><strong>The Command Class:</strong> A Python class that defines the
+button's icon, tooltip, text, and click action, registered into
+FreeCAD's GUI.</li>
+<li><strong>The UI Dialog:</strong> A modal or non-modal window created
+via PySide to gather user input or display data.</li>
+</ol>
+<hr />
+<h3 id="step-1-create-the-pyside-dialog">Step 1: Create the PySide
+Dialog</h3>
+<p>You can build dialogs programmatically or design them using Qt
+Designer and load the <code>.ui</code> file. The following example
+builds a simple dialog entirely in Python:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PySide <span class="im">import</span> QtWidgets, QtCore</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CustomInputDialog(QtWidgets.QDialog):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, parent<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(CustomInputDialog, <span class="va">self</span>).<span class="fu">__init__</span>(parent)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.setWindowTitle(<span class="st">&quot;Custom Parameter Input&quot;</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.resize(<span class="dv">300</span>, <span class="dv">150</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create Layout</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        layout <span class="op">=</span> QtWidgets.QVBoxLayout(<span class="va">self</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add Label and Line Edit</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.label <span class="op">=</span> QtWidgets.QLabel(<span class="st">&quot;Enter Dimension (mm):&quot;</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        layout.addWidget(<span class="va">self</span>.label)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.input_field <span class="op">=</span> QtWidgets.QLineEdit()</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        layout.addWidget(<span class="va">self</span>.input_field)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add Standard OK/Cancel Buttons</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.button_box <span class="op">=</span> QtWidgets.QDialogButtonBox(</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            QtWidgets.QDialogButtonBox.Ok <span class="op">|</span> QtWidgets.QDialogButtonBox.Cancel</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.button_box.accepted.<span class="ex">connect</span>(<span class="va">self</span>.accept)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.button_box.rejected.<span class="ex">connect</span>(<span class="va">self</span>.reject)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        layout.addWidget(<span class="va">self</span>.button_box)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_value(<span class="va">self</span>):</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.input_field.text()</span></code></pre></div>
+<hr />
+<h3 id="step-2-define-the-freecad-command">Step 2: Define the FreeCAD
+Command</h3>
+<p>FreeCAD requires a specific class structure to represent an action.
+The class must implement <code>GetResources()</code> to define
+appearance and <code>Activated()</code> to handle execution.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCADGui <span class="im">as</span> Gui</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CustomToolCommand:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> GetResources(<span class="va">self</span>):</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Pixmap&#39;</span>: <span class="st">&#39;Std_Tool1&#39;</span>,  <span class="co"># Built-in icon name or absolute path to a .svg/.png</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;MenuText&#39;</span>: <span class="st">&#39;Open Input Dialog&#39;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;ToolTip&#39;</span>: <span class="st">&#39;Opens a custom dialog to enter dimensions&#39;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> Activated(<span class="va">self</span>):</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Retrieve the main FreeCAD window as the parent</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        main_window <span class="op">=</span> Gui.getMainWindow()</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Instantiate and display the dialog</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        dialog <span class="op">=</span> CustomInputDialog(main_window)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> dialog.exec_():</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>            user_value <span class="op">=</span> dialog.get_value()</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>            App.Console.PrintMessage(<span class="ss">f&quot;User entered: </span><span class="sc">{</span>user_value<span class="sc">}</span><span class="ch">\n</span><span class="ss">&quot;</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> IsActive(<span class="va">self</span>):</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Optional: return False if no document is open</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> App.ActiveDocument <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span></span></code></pre></div>
+<hr />
+<h3 id="step-3-register-the-command-and-add-the-button">Step 3: Register
+the Command and Add the Button</h3>
+<p>To make the command accessible to the user, register it with the GUI
+system and append it to a toolbar or workbench.</p>
+<h4 id="register-the-command">Register the Command</h4>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Gui.addCommand(<span class="st">&#39;CustomTool_Command&#39;</span>, CustomToolCommand())</span></code></pre></div>
+<h4 id="add-to-an-existing-workbench-toolbar">Add to an Existing
+Workbench Toolbar</h4>
+<p>To immediately test the button, you can inject it into an active
+workbench's toolbar directly via the Python console or a macro:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add to the current workbench toolbar</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>workbench <span class="op">=</span> Gui.activeWorkbench()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>workbench.addToolbarItem(<span class="st">&quot;Custom Tools&quot;</span>, [<span class="st">&quot;CustomTool_Command&quot;</span>])</span></code></pre></div>
+<hr />
+<h3 id="making-the-customization-persistent">Making the Customization
+Persistent</h3>
+<p>To ensure your custom buttons and dialogs persist across FreeCAD
+sessions:</p>
+<ol type="1">
+<li><strong>Save as a Macro:</strong> Save the complete script into your
+FreeCAD macro directory (accessible via <strong>Macro &gt;
+Macros...</strong>).</li>
+<li><strong>Add to a Custom Toolbar via UI:</strong>
+<ul>
+<li>Go to <strong>Tools &gt; Customize &gt; Toolbars</strong>.</li>
+<li>Select a workbench where the button should appear.</li>
+<li>Click <strong>New</strong> to create a custom toolbar category.</li>
+<li>Select <strong>Macros</strong> from the command category drop-down
+list.</li>
+<li>Select your registered macro command and click the right arrow to
+add it to the toolbar.</li>
+</ul></li>
+<li><strong>Package as a Workbench:</strong> For complex tools, create
+an <code>InitGui.py</code> file within an addon directory inside
+<code>~/.FreeCAD/Mod/</code> (Linux/macOS) or
+<code>%APPDATA%\FreeCAD\Mod\</code> (Windows) to automatically create
+workbenches, toolbars, and menus on application startup.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/add-custom-ui-dialogs-and-buttons-to-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

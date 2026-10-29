@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Set Up Profile Cutting in FreeCAD Path - freecad</title>
+    <meta name="description" content="This guide provides a straightforward walkthrough on setting up a 2D profile cutting operation using the Path (CAM) workbench in FreeCAD. You will learn how to create a machining job, assign your cutting tool, select the appropriate model geometry, config">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-set-up-profile-cutting-in-free-cad-path">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Set Up Profile Cutting in FreeCAD Path - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-set-up-profile-cutting-in-free-cad-path" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide provides a straightforward walkthrough on setting up a 2D profile cutting operation using the Path (CAM) workbench in FreeCAD. You will learn how to create a machining job, assign your cutting tool, select the appropriate model geometry, config" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-set-up-profile-cutting-in-freecad-path">How to Set Up
+Profile Cutting in FreeCAD Path</h1>
+<p>This guide provides a straightforward walkthrough on setting up a 2D
+profile cutting operation using the Path (CAM) workbench in FreeCAD. You
+will learn how to create a machining job, assign your cutting tool,
+select the appropriate model geometry, configure critical depth and
+offset parameters, and verify the generated toolpath before exporting
+your final G-code.</p>
+<h3 id="step-1-switch-to-the-cam-workbench-and-create-a-job">Step 1:
+Switch to the CAM Workbench and Create a Job</h3>
+<ol type="1">
+<li>Open your 3D model in FreeCAD.</li>
+<li>In the workbench dropdown menu, select <strong>CAM</strong>
+(formerly named <strong>Path</strong> in older versions).</li>
+<li>Click the <strong>Job</strong> icon on the toolbar to create a new
+machining setup.</li>
+<li>In the Job dialog:
+<ul>
+<li><strong>Model</strong>: Ensure your solid body is selected.</li>
+<li><strong>Output</strong>: Specify your post-processor based on your
+CNC controller (e.g., GRBL, LinuxCNC, Mach3).</li>
+<li><strong>Setup Sheet</strong>: Adjust stock dimensions if you need
+extra stock allowance around the part.</li>
+<li><strong>Tools</strong>: Add a suitable tool controller (e.g., an end
+mill with appropriate feed rates and spindle speeds).</li>
+</ul></li>
+<li>Click <strong>OK</strong> to generate the Job object in the tree
+view.</li>
+</ol>
+<h3 id="step-2-select-geometry">Step 2: Select Geometry</h3>
+<ol type="1">
+<li>Click on the 3D model to select the edges or faces defining the
+profile you want to cut.
+<ul>
+<li>To cut around the perimeter, select the bottom face of the part, or
+select the continuous loop of outer edges while holding the
+<code>Ctrl</code> key.</li>
+<li>For an interior cutout (pocket hole profile), select the bottom face
+or inner loop of the hole.</li>
+</ul></li>
+</ol>
+<h3 id="step-3-insert-the-profile-operation">Step 3: Insert the Profile
+Operation</h3>
+<ol type="1">
+<li>With the geometry selected, click the <strong>Profile</strong> tool
+icon (Profile based on edges or a face) on the CAM toolbar, or go to
+<strong>CAM &gt; Profile</strong>.</li>
+<li>The Profile task panel will open on the left.</li>
+</ol>
+<h3 id="step-4-configure-profile-parameters">Step 4: Configure Profile
+Parameters</h3>
+<p>Navigate through the tabs in the task panel to configure your
+cut:</p>
+<ul>
+<li><strong>Base Geometry</strong>: Verify that the correct edges or
+faces appear in the list. You can use the <strong>Add</strong> or
+<strong>Remove</strong> buttons to adjust selections.</li>
+<li><strong>Depths</strong>:
+<ul>
+<li><strong>Start Depth</strong>: The top surface of your cut (typically
+<code>0 mm</code> or the top of the stock).</li>
+<li><strong>Final Depth</strong>: The bottom of the cut (e.g., the part
+thickness or slightly deeper if through-cutting into a spoilboard).</li>
+<li><strong>Step Down</strong>: The maximum depth per pass. FreeCAD will
+divide the total depth into equal steps based on this value.</li>
+</ul></li>
+<li><strong>Heights</strong>:
+<ul>
+<li><strong>Clearance Height</strong>: The Z-height for rapid travel
+between cut locations.</li>
+<li><strong>Safe Height</strong>: The transition height before plunging
+into the cut.</li>
+</ul></li>
+<li><strong>Operation</strong>:
+<ul>
+<li><strong>Side</strong>: Choose <strong>Outside</strong> for exterior
+profiles or <strong>Inside</strong> for interior cutouts.</li>
+<li><strong>Direction</strong>: Set to <strong>CW</strong> (Clockwise)
+or <strong>CCW</strong> (Counter-Clockwise) to enforce climb or
+conventional milling, depending on your material and tooling.</li>
+<li><strong>Use Compensation</strong>: Check this box if you want the
+tool radius offset calculated automatically.</li>
+</ul></li>
+</ul>
+<p>Click <strong>Apply</strong>, then <strong>OK</strong> to generate
+the profile toolpath.</p>
+<h3 id="step-5-simulate-and-verify">Step 5: Simulate and Verify</h3>
+<ol type="1">
+<li>Select the newly created <strong>Profile</strong> operation under
+your Job in the tree view.</li>
+<li>Click the <strong>CAM Simulator</strong> button to watch the
+toolpath preview.</li>
+<li>Verify that the tool cuts on the correct side of the line and steps
+down in appropriate increments without gouging the finished part.</li>
+</ol>
+<h3 id="step-6-post-process-export-g-code">Step 6: Post-Process (Export
+G-code)</h3>
+<ol type="1">
+<li>Select the main <strong>Job</strong> object in the tree view.</li>
+<li>Click the <strong>Post-Process</strong> button on the toolbar.</li>
+<li>Choose a destination folder and filename, then click
+<strong>Save</strong> to write the G-code file for your machine.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-set-up-profile-cutting-in-free-cad-path';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

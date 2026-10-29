@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Pad to Last Option Explained - freecad</title>
+    <meta name="description" content="This article explains the function and practical usage of the &quot;To last&quot; pad option in FreeCAD&#39;s PartDesign Workbench. Readers will learn how this extrusion type operates, its parametric advantages over fixed-dimension pads, common use cases, and the key r">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-pad-to-last-option-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Pad to Last Option Explained - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-pad-to-last-option-explained" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the function and practical usage of the &quot;To last&quot; pad option in FreeCAD&#39;s PartDesign Workbench. Readers will learn how this extrusion type operates, its parametric advantages over fixed-dimension pads, common use cases, and the key r" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-pad-to-last-option-explained">FreeCAD Pad to Last Option
+Explained</h1>
+<p>This article explains the function and practical usage of the "To
+last" pad option in FreeCAD's PartDesign Workbench. Readers will learn
+how this extrusion type operates, its parametric advantages over
+fixed-dimension pads, common use cases, and the key requirements needed
+to avoid modeling errors.</p>
+<p>In FreeCAD's PartDesign Workbench, the Pad tool converts a 2D sketch
+into a 3D solid feature. When configuring the Pad parameters, the
+<strong>Type</strong> dropdown provides several methods to define the
+extrusion's termination. Selecting the <strong>To last</strong> option
+commands FreeCAD to extrude the sketch profile until it intersects the
+farthest (last) boundary or face of the active body in the direction of
+the pad.</p>
+<h3 id="how-it-works">How It Works</h3>
+<p>Unlike the default "Dimension" type, which requires a specific
+numerical length (such as 10 mm), "To last" automatically calculates the
+distance dynamically:</p>
+<ol type="1">
+<li>FreeCAD projects the sketch geometry along its normal extrusion
+axis.</li>
+<li>The software detects all intersecting faces of the existing solid
+body along that path.</li>
+<li>The extrusion extends entirely through any intermediate voids or
+faces, stopping only when it hits the outermost or final face of the
+solid.</li>
+</ol>
+<h3 id="parametric-advantages">Parametric Advantages</h3>
+<p>The primary benefit of using "To last" is design resilience. In
+parametric 3D CAD, dimensions of base features often change during the
+design lifecycle. If you use a fixed dimension to bridge a gap, changing
+the underlying geometry requires manually updating the pad depth to
+prevent gaps or unwanted protrusions.</p>
+<p>By utilizing "To last," the feature remains fully parametric. If the
+main body is thickened, lengthened, or reshaped, the pad automatically
+recalculates its depth to always reach the outer boundary without manual
+intervention.</p>
+<h3 id="requirements-and-limitations">Requirements and Limitations</h3>
+<p>For the "To last" function to work correctly, certain conditions must
+be met:</p>
+<ul>
+<li><strong>Existing Geometry:</strong> The sketch must be part of an
+active body that already contains solid geometry. "To last" cannot be
+used on the very first feature of a body (the base feature) because
+there is no existing geometry to target.</li>
+<li><strong>Direct Path:</strong> The projected sketch must directly
+intersect an existing face of the solid. If the extrusion path shoots
+into empty space without encountering a terminating surface, the
+operation will fail and return a geometry error.</li>
+<li><strong>Reverse Direction:</strong> If the pad projects away from
+the body instead of toward it, you must check the
+<strong>Reversed</strong> box so the software looks toward the existing
+solid faces.</li>
+</ul>
+<h3 id="common-use-cases">Common Use Cases</h3>
+<ul>
+<li><strong>Internal Ribs and Gussets:</strong> Creating structural
+supports inside an enclosure where the rib needs to span completely from
+an inner wall to an outer wall.</li>
+<li><strong>Mounting Bosses:</strong> Extending screw bosses or
+standoffs from a base plate to the underside of a complex top
+cover.</li>
+<li><strong>Filling Cavities:</strong> Adding solid material across
+complex, non-planar internal cavities where calculating an exact
+extrusion distance would be difficult.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-pad-to-last-option-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

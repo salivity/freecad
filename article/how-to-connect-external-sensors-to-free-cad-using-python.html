@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Connect External Sensors to FreeCAD Using Python - freecad</title>
+    <meta name="description" content="Connecting external hardware and sensors to FreeCAD transforms the parametric 3D modeling software into an interactive digital twin or real-time visualization platform. By leveraging FreeCAD’s embedded Python interpreter along with serial communication li">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-connect-external-sensors-to-free-cad-using-python">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Connect External Sensors to FreeCAD Using Python - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-connect-external-sensors-to-free-cad-using-python" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Connecting external hardware and sensors to FreeCAD transforms the parametric 3D modeling software into an interactive digital twin or real-time visualization platform. By leveraging FreeCAD’s embedded Python interpreter along with serial communication li" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-connect-external-sensors-to-freecad-using-python">How to
+Connect External Sensors to FreeCAD Using Python</h1>
+<p>Connecting external hardware and sensors to FreeCAD transforms the
+parametric 3D modeling software into an interactive digital twin or
+real-time visualization platform. By leveraging FreeCAD’s embedded
+Python interpreter along with serial communication libraries, you can
+ingest live telemetry from microcontrollers like Arduino, Raspberry Pi,
+or ESP32 and directly manipulate 3D geometry properties. This guide
+outlines the essential steps to configure communication, handle
+asynchronous data streams, and update FreeCAD document objects in real
+time.</p>
+<h3 id="1-install-required-python-libraries">1. Install Required Python
+Libraries</h3>
+<p>FreeCAD uses its own internal Python environment. To communicate with
+external hardware over USB or serial ports, you must install the
+<code>pyserial</code> library into FreeCAD's Python environment.</p>
+<p>Open the FreeCAD Python console (View &gt; Panels &gt; Python
+console) and run:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>subprocess.run([sys.executable, <span class="st">&quot;-m&quot;</span>, <span class="st">&quot;pip&quot;</span>, <span class="st">&quot;install&quot;</span>, <span class="st">&quot;pyserial&quot;</span>])</span></code></pre></div>
+<h3 id="2-configure-hardware-data-output">2. Configure Hardware Data
+Output</h3>
+<p>Set up your microcontroller (e.g., Arduino) to read your sensor (such
+as an ultrasonic distance sensor, potentiometer, or IMU) and print
+structured values over the serial interface.</p>
+<p>Example Arduino snippet:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> setup<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  Serial<span class="op">.</span>begin<span class="op">(</span><span class="dv">9600</span><span class="op">);</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> loop<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> sensorValue <span class="op">=</span> analogRead<span class="op">(</span>A0<span class="op">);</span> <span class="co">// Read sensor</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  Serial<span class="op">.</span>println<span class="op">(</span>sensorValue<span class="op">);</span>      <span class="co">// Send raw value followed by newline</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  delay<span class="op">(</span><span class="dv">50</span><span class="op">);</span>                        <span class="co">// Limit transmission rate</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="3-implement-non-blocking-data-polling-with-pyside">3. Implement
+Non-Blocking Data Polling with PySide</h3>
+<p>Reading serial data inside a continuous <code>while</code> loop
+within FreeCAD will block the main application thread and freeze the
+user interface. To prevent this, use PySide's <code>QTimer</code> to
+poll the serial port periodically without interrupting FreeCAD’s event
+loop.</p>
+<p>Run the following script inside FreeCAD's Macro editor (Macro &gt;
+Macros &gt; Create):</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCADGui <span class="im">as</span> Gui</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PySide <span class="im">import</span> QtCore</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> serial</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configure serial connection</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>SERIAL_PORT <span class="op">=</span> <span class="st">&quot;COM3&quot;</span>  <span class="co"># Replace with your port (e.g., &#39;/dev/ttyUSB0&#39; on Linux)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>BAUD_RATE <span class="op">=</span> <span class="dv">9600</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    ser <span class="op">=</span> serial.Serial(SERIAL_PORT, BAUD_RATE, timeout<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    App.Console.PrintError(<span class="ss">f&quot;Failed to connect to serial port: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ch">\n</span><span class="ss">&quot;</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    ser <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_sensor_and_update():</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ser <span class="kw">and</span> ser.in_waiting <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            raw_line <span class="op">=</span> ser.readline().decode(<span class="st">&quot;utf-8&quot;</span>).strip()</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> raw_line:</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                sensor_value <span class="op">=</span> <span class="bu">float</span>(raw_line)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Reference your target 3D object in the active document</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                doc <span class="op">=</span> App.ActiveDocument</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                obj <span class="op">=</span> doc.getObject(<span class="st">&quot;Box&quot;</span>)  <span class="co"># Name of your target object</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> obj:</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Update a property based on sensor data</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Example: Mapping sensor value to box height</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                    obj.Height <span class="op">=</span> sensor_value</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Recompute the document to reflect visual changes</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                    doc.recompute()</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">ValueError</span>:</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>            <span class="cf">pass</span>  <span class="co"># Handle incomplete serial strings safely</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup QTimer for polling every 50 milliseconds</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ser <span class="kw">and</span> ser.is_open:</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    timer <span class="op">=</span> QtCore.QTimer()</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    timer.timeout.<span class="ex">connect</span>(read_sensor_and_update)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    timer.start(<span class="dv">50</span>)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Keep a reference to prevent garbage collection</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    App.sensor_timer <span class="op">=</span> timer</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    App.Console.PrintMessage(<span class="st">&quot;Sensor listening active.</span><span class="ch">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<h3 id="4-drive-parametric-properties">4. Drive Parametric
+Properties</h3>
+<p>Once the data stream is linked via <code>QTimer</code>, you can alter
+any standard FreeCAD property:</p>
+<ul>
+<li><strong>Linear Position:</strong> Modify
+<code>obj.Placement.Base.x</code>, <code>y</code>, or <code>z</code> to
+simulate actuators or positioning stages.</li>
+<li><strong>Rotational Orientation:</strong> Apply sensor readings from
+gyroscopes to <code>obj.Placement.Rotation</code> using Euler angles or
+quaternions.</li>
+<li><strong>Dimensions:</strong> Update parametric parameters such as
+<code>Length</code>, <code>Width</code>, <code>Radius</code>, or custom
+Sketcher constraints to show dynamic deformation or fluid levels.</li>
+</ul>
+<p>Always call <code>doc.recompute()</code> after modifying values to
+ensure the 3D viewport updates immediately.</p>
+<h3 id="5-stopping-the-data-stream">5. Stopping the Data Stream</h3>
+<p>To safely close the connection and stop polling without restarting
+FreeCAD, execute:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">hasattr</span>(App, <span class="st">&quot;sensor_timer&quot;</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    App.sensor_timer.stop()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">del</span> App.sensor_timer</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">&quot;ser&quot;</span> <span class="kw">in</span> <span class="bu">locals</span>() <span class="kw">and</span> ser.is_open:</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    ser.close()</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>App.Console.PrintMessage(<span class="st">&quot;Sensor communication stopped.</span><span class="ch">\n</span><span class="st">&quot;</span>)</span></code></pre></div></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-connect-external-sensors-to-free-cad-using-python';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

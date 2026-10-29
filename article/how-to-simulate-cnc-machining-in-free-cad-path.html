@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Simulate CNC Machining in FreeCAD Path - freecad</title>
+    <meta name="description" content="Simulating CNC toolpaths in FreeCAD allows you to verify cutting sequences, inspect raw stock removal, and detect errors or collisions before exporting G-code to a physical machine. This guide outlines the exact steps to configure, launch, and control the">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-simulate-cnc-machining-in-free-cad-path">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Simulate CNC Machining in FreeCAD Path - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-simulate-cnc-machining-in-free-cad-path" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Simulating CNC toolpaths in FreeCAD allows you to verify cutting sequences, inspect raw stock removal, and detect errors or collisions before exporting G-code to a physical machine. This guide outlines the exact steps to configure, launch, and control the" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-simulate-cnc-machining-in-freecad-path">How to Simulate
+CNC Machining in FreeCAD Path</h1>
+<p>Simulating CNC toolpaths in FreeCAD allows you to verify cutting
+sequences, inspect raw stock removal, and detect errors or collisions
+before exporting G-code to a physical machine. This guide outlines the
+exact steps to configure, launch, and control the simulation tool within
+FreeCAD's CAM (formerly Path) Workbench to validate your machining jobs
+safely.</p>
+<h2 id="1-prepare-your-cam-job">1. Prepare Your CAM Job</h2>
+<p>Before running a simulation, you must have an active CAM Job with
+configured operations:</p>
+<ol type="1">
+<li>Open your 3D model and switch to the <strong>CAM</strong> (or
+<strong>Path</strong>) Workbench from the workbench dropdown.</li>
+<li>Ensure you have created a <strong>Job</strong> containing your base
+model, defined stock boundaries, and appropriate tool controller
+definitions.</li>
+<li>Verify that your cutting operations (such as Profile, Pocket, or
+Adaptive) are fully computed and visible under the Job tree
+hierarchy.</li>
+</ol>
+<h2 id="2-launch-the-cam-simulator">2. Launch the CAM Simulator</h2>
+<ol type="1">
+<li>In the <strong>Tree View</strong>, click on the <strong>Job</strong>
+container or select the specific operations you want to inspect.</li>
+<li>Click the <strong>CAM Simulator</strong> icon on the toolbar
+(depicted as a cutting tool removing material from a stock cube), or
+navigate to the top menu and select <strong>CAM</strong> &gt;
+<strong>CAM Simulator</strong>.</li>
+<li>FreeCAD will render a semi-transparent representation of your
+defined stock over your base part.</li>
+</ol>
+<h2 id="3-configure-the-simulation-controls">3. Configure the Simulation
+Controls</h2>
+<p>Once the simulator panel opens in the <strong>Tasks</strong> tab on
+the left:</p>
+<ul>
+<li><strong>Playback Speed:</strong> Adjust the slider to increase or
+decrease the animation speed of the cutting head.</li>
+<li><strong>Accuracy/Resolution:</strong> Set the mesh resolution.
+Higher accuracy provides a more precise representation of the finished
+surface but may reduce playback performance on older hardware.</li>
+</ul>
+<h2 id="4-run-and-analyze-the-toolpath">4. Run and Analyze the
+Toolpath</h2>
+<ul>
+<li>Click the <strong>Play</strong> button to begin the virtual
+machining process.</li>
+<li>Use the <strong>Pause</strong> and <strong>Step Forward</strong>
+controls to inspect complex geometries or deep passes
+frame-by-frame.</li>
+<li>Rotate and zoom your view in the 3D viewport while the simulation is
+running or paused to check undercut areas, entry plunges, and tab
+placements.</li>
+<li>Pay close attention to red lines or warnings indicating rapid
+movements (<em>G0</em>) traveling through uncut material rather than
+above the clearance plane.</li>
+</ul>
+<h2 id="5-finalize-and-correct-errors">5. Finalize and Correct
+Errors</h2>
+<p>When the animation finishes, compare the remaining stock volume
+against your original 3D geometry to ensure all necessary features were
+machined correctly. Click <strong>OK</strong> or <strong>Close</strong>
+in the Tasks tab to exit the simulator. If you spot gouges, uncut stock,
+or rapid-traverse collisions, reopen the problematic operation in the
+Tree View to modify depths, step-overs, or retract heights before
+running the simulation again.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-simulate-cnc-machining-in-free-cad-path';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Open Contours and Duplicate Lines in FreeCAD - freecad</title>
+    <meta name="description" content="When creating 3D features like pads or pockets in FreeCAD, sketches must usually consist of closed, non-intersecting profiles without redundant geometry. This guide explains how to quickly identify and fix open contours, unconstrained gaps, and duplicate">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/find-open-contours-and-duplicate-lines-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Find Open Contours and Duplicate Lines in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/find-open-contours-and-duplicate-lines-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When creating 3D features like pads or pockets in FreeCAD, sketches must usually consist of closed, non-intersecting profiles without redundant geometry. This guide explains how to quickly identify and fix open contours, unconstrained gaps, and duplicate" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="find-open-contours-and-duplicate-lines-in-freecad">Find Open
+Contours and Duplicate Lines in FreeCAD</h1>
+<p>When creating 3D features like pads or pockets in FreeCAD, sketches
+must usually consist of closed, non-intersecting profiles without
+redundant geometry. This guide explains how to quickly identify and fix
+open contours, unconstrained gaps, and duplicate overlapping lines in
+FreeCAD using the built-in Sketcher validation tool and manual
+inspection techniques.</p>
+<h2 id="use-the-validate-sketch-tool">Use the Validate Sketch Tool</h2>
+<p>FreeCAD includes a dedicated diagnostic utility to detect broken
+geometry, missing coincidences, and open vertices.</p>
+<ol type="1">
+<li>Close the active sketch editor if it is currently open.</li>
+<li>Select the problematic sketch in the <strong>Tree
+view</strong>.</li>
+<li>In the top menu, go to <strong>Sketch</strong> and select
+<strong>Validate sketch...</strong> (in the Part Design or Sketcher
+workbench).</li>
+<li>A dialog box will appear with several diagnostic checks:
+<ul>
+<li><strong>Missing coincidences:</strong> Detects endpoints that are
+close to each other but not constrained with a coincidence constraint.
+Set a tolerance value (e.g., <code>0.01 mm</code>) and click
+<strong>Find</strong>. If gaps exist, click <strong>Fix</strong> to
+automatically merge the endpoints.</li>
+<li><strong>Highlight open vertices:</strong> Check this option to turn
+all unclosed endpoints magenta/yellow in the 3D view, showing you
+precisely where a loop remains open.</li>
+<li><strong>Invalid constraints:</strong> Identifies conflicting or
+redundant constraints that may be breaking the contour. Click
+<strong>Verify</strong> to scan and resolve them.</li>
+<li><strong>Reversed external geometry:</strong> Fixes issues where
+referenced external edges conflict with sketch orientation.</li>
+</ul></li>
+</ol>
+<h2 id="check-for-duplicate-and-overlapping-lines">Check for Duplicate
+and Overlapping Lines</h2>
+<p>Duplicate lines occur when a segment is inadvertently drawn directly
+on top of an existing one. Because they overlap perfectly, the standard
+coincidence validator may not always register them as open gaps.</p>
+<h3 id="1-check-the-degrees-of-freedom-dof">1. Check the Degrees of
+Freedom (DOF)</h3>
+<p>Open the sketch and look at the <strong>Solver messages</strong>
+panel in the Combo View. If your sketch appears visually complete and
+constrained, but FreeCAD reports extra degrees of freedom, an extra
+hidden line segment is often the cause.</p>
+<h3 id="2-box-select-suspected-segments">2. Box-Select Suspected
+Segments</h3>
+<ol type="1">
+<li>Click and drag a selection box around a single line segment.</li>
+<li>Look at the <strong>Elements</strong> list in the Task panel.</li>
+<li>If more than one line (e.g., <code>Line1</code> and
+<code>Line2</code>) is selected from what appears to be a single edge,
+an overlapping duplicate exists.</li>
+<li>Select the duplicate entry directly in the list and press
+<strong>Delete</strong>.</li>
+</ol>
+<h3 id="3-drag-endpoints">3. Drag Endpoints</h3>
+<p>Click and drag an endpoint or a line segment in the 3D viewport. If
+an underlying line remains in place while the dragged line moves away,
+you have exposed an overlapping duplicate. Press <strong>Ctrl +
+Z</strong> to undo the movement, select the unwanted duplicate, and
+delete it.</p>
+<h3 id="4-review-the-elements-list">4. Review the Elements List</h3>
+<p>In the <strong>Elements</strong> list within the Sketcher task panel,
+click through each line or arc sequentially. FreeCAD will highlight the
+corresponding geometry in green in the viewport. If the highlight does
+not move when advancing to the next element, you have located a
+duplicate.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/find-open-contours-and-duplicate-lines-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

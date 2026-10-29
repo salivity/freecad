@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 3D Objects to 2D in FreeCAD Draft - freecad</title>
+    <meta name="description" content="Projecting a 3D object onto a 2D plane in FreeCAD is a straightforward process primarily handled by the Shape 2D View tool within the Draft Workbench. This guide explains how to orient your model, generate a flat 2D projection from a 3D part, and configur">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/project-3-d-objects-to-2-d-in-free-cad-draft">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Project 3D Objects to 2D in FreeCAD Draft - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/project-3-d-objects-to-2-d-in-free-cad-draft" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Projecting a 3D object onto a 2D plane in FreeCAD is a straightforward process primarily handled by the Shape 2D View tool within the Draft Workbench. This guide explains how to orient your model, generate a flat 2D projection from a 3D part, and configur" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="project-3d-objects-to-2d-in-freecad-draft">Project 3D Objects to
+2D in FreeCAD Draft</h1>
+<p>Projecting a 3D object onto a 2D plane in FreeCAD is a
+straightforward process primarily handled by the Shape 2D View tool
+within the Draft Workbench. This guide explains how to orient your
+model, generate a flat 2D projection from a 3D part, and configure the
+projection settings for drafting, technical drawing, or vector
+export.</p>
+<h3 id="step-1-switch-to-the-draft-workbench">Step 1: Switch to the
+Draft Workbench</h3>
+<ol type="1">
+<li>Open your document containing the 3D object in FreeCAD.</li>
+<li>In the workbench selector dropdown at the top of the interface,
+select <strong>Draft</strong>.</li>
+</ol>
+<h3 id="step-2-orient-the-view-or-set-the-working-plane">Step 2: Orient
+the View or Set the Working Plane</h3>
+<p>The 2D projection direction depends on your current view or the
+active working plane:</p>
+<ul>
+<li><strong>Option A (Camera View):</strong> Rotate your 3D view so you
+are looking directly at the face or angle you want to project (e.g.,
+using standard views like Top, Front, or Isometric by pressing keys
+<code>1</code>, <code>2</code>, or <code>0</code>).</li>
+<li><strong>Option B (Working Plane):</strong> Set the Draft Working
+Plane to the specific plane you want to project onto (such as XY, XZ, or
+YZ) using the Working Plane button on the Draft toolbar.</li>
+</ul>
+<h3 id="step-3-create-the-2d-projection">Step 3: Create the 2D
+Projection</h3>
+<ol type="1">
+<li>In the <strong>Tree view</strong>, select the 3D object (Part, Body,
+or Shape) you wish to project.</li>
+<li>Go to the top menu and select <strong>Draft → Modification → Shape
+2D View</strong>, or click the <strong>Shape 2D View</strong> icon on
+the Draft toolbar.</li>
+<li>A new object labeled <code>Shape2DView</code> will appear in the
+Tree view, and a flat 2D projection will be placed on the active plane
+in the 3D viewport.</li>
+</ol>
+<h3 id="step-4-adjust-projection-properties">Step 4: Adjust Projection
+Properties</h3>
+<p>Select the newly created <code>Shape2DView</code> in the Tree view
+and navigate to the <strong>Data</strong> tab in the Property View panel
+to fine-tune the output:</p>
+<ul>
+<li><strong>Projection:</strong> Sets the vector along which the object
+is projected. By default, it uses the camera direction at creation. You
+can manually adjust the <code>(X, Y, Z)</code> coordinates to change the
+projection vector.</li>
+<li><strong>Projection Mode:</strong> Choose between <code>Solid</code>,
+<code>Individual Faces</code>, or <code>Cutlines</code> depending on
+whether you need solid outlines or sectional outlines.</li>
+<li><strong>In Face:</strong> Determines whether faces are generated as
+filled planes or just wireframes.</li>
+<li><strong>Tessellation:</strong> Enables approximation for complex
+curved surfaces if standard projection fails or creates artifacts.</li>
+</ul>
+<h3 id="step-5-utilize-the-2d-geometry">Step 5: Utilize the 2D
+Geometry</h3>
+<p>Once generated, the 2D shape behaves like any standard Draft wire or
+face:</p>
+<ul>
+<li>Move it to a separate layer or hide the original 3D model by
+selecting the 3D body and pressing the <strong>Spacebar</strong>.</li>
+<li>Export the 2D geometry for CNC or CAD applications by selecting the
+<code>Shape2DView</code> and going to <strong>File → Export</strong>,
+then choosing formats such as <strong>DXF</strong> or
+<strong>SVG</strong>.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/project-3-d-objects-to-2-d-in-free-cad-draft';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

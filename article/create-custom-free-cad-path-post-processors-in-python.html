@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Custom FreeCAD Path Post-Processors in Python - freecad</title>
+    <meta name="description" content="This guide explains how to build a custom post-processor for the FreeCAD CAM (formerly Path) Workbench using Python. You will learn where to store your post-processor script, how the core export function works, how to parse FreeCAD toolpath commands into">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/create-custom-free-cad-path-post-processors-in-python">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Create Custom FreeCAD Path Post-Processors in Python - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/create-custom-free-cad-path-post-processors-in-python" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to build a custom post-processor for the FreeCAD CAM (formerly Path) Workbench using Python. You will learn where to store your post-processor script, how the core export function works, how to parse FreeCAD toolpath commands into" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="create-custom-freecad-path-post-processors-in-python">Create
+Custom FreeCAD Path Post-Processors in Python</h1>
+<p>This guide explains how to build a custom post-processor for the
+FreeCAD CAM (formerly Path) Workbench using Python. You will learn where
+to store your post-processor script, how the core <code>export</code>
+function works, how to parse FreeCAD toolpath commands into
+machine-specific G-code, and how to format header, movement, and footer
+blocks for your specific CNC controller.</p>
+<h3 id="locating-the-post-processor-directory">Locating the
+Post-Processor Directory</h3>
+<p>FreeCAD searches for post-processors in its internal application
+directory and your user macro directory. To ensure your custom script
+persists across FreeCAD updates, place your script in the user macro
+directory:</p>
+<ul>
+<li><strong>Linux</strong>: <code>~/.local/share/FreeCAD/Macro/</code>
+or <code>~/.FreeCAD/Macro/</code></li>
+<li><strong>Windows</strong>: <code>%APPDATA%\FreeCAD\Macro\</code></li>
+<li><strong>macOS</strong>:
+<code>~/Library/Application Support/FreeCAD/Macro/</code></li>
+</ul>
+<p>Post-processor file names must end with <code>_post.py</code> (for
+example, <code>my_controller_post.py</code>). Once saved in this
+directory with the proper suffix, FreeCAD will automatically register
+and display it in the CAM Job configuration dropdown.</p>
+<h3 id="basic-script-structure-and-metadata">Basic Script Structure and
+Metadata</h3>
+<p>A FreeCAD post-processor is a standard Python file containing
+metadata definitions and an <code>export()</code> entry point.</p>
+<p>Create a new file named <code>custom_cnc_post.py</code> and start
+with the standard metadata header:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>TOOLTIP <span class="op">=</span> <span class="st">&quot;Custom post-processor for specific CNC controller&quot;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>UNITS <span class="op">=</span> <span class="st">&quot;G21&quot;</span>  <span class="co"># Default to metric (G21) or imperial (G20)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>CORNER_MAX <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>CORNER_MIN <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> Path</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Path.Post.Command <span class="im">import</span> Command</span></code></pre></div>
+<p>The <code>TOOLTIP</code> variable provides the description visible
+inside FreeCAD’s Job Edit dialog under the <strong>Output</strong>
+tab.</p>
+<h3 id="the-export-function">The <code>export</code> Function</h3>
+<p>The CAM workbench executes the
+<code>export(objectslist, filename, argstring)</code> function when you
+post-process a job. This function accepts three arguments:</p>
+<ul>
+<li><code>objectslist</code>: A list of FreeCAD document objects
+selected for post-processing (typically operations, tools, and compound
+paths).</li>
+<li><code>filename</code>: The absolute destination path of the output
+file.</li>
+<li><code>argstring</code>: Optional string arguments passed from the
+export dialogue.</li>
+</ul>
+<p>Here is the fundamental implementation of the <code>export</code>
+function:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> export(objectslist, filename, argstring):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> <span class="bu">open</span>(filename, <span class="st">&quot;w&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Write machine preamble / safety block</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    out.write(<span class="st">&quot;%</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    out.write(<span class="st">&quot;G90 G17 G21</span><span class="ch">\n</span><span class="st">&quot;</span>) <span class="co"># Absolute mode, XY plane, Metric</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> obj <span class="kw">in</span> objectslist:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> <span class="bu">hasattr</span>(obj, <span class="st">&quot;Path&quot;</span>):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Parse the Path object</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> command <span class="kw">in</span> obj.Path.Commands:</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            gcode_line <span class="op">=</span> parse_command(command)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> gcode_line:</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                out.write(gcode_line <span class="op">+</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Write postamble / shutdown block</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    out.write(<span class="st">&quot;M5</span><span class="ch">\n</span><span class="st">&quot;</span>)   <span class="co"># Spindle off</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    out.write(<span class="st">&quot;M30</span><span class="ch">\n</span><span class="st">&quot;</span>)  <span class="co"># Program end</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    out.write(<span class="st">&quot;%</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    out.close()</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> filename</span></code></pre></div>
+<h3 id="parsing-path-commands">Parsing Path Commands</h3>
+<p>FreeCAD stores toolpath data as a sequence of
+<code>Path.Command</code> objects. Each command contains:</p>
+<ul>
+<li><code>command.Name</code>: The movement or state instruction (e.g.,
+<code>G0</code>, <code>G1</code>, <code>G2</code>, <code>G3</code>,
+<code>M3</code>, <code>M5</code>, <code>message</code>).</li>
+<li><code>command.Parameters</code>: A dictionary holding the axes
+coordinates and feed values (e.g.,
+<code>{'X': 10.0, 'Y': 5.5, 'F': 1200}</code>).</li>
+</ul>
+<p>Implement a command parsing function to translate these internal
+objects into properly formatted text:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_command(command):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> command.Name</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> command.Parameters</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ignore comments or internal FreeCAD markers</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> name <span class="kw">in</span> [<span class="st">&quot;message&quot;</span>, <span class="st">&quot;comment&quot;</span>]:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f&quot;(</span><span class="sc">{</span>params<span class="sc">.</span>get(<span class="st">&#39;message&#39;</span>, <span class="st">&#39;&#39;</span>)<span class="sc">}</span><span class="ss">)&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Format coordinate values to 3 decimal places</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    line <span class="op">=</span> [name]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> axis <span class="kw">in</span> [<span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>, <span class="st">&quot;Z&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>]:</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> axis <span class="kw">in</span> params:</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            line.append(<span class="ss">f&quot;</span><span class="sc">{</span>axis<span class="sc">}{</span>params[axis]<span class="sc">:.3f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Format feed rate and spindle speed as integers</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">&quot;F&quot;</span> <span class="kw">in</span> params:</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        line.append(<span class="ss">f&quot;F</span><span class="sc">{</span><span class="bu">int</span>(params[<span class="st">&#39;F&#39;</span>])<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">&quot;S&quot;</span> <span class="kw">in</span> params:</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        line.append(<span class="ss">f&quot;S</span><span class="sc">{</span><span class="bu">int</span>(params[<span class="st">&#39;S&#39;</span>])<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">&quot;T&quot;</span> <span class="kw">in</span> params:</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        line.append(<span class="ss">f&quot;T</span><span class="sc">{</span><span class="bu">int</span>(params[<span class="st">&#39;T&#39;</span>])<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return space-delimited G-code instruction</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot; &quot;</span>.join(line)</span></code></pre></div>
+<h3 id="handling-arc-commands-g2-and-g3">Handling Arc Commands (G2 and
+G3)</h3>
+<p>Circular interpolation commands (<code>G2</code> for clockwise,
+<code>G3</code> for counter-clockwise) require center offsets relative
+to the start point (<code>I</code>, <code>J</code>, <code>K</code>) or
+absolute radius (<code>R</code>).</p>
+<p>Extend the parsing function to include arc offsets:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> name <span class="kw">in</span> [<span class="st">&quot;G2&quot;</span>, <span class="st">&quot;G3&quot;</span>]:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> offset <span class="kw">in</span> [<span class="st">&quot;I&quot;</span>, <span class="st">&quot;J&quot;</span>, <span class="st">&quot;K&quot;</span>, <span class="st">&quot;R&quot;</span>]:</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> offset <span class="kw">in</span> params:</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                line.append(<span class="ss">f&quot;</span><span class="sc">{</span>offset<span class="sc">}{</span>params[offset]<span class="sc">:.3f}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<h3 id="loading-and-testing-the-post-processor">Loading and Testing the
+Post-Processor</h3>
+<ol type="1">
+<li>Save your completed file as <code>my_machine_post.py</code> into
+your FreeCAD <code>Macro</code> folder.</li>
+<li>Restart FreeCAD or reload macros via the Python console using
+<code>import my_machine_post</code>.</li>
+<li>Open a document containing a CAM Job.</li>
+<li>Double-click the <strong>Job</strong> in the tree view to edit it,
+and navigate to the <strong>Output</strong> tab.</li>
+<li>In the <strong>Post Processor</strong> dropdown, select
+<code>my_machine</code>.</li>
+<li>Click the <strong>Post Process</strong> button on the CAM toolbar,
+select your output location, and verify that the output G-code matches
+your controller's formatting rules.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/create-custom-free-cad-path-post-processors-in-python';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

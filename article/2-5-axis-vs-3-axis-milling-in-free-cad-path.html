@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.5-Axis vs 3-Axis Milling in FreeCAD Path - freecad</title>
+    <meta name="description" content="This article explains the core differences between 2.5-axis and 3-axis milling within the FreeCAD Path (CAM) workbench. It covers how machine movement differs across the X, Y, and Z axes, the specific FreeCAD operations associated with each method, the ty">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/2-5-axis-vs-3-axis-milling-in-free-cad-path">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="2.5-Axis vs 3-Axis Milling in FreeCAD Path - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/2-5-axis-vs-3-axis-milling-in-free-cad-path" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the core differences between 2.5-axis and 3-axis milling within the FreeCAD Path (CAM) workbench. It covers how machine movement differs across the X, Y, and Z axes, the specific FreeCAD operations associated with each method, the ty" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="25-axis-vs-3-axis-milling-in-freecad-path">2.5-Axis vs 3-Axis
+Milling in FreeCAD Path</h1>
+<p>This article explains the core differences between 2.5-axis and
+3-axis milling within the FreeCAD Path (CAM) workbench. It covers how
+machine movement differs across the X, Y, and Z axes, the specific
+FreeCAD operations associated with each method, the types of part
+geometries each strategy handles, and how choosing the right approach
+impacts machining time and surface finish.</p>
+<h2 id="understanding-25-axis-milling-in-freecad">Understanding 2.5-Axis
+Milling in FreeCAD</h2>
+<p>In 2.5-axis milling, the machine can move simultaneously along two
+axes (typically X and Y) to cut a profile, while the third axis (Z) is
+used only to reposition the tool to a new cutting depth between passes.
+The cutting tool does not change its Z-depth while actively cutting an
+X-Y path.</p>
+<p>In FreeCAD Path, 2.5-axis operations are the most common and
+computationally efficient. Key operations include:</p>
+<ul>
+<li><strong>Profile:</strong> Cuts along the perimeter of an inside or
+outside edge at fixed Z-depth increments (stepdowns).</li>
+<li><strong>Pocket Shape:</strong> Clears out material from a
+flat-bottomed cavity by rastering or offsetting in X and Y, stepping
+down in Z only after a level is cleared.</li>
+<li><strong>Drilling:</strong> Moves to specific X and Y coordinates and
+plunges purely along the Z-axis.</li>
+<li><strong>Adaptive (2D):</strong> Maintains a constant tool engagement
+angle across flat planes while stepping down at defined intervals.</li>
+</ul>
+<h3 id="characteristics-of-25-axis-milling">Characteristics of 2.5-Axis
+Milling</h3>
+<ul>
+<li><strong>Prismatic Geometry:</strong> Best suited for flat surfaces,
+vertical walls, standard holes, and pockets with flat floors.</li>
+<li><strong>Simple G-Code:</strong> Generates compact, easily readable
+G-code files.</li>
+<li><strong>Rigidity and Speed:</strong> Allows for aggressive material
+removal because cutting forces remain relatively predictable.</li>
+</ul>
+<h2 id="understanding-3-axis-milling-in-freecad">Understanding 3-Axis
+Milling in FreeCAD</h2>
+<p>In true 3-axis milling, the machine moves simultaneously across all
+three axes (X, Y, and Z) during a cutting move. This simultaneous
+interpolation allows the cutter to follow organic curves, non-planar
+surfaces, and complex 3D contours.</p>
+<p>FreeCAD provides dedicated 3D operations to handle continuous
+multi-axis motion, such as:</p>
+<ul>
+<li><strong>3D Pocket:</strong> Clears cavities that have sloped,
+curved, or non-uniform bottom surfaces.</li>
+<li><strong>3D Surface / Waterline:</strong> Drives the tool across
+compound curves, fillets, organic meshes, or sculpted solid models to
+produce a smooth 3D finish.</li>
+</ul>
+<h3 id="characteristics-of-3-axis-milling">Characteristics of 3-Axis
+Milling</h3>
+<ul>
+<li><strong>Organic Geometry:</strong> Capable of cutting molds,
+fillets, chamfers without specialty bits, contoured terrains, and
+complex sculptural shapes.</li>
+<li><strong>Large G-Code:</strong> Generates significantly larger
+toolpath files due to numerous small linear interpolations (line
+segments) required to approximate smooth 3D curves.</li>
+<li><strong>Tool Engagement:</strong> Requires ball-nose, bull-nose, or
+tapered end mills to create accurate curved finishes, often requiring
+smaller stepovers that increase cycle time.</li>
+</ul>
+<h2 id="key-differences-summary">Key Differences Summary</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">2.5-Axis Milling</th>
+<th style="text-align: left;">3-Axis Milling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Axis Motion</strong></td>
+<td style="text-align: left;">X and Y move simultaneously; Z moves
+independently between cuts.</td>
+<td style="text-align: left;">X, Y, and Z move simultaneously during the
+cut.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Typical Geometries</strong></td>
+<td style="text-align: left;">Vertical walls, flat floors,
+through-holes, standard pockets.</td>
+<td style="text-align: left;">Organic shapes, complex curves, sloped
+surfaces, 3D fillets.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>FreeCAD Operations</strong></td>
+<td style="text-align: left;">Profile, Pocket Shape, Adaptive, Helix,
+Drill.</td>
+<td style="text-align: left;">3D Pocket, Surface, Waterline.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Tool Types</strong></td>
+<td style="text-align: left;">Primarily square flat end mills.</td>
+<td style="text-align: left;">Ball-end, bull-nose, or specialized 3D
+cutters.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Processing Overhead</strong></td>
+<td style="text-align: left;">Fast toolpath calculation and smaller
+G-code size.</td>
+<td style="text-align: left;">Heavier calculation times and dense G-code
+output.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="choosing-the-right-strategy-in-freecad">Choosing the Right
+Strategy in FreeCAD</h2>
+<p>When setting up a job in FreeCAD Path, standard practice is to use
+2.5-axis operations whenever possible. Roughing out bulk material,
+establishing outer boundaries, and clearing flat pockets are faster and
+more rigid with 2.5-axis paths like Adaptive or Pocket Shape.</p>
+<p>Switch to 3-axis operations strictly when the geometry demands it,
+such as finishing complex surfaces, domes, or sweeping contours. Many
+hybrid workflows rough out the part using 2.5-axis clearing strategies
+first, followed by a 3-axis finishing pass to clean up non-planar
+surfaces.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/2-5-axis-vs-3-axis-milling-in-free-cad-path';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

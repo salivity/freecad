@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding the FreeCAD ActiveDocument Object - freecad</title>
+    <meta name="description" content="The ActiveDocument object in FreeCAD serves as the primary programmatic gateway to whichever 3D project document is currently selected and focused by the user. In FreeCAD&#39;s Python scripting environment, it represents the active workspace, allowing develop">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/understanding-the-free-cad-active-document-object">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding the FreeCAD ActiveDocument Object - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/understanding-the-free-cad-active-document-object" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The ActiveDocument object in FreeCAD serves as the primary programmatic gateway to whichever 3D project document is currently selected and focused by the user. In FreeCAD&#39;s Python scripting environment, it represents the active workspace, allowing develop" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-the-freecad-activedocument-object">Understanding
+the FreeCAD ActiveDocument Object</h1>
+<p>The <code>ActiveDocument</code> object in FreeCAD serves as the
+primary programmatic gateway to whichever 3D project document is
+currently selected and focused by the user. In FreeCAD's Python
+scripting environment, it represents the active workspace, allowing
+developers and scriptwriters to create, modify, inspect, and delete
+geometric features, sketches, and properties without needing to hardcode
+the document's specific name.</p>
+<p>In FreeCAD, multiple documents can be open simultaneously in the
+workspace. The application-level module, accessed via
+<code>FreeCAD</code> or <code>App</code>, uses the
+<code>ActiveDocument</code> attribute
+(<code>FreeCAD.ActiveDocument</code> or <code>App.ActiveDocument</code>)
+to track the project tab currently in focus.</p>
+<h3 id="primary-functions-of-activedocument">Primary Functions of
+ActiveDocument</h3>
+<ul>
+<li><strong>Object Creation and Management:</strong> It acts as the
+factory for adding new elements to the model. Using methods like
+<code>ActiveDocument.addObject()</code>, scripts can instantiate
+primitives, sketches, PartDesign features, and meshes directly into the
+active design space.</li>
+<li><strong>Accessing Existing Features:</strong> Objects inside the
+model tree can be accessed directly as attributes of the
+<code>ActiveDocument</code> (for example,
+<code>App.ActiveDocument.Box</code>) or through its <code>Objects</code>
+list, making traversal and batch modifications straightforward.</li>
+<li><strong>Triggering Recomputations:</strong> When changes are made to
+parametric features via code, the document does not automatically
+recalculate geometry by default. Calling
+<code>App.ActiveDocument.recompute()</code> forces FreeCAD to update the
+dependency graph and redraw the updated shapes.</li>
+<li><strong>Managing Document State:</strong> It provides control over
+global file parameters, such as document metadata, units, save states,
+and transaction management for undo and redo operations
+(<code>openTransaction()</code> and
+<code>commitTransaction()</code>).</li>
+</ul>
+<h3 id="importance-in-scripting-and-macros">Importance in Scripting and
+Macros</h3>
+<p>When creating macros or interactive tools in the Python console,
+relying on <code>ActiveDocument</code> ensures portability. If a script
+hardcoded a reference like <code>FreeCAD.getDocument("Unnamed1")</code>,
+it would fail as soon as the file was saved under a new name or run on
+another project. Referencing <code>App.ActiveDocument</code> ensures
+that commands automatically target the model the user is actively
+viewing.</p>
+<h3 id="handling-headless-and-multi-document-scenarios">Handling
+Headless and Multi-Document Scenarios</h3>
+<p>While essential for interactive work, <code>ActiveDocument</code>
+evaluates to <code>None</code> if no document is open in the
+application. In automated batch processing, headless environments, or
+background tasks where multiple files are manipulated sequentially,
+relying strictly on <code>ActiveDocument</code> can introduce errors if
+focus shifts unexpectedly. In those advanced contexts, assigning
+documents directly to explicit variables (via
+<code>FreeCAD.newDocument()</code> or
+<code>FreeCAD.openDocument()</code>) is preferred, while
+<code>ActiveDocument</code> remains the standard for interactive
+modeling and GUI-driven macros.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/understanding-the-free-cad-active-document-object';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

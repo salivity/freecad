@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD OpenSCAD Workbench: Purpose and Features - freecad</title>
+    <meta name="description" content="The FreeCAD OpenSCAD workbench provides seamless interoperability between FreeCAD&#39;s visual, boundary-representation (B-rep) environment and OpenSCAD&#39;s programmatic, Constructive Solid Geometry (CSG) modeling system. This article outlines the primary purpo">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-open-scad-workbench-purpose-and-features">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD OpenSCAD Workbench: Purpose and Features - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-open-scad-workbench-purpose-and-features" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The FreeCAD OpenSCAD workbench provides seamless interoperability between FreeCAD&#39;s visual, boundary-representation (B-rep) environment and OpenSCAD&#39;s programmatic, Constructive Solid Geometry (CSG) modeling system. This article outlines the primary purpo" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-openscad-workbench-purpose-and-features">FreeCAD
+OpenSCAD Workbench: Purpose and Features</h1>
+<p>The FreeCAD OpenSCAD workbench provides seamless interoperability
+between FreeCAD's visual, boundary-representation (B-rep) environment
+and OpenSCAD's programmatic, Constructive Solid Geometry (CSG) modeling
+system. This article outlines the primary purpose of the workbench,
+detailing how it handles file imports, exports, and specific algorithmic
+geometry operations to bridge the gap between code-driven design and
+graphical parametric CAD.</p>
+<h3 id="bridging-code-based-and-visual-3d-modeling">Bridging Code-Based
+and Visual 3D Modeling</h3>
+<p>OpenSCAD is a popular script-based CAD modeler where users define 3D
+objects purely through text-based code. FreeCAD, conversely, is a
+feature-rich, graphical parametric modeler. The primary purpose of the
+FreeCAD OpenSCAD workbench is to allow users to integrate OpenSCAD files
+(<code>.scad</code>) directly into FreeCAD workflows, translating
+code-based CSG operations into FreeCAD's native geometric
+representations.</p>
+<p>To achieve this, the workbench interfaces directly with an installed
+OpenSCAD executable on your computer, using it as an external rendering
+engine to parse scripts and return geometric data back to FreeCAD.</p>
+<h3 id="core-capabilities-and-functions">Core Capabilities and
+Functions</h3>
+<p>The workbench provides several specialized tools designed for file
+conversion and hybrid workflows:</p>
+<ul>
+<li><strong>Importing OpenSCAD Scripts:</strong> Users can open or
+import <code>.scad</code> files directly. FreeCAD parses the CSG tree,
+converting primitive shapes, transformations, and boolean operations
+into native FreeCAD objects that can be manipulated in other workbenches
+(such as Part, Part Design, or TechDraw).</li>
+<li><strong>Exporting to OpenSCAD:</strong> Geometric models created in
+FreeCAD can be exported back into CSG-compliant <code>.scad</code>
+scripts, translating visual geometry into readable, programmatic
+code.</li>
+<li><strong>CSG Tree Manipulation:</strong> The workbench offers tools
+to analyze, split, and rebuild CSG feature trees, allowing designers to
+inspect the structural hierarchy of imported models.</li>
+<li><strong>Accessing Unique OpenSCAD Operators:</strong> Certain
+geometric operations that are native to OpenSCAD—such as the Minkowski
+sum and convex hull operations—can be executed directly inside FreeCAD
+through this workbench, expanding FreeCAD's standard modeling
+toolset.</li>
+<li><strong>Mesh and Geometry Repair:</strong> The workbench includes
+utilities to clean up, check, and repair 3D meshes to ensure they are
+manifold and valid before processing.</li>
+</ul>
+<h3 id="typical-use-cases">Typical Use Cases</h3>
+<p>The OpenSCAD workbench is primarily utilized in scenarios requiring
+cross-platform CAD flexibility:</p>
+<ol type="1">
+<li><strong>Upgrading Legacy OpenSCAD Projects:</strong> Designers who
+have accumulated libraries of <code>.scad</code> scripts can import them
+into FreeCAD to create technical 2D drawings (via TechDraw), run finite
+element analysis (FEM), or prepare them for assembly with non-code-based
+parts.</li>
+<li><strong>Hybrid Parametric Design:</strong> Users can write automated
+or algorithmic components in OpenSCAD syntax and incorporate them into a
+larger mechanical assembly modeled natively in FreeCAD.</li>
+<li><strong>Advanced Boolean Operations:</strong> Complex convex hulls
+and offset operations that are resource-intensive or difficult to
+compute in traditional CAD kernels can be delegated to the OpenSCAD
+engine through FreeCAD.</li>
+</ol>
+<p>By acting as a functional translation layer, the OpenSCAD workbench
+ensures that designers do not have to choose strictly between
+programmatic script-based CAD and visual parametric modeling.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-open-scad-workbench-purpose-and-features';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Install Python Modules for FreeCAD - freecad</title>
+    <meta name="description" content="This guide explains how to install third-party Python packages for use within FreeCAD extensions, workbenches, and macros. Because FreeCAD uses its own Python environment on Windows and macOS—and typically uses the system Python environment on Linux—addin">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-install-python-modules-for-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Install Python Modules for FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-install-python-modules-for-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to install third-party Python packages for use within FreeCAD extensions, workbenches, and macros. Because FreeCAD uses its own Python environment on Windows and macOS—and typically uses the system Python environment on Linux—addin" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-install-python-modules-for-freecad">How to Install Python
+Modules for FreeCAD</h1>
+<p>This guide explains how to install third-party Python packages for
+use within FreeCAD extensions, workbenches, and macros. Because FreeCAD
+uses its own Python environment on Windows and macOS—and typically uses
+the system Python environment on Linux—adding external libraries
+requires targeting the correct interpreter. Below, you will find
+straightforward methods to install external modules directly using the
+built-in FreeCAD Python console, your operating system's terminal, or a
+dedicated target directory.</p>
+<h2 id="identify-freecads-python-interpreter">Identify FreeCAD’s Python
+Interpreter</h2>
+<p>FreeCAD executes scripts using an embedded or linked Python
+interpreter. Before installing packages, verify which Python environment
+FreeCAD is running:</p>
+<ol type="1">
+<li>Open FreeCAD.</li>
+<li>Ensure the <strong>Python console</strong> is visible
+(<strong>View</strong> &gt; <strong>Panels</strong> &gt; <strong>Python
+console</strong>).</li>
+<li>Type the following commands and press <strong>Enter</strong>:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.executable)</span></code></pre></div>
+<p>The output displays the exact path to the Python binary used by
+FreeCAD.</p>
+<hr />
+<h2
+id="method-1-install-directly-from-the-freecad-python-console">Method 1:
+Install Directly from the FreeCAD Python Console</h2>
+<p>The simplest, cross-platform way to install a module is using
+Python's built-in <code>subprocess</code> module directly inside
+FreeCAD. This ensures that the package is installed to the exact
+environment FreeCAD runs on.</p>
+<ol type="1">
+<li>Open FreeCAD and access the <strong>Python console</strong>.</li>
+<li>Run the following code block, replacing <code>package_name</code>
+with your desired module (for example, <code>scipy</code> or
+<code>requests</code>):</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>subprocess.run([sys.executable, <span class="st">&quot;-m&quot;</span>, <span class="st">&quot;pip&quot;</span>, <span class="st">&quot;install&quot;</span>, <span class="st">&quot;package_name&quot;</span>])</span></code></pre></div>
+<ol start="3" type="1">
+<li>Wait for the process to complete. Once finished, verify the
+installation:</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> package_name</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(package_name.<span class="va">__file__</span>)</span></code></pre></div>
+<p>If no errors appear, the module is ready for use in your macros and
+workbenches.</p>
+<hr />
+<h2 id="method-2-install-via-the-operating-system-terminal">Method 2:
+Install via the Operating System Terminal</h2>
+<p>If you prefer using a system terminal or need to install multiple
+packages from a <code>requirements.txt</code> file, invoke FreeCAD's
+bundled Python binary directly from your command line.</p>
+<h3 id="windows">Windows</h3>
+<p>Open Command Prompt as an administrator and run:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode cmd"><code class="sourceCode dosbat"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;C:\Program Files\FreeCAD 1.0\bin\python.exe&quot;</span> -m pip install package_name</span></code></pre></div>
+<p><em>(Adjust the directory path to match the output from
+<code>sys.executable</code>.)</em></p>
+<h3 id="macos">macOS</h3>
+<p>Open Terminal and run:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/Applications/FreeCAD.app/Contents/Resources/bin/python</span> <span class="at">-m</span> pip install package_name</span></code></pre></div>
+<h3 id="linux">Linux</h3>
+<p>On Linux distributions, FreeCAD typically uses your system-wide
+Python installation. Install packages through your system's package
+manager or using <code>pip</code>:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--user</span> package_name</span></code></pre></div>
+<hr />
+<h2 id="method-3-install-to-freecads-user-addon-directory">Method 3:
+Install to FreeCAD's User Addon Directory</h2>
+<p>If your FreeCAD installation directory is write-protected (common in
+corporate or restricted environments), install packages into your
+personal FreeCAD configuration folder using pip's <code>--target</code>
+flag.</p>
+<ol type="1">
+<li>Find your user directory inside the FreeCAD Python console:</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(FreeCAD.getUserAppDataDir())</span></code></pre></div>
+<ol start="2" type="1">
+<li>Open your system terminal and install the package to the
+<code>site-packages</code> or <code>Mod</code> folder inside that
+path:</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">--target</span><span class="op">=</span><span class="st">&quot;&lt;UserAppDataDir&gt;/site-packages&quot;</span> package_name</span></code></pre></div>
+<ol start="3" type="1">
+<li>If the directory is not automatically on your Python path, append it
+at the beginning of your FreeCAD macro or workbench:</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>user_site <span class="op">=</span> FreeCAD.getUserAppDataDir() <span class="op">+</span> <span class="st">&quot;site-packages&quot;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> user_site <span class="kw">not</span> <span class="kw">in</span> sys.path:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    sys.path.append(user_site)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> package_name</span></code></pre></div></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-install-python-modules-for-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

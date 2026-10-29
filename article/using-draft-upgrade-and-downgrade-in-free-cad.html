@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Draft Upgrade and Downgrade in FreeCAD - freecad</title>
+    <meta name="description" content="This guide explains how to use the Draft Upgrade and Draft Downgrade tools in FreeCAD to convert, join, split, and simplify 2D and 3D geometry. You will learn the purpose of each tool, where to locate them, and how to apply them progressively to transform">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/using-draft-upgrade-and-downgrade-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Using Draft Upgrade and Downgrade in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/using-draft-upgrade-and-downgrade-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to use the Draft Upgrade and Draft Downgrade tools in FreeCAD to convert, join, split, and simplify 2D and 3D geometry. You will learn the purpose of each tool, where to locate them, and how to apply them progressively to transform" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="using-draft-upgrade-and-downgrade-in-freecad">Using Draft
+Upgrade and Downgrade in FreeCAD</h1>
+<p>This guide explains how to use the Draft Upgrade and Draft Downgrade
+tools in FreeCAD to convert, join, split, and simplify 2D and 3D
+geometry. You will learn the purpose of each tool, where to locate them,
+and how to apply them progressively to transform edges, wires, faces,
+and solids.</p>
+<h3 id="understanding-upgrade-and-downgrade">Understanding Upgrade and
+Downgrade</h3>
+<p>The <strong>Draft Upgrade</strong> and <strong>Draft
+Downgrade</strong> tools operate in opposite directions along an object
+hierarchy. Instead of performing a single fixed action, both tools
+change their behavior depending on the type and state of the selected
+geometry:</p>
+<ul>
+<li><strong>Draft Upgrade:</strong> Promotes geometry to a higher
+topological state (e.g., joining separate lines into a continuous wire,
+turning a closed wire into a face, or turning multiple faces into a
+solid).</li>
+<li><strong>Draft Downgrade:</strong> Demotes geometry to a lower
+topological state (e.g., breaking a 3D solid into separate faces,
+turning a face into wire boundaries, or splitting a wire into individual
+edges).</li>
+</ul>
+<hr />
+<h3 id="how-to-access-the-tools">How to Access the Tools</h3>
+<ol type="1">
+<li>Open FreeCAD and switch to the <strong>Draft Workbench</strong> via
+the workbench dropdown.</li>
+<li>Ensure you have the geometry you want to modify visible in the 3D
+view.</li>
+<li>Locate the tools:
+<ul>
+<li><strong>Upgrade:</strong> Click the <strong>Upgrade</strong> icon
+(upward-pointing arrow) on the Draft toolbar, press <code>U</code> then
+<code>P</code> on your keyboard, or go to <strong>Modification →
+Upgrade</strong>.</li>
+<li><strong>Downgrade:</strong> Click the <strong>Downgrade</strong>
+icon (downward-pointing arrow) on the Draft toolbar, press
+<code>D</code> then <code>N</code> on your keyboard, or go to
+<strong>Modification → Downgrade</strong>.</li>
+</ul></li>
+</ol>
+<hr />
+<h3 id="step-by-step-using-draft-upgrade">Step-by-Step: Using Draft
+Upgrade</h3>
+<p>The Upgrade tool moves geometry up the complexity ladder. If an
+operation does not fully reach the final desired shape on the first try,
+applying the tool a second or third time often moves it to the next
+level.</p>
+<ol type="1">
+<li><strong>Select the elements:</strong> In the 3D view or the Tree
+view, select the elements you want to combine or upgrade (for example,
+two or more touching lines).</li>
+<li><strong>Execute Upgrade:</strong> Click the <strong>Upgrade</strong>
+button or use the shortcut <code>U</code>, <code>P</code>.</li>
+<li><strong>Hierarchy progression:</strong>
+<ul>
+<li><strong>Individual lines/arcs with shared endpoints</strong> merge
+into an open or closed <strong>Wire</strong>.</li>
+<li>A <strong>closed wire</strong> becomes a <strong>Face</strong>.</li>
+<li>Multiple overlapping faces or coplanar shapes merge via a
+<strong>Union</strong>.</li>
+<li>A closed shell of faces can become a <strong>Solid</strong>.</li>
+</ul></li>
+</ol>
+<p><em>Note: For separate edges to form a closed wire, their endpoints
+must meet precisely. If lines do not join, verify that snapping was used
+to share exact vertex coordinates.</em></p>
+<hr />
+<h3 id="step-by-step-using-draft-downgrade">Step-by-Step: Using Draft
+Downgrade</h3>
+<p>The Downgrade tool is used to deconstruct compound shapes or extract
+editable boundaries from higher-level objects.</p>
+<ol type="1">
+<li><strong>Select the element:</strong> Choose the object you want to
+decompose in the 3D view or the Tree view (for example, a solid box, a
+face, or a polyline).</li>
+<li><strong>Execute Downgrade:</strong> Click the
+<strong>Downgrade</strong> button or use the shortcut <code>D</code>,
+<code>N</code>.</li>
+<li><strong>Hierarchy progression:</strong>
+<ul>
+<li>A <strong>Solid</strong> or <strong>Compound</strong> breaks down
+into its individual <strong>Faces</strong>.</li>
+<li>A <strong>Face</strong> converts into its perimeter <strong>Closed
+Wire</strong>.</li>
+<li>A <strong>Closed Wire</strong> can be broken into an open wire or
+split into <strong>Individual Edges</strong>.</li>
+<li>A <strong>Draft Block</strong> or clone expands back into its base
+elements.</li>
+</ul></li>
+</ol>
+<hr />
+<h3 id="common-use-cases">Common Use Cases</h3>
+<ul>
+<li><strong>Preparing 2D profiles for extrusion:</strong> If an imported
+DXF file consists of loose line segments, select them and apply
+<strong>Draft Upgrade</strong> once to create a wire, and a second time
+to create a face suitable for the Part or Part Design workbenches.</li>
+<li><strong>Extracting paths from 3D models:</strong> Select a face on a
+3D solid and run <strong>Draft Downgrade</strong> to extract its border
+wires for use as sweep paths or toolpaths.</li>
+<li><strong>Fixing self-intersecting profiles:</strong> If an extrusion
+fails due to an invalid wire, run <strong>Draft Downgrade</strong> to
+break the wire into basic lines, adjust the faulty segments, and use
+<strong>Draft Upgrade</strong> to rebuild the profile.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/using-draft-upgrade-and-downgrade-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

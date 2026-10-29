@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Create Assembly Instructions in FreeCAD - freecad</title>
+    <meta name="description" content="Documenting assembly instructions in FreeCAD involves breaking down a 3D model into logical sequential steps, creating exploded assembly states, and generating clean 2D technical drawings with part lists and callouts. This guide walks you through the enti">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-create-assembly-instructions-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Create Assembly Instructions in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-create-assembly-instructions-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Documenting assembly instructions in FreeCAD involves breaking down a 3D model into logical sequential steps, creating exploded assembly states, and generating clean 2D technical drawings with part lists and callouts. This guide walks you through the enti" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-create-assembly-instructions-in-freecad">How to Create
+Assembly Instructions in FreeCAD</h1>
+<p>Documenting assembly instructions in FreeCAD involves breaking down a
+3D model into logical sequential steps, creating exploded assembly
+states, and generating clean 2D technical drawings with part lists and
+callouts. This guide walks you through the entire workflow, from
+preparing your 3D model with dedicated workbenches to exporting a
+print-ready, step-by-step PDF instruction manual using the TechDraw
+workbench.</p>
+<h3 id="step-1-install-required-workbenches">Step 1: Install Required
+Workbenches</h3>
+<p>While core FreeCAD handles 2D documentation natively, generating
+exploded views is easiest with community add-ons.</p>
+<ol type="1">
+<li>Open FreeCAD and navigate to <strong>Tools &gt; Addon
+manager</strong>.</li>
+<li>Locate and install the <strong>ExplodedAssembly</strong>
+workbench.</li>
+<li>Restart FreeCAD to ensure the workbench loads correctly.</li>
+</ol>
+<h3 id="step-2-organize-the-3d-model-into-sub-assemblies">Step 2:
+Organize the 3D Model into Sub-Assemblies</h3>
+<p>Before detailing the instructions, structure your model logically in
+the Tree View.</p>
+<ol type="1">
+<li>Group related parts into folders or sub-assemblies (e.g., base
+frame, motor mount, fasteners).</li>
+<li>Ensure each component has a distinct and descriptive label (e.g.,
+"M4x12_Bolt", "Base_Plate").</li>
+<li>Determine the real-world build order from the first component to the
+final fastener.</li>
+</ol>
+<h3 id="step-3-create-exploded-steps">Step 3: Create Exploded Steps</h3>
+<p>Use the ExplodedAssembly workbench to generate the visual
+sequence.</p>
+<ol type="1">
+<li>Switch to the <strong>ExplodedAssembly</strong> workbench from the
+workbench dropdown.</li>
+<li>Select the part or group of parts you want to move in the first
+disassembly step.</li>
+<li>Click the <strong>Create a bolt exploded track</strong> or
+<strong>Create a simple exploded track</strong> tool.</li>
+<li>Use the directional handles or input exact offset values to pull
+parts away along their assembly vector.</li>
+<li>Repeat this process in reverse order of assembly until all parts are
+placed in their disassembled positions.</li>
+<li>Use the animation/step controls in the ExplodedAssembly panel to
+verify each movement corresponds to an assembly stage.</li>
+</ol>
+<h3 id="step-4-create-a-drawing-sheet-in-techdraw">Step 4: Create a
+Drawing Sheet in TechDraw</h3>
+<p>The TechDraw workbench converts your 3D views into formal 2D
+documentation.</p>
+<ol type="1">
+<li>Switch to the <strong>TechDraw</strong> workbench.</li>
+<li>Click <strong>Insert 'Default Page'</strong> or <strong>Insert Page
+using Template</strong> to choose an appropriate sheet size (e.g., A4 or
+US Letter landscape).</li>
+<li>Return to the 3D view, orient the camera to a clear isometric angle
+showing the current assembly step, and select the objects for that step
+in the Tree view.</li>
+<li>Return to your TechDraw page and click <strong>Insert View</strong>.
+Adjust the <code>Scale</code> and <code>Direction</code> properties in
+the Data tab if necessary.</li>
+<li>Create additional pages for each subsequent step in the assembly
+process, inserting the corresponding exploded or partially assembled
+state on each page.</li>
+</ol>
+<h3 id="step-5-add-balloons-callouts-and-hardware-lists">Step 5: Add
+Balloons, Callouts, and Hardware Lists</h3>
+<p>Make the drawings functional by identifying each component.</p>
+<ol type="1">
+<li><strong>Add Item Balloons:</strong> Select a component's edge or
+vertex in the TechDraw view and click <strong>Insert Balloon
+Annotation</strong>. Label each balloon with a step number or item
+index.</li>
+<li><strong>Insert Directional Arrows:</strong> Use the <strong>Insert
+Cosmetic Line</strong> or annotation tools to draw trajectory lines
+showing the insertion path of pins, bolts, and interlocking
+components.</li>
+<li><strong>Add Text Instructions:</strong> Use the <strong>Insert
+Annotation</strong> tool to place written instructions next to each view
+(e.g., "Secure using 4x M4 screws; torque to 2 Nm").</li>
+<li><strong>Bill of Materials (BOM):</strong> Use the <strong>Insert
+Spreadsheet View</strong> tool to include a table listing part numbers,
+descriptions, and quantities required for that specific step.</li>
+</ol>
+<h3 id="step-6-export-the-documentation">Step 6: Export the
+Documentation</h3>
+<ol type="1">
+<li>Review each page in the TechDraw tree to verify alignment, scale,
+and readability.</li>
+<li>Select the pages you want to include in the manual.</li>
+<li>Go to <strong>File &gt; Export PDF</strong> to generate a single,
+multi-page instruction document suitable for digital viewing or
+printing.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-create-assembly-instructions-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Insert Doors and Windows in FreeCAD Arch - freecad</title>
+    <meta name="description" content="Inserting doors and windows into walls in FreeCAD is a streamlined process managed primarily through the Arch or BIM Workbench. FreeCAD treats both doors and windows as &quot;Window&quot; objects that host parametric presets, which can be directly attached to an ex">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-insert-doors-and-windows-in-free-cad-arch">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Insert Doors and Windows in FreeCAD Arch - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-insert-doors-and-windows-in-free-cad-arch" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Inserting doors and windows into walls in FreeCAD is a streamlined process managed primarily through the Arch or BIM Workbench. FreeCAD treats both doors and windows as &quot;Window&quot; objects that host parametric presets, which can be directly attached to an ex" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-insert-doors-and-windows-in-freecad-arch">How to Insert
+Doors and Windows in FreeCAD Arch</h1>
+<p>Inserting doors and windows into walls in FreeCAD is a streamlined
+process managed primarily through the Arch or BIM Workbench. FreeCAD
+treats both doors and windows as "Window" objects that host parametric
+presets, which can be directly attached to an existing wall object to
+automatically generate the necessary opening cuts and frame geometry.
+This guide covers how to select presets, place components into host
+walls, and adjust their parametric properties.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before adding openings, ensure you have the <strong>BIM</strong> or
+<strong>Arch Workbench</strong> active (in FreeCAD 0.21 and later, Arch
+is integrated directly into the BIM workbench) and an existing
+<strong>Arch Wall</strong> modeled in your 3D view.</p>
+<h2 id="step-1-select-the-host-wall">Step 1: Select the Host Wall</h2>
+<ol type="1">
+<li>Switch your active workbench to <strong>BIM</strong> or
+<strong>Arch</strong>.</li>
+<li>In the 3D view or the Tree view, select the wall into which you want
+to insert the door or window. Alternatively, you can select the specific
+exterior or interior face of the wall where the component should
+sit.</li>
+</ol>
+<h2 id="step-2-open-the-window-tool">Step 2: Open the Window Tool</h2>
+<ol type="1">
+<li>Click the <strong>Window</strong> tool icon from the toolbar, or
+navigate to <strong>BIM/Arch → Window</strong> in the top menu.</li>
+<li>The Task panel will open on the left side of the screen, displaying
+preset options and dimensions.</li>
+</ol>
+<h2 id="step-3-choose-a-preset">Step 3: Choose a Preset</h2>
+<p>FreeCAD uses the same underlying tool for both doors and windows:</p>
+<ul>
+<li><strong>For Windows:</strong> Select a preset such as <em>Simple
+window</em>, <em>Double opening</em>, or <em>Fixed</em>.</li>
+<li><strong>For Doors:</strong> Select a door preset, such as <em>Simple
+door</em> or <em>Glass door</em>.</li>
+</ul>
+<h2 id="step-4-configure-dimensions-and-placement">Step 4: Configure
+Dimensions and Placement</h2>
+<ol type="1">
+<li>In the Task panel, define the parametric values:
+<ul>
+<li><strong>Width</strong> and <strong>Height</strong>: Set the overall
+dimensions of the frame.</li>
+<li><strong>Offset</strong>: Adjust the depth placement of the frame
+relative to the wall face.</li>
+</ul></li>
+<li>Move your cursor over the selected wall in the 3D view. FreeCAD will
+preview the component snapping to the wall's geometry.</li>
+<li>Click to place the door or window at the desired location along the
+wall.</li>
+</ol>
+<p>Once placed, FreeCAD automatically creates a boolean subtraction
+within the host wall, cutting an opening matching the dimensions of the
+door or window frame.</p>
+<h2 id="step-5-adjusting-position-and-properties">Step 5: Adjusting
+Position and Properties</h2>
+<p>If you need to make changes after insertion:</p>
+<ol type="1">
+<li><strong>Repositioning:</strong> Select the window or door object in
+the Tree view. In the <strong>Data</strong> tab of the Properties panel
+below, expand the <strong>Placement</strong> property to fine-tune the
+X, Y, or Z coordinates along the wall.</li>
+<li><strong>Resizing:</strong> Modify the <strong>Width</strong>,
+<strong>Height</strong>, or <strong>Hole Depth</strong> properties
+directly in the Data tab. The wall opening will automatically update to
+match the new dimensions.</li>
+<li><strong>Opening Symbol (2D):</strong> To display swing directions in
+2D floor plans, set the <strong>Opening</strong> property in the Data
+tab to an angle (e.g., <code>90°</code>).</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-insert-doors-and-windows-in-free-cad-arch';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

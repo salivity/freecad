@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinate Constraint vs Absolute Origin in FreeCAD - freecad</title>
+    <meta name="description" content="In FreeCAD, navigating spatial positioning requires understanding the distinct roles of the absolute origin and coordinate system constraints. The absolute origin serves as the immutable, fixed zero-point (0,0,0) of the 3D workspace, while a coordinate sy">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/coordinate-constraint-vs-absolute-origin-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Coordinate Constraint vs Absolute Origin in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/coordinate-constraint-vs-absolute-origin-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In FreeCAD, navigating spatial positioning requires understanding the distinct roles of the absolute origin and coordinate system constraints. The absolute origin serves as the immutable, fixed zero-point (0,0,0) of the 3D workspace, while a coordinate sy" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="coordinate-constraint-vs-absolute-origin-in-freecad">Coordinate
+Constraint vs Absolute Origin in FreeCAD</h1>
+<p>In FreeCAD, navigating spatial positioning requires understanding the
+distinct roles of the absolute origin and coordinate system constraints.
+The absolute origin serves as the immutable, fixed zero-point (0,0,0) of
+the 3D workspace, while a coordinate system constraint dynamically
+attaches and positions geometry relative to other features, datum
+objects, or components. This article breaks down the operational
+differences between these two reference methods, their behaviors under
+parametric modifications, and when to apply each in your modeling
+workflow.</p>
+<h3 id="the-absolute-origin">The Absolute Origin</h3>
+<p>The absolute origin is the root reference point defined by the
+coordinates (0, 0, 0) in the global 3D environment. Every document, Part
+container, and PartDesign Body contains an origin object with default
+primary axes (X, Y, Z) and base planes (XY, XZ, YZ).</p>
+<p>Key characteristics of the absolute origin include:</p>
+<ul>
+<li><strong>Static Nature:</strong> It cannot be moved, rotated, or
+altered by constraints. It provides an unshifting benchmark for the
+entire model.</li>
+<li><strong>Independence:</strong> It relies on no prior geometry.
+Grounding initial sketches to the base planes of the absolute origin
+prevents downstream model failure caused by the Topological Naming
+Problem.</li>
+<li><strong>Scope:</strong> It defines the default center of the global
+modeling space or the root space of a specific PartDesign Body.</li>
+</ul>
+<h3 id="the-coordinate-system-constraint">The Coordinate System
+Constraint</h3>
+<p>A coordinate system constraint—typically utilized through a Local
+Coordinate System (LCS) or within FreeCAD’s assembly workbenches (such
+as Assembly, Assembly3, or Assembly4)—positions a local set of axes
+relative to designated geometry using mathematical constraints or
+attachment modes.</p>
+<p>Key characteristics of a coordinate system constraint include:</p>
+<ul>
+<li><strong>Parametric Mobility:</strong> If the underlying geometry
+changes, moves, or recalculates, the constrained coordinate system moves
+with it.</li>
+<li><strong>Relational Attachment:</strong> It is anchored to vertices,
+edges, planar faces, or other datum objects using defined offsets,
+angles, and solver rules.</li>
+<li><strong>Component-Level Mapping:</strong> In assembly workflows,
+coordinate system constraints align two distinct parts by matching their
+respective local coordinate systems together, controlling degrees of
+freedom between components.</li>
+</ul>
+<h3 id="core-differences">Core Differences</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Absolute Origin</th>
+<th style="text-align: left;">Coordinate System Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Mobility</strong></td>
+<td style="text-align: left;">Fixed at (0,0,0); cannot be moved.</td>
+<td style="text-align: left;">Dynamic; shifts when reference geometry
+updates.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Dependencies</strong></td>
+<td style="text-align: left;">Zero external dependencies.</td>
+<td style="text-align: left;">Depends on parent geometry, faces, or
+datum points.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Application</strong></td>
+<td style="text-align: left;">Base feature creation and global
+grounding.</td>
+<td style="text-align: left;">Off-axis features, assembly joints, and
+sub-assemblies.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Robustness</strong></td>
+<td style="text-align: left;">Immune to topological naming
+breakage.</td>
+<td style="text-align: left;">Vulnerable to reference errors if parent
+faces/edges change.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="when-to-use-each">When to Use Each</h3>
+<p>Use the <strong>absolute origin</strong> to start your design. The
+first sketch or base feature of any PartDesign Body should reference the
+absolute origin's planes and axes to establish a stable structural
+foundation.</p>
+<p>Use a <strong>coordinate system constraint</strong> when you must
+place features on angled surfaces, position parts dynamically within an
+assembly, or create reusable modular components that need to anchor to
+arbitrary locations on other parts. Constraining an LCS to geometry
+provides an intermediate datum layer, simplifying subsequent operations
+without cluttering the global origin.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/coordinate-constraint-vs-absolute-origin-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

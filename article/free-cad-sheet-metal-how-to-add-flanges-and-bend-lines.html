@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD SheetMetal: How to Add Flanges and Bend Lines - freecad</title>
+    <meta name="description" content="Designing sheet metal components in FreeCAD requires the dedicated SheetMetal workbench to model manufacturing-ready features like folds, tabs, and flat projections. This guide covers the process of generating flanges from existing edges, folding flat pla">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-sheet-metal-how-to-add-flanges-and-bend-lines">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD SheetMetal: How to Add Flanges and Bend Lines - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-sheet-metal-how-to-add-flanges-and-bend-lines" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Designing sheet metal components in FreeCAD requires the dedicated SheetMetal workbench to model manufacturing-ready features like folds, tabs, and flat projections. This guide covers the process of generating flanges from existing edges, folding flat pla" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-sheetmetal-how-to-add-flanges-and-bend-lines">FreeCAD
+SheetMetal: How to Add Flanges and Bend Lines</h1>
+<p>Designing sheet metal components in FreeCAD requires the dedicated
+SheetMetal workbench to model manufacturing-ready features like folds,
+tabs, and flat projections. This guide covers the process of generating
+flanges from existing edges, folding flat plates along dedicated bend
+lines using sketches, and exporting an unfolded pattern displaying your
+bend centerlines for fabrication.</p>
+<h3 id="installing-the-sheetmetal-workbench">Installing the SheetMetal
+Workbench</h3>
+<p>Before beginning, ensure the SheetMetal add-on is installed:</p>
+<ol type="1">
+<li>Open FreeCAD and navigate to <strong>Tools</strong> &gt;
+<strong>Addon manager</strong>.</li>
+<li>Locate <strong>SheetMetal</strong> in the workbenches list, select
+it, and click <strong>Install</strong>.</li>
+<li>Restart FreeCAD and select <strong>SheetMetal</strong> from the
+workbench dropdown menu.</li>
+</ol>
+<hr />
+<h3 id="method-1-adding-flanges-from-edges">Method 1: Adding Flanges
+from Edges</h3>
+<p>The standard way to extend walls and form bends is by adding flanges
+directly to existing geometry.</p>
+<ol type="1">
+<li><strong>Create a Base Plate</strong>: Start in the <strong>Part
+Design</strong> or <strong>Sketcher</strong> workbench. Create a 2D
+sketch of your base profile, then use the <strong>Make Base
+Wall</strong> tool from the SheetMetal workbench to give it a defined
+sheet thickness.</li>
+<li><strong>Select an Edge</strong>: Click on the specific top or bottom
+edge of the plate where you want the bend to originate. To add multiple
+identical flanges simultaneously, hold <code>Ctrl</code> and select
+multiple edges.</li>
+<li><strong>Generate the Flange</strong>: Click the <strong>Make
+Bend</strong> (Edge Bend) icon on the toolbar.</li>
+<li><strong>Adjust Parameters</strong>: Select the newly created
+<code>Bend</code> object in the tree view and open the
+<strong>Data</strong> tab in the Property View to configure dimensions:
+<ul>
+<li><strong>Radius</strong>: Sets the internal bend radius (ensure this
+matches your tooling).</li>
+<li><strong>Length</strong>: Sets the total extension of the new
+flange.</li>
+<li><strong>Angle</strong>: Changes the bend angle (default is
+90°).</li>
+<li><strong>Relief Type</strong>: Changes corner cutouts (e.g.,
+Rectangle, Round) to avoid material tearing.</li>
+<li><strong>Invert</strong>: Flips the direction of the bend if
+necessary.</li>
+</ul></li>
+</ol>
+<hr />
+<h3 id="method-2-adding-bends-along-a-sketch-line">Method 2: Adding
+Bends along a Sketch Line</h3>
+<p>If you have a flat plate and need to fold it across an arbitrary
+line, use the bend-on-line workflow:</p>
+<ol type="1">
+<li><strong>Select the Plate Surface</strong>: Click on the flat face of
+the sheet metal body where the fold should occur.</li>
+<li><strong>Create a Bend Line Sketch</strong>: Click the <strong>New
+Sketch</strong> tool. Draw a single open line across the face
+representing the axis of the bend, then close the sketch.</li>
+<li><strong>Execute the Fold</strong>:
+<ul>
+<li>Select the flat face of your plate.</li>
+<li>Hold <code>Ctrl</code> and select the sketch containing the bend
+line.</li>
+<li>Click the <strong>Bend on a line</strong> tool from the SheetMetal
+toolbar.</li>
+</ul></li>
+<li><strong>Configure the Fold</strong>: In the Property View, adjust
+the <strong>Angle</strong>, <strong>Radius</strong>, and choose which
+side of the line moves by toggling the <strong>Invert</strong>
+parameter.</li>
+</ol>
+<hr />
+<h3
+id="generating-flat-patterns-and-bend-lines-for-production">Generating
+Flat Patterns and Bend Lines for Production</h3>
+<p>To view and export the flattened sheet displaying the tangent and
+center bend lines for CNC or laser cutting:</p>
+<ol type="1">
+<li>Select the main base face of your finished model.</li>
+<li>Click the <strong>Unfold</strong> tool on the SheetMetal
+toolbar.</li>
+<li>In the tree view, expand the resulting <code>Unfold</code> object to
+view the generated flat geometry.</li>
+<li>In the Property View under the <code>Unfold</code> object, ensure
+<strong>Bend Lines</strong> is set to <code>True</code>.</li>
+<li>Export the flat pattern:
+<ul>
+<li>Select the unfolded object, navigate to <strong>File</strong> &gt;
+<strong>Export</strong>, and choose <strong>DXF</strong> to export cut
+lines and bend lines for manufacturing.</li>
+<li>Alternatively, send the unfolded shape to the
+<strong>TechDraw</strong> workbench to generate an engineering drawing
+with dimensioned bend positions and angles.</li>
+</ul></li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-sheet-metal-how-to-add-flanges-and-bend-lines';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

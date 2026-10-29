@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is Additive Pipe in FreeCAD Part Design - freecad</title>
+    <meta name="description" content="The Additive Pipe tool is a modeling feature in FreeCAD&#39;s Part Design workbench used to create complex 3D geometry by sweeping a closed 2D profile along a specified path. This article explains the fundamentals of the Additive Pipe feature, its core geomet">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/what-is-additive-pipe-in-free-cad-part-design">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Is Additive Pipe in FreeCAD Part Design - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/what-is-additive-pipe-in-free-cad-part-design" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Additive Pipe tool is a modeling feature in FreeCAD&#39;s Part Design workbench used to create complex 3D geometry by sweeping a closed 2D profile along a specified path. This article explains the fundamentals of the Additive Pipe feature, its core geomet" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-is-additive-pipe-in-freecad-part-design">What Is Additive
+Pipe in FreeCAD Part Design</h1>
+<p>The Additive Pipe tool is a modeling feature in FreeCAD's Part Design
+workbench used to create complex 3D geometry by sweeping a closed 2D
+profile along a specified path. This article explains the fundamentals
+of the Additive Pipe feature, its core geometric requirements, its
+primary configuration settings, and how to execute the operation
+correctly within your parametric modeling workflow.</p>
+<h3 id="understanding-the-additive-pipe-feature">Understanding the
+Additive Pipe Feature</h3>
+<p>In parametric 3D modeling, an Additive Pipe performs a "sweep"
+operation. It takes a cross-sectional shape and extrudes it along a
+trajectory, adding solid material to an active Part Design Body. Unlike
+a simple Pad feature, which only extrudes straight along a normal
+vector, an Additive Pipe allows geometry to curve, twist, and follow
+intricate multi-segment lines or curves in 3D space. It can be used to
+generate the initial base feature of a body or to fuse additional
+geometry onto an existing solid.</p>
+<h3 id="core-requirements">Core Requirements</h3>
+<p>To successfully generate an Additive Pipe, FreeCAD requires two
+distinct geometric elements within the same active Body:</p>
+<ol type="1">
+<li><strong>The Profile:</strong> A closed, non-self-intersecting 2D
+sketch that represents the cross-section of the final solid (such as a
+circle, rectangle, or custom polygon).</li>
+<li><strong>The Spine (Path):</strong> A sketch, edge, or continuous
+wire that dictates the path the profile will follow. This path does not
+need to be planar, but it should ideally intersect or align with the
+plane of the profile to prevent unexpected twisting or
+self-intersection.</li>
+</ol>
+<h3 id="key-orientation-and-corner-modes">Key Orientation and Corner
+Modes</h3>
+<p>FreeCAD provides several parameters to control how the profile
+behaves as it moves along the path:</p>
+<ul>
+<li><strong>Orientation Mode:</strong> Controls the alignment of the
+profile during the sweep.
+<ul>
+<li><em>Standard:</em> Keeps the profile perpendicular to the path
+direction.</li>
+<li><em>Fixed:</em> Keeps the orientation angle fixed relative to the
+starting orientation.</li>
+<li><em>Frenet:</em> Uses Frenet-Serret framing, orienting the profile
+based on the path's curvature and tangent vectors to reduce unwanted
+twisting on complex 3D curves.</li>
+<li><em>Auxiliary:</em> Uses a secondary curve to guide the direction
+and twisting of the profile.</li>
+</ul></li>
+<li><strong>Corner Transition:</strong> Defines how the pipe handles
+sharp angles in the path. Options include transformed sharp corners or
+rounded corners that blend the geometry cleanly.</li>
+</ul>
+<h3 id="how-to-create-an-additive-pipe">How to Create an Additive
+Pipe</h3>
+<ol type="1">
+<li>Activate your target <strong>Body</strong> in the Part Design
+workbench.</li>
+<li>Create the <strong>Path sketch</strong> defining the route of the
+pipe.</li>
+<li>Create the <strong>Profile sketch</strong> defining the
+cross-section, ideally on a plane perpendicular to the start of the
+path.</li>
+<li>Select the Profile sketch in the tree view and click the
+<strong>Additive Pipe</strong> icon in the toolbar.</li>
+<li>In the Task panel, click the <strong>Path</strong> button and select
+the edge or sketch representing your path from the 3D view.</li>
+<li>Adjust the orientation mode and corner transitions as needed, then
+click <strong>OK</strong> to generate the solid feature.</li>
+</ol>
+<h3 id="additive-vs-subtractive-pipe">Additive vs. Subtractive Pipe</h3>
+<p>While the Additive Pipe generates material, FreeCAD also features an
+identical counterpart called the Subtractive Pipe. The Subtractive Pipe
+uses the exact same sweep mechanics and parameters, but instead of
+creating volume, it carves the swept shape out of an existing solid
+body, functioning like a complex parametric sweep-cut.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/what-is-additive-pipe-in-free-cad-part-design';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

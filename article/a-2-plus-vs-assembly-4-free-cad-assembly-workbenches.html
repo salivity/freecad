@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2plus vs Assembly4: FreeCAD Assembly Workbenches - freecad</title>
+    <meta name="description" content="FreeCAD offers multiple community-developed workbenches for assembling individual parts into complex models, with A2plus and Assembly4 being two of the most popular choices. While both tools allow users to construct multi-part mechanisms, they rely on fun">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/a-2-plus-vs-assembly-4-free-cad-assembly-workbenches">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="A2plus vs Assembly4: FreeCAD Assembly Workbenches - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/a-2-plus-vs-assembly-4-free-cad-assembly-workbenches" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FreeCAD offers multiple community-developed workbenches for assembling individual parts into complex models, with A2plus and Assembly4 being two of the most popular choices. While both tools allow users to construct multi-part mechanisms, they rely on fun" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="a2plus-vs-assembly4-freecad-assembly-workbenches">A2plus vs
+Assembly4: FreeCAD Assembly Workbenches</h1>
+<p>FreeCAD offers multiple community-developed workbenches for
+assembling individual parts into complex models, with A2plus and
+Assembly4 being two of the most popular choices. While both tools allow
+users to construct multi-part mechanisms, they rely on fundamentally
+different mathematical philosophies, constraint mechanisms, and
+workflows. This guide breaks down the core technical differences between
+A2plus and Assembly4 to help you choose the right workbench for your
+modeling needs.</p>
+<h3 id="underlying-assembly-philosophy">Underlying Assembly
+Philosophy</h3>
+<p>The primary distinction between the two workbenches lies in how they
+mate parts:</p>
+<ul>
+<li><strong>A2plus (Constraint-Based):</strong> Uses a traditional
+constraint solver. Users select geometric features—such as faces,
+circular edges, or vertices—on two different parts and apply logical
+constraints (such as coincident, concentric, parallel, or angle). The
+internal solver continuously computes the positions of all parts to
+satisfy these geometric relationships.</li>
+<li><strong>Assembly4 (Coordinate-System-Based):</strong> Discards
+traditional edge-and-face constraints in favor of Local Coordinate
+Systems (LCS). Instead of mating surfaces, users attach a coordinate
+system attached to one part directly onto a coordinate system attached
+to another part (or to the assembly frame).</li>
+</ul>
+<h3 id="resistance-to-the-topological-naming-problem">Resistance to the
+Topological Naming Problem</h3>
+<p>The Topological Naming Problem (TNP) occurs in parametric CAD when an
+edit to an earlier feature alters the internal IDs of subsequent edges
+or faces, often breaking downstream constraints.</p>
+<ul>
+<li><strong>A2plus</strong> is susceptible to TNP disruptions. Because
+mates rely on direct geometric selections (such as Face12 or Edge4),
+modifying an underlying part model can invert, break, or invalidate
+existing mates in the assembly.</li>
+<li><strong>Assembly4</strong> is inherently robust against TNP. Because
+attachments connect Datum Coordinate Systems rather than arbitrary
+geometric faces or edges, modifications to underlying geometry rarely
+break the assembly structure, provided the datum points remain
+intact.</li>
+</ul>
+<h3 id="kinematics-motion-and-animation">Kinematics, Motion, and
+Animation</h3>
+<ul>
+<li><strong>A2plus</strong> allows for basic degree-of-freedom tracking
+and simple mechanical solving. However, simulating continuous movement
+or building complex kinematic chains can become computationally heavy or
+unstable if constraints over-constrain the system.</li>
+<li><strong>Assembly4</strong> excels at parametric motion and kinematic
+simulation. It includes a dedicated animation engine driven by
+user-defined variables and mathematical expressions. Changing a single
+variable (such as an angle or linear offset) dynamically updates the
+position of parts, making it ideal for simulating linkages, gears, and
+cyclic mechanisms.</li>
+</ul>
+<h3 id="ease-of-use-and-workflow">Ease of Use and Workflow</h3>
+<ul>
+<li><strong>A2plus</strong> provides a workflow familiar to users
+transitioning from commercial systems like SolidWorks or Autodesk
+Inventor. It requires minimal upfront preparation: you import parts into
+an assembly document, select two surfaces, and click a button to align
+them. This approach makes it fast and accessible for simple, static
+assemblies.</li>
+<li><strong>Assembly4</strong> requires deliberate upfront planning.
+Before assembling, you must define and orient Local Coordinate Systems
+inside the individual part files at the intended connection points.
+While this adds initial overhead, it produces a clean, predictable
+hierarchy that is easier to maintain in large or complex projects.</li>
+</ul>
+<h3 id="summary-which-should-you-choose">Summary: Which Should You
+Choose?</h3>
+<p>Choose <strong>A2plus</strong> if you need a quick, intuitive
+assembly tool for static structures and prefer the traditional approach
+of clicking faces and edges to establish mates without setting up helper
+geometry first.</p>
+<p>Choose <strong>Assembly4</strong> if you are building complex
+parametric models, require robust motion and kinematics simulations, or
+want an assembly that will not break when individual part dimensions are
+frequently modified.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/a-2-plus-vs-assembly-4-free-cad-assembly-workbenches';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

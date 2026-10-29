@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Equal Radius Constraints on Circles in FreeCAD - freecad</title>
+    <meta name="description" content="Applying an equal radius constraint to multiple circles in FreeCAD ensures that all selected circles or arcs share the same dimension without having to define individual measurements for each one. This guide explains how to use the Sketcher Workbench&#39;s eq">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/set-equal-radius-constraints-on-circles-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Set Equal Radius Constraints on Circles in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/set-equal-radius-constraints-on-circles-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Applying an equal radius constraint to multiple circles in FreeCAD ensures that all selected circles or arcs share the same dimension without having to define individual measurements for each one. This guide explains how to use the Sketcher Workbench&#39;s eq" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="set-equal-radius-constraints-on-circles-in-freecad">Set Equal
+Radius Constraints on Circles in FreeCAD</h1>
+<p>Applying an equal radius constraint to multiple circles in FreeCAD
+ensures that all selected circles or arcs share the same dimension
+without having to define individual measurements for each one. This
+guide explains how to use the Sketcher Workbench's equality constraint
+to link the radii of multiple circular entities simultaneously, allowing
+you to update the size of all linked circles by modifying just one
+dimension.</p>
+<h3 id="step-1-open-your-sketch">Step 1: Open Your Sketch</h3>
+<ol type="1">
+<li>Launch FreeCAD and open your project.</li>
+<li>In the tree view, double-click the sketch containing your circles to
+open it in the <strong>Sketcher Workbench</strong>.</li>
+<li>Ensure the circles or arcs you want to constrain are already drawn
+in the viewport.</li>
+</ol>
+<h3 id="step-2-select-the-circles">Step 2: Select the Circles</h3>
+<ol type="1">
+<li>Hold down the <strong>Ctrl</strong> key (or <strong>Cmd</strong> on
+macOS).</li>
+<li>Click directly on the circumference edge of each circle you wish to
+make equal.</li>
+<li>Verify that the selected circles are highlighted (usually in green
+or your configured selection color). Do not select the center points;
+you must click the circular edges.</li>
+</ol>
+<h3 id="step-3-apply-the-equality-constraint">Step 3: Apply the Equality
+Constraint</h3>
+<ol type="1">
+<li>With the circles selected, click the <strong>Constrain
+equality</strong> tool in the Sketcher toolbar (represented by an equals
+sign <code>=</code>).</li>
+<li>Alternatively, press the shortcut key <strong>E</strong> on your
+keyboard, or navigate to <strong>Sketch → Sketcher constraints →
+Constrain equality</strong> from the top menu.</li>
+<li>The circles will immediately snap to the same radius, and an
+equality constraint marker will appear next to each entity.</li>
+</ol>
+<h3 id="step-4-define-the-master-radius-or-diameter">Step 4: Define the
+Master Radius or Diameter</h3>
+<ol type="1">
+<li>Select one of the constrained circles.</li>
+<li>Apply a radius constraint by clicking the <strong>Constrain
+radius</strong> tool (shortcut: <strong>Shift + R</strong>) or a
+diameter constraint using the <strong>Constrain diameter</strong> tool
+(shortcut: <strong>Shift + D</strong>).</li>
+<li>Enter your desired measurement in the dialog box and press
+<strong>OK</strong>.</li>
+<li>All circles linked by the equality constraint will automatically
+resize to match the newly specified value.</li>
+</ol>
+<h3 id="tips-for-managing-equal-constraints">Tips for Managing Equal
+Constraints</h3>
+<ul>
+<li><strong>Arcs and Circles:</strong> The equality constraint works
+interchangeably between full circles and circular arcs.</li>
+<li><strong>Adding More Circles Later:</strong> To add another circle to
+the group, select one of the previously constrained circles along with
+the new circle, and press <strong>E</strong>.</li>
+<li><strong>Avoiding Redundancies:</strong> Do not apply individual
+radius constraints to more than one circle in an equal-constraint group,
+as this will trigger an over-constrained sketch error.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/set-equal-radius-constraints-on-circles-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

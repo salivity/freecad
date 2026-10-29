@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Run OpenFOAM CFD Simulations in FreeCAD - freecad</title>
+    <meta name="description" content="Setting up computational fluid dynamics (CFD) simulations using OpenFOAM directly within FreeCAD is accomplished via the CfdOF workbench. This workflow bridges FreeCAD&#39;s 3D parametric CAD modeling capabilities with OpenFOAM’s powerful numerical solver, ha">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-run-open-foam-cfd-simulations-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Run OpenFOAM CFD Simulations in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-run-open-foam-cfd-simulations-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Setting up computational fluid dynamics (CFD) simulations using OpenFOAM directly within FreeCAD is accomplished via the CfdOF workbench. This workflow bridges FreeCAD&#39;s 3D parametric CAD modeling capabilities with OpenFOAM’s powerful numerical solver, ha" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-run-openfoam-cfd-simulations-in-freecad">How to Run
+OpenFOAM CFD Simulations in FreeCAD</h1>
+<p>Setting up computational fluid dynamics (CFD) simulations using
+OpenFOAM directly within FreeCAD is accomplished via the CfdOF
+workbench. This workflow bridges FreeCAD's 3D parametric CAD modeling
+capabilities with OpenFOAM’s powerful numerical solver, handling fluid
+domain definition, meshing, boundary conditions, solver execution, and
+post-processing within a unified interface.</p>
+<h3 id="step-1-install-prerequisites-and-the-cfdof-workbench">Step 1:
+Install Prerequisites and the CfdOF Workbench</h3>
+<ol type="1">
+<li><strong>Install OpenFOAM</strong>: Install a compatible version of
+OpenFOAM (such as OpenFOAM v2012+ or OpenFOAM-dev) on your operating
+system. Windows users typically install OpenFOAM via Windows Subsystem
+for Linux (WSL) or Docker.</li>
+<li><strong>Install ParaView</strong>: Install ParaView for data
+visualization and post-processing.</li>
+<li><strong>Install CfdOF in FreeCAD</strong>:
+<ul>
+<li>Open FreeCAD.</li>
+<li>Go to <strong>Tools</strong> &gt; <strong>Addon
+Manager</strong>.</li>
+<li>Locate <strong>CfdOF</strong> in the Workbenches tab and click
+<strong>Install</strong>.</li>
+<li>Restart FreeCAD.</li>
+</ul></li>
+</ol>
+<h3 id="step-2-configure-cfdof-preferences">Step 2: Configure CfdOF
+Preferences</h3>
+<ol type="1">
+<li>In FreeCAD, switch to the <strong>CfdOF</strong> workbench from the
+workbench dropdown.</li>
+<li>Navigate to <strong>Edit</strong> &gt; <strong>Preferences</strong>
+&gt; <strong>CFD</strong>.</li>
+<li>Under the <strong>OpenFOAM</strong> tab, specify the installation
+path for your OpenFOAM installation (or set the execution mode to
+WSL/Docker if on Windows).</li>
+<li>Verify the executable paths for meshing utilities (such as
+<code>cfMesh</code> or <code>snappyHexMesh</code>) and
+<strong>ParaView</strong>.</li>
+<li>Click <strong>Apply</strong> and <strong>OK</strong>.</li>
+</ol>
+<h3 id="step-3-prepare-the-fluid-domain-geometry">Step 3: Prepare the
+Fluid Domain Geometry</h3>
+<ol type="1">
+<li>Model your part or import an existing STEP/IGES file using the
+<strong>Part</strong> or <strong>Part Design</strong> workbench.</li>
+<li>Ensure you are modeling the <strong>fluid domain</strong> (the space
+the fluid occupies), not the solid vessel walls, unless performing
+conjugate heat transfer. If necessary, use boolean operations in the
+Part workbench to subtract solid objects from a surrounding enclosure
+box to create the internal or external flow volume.</li>
+</ol>
+<h3 id="step-4-create-a-cfd-analysis-container">Step 4: Create a CFD
+Analysis Container</h3>
+<ol type="1">
+<li>Select the fluid domain solid in the tree view.</li>
+<li>Click the <strong>CFD Analysis</strong> container button on the
+CfdOF toolbar. This creates an analysis folder containing the physics
+model, fluid properties, mesh, and boundary conditions.</li>
+<li>Double-click the <strong>PhysicsModel</strong> object in the tree:
+<ul>
+<li>Select the <strong>Time</strong> model (Steady or Transient).</li>
+<li>Choose the <strong>Flow</strong> regime (Incompressible or
+Compressible).</li>
+<li>Choose the <strong>Turbulence</strong> model (Laminar, RANS such as
+<span class="math inline">\(k\)</span>-<span
+class="math inline">\(\omega\)</span> SST, or LES).</li>
+<li>Click <strong>OK</strong>.</li>
+</ul></li>
+</ol>
+<h3 id="step-5-assign-fluid-properties">Step 5: Assign Fluid
+Properties</h3>
+<ol type="1">
+<li>Double-click the <strong>FluidProperties</strong> object in the tree
+view.</li>
+<li>Select a predefined fluid (such as Air or Water) from the library,
+or specify custom kinematic viscosity (<span
+class="math inline">\(\nu\)</span>) and density (<span
+class="math inline">\(\rho\)</span>).</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<h3 id="step-6-define-boundary-conditions">Step 6: Define Boundary
+Conditions</h3>
+<p>For each flow boundary, create a boundary condition:</p>
+<ol type="1">
+<li>Click the <strong>CFD Boundary Condition</strong> tool.</li>
+<li>Select the relevant face on your 3D model and click
+<strong>Add</strong>.</li>
+<li>Choose the boundary type:
+<ul>
+<li><strong>Inlet</strong>: Define a uniform velocity (e.g., fixed value
+along an axis) or volumetric flow rate.</li>
+<li><strong>Outlet</strong>: Define a static pressure condition
+(typically zero gauge pressure).</li>
+<li><strong>Wall</strong>: Set no-slip, slip, or moving wall conditions,
+along with surface roughness if applicable.</li>
+</ul></li>
+<li>Click <strong>OK</strong> and repeat for all boundaries in the
+domain.</li>
+</ol>
+<h3 id="step-7-generate-the-mesh">Step 7: Generate the Mesh</h3>
+<ol type="1">
+<li>Select the fluid geometry and click the <strong>CFD Mesh</strong>
+button.</li>
+<li>Select the meshing utility: <strong>cfMesh</strong> (recommended for
+beginners) or <strong>snappyHexMesh</strong>.</li>
+<li>Set the <strong>Base Element Size</strong> to define the overall
+mesh resolution.</li>
+<li>(Optional) Add local surface refinements or boundary layers (viscous
+layers) to accurately capture near-wall shear stresses (<span
+class="math inline">\(y^+\)</span>).</li>
+<li>Click <strong>Write Mesh</strong>, then click <strong>Run
+Mesh</strong>. Inspect the output log to confirm clean mesh generation
+without non-orthogonal or inverted cells.</li>
+</ol>
+<h3 id="step-8-run-the-openfoam-solver">Step 8: Run the OpenFOAM
+Solver</h3>
+<ol type="1">
+<li>Double-click the <strong>CfdSolver</strong> object in the tree
+view.</li>
+<li>Review parallel processing options: set the number of CPU cores for
+parallel computation.</li>
+<li>Set simulation convergence criteria and iteration limits (e.g.,
+number of time steps or steady-state iterations).</li>
+<li>Click <strong>Write Case</strong> to generate standard OpenFOAM
+directories (<code>0/</code>, <code>constant/</code>,
+<code>system/</code>).</li>
+<li>Click <strong>Run</strong> to launch the OpenFOAM solver (e.g.,
+<code>simpleFoam</code> for steady incompressible flow).</li>
+<li>Monitor the residual plot directly inside FreeCAD to ensure the
+simulation converges.</li>
+</ol>
+<h3 id="step-9-post-process-results">Step 9: Post-Process Results</h3>
+<ol type="1">
+<li>Once the solver finishes, click the <strong>ParaView</strong> button
+within the solver dialog.</li>
+<li>In ParaView, click <strong>Apply</strong> in the Properties
+panel.</li>
+<li>Visualize velocity vectors, pressure contours, and streamlines
+across slices or internal clip planes to evaluate your fluid dynamics
+results.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-run-open-foam-cfd-simulations-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Make Non-Adjacent Lines Parallel in FreeCAD - freecad</title>
+    <meta name="description" content="Applying a parallel constraint to non-adjacent lines in FreeCAD allows you to align the direction of separated edges within the Sketcher workbench without creating physical connections between them. This guide provides a direct, step-by-step process for s">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-make-non-adjacent-lines-parallel-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Make Non-Adjacent Lines Parallel in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-make-non-adjacent-lines-parallel-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Applying a parallel constraint to non-adjacent lines in FreeCAD allows you to align the direction of separated edges within the Sketcher workbench without creating physical connections between them. This guide provides a direct, step-by-step process for s" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-make-non-adjacent-lines-parallel-in-freecad">How to Make
+Non-Adjacent Lines Parallel in FreeCAD</h1>
+<p>Applying a parallel constraint to non-adjacent lines in FreeCAD
+allows you to align the direction of separated edges within the Sketcher
+workbench without creating physical connections between them. This guide
+provides a direct, step-by-step process for selecting separated line
+segments, applying the constraint using toolbar icons or keyboard
+shortcuts, and troubleshooting common over-constraint errors that may
+occur during the operation.</p>
+<h3 id="step-by-step-guide">Step-by-Step Guide</h3>
+<ol type="1">
+<li><strong>Enter Sketch Edit Mode:</strong> Open your document,
+navigate to the <strong>Sketcher</strong> workbench, and double-click
+the sketch containing your target geometry in the tree view.</li>
+<li><strong>Select the First Line:</strong> Click directly on the body
+of the first line segment so that it changes color (typically to green),
+indicating it is selected. Do not select the endpoints.</li>
+<li><strong>Select the Second Line:</strong> Hold down the
+<strong>Ctrl</strong> key (or <strong>Cmd</strong> on macOS) and click
+on the body of the second, non-adjacent line segment. Both lines should
+now be highlighted.</li>
+<li><strong>Apply the Parallel Constraint:</strong>
+<ul>
+<li>Click the <strong>Constrain parallel</strong> icon on the Sketcher
+constraints toolbar (represented by two parallel diagonal lines).</li>
+<li>Alternatively, press the default keyboard shortcut
+<strong>P</strong>.</li>
+</ul></li>
+</ol>
+<p>Once applied, FreeCAD adds a numeric parallel constraint marker to
+both segments, ensuring their slopes remain equal regardless of distance
+or position.</p>
+<h3 id="important-considerations-and-troubleshooting">Important
+Considerations and Troubleshooting</h3>
+<ul>
+<li><strong>Select Edges, Not Endpoints:</strong> Ensure you click the
+line segments themselves rather than their vertices. Selecting vertices
+instead of edges will prevent the parallel tool from functioning
+properly.</li>
+<li><strong>Over-Constrained Sketches:</strong> If your sketch turns
+orange or red after applying the constraint, the lines are already
+locked by conflicting dimensions or constraints (such as both lines
+having individual horizontal/vertical constraints, or fixed angle
+dimensions). Remove any redundant orientation constraints to resolve the
+conflict.</li>
+<li><strong>Construction Geometry:</strong> The parallel constraint
+works identically on regular geometry lines and construction (blue)
+lines. You can make an active feature line parallel to a non-adjacent
+construction reference line using the same procedure.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-make-non-adjacent-lines-parallel-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

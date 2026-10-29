@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Perform Facing Operation in FreeCAD - freecad</title>
+    <meta name="description" content="Performing a facing operation in FreeCAD prepares raw stock by machining the top surface flat and bringing the material down to the exact final Z-height. Using the CAM Workbench (formerly called the Path Workbench in earlier versions), you define your raw">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-perform-facing-operation-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Perform Facing Operation in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-perform-facing-operation-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Performing a facing operation in FreeCAD prepares raw stock by machining the top surface flat and bringing the material down to the exact final Z-height. Using the CAM Workbench (formerly called the Path Workbench in earlier versions), you define your raw" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-perform-facing-operation-in-freecad">How to Perform
+Facing Operation in FreeCAD</h1>
+<p>Performing a facing operation in FreeCAD prepares raw stock by
+machining the top surface flat and bringing the material down to the
+exact final Z-height. Using the CAM Workbench (formerly called the Path
+Workbench in earlier versions), you define your raw stock dimensions,
+set tool parameters, and apply the MillFace operation to generate clean
+toolpaths across the material. This guide covers the complete
+step-by-step process to set up your stock, configure the facing
+toolpath, simulate the cut, and export G-code.</p>
+<h3 id="1-switch-to-the-cam-workbench">1. Switch to the CAM
+Workbench</h3>
+<p>Open your 3D model in FreeCAD. From the workbench dropdown menu at
+the top of the interface, switch to the <strong>CAM</strong> (or
+<strong>Path</strong>) workbench.</p>
+<h3 id="2-create-and-configure-a-job">2. Create and Configure a Job</h3>
+<p>Before generating any toolpaths, you must define the machine setup
+and the raw material bounds.</p>
+<ol type="1">
+<li>Click the <strong>Job</strong> button on the CAM toolbar.</li>
+<li>Under the <strong>Geometry</strong> tab, ensure your part is
+selected.</li>
+<li>Switch to the <strong>Output</strong> tab to specify your
+post-processor based on your CNC controller (e.g., LinuxCNC, GRBL,
+Mach3).</li>
+<li>Switch to the <strong>Setup</strong> tab to define your raw stock:
+<ul>
+<li>Select <strong>Create Box</strong>.</li>
+<li>Add extra material to the stock margins, particularly along the
+<strong>Z+</strong> axis (e.g., 1.0 mm to 2.0 mm), which represents the
+raw stock material that the facing operation will remove.</li>
+</ul></li>
+<li>Switch to the <strong>Tools</strong> tab, click
+<strong>Add</strong>, and choose an appropriate tool (typically a flat
+end mill or dedicated face mill) from your tool library.</li>
+<li>Click <strong>OK</strong> to create the Job.</li>
+</ol>
+<h3 id="3-create-the-millface-operation">3. Create the MillFace
+Operation</h3>
+<ol type="1">
+<li>Select the top horizontal face of your 3D model in the
+viewport.</li>
+<li>Click the <strong>MillFace</strong> button on the CAM toolbar.
+FreeCAD will create a facing operation linked directly to the selected
+surface.</li>
+</ol>
+<h3 id="4-configure-the-facing-parameters">4. Configure the Facing
+Parameters</h3>
+<p>Double-click the newly created <strong>Facing</strong> operation in
+the tree view to open the Data properties:</p>
+<ul>
+<li><strong>Depths Tab:</strong>
+<ul>
+<li><strong>Start Depth:</strong> Set this to the top of your raw stock
+(equal to the model height plus your added Z+ margin).</li>
+<li><strong>Final Depth:</strong> Set this to the top surface of the
+finished model (typically 0.0 mm relative to the selected face).</li>
+<li><strong>Step Down:</strong> Specify the maximum depth per pass
+(e.g., 0.5 mm) depending on your material hardness and tool
+capabilities.</li>
+</ul></li>
+<li><strong>Heights Tab:</strong>
+<ul>
+<li>Verify that the <strong>Clearance Height</strong> and <strong>Safe
+Height</strong> are set high enough to clear any clamps or
+fixtures.</li>
+</ul></li>
+<li><strong>Operation Tab:</strong>
+<ul>
+<li><strong>Pattern:</strong> Choose a cutting strategy, such as
+<strong>ZigZag</strong> (bi-directional) or <strong>Line</strong>
+(uni-directional for better surface finishes).</li>
+<li><strong>Step Over:</strong> Set the radial stepover percentage
+(commonly 50% to 75% of tool diameter).</li>
+<li><strong>Boundary Shape:</strong> Choose <strong>Stock</strong>
+rather than <strong>Bound</strong> if you want the cutter to clean the
+entirety of the oversized raw material, not just the model
+footprint.</li>
+</ul></li>
+</ul>
+<p>Click <strong>Apply</strong>, then <strong>OK</strong> to compute the
+toolpath.</p>
+<h3 id="5-simulate-and-verify-the-toolpath">5. Simulate and Verify the
+Toolpath</h3>
+<ol type="1">
+<li>Select your Job in the tree view.</li>
+<li>Click the <strong>CAM Simulator</strong> button on the toolbar.</li>
+<li>Adjust the playback speed and press <strong>Play</strong> to
+visually inspect the cutting passes. Ensure the tool covers the full
+area of the raw stock and steps down progressively without colliding
+with the part.</li>
+</ol>
+<h3 id="6-post-process-export-g-code">6. Post-Process (Export
+G-Code)</h3>
+<p>Once verified, select the Job or the specific Facing operation and
+click the <strong>Post-Process</strong> button on the toolbar. Save the
+generated <code>.nc</code> or <code>.gcode</code> file to send directly
+to your CNC machine.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-perform-facing-operation-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

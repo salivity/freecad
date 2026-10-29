@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calibrate Reference Image Scale in FreeCAD - freecad</title>
+    <meta name="description" content="Calibrating an imported reference image in FreeCAD ensures that background blueprints or sketches match real-world dimensions for precise 3D modeling. This guide provides a straightforward, step-by-step process to import an image plane, use the calibratio">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/calibrate-reference-image-scale-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Calibrate Reference Image Scale in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/calibrate-reference-image-scale-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Calibrating an imported reference image in FreeCAD ensures that background blueprints or sketches match real-world dimensions for precise 3D modeling. This guide provides a straightforward, step-by-step process to import an image plane, use the calibratio" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="calibrate-reference-image-scale-in-freecad">Calibrate Reference
+Image Scale in FreeCAD</h1>
+<p>Calibrating an imported reference image in FreeCAD ensures that
+background blueprints or sketches match real-world dimensions for
+precise 3D modeling. This guide provides a straightforward, step-by-step
+process to import an image plane, use the calibration tool to define a
+known distance, and automatically resize the image to a 1:1 scale.</p>
+<h3 id="1-import-the-image-plane">1. Import the Image Plane</h3>
+<ol type="1">
+<li>Open your project in FreeCAD.</li>
+<li>In the workbench dropdown menu, select the <strong>Image
+Workbench</strong>.</li>
+<li>Click the <strong>Create planar image</strong> tool (icon showing a
+picture with a green plus).</li>
+<li>Browse to and select your image file.</li>
+<li>In the pop-up dialog, choose the coordinate plane (XY, XZ, or YZ)
+that best matches your design intent and click <strong>OK</strong>.</li>
+</ol>
+<h3 id="2-calibrate-the-scale">2. Calibrate the Scale</h3>
+<p>FreeCAD includes a dedicated calibration feature in the Image
+Workbench that calculates the correct scale factor automatically.</p>
+<ol type="1">
+<li>Select the imported <strong>ImagePlane</strong> object in the Tree
+View.</li>
+<li>Click the <strong>Scale an image plane</strong> tool (icon depicting
+a ruler over an image) from the toolbar.</li>
+<li>In the 3D viewport, click on the starting point of a feature with a
+known real-world dimension (e.g., an overall length dimension or a scale
+bar).</li>
+<li>Click on the end point of that same feature.</li>
+<li>A dialog box will appear asking for the real-world distance. Enter
+the exact dimension in millimeters (or your active unit of measurement)
+and confirm.</li>
+</ol>
+<p>FreeCAD will automatically adjust the <code>XSize</code> and
+<code>YSize</code> properties of the image plane so the distance between
+those two selected points matches the input value.</p>
+<h3 id="3-alternative-manual-scaling-via-properties">3. Alternative:
+Manual Scaling via Properties</h3>
+<p>If you prefer manual adjustment or need to fine-tune the scale:</p>
+<ol type="1">
+<li>Select the <strong>ImagePlane</strong> in the Tree View.</li>
+<li>Navigate to the <strong>Data</strong> tab in the Property View panel
+at the bottom left.</li>
+<li>Locate the <strong>XSize</strong> and <strong>YSize</strong>
+properties.</li>
+<li>Calculate the scale factor: divide your target dimension by the
+measured dimension of the image.</li>
+<li>Multiply the existing <code>XSize</code> and <code>YSize</code>
+values by that factor and press Enter.</li>
+</ol>
+<h3 id="4-position-the-calibrated-image">4. Position the Calibrated
+Image</h3>
+<p>Once the image is scaled correctly:</p>
+<ol type="1">
+<li>Select the <strong>ImagePlane</strong> in the Tree View.</li>
+<li>In the <strong>Data</strong> tab, expand the
+<strong>Placement</strong> property.</li>
+<li>Adjust the <strong>Position</strong> (X, Y, and Z offsets) to align
+the reference image with your global origin or existing sketches.</li>
+<li>Adjust the <strong>Transparency</strong> in the
+<strong>View</strong> tab if you need to see overlaid sketches clearly
+while modeling.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/calibrate-reference-image-scale-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Analyze Harmonic Response in FreeCAD FEM - freecad</title>
+    <meta name="description" content="Harmonic response analysis predicts how a structure behaves under continuous cyclic or vibrating loads across a range of frequencies. In FreeCAD, this dynamic structural evaluation is performed using the Finite Element Method (FEM) workbench powered by th">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-analyze-harmonic-response-in-free-cad-fem">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Analyze Harmonic Response in FreeCAD FEM - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-analyze-harmonic-response-in-free-cad-fem" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Harmonic response analysis predicts how a structure behaves under continuous cyclic or vibrating loads across a range of frequencies. In FreeCAD, this dynamic structural evaluation is performed using the Finite Element Method (FEM) workbench powered by th" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-analyze-harmonic-response-in-freecad-fem">How to Analyze
+Harmonic Response in FreeCAD FEM</h1>
+<p>Harmonic response analysis predicts how a structure behaves under
+continuous cyclic or vibrating loads across a range of frequencies. In
+FreeCAD, this dynamic structural evaluation is performed using the
+Finite Element Method (FEM) workbench powered by the CalculiX solver
+backend via modal superposition. This guide covers the complete workflow
+to configure geometry, extract modal parameters, set up steady-state
+dynamic loading, and interpret the resulting frequency response
+spectrum.</p>
+<h3 id="1-model-preparation-and-meshing">1. Model Preparation and
+Meshing</h3>
+<p>Begin by creating or importing your part into FreeCAD and switching
+to the <strong>FEM Workbench</strong>.</p>
+<ol type="1">
+<li>Create an <strong>Analysis Container</strong> by clicking the yellow
+analysis icon.</li>
+<li>Select the solid geometry and create a mesh using either
+<strong>Netgen</strong> or <strong>Gmsh</strong>. For dynamic vibration
+studies, use second-order (quadratic) tetrahedral elements to avoid
+artificial stiffness and ensure accurate modal representations.</li>
+<li>Assign a material using the <strong>FEM Material for solid</strong>
+tool. Ensure the material definition includes both Young's Modulus and
+Density, as mass properties are mandatory for dynamic calculations.</li>
+</ol>
+<h3 id="2-apply-boundary-conditions">2. Apply Boundary Conditions</h3>
+<p>Define constraints that reflect real-world mounting conditions:</p>
+<ol type="1">
+<li>Use <strong>Constraint Fixed</strong> on faces or edges where the
+component is anchored.</li>
+<li>Apply structural loads (such as forces or pressures) that will act
+as the baseline amplitude for your harmonic excitation.</li>
+</ol>
+<h3 id="3-run-a-frequency-analysis">3. Run a Frequency Analysis</h3>
+<p>Harmonic response in CalculiX uses the modal superposition method,
+requiring natural frequencies and mode shapes to be determined
+first.</p>
+<ol type="1">
+<li>Double-click the <strong>CalculiX</strong> solver object in the
+tree.</li>
+<li>In the solver properties, set <strong>Analysis Type</strong> to
+<code>Frequency</code>.</li>
+<li>Specify the number of eigenmodes to calculate. Capture enough modes
+to exceed your target excitation frequency range by at least 30% to
+50%.</li>
+<li>Run the solver to confirm natural frequencies and ensure there are
+no unconstrained rigid-body modes.</li>
+</ol>
+<h3 id="4-configure-steady-state-dynamics-harmonic-loading">4. Configure
+Steady-State Dynamics (Harmonic Loading)</h3>
+<p>Native FreeCAD GUI features focus primarily on static and frequency
+calculations, so steady-state dynamic parameters are applied through
+CalculiX input keywords.</p>
+<ol type="1">
+<li>Select the CalculiX solver object and locate the <strong>Solver
+Control</strong> or <strong>Custom Keywords</strong> property.</li>
+<li>Insert the <code>*STEADY STATE DYNAMICS</code> CalculiX keyword
+block beneath the frequency extraction step.</li>
+<li>Define the excitation frequency range (minimum and maximum frequency
+in Hz) and the number of calculation intervals.</li>
+<li>Define structural or modal damping (such as
+<code>*MODAL DAMPING</code> specifying Rayleigh damping factors or
+direct damping ratios per mode) to prevent infinite displacement at
+resonance.</li>
+<li>Identify the amplitude and node set where the cyclic force acts
+using the <code>*AMPLITUDE</code> and <code>*CLOAD</code> or
+<code>*DLOAD</code> keywords.</li>
+</ol>
+<h3 id="5-execute-and-review-results">5. Execute and Review Results</h3>
+<ol type="1">
+<li>Click <strong>Write .inp file</strong> in the solver panel to
+inspect that your frequency and steady-state dynamics blocks are written
+sequentially.</li>
+<li>Click <strong>Run CalculiX</strong> to execute the simulation.</li>
+<li>Once completed, load the results back into FreeCAD.</li>
+<li>Review the generated response data: inspect maximum displacement
+amplitudes, von Mises stresses, and phase angles across the evaluated
+frequency spectrum to locate critical resonant peaks.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-analyze-harmonic-response-in-free-cad-fem';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

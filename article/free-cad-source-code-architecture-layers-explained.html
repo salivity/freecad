@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Source Code Architecture Layers Explained - freecad</title>
+    <meta name="description" content="FreeCAD relies on a modular, multi-tier software architecture designed to strictly separate core application logic, data modeling, graphical rendering, and end-user extensions. By isolating business logic from user interfaces, the software can run both in">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-source-code-architecture-layers-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Source Code Architecture Layers Explained - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-source-code-architecture-layers-explained" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FreeCAD relies on a modular, multi-tier software architecture designed to strictly separate core application logic, data modeling, graphical rendering, and end-user extensions. By isolating business logic from user interfaces, the software can run both in" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-source-code-architecture-layers-explained">FreeCAD
+Source Code Architecture Layers Explained</h1>
+<p>FreeCAD relies on a modular, multi-tier software architecture
+designed to strictly separate core application logic, data modeling,
+graphical rendering, and end-user extensions. By isolating business
+logic from user interfaces, the software can run both interactively on a
+desktop and headlessly on a server or automated pipeline. The source
+code is organized into distinct structural tiers: the Base layer, the
+App (document and data) layer, the Gui (presentation) layer,
+domain-specific Workbenches, and an extensive Python binding layer that
+spans the entire system.</p>
+<h3 id="1-the-base-layer">1. The Base Layer</h3>
+<p>The <code>Base</code> layer acts as the foundation of FreeCAD's C++
+framework, independent of any 3D graphics or high-level CAD
+functionality. It implements core utilities, fundamental mathematical
+primitives (such as vectors, matrices, and coordinate transformations),
+basic data structures, exception handling, and custom runtime type
+information (RTTI) through the <code>Base::BaseClass</code>.</p>
+<p>This layer also hosts the application's configuration infrastructure,
+logging frameworks, unit testing mechanics, and the parameter manager,
+which stores persistent application settings in an XML-based schema.</p>
+<h3 id="2-the-app-layer-data-engine">2. The App Layer (Data Engine)</h3>
+<p>The <code>App</code> layer contains the non-graphical document object
+model, responsible for the structural representation and parametric
+history of a project. It handles data persistence, dependency graph
+resolution, transactions, and undo/redo stacks.</p>
+<p>Key components of the App layer include:</p>
+<ul>
+<li><strong><code>App::Document</code></strong>: Manages a single active
+project file and coordinates its contents.</li>
+<li><strong><code>App::DocumentObject</code></strong>: The fundamental
+base class for all geometric, parametric, or auxiliary objects created
+in FreeCAD.</li>
+<li><strong><code>App::Property</code> system</strong>: Dynamic
+variables attached to document objects (e.g., dimensions, constraints,
+vectors, placements) that trigger recalculations when modified and
+handle automated XML/binary serialization.</li>
+</ul>
+<p>Crucially, the App layer has no dependency on graphical rendering
+libraries like Qt or Coin3D, allowing it to execute simulations, batch
+exports, and conversions purely via the command line or background
+services.</p>
+<h3 id="3-the-gui-layer-presentation-and-interaction">3. The Gui Layer
+(Presentation and Interaction)</h3>
+<p>The <code>Gui</code> layer builds on top of the App layer to provide
+graphical rendering, user input processing, and interface management. It
+depends heavily on <strong>Qt</strong> for interface elements (toolbars,
+dock widgets, menus) and <strong>Coin3D</strong> (an Open Inventor 2.1
+implementation) for the 3D scenegraph rendering engine.</p>
+<p>Rather than altering App data directly, the GUI decouples visual
+state via the <strong>ViewProvider</strong> pattern
+(<code>Gui::ViewProvider</code>). Every <code>App::DocumentObject</code>
+that requires a 3D representation has a corresponding
+<code>ViewProvider</code> in the GUI layer. This object defines visual
+properties such as color, transparency, render mode, and selection
+handling without contaminating the core CAD data model with visual
+configurations.</p>
+<p>The GUI layer also manages the command framework
+(<code>Gui::Command</code>), which encapsulates user actions, records
+them for Python scripting, and executes them against the document.</p>
+<h3 id="4-workbenches-domain-specific-modules">4. Workbenches
+(Domain-Specific Modules)</h3>
+<p>FreeCAD's toolsets are divided into separate, modular components
+known as <strong>Workbenches</strong> (e.g., Part, PartDesign, Sketcher,
+TechDraw, Draft, and BIM). Workbenches can be implemented in C++, pure
+Python, or a hybrid of both.</p>
+<p>Within each C++ workbench, the architectural split between App and
+GUI is maintained:</p>
+<ul>
+<li><strong>Workbench App logic</strong>: Integrates third-party
+computational kernels (most notably the <strong>OpenCASCADE Technology
+(OCCT)</strong> geometric kernel for B-Rep modeling) to compute
+geometry, topology, and features.</li>
+<li><strong>Workbench Gui logic</strong>: Supplies custom 3D
+manipulators, specialized Qt dialogs, toolbars, and ViewProviders
+specific to that toolset.</li>
+</ul>
+<h3 id="5-the-python-api-layer">5. The Python API Layer</h3>
+<p>Python is embedded deeply throughout the entire architecture, serving
+both as an external automation interface and an internal gluing
+mechanism. FreeCAD uses custom C++ bindings to expose almost every
+<code>Base</code>, <code>App</code>, and <code>Gui</code> class to the
+embedded Python interpreter.</p>
+<p>Through this layer, users and developers can manipulate document
+properties, construct geometric entities, customize the interface, and
+write completely functional workbenches in Python with performance
+matching native C++ logic for high-level operations.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-source-code-architecture-layers-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Draft Move vs Standard Translation - freecad</title>
+    <meta name="description" content="In FreeCAD, moving an object can be achieved through either a standard translation or the Draft Move tool, but each serves a distinct role in modeling workflows. While a standard translation generally alters an object’s underlying numerical placement prop">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-draft-move-vs-standard-translation">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Draft Move vs Standard Translation - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-draft-move-vs-standard-translation" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In FreeCAD, moving an object can be achieved through either a standard translation or the Draft Move tool, but each serves a distinct role in modeling workflows. While a standard translation generally alters an object’s underlying numerical placement prop" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-draft-move-vs-standard-translation">FreeCAD Draft Move
+vs Standard Translation</h1>
+<p>In FreeCAD, moving an object can be achieved through either a
+standard translation or the Draft Move tool, but each serves a distinct
+role in modeling workflows. While a standard translation generally
+alters an object’s underlying numerical placement properties along fixed
+global or local axes, a Draft Move is an interactive, vector-based
+operation that utilizes snapping mechanisms to reposition objects or
+sub-elements relative to existing geometry. Understanding the functional
+differences between these two methods ensures accurate positioning,
+maintains parametric integrity, and speeds up design tasks.</p>
+<h3 id="standard-translation-placement-and-transform">Standard
+Translation (Placement and Transform)</h3>
+<p>Standard translation refers to modifying an object’s coordinates
+directly via its properties or FreeCAD's built-in 3D gizmo.</p>
+<ul>
+<li><strong>Placement Property:</strong> Every spatial object in FreeCAD
+has a <code>Placement</code> attribute in the Data tab. Changing the
+<code>Base</code> coordinates (X, Y, Z) shifts the object relative to
+its parent coordinate system.</li>
+<li><strong>Transform Tool:</strong> Accessed by right-clicking an
+object in the tree view and selecting "Transform," this tool provides an
+on-screen triad (gizmo) allowing users to drag objects along specific
+axes or rotate them in discrete increments.</li>
+<li><strong>Rigid Body Movement:</strong> Standard translation treats
+the object as an indivisible unit. It relocates the entire coordinate
+system of the object without altering its underlying geometric
+definitions or component vertices.</li>
+<li><strong>Parametric Considerations:</strong> If an object is
+controlled by an Attachment (common in the PartDesign workbench),
+standard translation fields may be overridden or locked, requiring
+adjustments through the <code>Attachment Offset</code> instead.</li>
+</ul>
+<h3 id="draft-move-draft_move">Draft Move (<code>Draft_Move</code>)</h3>
+<p>The Draft Move tool is part of FreeCAD's Draft workbench and
+functions more like traditional CAD moving commands found in
+architectural and 2D drafting software.</p>
+<ul>
+<li><strong>Vector and Snapping Integration:</strong> Instead of relying
+strictly on axis offsets, Draft Move defines displacement using two
+user-selected points: a start point and an end point. This allows
+seamless snapping to vertices, midpoints, centers, and intersections of
+existing geometry.</li>
+<li><strong>Sub-element Modification:</strong> For certain Draft and
+sketch-based shapes, Draft Move can move individual vertices or edges
+rather than the entire object, directly altering the shape's geometric
+structure.</li>
+<li><strong>Copy Capability:</strong> During the Draft Move command, a
+toggle in the task panel allows you to create a copy or clone of the
+selected object at the target location instead of simply displacing the
+original.</li>
+<li><strong>Working Plane Dependence:</strong> Draft Move operations are
+typically projected onto the currently active Draft Working Plane (e.g.,
+Top, Front, Side, or custom surface), providing control over the plane
+of movement.</li>
+</ul>
+<h3 id="key-differences-at-a-glance">Key Differences at a Glance</h3>
+<ul>
+<li><strong>Input Method:</strong> Standard translation relies on manual
+coordinate entry or dragging an axial gizmo. Draft Move uses interactive
+point-to-point vectors.</li>
+<li><strong>Precision and Referencing:</strong> Standard translation is
+ideal when you know the exact numerical distance along an axis. Draft
+Move is superior when aligning an object directly to an existing
+geometric feature without prior measurement.</li>
+<li><strong>Geometry vs. Coordinates:</strong> Standard translation
+purely updates the <code>Placement.Base</code> coordinates. Draft Move
+can alter placement or modify raw geometry depending on whether whole
+objects or sub-elements are selected.</li>
+<li><strong>Duplication:</strong> Standard translation only moves the
+existing object. Draft Move includes an integrated option to duplicate
+the object during displacement.</li>
+</ul>
+<h3 id="when-to-use-each">When to Use Each</h3>
+<p>Use <strong>Standard Translation</strong> when working within the
+PartDesign workbench, when adjusting feature offsets parametrically, or
+when moving parts by known, uniform mathematical values along a single
+axis.</p>
+<p>Use <strong>Draft Move</strong> in layout design, architectural
+modeling, assembly alignment, or 2D drafting where an object needs to
+snap directly to the corner, edge, or midpoint of another geometric
+element.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-draft-move-vs-standard-translation';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

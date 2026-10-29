@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Export Animations to Video in FreeCAD - freecad</title>
+    <meta name="description" content="FreeCAD does not feature a native one-click tool to export animated assemblies or camera paths directly into containerized video formats like MP4 or AVI. Instead, the standard workflow requires generating the animation inside a specialized workbench, rend">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-export-animations-to-video-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Export Animations to Video in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-export-animations-to-video-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FreeCAD does not feature a native one-click tool to export animated assemblies or camera paths directly into containerized video formats like MP4 or AVI. Instead, the standard workflow requires generating the animation inside a specialized workbench, rend" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-export-animations-to-video-in-freecad">How to Export
+Animations to Video in FreeCAD</h1>
+<p>FreeCAD does not feature a native one-click tool to export animated
+assemblies or camera paths directly into containerized video formats
+like MP4 or AVI. Instead, the standard workflow requires generating the
+animation inside a specialized workbench, rendering out the movement as
+an ordered sequence of static image files, and compiling those frames
+into a video format using an external tool like FFmpeg. This guide walks
+through configuring your animation, saving your frame sequences, and
+encoding the final video output.</p>
+<h2 id="1-prepare-your-animation-in-freecad">1. Prepare Your Animation
+in FreeCAD</h2>
+<p>To animate in FreeCAD, you must use a dedicated workbench such as
+<strong>Assembly4</strong>, <strong>ExplodedAssembly</strong>, or the
+community-developed <strong>Animation Workbench</strong>.</p>
+<ol type="1">
+<li>Create your mechanical constraints or movement tracks using your
+chosen workbench.</li>
+<li>Define the duration, start variable, and end variable of your
+animation cycle.</li>
+<li>Test-run the animation inside the 3D view to verify that camera
+angles, lighting, and object trajectories behave as expected without
+clipping.</li>
+</ol>
+<h2 id="2-export-the-animation-as-an-image-sequence">2. Export the
+Animation as an Image Sequence</h2>
+<p>Once the motion is configured, render the animation
+frame-by-frame:</p>
+<ol type="1">
+<li><strong>Set Up a Target Folder:</strong> Create a dedicated, empty
+folder on your drive (e.g., <code>C:/FreeCAD_Renders/</code>) to prevent
+cluttering your project directory with hundreds of images.</li>
+<li><strong>Configure Frame Output:</strong> In your workbench’s
+animation dialog (such as the <em>Animate Assembly</em> window in
+Assembly4), look for the option labeled <strong>Save frames</strong>,
+<strong>Export sequence</strong>, or <strong>Record</strong>.</li>
+<li><strong>Define Naming and Resolution:</strong> Set the output file
+pattern with zero-padded numbering, such as <code>frame_%04d.png</code>
+(resulting in <code>frame_0001.png</code>, <code>frame_0002.png</code>,
+etc.). Select your desired pixel resolution (e.g., 1920x1080) and set
+your target frame rate (typically 30 or 60 frames per second).</li>
+<li><strong>Render:</strong> Execute the animation sequence. FreeCAD
+will step through each frame and save a corresponding PNG or JPEG image
+to your target folder.</li>
+</ol>
+<p><em>(Alternative Method: For custom scripted motion, use the FreeCAD
+Python Console with a <code>for</code> loop that updates object
+placement and invokes
+<code>Gui.ActiveDocument.ActiveView.saveImage('frame_%04d.png' % i, 1920, 1080, 'Transparent')</code>
+on each iteration).</em></p>
+<h2 id="3-convert-image-sequences-to-video-using-ffmpeg">3. Convert
+Image Sequences to Video Using FFmpeg</h2>
+<p>The fastest and most reliable way to convert the image sequence into
+a video format is using <strong>FFmpeg</strong>, an open-source
+command-line multimedia framework.</p>
+<ol type="1">
+<li><p>Open a terminal (macOS/Linux) or Command Prompt
+(Windows).</p></li>
+<li><p>Navigate to the folder containing your rendered images:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> path/to/your/frames</span></code></pre></div></li>
+<li><p>Run the following command to compile the images into an H.264 MP4
+video:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ffmpeg</span> <span class="at">-framerate</span> 30 <span class="at">-i</span> frame_%04d.png <span class="at">-c:v</span> libx264 <span class="at">-pix_fmt</span> yuv420p output.mp4</span></code></pre></div>
+<ul>
+<li><code>-framerate 30</code>: Sets the video playback speed to 30
+frames per second.</li>
+<li><code>-i frame_%04d.png</code>: Specifies the input naming pattern
+for four-digit numbers.</li>
+<li><code>-c:v libx264</code>: Uses the widely compatible H.264 video
+codec.</li>
+<li><code>-pix_fmt yuv420p</code>: Ensures maximum compatibility with
+standard media players and web browsers.</li>
+<li><code>output.mp4</code>: The filename of your finished video.</li>
+</ul></li>
+</ol>
+<h2 id="4-alternative-gui-compilers">4. Alternative GUI Compilers</h2>
+<p>If you prefer not to use the command line, you can import the image
+sequence into standard graphical video editing programs:</p>
+<ul>
+<li><strong>Blender:</strong> Open the Video Sequence Editor, select
+<strong>Add &gt; Image/Sequence</strong>, highlight all exported frames,
+set your output video format to FFmpeg Video / MP4, and click
+<strong>Render Animation</strong>.</li>
+<li><strong>OpenShot or Kdenlive:</strong> Import the first image of the
+sequence; the editor will typically detect the remaining sequence
+automatically and prompt to import it as a single video clip that you
+can export to any video format.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-export-animations-to-video-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

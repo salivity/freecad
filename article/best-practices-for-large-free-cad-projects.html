@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Practices for Large FreeCAD Projects - freecad</title>
+    <meta name="description" content="Managing large models in FreeCAD requires deliberate project organization to maintain software stability, prevent file corruption, and ensure efficient collaboration. This guide outlines essential best practices for structuring complex CAD projects, focus">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/best-practices-for-large-free-cad-projects">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Best Practices for Large FreeCAD Projects - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/best-practices-for-large-free-cad-projects" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Managing large models in FreeCAD requires deliberate project organization to maintain software stability, prevent file corruption, and ensure efficient collaboration. This guide outlines essential best practices for structuring complex CAD projects, focus" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="best-practices-for-large-freecad-projects">Best Practices for
+Large FreeCAD Projects</h1>
+<p>Managing large models in FreeCAD requires deliberate project
+organization to maintain software stability, prevent file corruption,
+and ensure efficient collaboration. This guide outlines essential best
+practices for structuring complex CAD projects, focusing on multi-file
+modular workflows, proper container usage, parametric data management,
+and performance optimization techniques.</p>
+<h2 id="adopt-a-multi-file-modular-workflow">Adopt a Multi-File Modular
+Workflow</h2>
+<p>Monolithic files containing hundreds of features inevitably lead to
+sluggish performance, dependency loops, and high risks of corruption.
+Decompose your project into smaller, manageable components:</p>
+<ul>
+<li><strong>Individual Part Files:</strong> Model each manufactured
+component or logical sub-unit in its own standalone <code>.FCStd</code>
+file.</li>
+<li><strong>Sub-Assemblies:</strong> Group related parts into
+intermediate assembly files before bringing them into the master
+model.</li>
+<li><strong>Master Assembly:</strong> Reserve the top-level file
+exclusively for positioning sub-assemblies and major structural
+elements, avoiding any local solid modeling.</li>
+</ul>
+<p>Use modern assembly workbenches (such as Assembly4, A2plus, or the
+integrated Assembly workbench in FreeCAD 1.0+) that leverage FreeCAD's
+native <code>App::Link</code> functionality to reference external
+components without duplicating geometry data.</p>
+<h2 id="implement-master-sketches-and-parameter-spreadsheets">Implement
+Master Sketches and Parameter Spreadsheets</h2>
+<p>Centrally managing project dimensions eliminates the need to update
+dozens of individual sketches when design requirements change.</p>
+<ul>
+<li><strong>Dedicated Parameter Files:</strong> Create a standalone file
+containing a single spreadsheet for project-wide variables such as
+clearances, wall thicknesses, and interface mounting hole patterns.</li>
+<li><strong>Skeleton/Master Modeling:</strong> Drive critical dimensions
+across parts using reference sketches (skeletons). Position reference
+planes and major layout sketches in a top-level layout file, then link
+these datums into individual part files to establish deterministic
+spatial references.</li>
+</ul>
+<h2 id="organize-the-tree-structure-with-containers">Organize the Tree
+Structure with Containers</h2>
+<p>Within individual files, maintain a disciplined hierarchy to avoid
+confusing dependency graphs:</p>
+<ul>
+<li><strong>Use One Body per Solid:</strong> Ensure every distinct solid
+feature is isolated within its own <code>PartDesign::Body</code>. Never
+combine multiple disconnected solids into a single Body container.</li>
+<li><strong>Group with Part Containers:</strong> Group related bodies,
+datum elements, and shape binders inside a standard
+<code>App::Part</code> container. This allows you to apply bulk spatial
+transformations to the entire group without breaking internal sketch
+constraints.</li>
+<li><strong>Folder Structure:</strong> Use FreeCAD's <code>Folder</code>
+objects inside the tree view to categorize non-geometric assets,
+construction sketches, and documentation tables.</li>
+</ul>
+<h2 id="mitigate-the-topological-naming-problem-tnp">Mitigate the
+Topological Naming Problem (TNP)</h2>
+<p>While modern FreeCAD versions include mitigations for the Topological
+Naming Problem, robust modeling habits remain critical for large
+projects:</p>
+<ul>
+<li><strong>Attach to Datums, Not Faces:</strong> Always map sketches to
+Datum Planes, Datum Lines, or origin axes rather than directly onto
+generated faces or edges of solid geometry.</li>
+<li><strong>Leverage Sub-Shape Binders:</strong> When referencing
+external geometry across bodies or files, generate an
+<code>Active/SubShapeBinder</code>. This isolates geometric references
+to a single point in the dependency tree, making fixes straightforward
+if an upstream face or edge index shifts.</li>
+</ul>
+<h2 id="optimize-file-and-viewport-performance">Optimize File and
+Viewport Performance</h2>
+<p>Large projects consume significant RAM and GPU bandwidth. Keep your
+workspace responsive by applying these system and file settings:</p>
+<ul>
+<li><strong>Adjust Mesh Deviation:</strong> In <em>Preferences &gt;
+Display &gt; 3D View</em>, increase the "Maximum deviation" for
+tessellation. Lower values produce smoother curves but dramatically
+increase polygon counts and memory usage.</li>
+<li><strong>Hide Inactive Geometry:</strong> Toggle visibility off
+(<code>Spacebar</code>) for internal sub-assemblies, datum objects, and
+construction geometry that are not currently under active
+development.</li>
+<li><strong>Purge Unused Dependencies:</strong> Regularly audit project
+trees to remove orphaned sketches, broken binders, and unused materials
+before saving.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/best-practices-for-large-free-cad-projects';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

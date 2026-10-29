@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Reorder Features in FreeCAD Part Design - freecad</title>
+    <meta name="description" content="Reordering features in the FreeCAD Part Design workbench allows you to modify the parametric history of your 3D model without having to delete and recreate operations. Because Part Design relies on a strict linear dependency tree, features can be rearrang">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-reorder-features-in-free-cad-part-design">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Reorder Features in FreeCAD Part Design - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-reorder-features-in-free-cad-part-design" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Reordering features in the FreeCAD Part Design workbench allows you to modify the parametric history of your 3D model without having to delete and recreate operations. Because Part Design relies on a strict linear dependency tree, features can be rearrang" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-reorder-features-in-freecad-part-design">How to Reorder
+Features in FreeCAD Part Design</h1>
+<p>Reordering features in the FreeCAD Part Design workbench allows you
+to modify the parametric history of your 3D model without having to
+delete and recreate operations. Because Part Design relies on a strict
+linear dependency tree, features can be rearranged using drag-and-drop
+actions or by manipulating the "Tip" of the active Body, provided that
+no parent-child dependency conflicts are introduced. This guide covers
+how to reorder features directly in the tree view, insert new features
+into an existing history, and troubleshoot common dependency errors.</p>
+<h3 id="understanding-the-sequential-history">Understanding the
+Sequential History</h3>
+<p>The Part Design workbench uses a cumulative, linear modeling
+approach. Each feature (such as a Pad, Pocket, or Fillet) depends on the
+cumulative solid created by the operations before it. Consequently, you
+cannot move a child feature before its parent geometry. For instance, a
+Pocket attached to the face of a specific Pad cannot be placed before
+that Pad in the tree view.</p>
+<h3 id="method-1-drag-and-drop-in-the-model-tree">Method 1: Drag and
+Drop in the Model Tree</h3>
+<p>In modern versions of FreeCAD (0.20 and later), simple reordering can
+be performed directly within the tree view:</p>
+<ol type="1">
+<li>Expand the active <strong>Body</strong> in the Model tree panel on
+the left side of the screen.</li>
+<li>Click and hold the feature you want to move.</li>
+<li>Drag the feature over the target feature you want to place it next
+to.</li>
+<li>Release the mouse button. The feature will shift to its new
+sequential position.</li>
+<li>If the model does not update immediately, press <code>F5</code> to
+recompute the document.</li>
+</ol>
+<p><em>Note: If the cursor displays a "prohibited" or "no" icon, the
+drop location violates a geometric dependency.</em></p>
+<h3 id="method-2-inserting-features-by-changing-the-tip">Method 2:
+Inserting Features by Changing the Tip</h3>
+<p>If you need to insert a new feature into the middle of your model
+history rather than moving an existing one, you can temporarily change
+the "Tip" of the body:</p>
+<ol type="1">
+<li>Right-click the feature in the tree that should immediately precede
+your new operation.</li>
+<li>Select <strong>Set tip</strong> from the context menu. The model
+view will roll back to that state, temporarily hiding all subsequent
+operations.</li>
+<li>Create your new sketch or additive/subtractive feature. FreeCAD will
+insert it immediately after the current Tip.</li>
+<li>Once completed, scroll to the bottom of the Body, right-click the
+final feature in the tree, and select <strong>Set tip</strong> to
+restore the full model.</li>
+<li>Press <code>F5</code> to recompute.</li>
+</ol>
+<h3 id="troubleshooting-reordering-errors">Troubleshooting Reordering
+Errors</h3>
+<p>Reordering often causes the model tree to display red or yellow
+warning icons. These usually indicate broken topological references:</p>
+<ul>
+<li><strong>Cyclic Dependency Errors:</strong> Occurs when Feature A
+relies on Feature B, but Feature B is moved before Feature A. Revert the
+move using <code>Ctrl + Z</code> and inspect the external geometry
+references in your sketches.</li>
+<li><strong>Missing Support Faces:</strong> If a sketch was mapped
+directly to a planar face created by an operation that now occurs later
+in the tree, the sketch will break. To fix this, select the sketch, open
+the <strong>Map Mode</strong> property in the Data tab, and re-link it
+to a valid plane or feature created earlier in the sequence.</li>
+</ul>
+<h3 id="best-practices-to-allow-easy-reordering">Best Practices to Allow
+Easy Reordering</h3>
+<ul>
+<li><strong>Reference Datum Planes:</strong> Whenever possible, attach
+sketches to default planes (XY, XZ, YZ) or Datum Planes rather than
+model faces. This detaches the sketches from downstream geometry and
+makes features freely movable.</li>
+<li><strong>Keep Dress-Up Features at the End:</strong> Operations like
+Fillets, Chamfers, and Drafts change face and edge indices. Keep these
+at the very bottom of the Part Design tree so they do not disrupt the
+references of core structural features.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-reorder-features-in-free-cad-part-design';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

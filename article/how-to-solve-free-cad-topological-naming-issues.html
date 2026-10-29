@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Solve FreeCAD Topological Naming Issues - freecad</title>
+    <meta name="description" content="The Topological Naming Problem (TNP) occurs in FreeCAD when altering an early sketch causes internal geometric references—such as Face1 or Edge3—to be re-indexed, which in turn breaks downstream operations attached to those elements. This guide provides a">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-solve-free-cad-topological-naming-issues">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Solve FreeCAD Topological Naming Issues - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-solve-free-cad-topological-naming-issues" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Topological Naming Problem (TNP) occurs in FreeCAD when altering an early sketch causes internal geometric references—such as Face1 or Edge3—to be re-indexed, which in turn breaks downstream operations attached to those elements. This guide provides a" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-solve-freecad-topological-naming-issues">How to Solve
+FreeCAD Topological Naming Issues</h1>
+<p>The Topological Naming Problem (TNP) occurs in FreeCAD when altering
+an early sketch causes internal geometric references—such as Face1 or
+Edge3—to be re-indexed, which in turn breaks downstream operations
+attached to those elements. This guide provides actionable methods to
+avoid TNP during the design phase, workflows to decouple sketches from
+generated geometry, and step-by-step instructions for repairing broken
+models when base sketches are altered.</p>
+<h3 id="understand-why-the-issue-occurs">Understand Why the Issue
+Occurs</h3>
+<p>In FreeCAD, features generated from sketches (like pads or pockets)
+produce faces, edges, and vertices that are labeled sequentially by the
+underlying geometric kernel. When you edit a base sketch by adding,
+deleting, or altering geometry, the order and total count of the
+resulting faces change. Any downstream feature attached directly to a
+generated face (e.g., "Face4") will either attach to the wrong face or
+fail completely because that specific index no longer represents the
+original geometry.</p>
+<h3 id="use-datum-planes-instead-of-solid-faces">Use Datum Planes
+Instead of Solid Faces</h3>
+<p>The most effective way to prevent TNP is to avoid mapping new
+sketches directly onto the faces of a 3D solid. Instead, use Datum
+Planes:</p>
+<ol type="1">
+<li>Select the base coordinate system planes (XY, XZ, or YZ) or an
+immutable reference feature.</li>
+<li>Create a <strong>Datum Plane</strong> from the Part Design
+workbench.</li>
+<li>Adjust the plane's position using the <strong>Attachment
+Offset</strong> properties (X, Y, Z translations and rotations).</li>
+<li>Attach your new sketch to this Datum Plane rather than the face of
+the solid.</li>
+</ol>
+<p>Because the Datum Plane references the global coordinate system,
+changes to preceding solid geometry will not affect the sketch's
+placement.</p>
+<h3 id="implement-master-sketches-skeleton-modeling">Implement Master
+Sketches (Skeleton Modeling)</h3>
+<p>Centralize your model's critical dimensions using skeleton
+sketches:</p>
+<ol type="1">
+<li>Create one or more base sketches at the very beginning of the tree
+on standard origin planes.</li>
+<li>Draw the primary framework, bounding boxes, and alignment lines of
+your design.</li>
+<li>Reference these primary sketches across subsequent sketches using
+the <strong>External Geometry</strong> tool or using the
+<strong>Spreadsheet Workbench</strong> with aliases.</li>
+<li>If base dimensions change, edit the master sketch; downstream solid
+features will adjust their size without reordering generated face
+references.</li>
+</ol>
+<h3 id="apply-dress-up-features-at-the-very-end">Apply Dress-Up Features
+at the Very End</h3>
+<p>Chamfers, fillets, drafts, and thread features significantly alter
+edge and face numbering. Never attach sketches or downstream features to
+geometry created after applying a dress-up feature. Keep all fillets and
+chamfers as the final operations at the bottom of the Part Design
+tree.</p>
+<h3 id="how-to-repair-broken-sketches-after-editing-a-base-sketch">How
+to Repair Broken Sketches After Editing a Base Sketch</h3>
+<p>If you have already modified a base sketch and downstream features
+have broken, resolve the broken dependencies sequentially from top to
+bottom:</p>
+<ol type="1">
+<li><strong>Re-link the Sketch Support:</strong>
+<ul>
+<li>Select the broken sketch in the tree view.</li>
+<li>Go to the <strong>Data</strong> tab in the Property View.</li>
+<li>Locate the <strong>Map Mode</strong> (or
+<strong>Attachment</strong>) property and click the ellipsis
+(<code>...</code>) button.</li>
+<li>Clear the missing or incorrect reference and select the correct face
+or Datum Plane.</li>
+<li>Set the attachment mode (typically "FlatFace") and click
+<strong>OK</strong>.</li>
+</ul></li>
+<li><strong>Fix Missing External Geometry:</strong>
+<ul>
+<li>Open the broken sketch in the Sketcher workbench.</li>
+<li>Missing external geometry references will appear in magenta or
+trigger an error message.</li>
+<li>Delete the broken external reference lines.</li>
+<li>Re-import the external geometry from the updated solid or link to an
+origin plane/master sketch.</li>
+<li>Re-apply any lost constraints to the newly selected references.</li>
+</ul></li>
+<li><strong>Recompute the Model:</strong>
+<ul>
+<li>Close the sketch.</li>
+<li>Press <strong>Ctrl + R</strong> (or click the
+<strong>Recompute</strong> button) to evaluate the model tree.</li>
+<li>Move to the next broken feature down the tree and repeat the
+process.</li>
+</ul></li>
+</ol>
+<h3 id="upgrade-to-freecad-10-or-later">Upgrade to FreeCAD 1.0 or
+Later</h3>
+<p>Beginning with FreeCAD 1.0, the integrated Topological Naming
+Algorithm (originally developed under the Ondsel project) automatically
+tracks and remaps geometric elements across edits. While upgrading
+minimizes errors caused by simple sketch modifications, adhering to
+stable modeling habits—such as using Datum geometry and avoiding face
+attachments—remains the industry standard for parametric CAD
+reliability.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-solve-free-cad-topological-naming-issues';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

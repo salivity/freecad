@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Arch Site: Structural Site Object Explained - freecad</title>
+    <meta name="description" content="In FreeCAD&#39;s Arch and BIM workbenches, the Site object serves as the spatial foundation of an architectural project, representing the physical terrain, geographical coordinates, and boundaries of a plot of land. This article explains what the Arch Site ob">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-arch-site-structural-site-object-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Arch Site: Structural Site Object Explained - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-arch-site-structural-site-object-explained" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In FreeCAD&#39;s Arch and BIM workbenches, the Site object serves as the spatial foundation of an architectural project, representing the physical terrain, geographical coordinates, and boundaries of a plot of land. This article explains what the Arch Site ob" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-arch-site-structural-site-object-explained">FreeCAD Arch
+Site: Structural Site Object Explained</h1>
+<p>In FreeCAD's Arch and BIM workbenches, the Site object serves as the
+spatial foundation of an architectural project, representing the
+physical terrain, geographical coordinates, and boundaries of a plot of
+land. This article explains what the Arch Site object is, its key
+functions, essential properties, and its role in organizing building
+elements and exporting standard Industry Foundation Classes (IFC)
+data.</p>
+<h2 id="definition-of-the-arch-site-object">Definition of the Arch Site
+Object</h2>
+<p>The Arch Site is a specialized grouping object used to define a
+real-world construction site. It acts as the top-level spatial container
+in an architectural project hierarchy. In standard Building Information
+Modeling (BIM) workflows, a Site typically encompasses one or more
+Building objects, exterior landscaping elements, roads, and native
+terrain geometry.</p>
+<p>When exporting a project to IFC format, the Arch Site translates
+directly into an <code>IfcSite</code> entity, ensuring proper spatial
+referencing in collaborative BIM environments.</p>
+<h2 id="primary-functions-of-the-site-object">Primary Functions of the
+Site Object</h2>
+<h3 id="1-spatial-organization">1. Spatial Organization</h3>
+<p>The Site object organizes complex project hierarchies. While child
+objects such as walls, slabs, and structural columns typically reside
+inside Storeys (Levels) and Buildings, the Site acts as the master
+parent container. Moving the Site automatically shifts all nested
+elements, maintaining spatial consistency.</p>
+<h3 id="2-terrain-and-topography-modeling">2. Terrain and Topography
+Modeling</h3>
+<p>An Arch Site can incorporate topographical geometry. You can generate
+a 3D terrain surface directly from:</p>
+<ul>
+<li>2D contour lines (imported from DXF, DWG, or sketch lines)</li>
+<li>Point clouds or coordinate sets representing ground elevations</li>
+<li>Standard 3D meshes and solids</li>
+</ul>
+<p>Once added to a Site, FreeCAD can compute cut-and-fill operations to
+calculate earthwork volumes required for excavations and
+foundations.</p>
+<h3 id="3-geographic-and-solar-positioning">3. Geographic and Solar
+Positioning</h3>
+<p>The Site object anchors your project to real-world coordinates. This
+data is critical for accurate shadow studies, solar analysis, and
+daylight modeling using FreeCAD's integrated tools or external renderers
+like Ladybug.</p>
+<h2 id="key-properties-of-the-site-object">Key Properties of the Site
+Object</h2>
+<p>When you select a Site object in the FreeCAD tree view, the Property
+panel provides several critical parameters:</p>
+<ul>
+<li><strong>Latitude and Longitude:</strong> Decimal or degree-based
+geographic coordinates used to pinpoint the exact location on
+Earth.</li>
+<li><strong>Elevation:</strong> The reference height of the site above
+sea level.</li>
+<li><strong>North Deviation (Declination):</strong> The angle difference
+between the project's drawing orientation (true horizontal/vertical
+grid) and true geographic north.</li>
+<li><strong>Terrain:</strong> Specifies the linked base shape or mesh
+that defines the ground surface.</li>
+<li><strong>Postal Address:</strong> Metadata fields for street, city,
+country, and postal code to enrich the IFC dataset.</li>
+<li><strong>EPW File:</strong> The path to an EnergyPlus Weather file
+used for localized climate and solar simulations.</li>
+</ul>
+<h2 id="how-to-create-and-use-a-site-in-freecad">How to Create and Use a
+Site in FreeCAD</h2>
+<ol type="1">
+<li>Switch to the <strong>BIM</strong> or <strong>Arch</strong>
+workbench.</li>
+<li>Ensure you have your project elements or terrain shape selected
+(optional).</li>
+<li>Click the <strong>Site</strong> tool icon from the toolbar or choose
+it from the menu.</li>
+<li>Drag and drop existing Building objects or structural elements into
+the newly created Site folder in the tree view.</li>
+<li>Set the latitude, longitude, and elevation in the Data tab of the
+Property view.</li>
+</ol>
+<p>Using the Arch Site object guarantees that your FreeCAD model adheres
+to international BIM standards, provides accurate environmental data,
+and maintains a clean structural hierarchy.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-arch-site-structural-site-object-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

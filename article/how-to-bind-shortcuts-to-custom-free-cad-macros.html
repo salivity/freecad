@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Bind Shortcuts to Custom FreeCAD Macros - freecad</title>
+    <meta name="description" content="Assigning keyboard shortcuts to custom macros in FreeCAD allows you to automate repetitive modeling tasks and trigger custom Python scripts with a single keystroke. This process involves using FreeCAD&#39;s built-in customization settings to register the macr">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-bind-shortcuts-to-custom-free-cad-macros">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Bind Shortcuts to Custom FreeCAD Macros - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-bind-shortcuts-to-custom-free-cad-macros" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Assigning keyboard shortcuts to custom macros in FreeCAD allows you to automate repetitive modeling tasks and trigger custom Python scripts with a single keystroke. This process involves using FreeCAD&#39;s built-in customization settings to register the macr" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-bind-shortcuts-to-custom-freecad-macros">How to Bind
+Shortcuts to Custom FreeCAD Macros</h1>
+<p>Assigning keyboard shortcuts to custom macros in FreeCAD allows you
+to automate repetitive modeling tasks and trigger custom Python scripts
+with a single keystroke. This process involves using FreeCAD's built-in
+customization settings to register the macro as an accessible GUI
+command and then binding that command to your preferred key combination.
+Below is a direct, step-by-step guide to setting up your custom
+shortcut.</p>
+<h3 id="step-1-open-the-customize-window">Step 1: Open the Customize
+Window</h3>
+<ol type="1">
+<li>Launch FreeCAD.</li>
+<li>In the top navigation menu, click on <strong>Tools</strong>.</li>
+<li>Select <strong>Customize...</strong> from the dropdown menu to open
+the customization dialog.</li>
+</ol>
+<h3 id="step-2-register-the-macro-as-a-command">Step 2: Register the
+Macro as a Command</h3>
+<p>Before FreeCAD can assign a keyboard shortcut to a script, the macro
+must be converted into a recognized interface action.</p>
+<ol type="1">
+<li>In the <strong>Customize</strong> dialog, select the
+<strong>Macros</strong> tab.</li>
+<li>In the <strong>Macro</strong> dropdown list, select the macro script
+you want to use.</li>
+<li>Fill in the <strong>Menu text</strong> field with a descriptive name
+(e.g., <code>My Custom Macro</code>). This is how the command will
+appear in shortcut listings.</li>
+<li>(Optional) Provide a <strong>Tool tip</strong> or assign a
+<strong>Pixmap</strong> (icon) if you also plan to add it to a
+toolbar.</li>
+<li>Click the <strong>Add</strong> button located on the right side of
+the window. Your macro is now registered as a custom command.</li>
+</ol>
+<h3 id="step-3-assign-the-keyboard-shortcut">Step 3: Assign the Keyboard
+Shortcut</h3>
+<ol type="1">
+<li>Switch to the <strong>Keyboard</strong> tab inside the same
+<strong>Customize</strong> dialog.</li>
+<li>In the <strong>Category</strong> dropdown menu, select
+<strong>Macros</strong>.</li>
+<li>In the list of commands below the category, scroll to and select the
+name of the macro you defined in Step 2.</li>
+<li>Click into the <strong>Press keys</strong> input field at the bottom
+of the window.</li>
+<li>Press the physical keys on your keyboard that you want to use as the
+shortcut (for example, <code>Ctrl</code> + <code>Shift</code> +
+<code>M</code>).</li>
+<li>Click the <strong>Assign</strong> button to link the key combination
+to the macro.</li>
+</ol>
+<h3 id="step-4-save-and-test">Step 4: Save and Test</h3>
+<ol type="1">
+<li>Click the <strong>Close</strong> button at the bottom of the
+Customize dialog to save your changes.</li>
+<li>Return to the active 3D view or workbench and press your assigned
+shortcut to verify that the macro executes properly.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-bind-shortcuts-to-custom-free-cad-macros';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

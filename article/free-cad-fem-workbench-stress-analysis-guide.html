@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD FEM Workbench Stress Analysis Guide - freecad</title>
+    <meta name="description" content="This guide provides a comprehensive walkthrough for performing a linear static stress analysis on a solid mechanical component using FreeCAD&#39;s built-in Finite Element Method (FEM) workbench. You will learn how to initialize an analysis container, assign m">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-fem-workbench-stress-analysis-guide">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD FEM Workbench Stress Analysis Guide - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-fem-workbench-stress-analysis-guide" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide provides a comprehensive walkthrough for performing a linear static stress analysis on a solid mechanical component using FreeCAD&#39;s built-in Finite Element Method (FEM) workbench. You will learn how to initialize an analysis container, assign m" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-fem-workbench-stress-analysis-guide">FreeCAD FEM
+Workbench Stress Analysis Guide</h1>
+<p>This guide provides a comprehensive walkthrough for performing a
+linear static stress analysis on a solid mechanical component using
+FreeCAD's built-in Finite Element Method (FEM) workbench. You will learn
+how to initialize an analysis container, assign material properties,
+apply boundary constraints and mechanical forces, generate a finite
+element mesh, run the CalculiX solver, and interpret von Mises stress
+distributions to validate your mechanical design.</p>
+<h3 id="1-prepare-the-geometry-and-activate-fem">1. Prepare the Geometry
+and Activate FEM</h3>
+<p>Ensure your 3D mechanical part is completely modeled as a single
+solid body using the <strong>Part Design</strong> or
+<strong>Part</strong> workbench. Switch to the <strong>FEM</strong>
+workbench using the workbench dropdown selector located in the top
+toolbar.</p>
+<h3 id="2-create-the-analysis-container">2. Create the Analysis
+Container</h3>
+<p>Click the <strong>Analysis container</strong> button (represented by
+a yellow capital 'A' icon) in the toolbar. This container acts as the
+root directory for your simulation, holding your material definitions,
+boundary conditions, mesh, and solver settings.</p>
+<h3 id="3-assign-material-properties">3. Assign Material Properties</h3>
+<ol type="1">
+<li>Select your solid part in the tree view.</li>
+<li>Click the <strong>Material for solid</strong> button in the FEM
+toolbar.</li>
+<li>In the task panel, choose a standard engineering material from the
+drop-down list (such as <em>Steel-Generic</em> or
+<em>Aluminum-Generic</em>), or manually enter the Young's Modulus and
+Poisson's Ratio.</li>
+<li>Verify that the correct solid object is linked to the material, then
+click <strong>OK</strong>.</li>
+</ol>
+<h3 id="4-apply-boundary-constraints">4. Apply Boundary Constraints</h3>
+<ol type="1">
+<li>Click the <strong>Constraint fixed</strong> button to define where
+the component is anchored.</li>
+<li>Click <strong>Add</strong> in the task panel and select the face,
+edge, or vertex where the part is held rigid.</li>
+<li>Click <strong>OK</strong> to apply the zero-displacement
+constraint.</li>
+</ol>
+<h3 id="5-apply-external-loads">5. Apply External Loads</h3>
+<ol type="1">
+<li>Click the <strong>Constraint force</strong> button to simulate the
+mechanical load.</li>
+<li>Click <strong>Add</strong> and select the surface where the load
+acts.</li>
+<li>Specify the load magnitude in Newtons (N).</li>
+<li>Define the load direction by selecting an edge parallel to the
+desired force vector, or toggle the <strong>Reverse direction</strong>
+checkbox if the direction arrow points the wrong way.</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<h3 id="6-generate-the-mesh">6. Generate the Mesh</h3>
+<p>FreeCAD provides tools like Netgen and Gmsh to discretize the
+geometry.</p>
+<ol type="1">
+<li>Select the main solid body in the model tree.</li>
+<li>Click <strong>FEM mesh from shape by Netgen</strong> (or Gmsh).</li>
+<li>In the task panel, choose the element order (use <strong>Second
+order</strong> / quadratic elements for accurate stress
+calculations).</li>
+<li>Set the <strong>Max size</strong> to an appropriate element
+dimension relative to the part features (smaller values yield more
+accurate results but increase computation time).</li>
+<li>Click <strong>Apply</strong> to generate the tetrahedral mesh, then
+click <strong>OK</strong>.</li>
+</ol>
+<h3 id="7-run-the-calculix-solver">7. Run the CalculiX Solver</h3>
+<ol type="1">
+<li>Double-click the <strong>CalculiX</strong> solver object inside the
+Analysis container in the tree view.</li>
+<li>In the task panel, select the analysis type as
+<strong>Static</strong>.</li>
+<li>Click <strong>Write .inp file</strong> to generate the input deck
+for the solver.</li>
+<li>Click <strong>Run CalculiX</strong> to begin the computation.</li>
+<li>Once the solver outputs indicate success with no errors, click
+<strong>OK</strong> to close the task panel.</li>
+</ol>
+<h3 id="8-inspect-the-stress-results">8. Inspect the Stress Results</h3>
+<p>A results pipeline object (e.g., <code>CCX_Results</code>) will
+appear inside the Analysis container.</p>
+<ol type="1">
+<li>Double-click the results object to activate the post-processing
+panel.</li>
+<li>Select <strong>Von Mises stress</strong> from the result type
+dropdown menu.</li>
+<li>Adjust the color scale and visibility settings to identify stress
+concentrations (hot spots).</li>
+<li>Compare the peak von Mises stress against the yield strength of your
+chosen material to determine your factor of safety and verify structural
+integrity.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-fem-workbench-stress-analysis-guide';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

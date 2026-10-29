@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deleting Parent Features in FreeCAD Part Design - freecad</title>
+    <meta name="description" content="In FreeCAD&#39;s Part Design workbench, 3D models are built using a strict parametric, history-based dependency tree where each step relies on the geometry of previous operations. Deleting a parent feature disrupts this chain of references, causing subsequent">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/deleting-parent-features-in-free-cad-part-design">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Deleting Parent Features in FreeCAD Part Design - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/deleting-parent-features-in-free-cad-part-design" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In FreeCAD&#39;s Part Design workbench, 3D models are built using a strict parametric, history-based dependency tree where each step relies on the geometry of previous operations. Deleting a parent feature disrupts this chain of references, causing subsequent" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="deleting-parent-features-in-freecad-part-design">Deleting Parent
+Features in FreeCAD Part Design</h1>
+<p>In FreeCAD's Part Design workbench, 3D models are built using a
+strict parametric, history-based dependency tree where each step relies
+on the geometry of previous operations. Deleting a parent feature
+disrupts this chain of references, causing subsequent child features to
+lose their positional or geometric anchors, which leads to calculation
+errors and broken models. This article outlines the specific mechanisms
+that occur when a parent feature is deleted, how it affects child
+operations, and the best practices to resolve or prevent dependency
+errors in your document tree.</p>
+<h3 id="the-parametric-dependency-structure">The Parametric Dependency
+Structure</h3>
+<p>Part Design operates sequentially to produce a single contiguous
+solid body. Every operation—such as a Pad, Pocket, Chamfer, or Boolean
+operation—builds upon a prior state of the body or a specific reference
+element, such as a datum plane, edge, or sketch.</p>
+<p>When an object is designated as a "parent," subsequent "child"
+features reference its internal IDs, vertex points, edges, or planar
+faces.</p>
+<h3 id="immediate-effects-of-deleting-a-parent-feature">Immediate
+Effects of Deleting a Parent Feature</h3>
+<p>When a parent feature is deleted from the tree, FreeCAD executes the
+removal, which triggers several immediate structural changes:</p>
+<ol type="1">
+<li><strong>Broken Attachment References:</strong> Child sketches or
+datum tools that relied on faces or edges of the deleted feature lose
+their support geometry. FreeCAD will flag these attachments as invalid,
+leaving the sketches detached in 3D space with no valid coordinate
+system to map onto.</li>
+<li><strong>Feature Computation Errors:</strong> Dependent 3D features
+(such as a Pocket meant to cut through a deleted Pad) cannot compute
+without their base solid. These child features fail to generate geometry
+and display a warning or error badge (typically an exclamation mark
+icon) in the Model tree.</li>
+<li><strong>Loss of the Active "Tip":</strong> The Part Design Body
+designates the final computed step of the model as the "Tip." If the
+deleted parent held the Tip, FreeCAD attempts to reassign the Tip to a
+preceding valid step. If a child feature breaks, the visual model
+automatically rolls back to the last successfully calculated feature,
+hiding subsequent steps from the 3D view.</li>
+<li><strong>Topological Naming Chaos:</strong> If the parent feature
+introduced numbered faces (e.g., <code>Face1</code>, <code>Edge4</code>)
+that downstream operations relied upon, removing that geometry shifts
+the internal index of remaining elements. This causes child operations
+to reference entirely wrong locations or fail entirely.</li>
+</ol>
+<h3 id="freecads-dependency-warning">FreeCAD's Dependency Warning</h3>
+<p>Depending on user preferences, FreeCAD will usually display a
+confirmation dialog when attempting to delete an object that has
+dependencies. This dialog notifies you that other features rely on the
+selected object and may ask whether to delete only the selected object
+or to recursively delete all child features as well.</p>
+<p>Selecting "Yes" without removing dependencies leaves the children
+orphaned and broken, whereas deleting all dependencies strips the entire
+model tree downstream from that point.</p>
+<h3 id="how-to-safely-remove-or-replace-parent-features">How to Safely
+Remove or Replace Parent Features</h3>
+<p>To prevent model corruption when modifying your design tree, use the
+following procedures rather than outright deletion:</p>
+<ul>
+<li><strong>Re-map Sketches First:</strong> If the parent feature is a
+base solid and the child is a sketch attached to one of its faces, edit
+the sketch's <strong>Map Mode</strong> (Attachment settings) and remap
+it to a neutral reference, such as a default origin plane (XY, XZ, YZ)
+or a dedicated Datum Plane, before deleting the parent.</li>
+<li><strong>Inspect the Dependency Graph:</strong> Use <strong>Tools
+&gt; Dependency Graph</strong> to visualize which objects will be
+impacted by the removal of the targeted feature.</li>
+<li><strong>Adjust Child Properties:</strong> For parametric modifiers
+like Fillets or Chamfers that reference edges of the parent, either
+manually remove those edges from the feature's list in the Tasks panel
+or delete the modifier first.</li>
+<li><strong>Deactivate Instead of Deleting:</strong> If you want to test
+the model without a specific feature, consider temporarily suppressing
+or bypassing it, or moving the Tip above the feature to evaluate the
+tree before committing to permanent deletion.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/deleting-parent-features-in-free-cad-part-design';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

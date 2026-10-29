@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Export FreeCAD FEM Mesh to External Solvers - freecad</title>
+    <meta name="description" content="FreeCAD&#39;s Finite Element Method (FEM) Workbench allows users to model, mesh, and apply boundary conditions to physical designs before solving. While FreeCAD has built-in integration for solvers like CalculiX and Elmer, users often need to export either ra">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-export-free-cad-fem-mesh-to-external-solvers">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Export FreeCAD FEM Mesh to External Solvers - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-export-free-cad-fem-mesh-to-external-solvers" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FreeCAD&#39;s Finite Element Method (FEM) Workbench allows users to model, mesh, and apply boundary conditions to physical designs before solving. While FreeCAD has built-in integration for solvers like CalculiX and Elmer, users often need to export either ra" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-export-freecad-fem-mesh-to-external-solvers">How to
+Export FreeCAD FEM Mesh to External Solvers</h1>
+<p>FreeCAD's Finite Element Method (FEM) Workbench allows users to
+model, mesh, and apply boundary conditions to physical designs before
+solving. While FreeCAD has built-in integration for solvers like
+CalculiX and Elmer, users often need to export either raw mesh data or
+full simulation decks to run in external software such as Abaqus, ANSYS,
+Nastran, or OpenFOAM. This guide outlines the exact steps to export
+standalone FEM meshes and complete analysis data files directly from
+FreeCAD.</p>
+<h2 id="method-1-exporting-standalone-fem-mesh-data">Method 1: Exporting
+Standalone FEM Mesh Data</h2>
+<p>If you only need the discrete mesh nodes and elements without
+materials or constraints, you can export the mesh directly to common
+mesh exchange formats such as UNV, MED, VTK, or Abaqus INP.</p>
+<ol type="1">
+<li>Switch to the <strong>FEM Workbench</strong> in FreeCAD.</li>
+<li>In the <strong>Tree View</strong>, select the generated mesh object
+(for example, <code>FEMMeshGmsh</code> or
+<code>FEMMeshNetgen</code>).</li>
+<li>Click on the top menu and select <strong>File &gt;
+Export</strong>.</li>
+<li>In the file dialogue, click the <strong>Files of type</strong>
+dropdown and select your target format:
+<ul>
+<li><strong>FEM mesh formats (*.unv, *.med, *.dat, *.inp)</strong>:
+Ideal for Nastran, ANSYS, Abaqus, or Salome.</li>
+<li><strong>VTK format (*.vtk, *.vtu)</strong>: Ideal for
+post-processors like ParaView.</li>
+</ul></li>
+<li>Enter a file name, choose your destination folder, and click
+<strong>Save</strong>.</li>
+</ol>
+<p>Alternatively, you can select the mesh, go to the top menu, click
+<strong>FEM &gt; Export FEM mesh to file</strong>, and select from the
+supported file filters.</p>
+<h2 id="method-2-exporting-complete-analysis-input-decks">Method 2:
+Exporting Complete Analysis Input Decks</h2>
+<p>When you need to export constraints, boundary conditions, loads,
+materials, and mesh definitions together, export the solver input file
+directly from the analysis container.</p>
+<h3 id="exporting-for-calculix-inp">Exporting for CalculiX (.inp)</h3>
+<p>CalculiX input decks use standard Abaqus <code>.inp</code> syntax,
+making them compatible with CalculiX, Abaqus, and many third-party
+structural solvers.</p>
+<ol type="1">
+<li>In the <strong>Tree View</strong>, expand the
+<strong>Analysis</strong> container.</li>
+<li>Double-click the <strong>SolverCalculiX</strong> object to open its
+task panel.</li>
+<li>In the task panel, locate the <strong>CalculiX Input File</strong>
+section.</li>
+<li>Click <strong>Write .inp file</strong>.</li>
+<li>FreeCAD writes the complete input deck to your active working
+directory. To change or locate the file, review the path displayed in
+the status window or modify the working directory under <strong>Edit
+&gt; Preferences &gt; FEM &gt; General</strong>.</li>
+<li>You can also click <strong>Edit .inp file</strong> to view, edit, or
+copy the generated text deck directly within FreeCAD.</li>
+</ol>
+<h3 id="exporting-for-elmer-sif-and-mesh-directory">Exporting for Elmer
+(.sif and Mesh Directory)</h3>
+<p>Elmer requires a solver input file (<code>case.sif</code>) alongside
+a dedicated mesh directory containing node and element tables.</p>
+<ol type="1">
+<li>Ensure the <strong>SolverElmer</strong> object exists inside your
+active Analysis container.</li>
+<li>Double-click the <strong>SolverElmer</strong> object in the Tree
+View to open the task panel.</li>
+<li>Click the <strong>Write</strong> button under the solver
+configuration.</li>
+<li>FreeCAD generates the Elmer mesh format (<code>mesh.header</code>,
+<code>mesh.nodes</code>, <code>mesh.elements</code>,
+<code>mesh.boundary</code>) and the corresponding <code>.sif</code>
+configuration file inside the designated FEM working directory.</li>
+</ol>
+<h3 id="exporting-for-z88">Exporting for Z88</h3>
+<ol type="1">
+<li>Select the <strong>SolverZ88</strong> object within your active
+Analysis container.</li>
+<li>Double-click the solver to display the control panel in the Combo
+View.</li>
+<li>Click <strong>Write</strong> to generate the Z88 input files
+(<code>z88structure.txt</code>, <code>z88sets.txt</code>) into the
+simulation working folder.</li>
+</ol>
+<h2 id="best-practices-for-external-solver-export">Best Practices for
+External Solver Export</h2>
+<ul>
+<li><strong>Element Types</strong>: Ensure your target solver supports
+the element formulations created by FreeCAD. Second-order tetrahedral
+elements (C3D10) generated via Gmsh or Netgen generally transfer cleanly
+across <code>.inp</code> and <code>.unv</code> formats.</li>
+<li><strong>Unit Consistency</strong>: FreeCAD converts geometric
+dimensions to the internal units specified by the solver. Verify that
+mechanical units (such as MPa vs. Pa, or mm vs. m) match the expected
+input units of your external solver.</li>
+<li><strong>Working Directory Setup</strong>: Before exporting, set a
+permanent, accessible directory in <strong>Edit &gt; Preferences &gt;
+FEM &gt; General &gt; Working Directory</strong> to easily locate all
+automatically written decks and coordinate files.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-export-free-cad-fem-mesh-to-external-solvers';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

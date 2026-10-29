@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Share Custom Python Macros in FreeCAD - freecad</title>
+    <meta name="description" content="Sharing custom Python macros with the FreeCAD community ensures your tools reach other designers, receive peer feedback, and help expand the software&#39;s open-source ecosystem. The most effective way to distribute a macro is through the official FreeCAD Add">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-share-custom-python-macros-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Share Custom Python Macros in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-share-custom-python-macros-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Sharing custom Python macros with the FreeCAD community ensures your tools reach other designers, receive peer feedback, and help expand the software&#39;s open-source ecosystem. The most effective way to distribute a macro is through the official FreeCAD Add" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-share-custom-python-macros-in-freecad">How to Share
+Custom Python Macros in FreeCAD</h1>
+<p>Sharing custom Python macros with the FreeCAD community ensures your
+tools reach other designers, receive peer feedback, and help expand the
+software's open-source ecosystem. The most effective way to distribute a
+macro is through the official FreeCAD Addon Manager via the community
+macro repository, supplemented by documentation on the FreeCAD Wiki and
+discussion on the official user forums.</p>
+<h3 id="1-the-official-freecad-addon-manager-repository">1. The Official
+FreeCAD Addon Manager Repository</h3>
+<p>The standard and most accessible method for end-users to install your
+script is directly inside FreeCAD using the built-in Addon Manager
+(<strong>Tools &gt; Addon Manager</strong>). For your macro to appear in
+this list, it must be added to the centralized
+<strong>FreeCAD-macros</strong> repository on GitHub.</p>
+<p>To submit your macro:</p>
+<ul>
+<li><strong>Fork the Repository:</strong> Create a fork of the official
+<code>FreeCAD/FreeCAD-macros</code> GitHub repository.</li>
+<li><strong>Format the File:</strong> Ensure your macro file uses the
+<code>.FCMacro</code> file extension instead of <code>.py</code>.</li>
+<li><strong>Add an Icon:</strong> Create a 64x64 pixel SVG icon with the
+same base name as your macro (e.g., <code>MyMacro.FCMacro</code> and
+<code>MyMacro.svg</code>) so it displays properly in the interface.</li>
+<li><strong>Submit a Pull Request:</strong> Commit your files to your
+fork and open a Pull Request (PR) against the main repository. Once
+reviewed and merged by the maintainers, it will automatically populate
+in the Addon Manager for all FreeCAD users.</li>
+</ul>
+<h3 id="2-include-required-macro-metadata">2. Include Required Macro
+Metadata</h3>
+<p>For the Addon Manager and users to properly understand your macro,
+include standardized metadata in the header comments of your Python
+code. Place this block at the very top of your <code>.FCMacro</code>
+file:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>__Name__ <span class="op">=</span> <span class="st">&quot;Macro Name&quot;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>__Comment__ <span class="op">=</span> <span class="st">&quot;A brief explanation of what the macro accomplishes&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>__Author__ <span class="op">=</span> <span class="st">&quot;Your Name&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>__Version__ <span class="op">=</span> <span class="st">&quot;1.0.0&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>__Date__ <span class="op">=</span> <span class="st">&quot;YYYY-MM-DD&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>__License__ <span class="op">=</span> <span class="st">&quot;LGPL-2.1-or-later&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>__Web__ <span class="op">=</span> <span class="st">&quot;https://wiki.freecad.org/Macro_Your_Macro_Name&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>__Wiki__ <span class="op">=</span> <span class="st">&quot;https://wiki.freecad.org/Macro_Your_Macro_Name&quot;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>__Icon__ <span class="op">=</span> <span class="st">&quot;MyMacro.svg&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>__Help__ <span class="op">=</span> <span class="st">&quot;Instructions on how to execute or configure the macro&quot;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>__Status__ <span class="op">=</span> <span class="st">&quot;Stable&quot;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>__Requires__ <span class="op">=</span> <span class="st">&quot;FreeCAD &gt;= 0.20&quot;</span></span></code></pre></div>
+<p>This metadata allows the Addon Manager to filter by version
+requirements, link documentation, and display licensing information
+clearly.</p>
+<h3 id="3-document-on-the-freecad-wiki">3. Document on the FreeCAD
+Wiki</h3>
+<p>The FreeCAD community relies heavily on its wiki for instructions and
+troubleshooting. Creating a dedicated wiki page for your macro provides
+users with detailed usage steps, animated examples, and compatibility
+notes.</p>
+<ul>
+<li>Request editor access on the FreeCAD Wiki via the forums if you do
+not already have an account.</li>
+<li>Use the standard macro template by naming your page
+<code>Macro_YourMacroName</code>.</li>
+<li>Include installation steps, step-by-step usage instructions, known
+limitations, and a changelog.</li>
+</ul>
+<h3 id="4-announce-on-the-freecad-forum">4. Announce on the FreeCAD
+Forum</h3>
+<p>Before or alongside submitting to the Addon Manager, post your macro
+in the <strong>Python Scripting and Macros</strong> subforum on the
+official FreeCAD forum.</p>
+<p>Forum threads allow you to:</p>
+<ul>
+<li>Test pre-release versions across different operating systems
+(Windows, macOS, Linux).</li>
+<li>Solicit feedback on edge cases, performance, and user interface
+design.</li>
+<li>Announce updates, bug fixes, and feature additions to active
+community members.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-share-custom-python-macros-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

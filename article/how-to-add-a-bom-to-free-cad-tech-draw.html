@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Add a BOM to FreeCAD TechDraw - freecad</title>
+    <meta name="description" content="Adding a Bill of Materials (BOM) to a technical drawing in FreeCAD allows you to display part lists, quantities, and component properties directly on your drawing sheet. This guide outlines how to prepare your part data, generate a BOM table, and project">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-add-a-bom-to-free-cad-tech-draw">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Add a BOM to FreeCAD TechDraw - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-add-a-bom-to-free-cad-tech-draw" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Adding a Bill of Materials (BOM) to a technical drawing in FreeCAD allows you to display part lists, quantities, and component properties directly on your drawing sheet. This guide outlines how to prepare your part data, generate a BOM table, and project" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-add-a-bom-to-freecad-techdraw">How to Add a BOM to
+FreeCAD TechDraw</h1>
+<p>Adding a Bill of Materials (BOM) to a technical drawing in FreeCAD
+allows you to display part lists, quantities, and component properties
+directly on your drawing sheet. This guide outlines how to prepare your
+part data, generate a BOM table, and project it onto a TechDraw page
+using the Spreadsheet View tool.</p>
+<h3 id="step-1-create-the-bom-data-in-a-spreadsheet">Step 1: Create the
+BOM Data in a Spreadsheet</h3>
+<p>FreeCAD uses the Spreadsheet workbench to drive data tables in
+TechDraw.</p>
+<ol type="1">
+<li>Switch to the <strong>Spreadsheet Workbench</strong> from the
+workbench dropdown.</li>
+<li>Click <strong>Create sheet</strong> to add a new spreadsheet to your
+model tree.</li>
+<li>Double-click the newly created spreadsheet in the tree view to open
+it.</li>
+<li>Enter your BOM headers in row 1 (for example: <code>Item</code>,
+<code>Part Name</code>, <code>Qty</code>, <code>Material</code>).</li>
+<li>Populate the rows below with your project components and
+details.</li>
+<li>Note the cell range that contains your table (for example,
+<code>A1:D6</code>).</li>
+</ol>
+<p><em>(Note: If you are using the FreeCAD Assembly workbench, you can
+use the <strong>Create Bill of Materials</strong> tool to automatically
+generate this spreadsheet from your assembly hierarchy.)</em></p>
+<h3 id="step-2-open-your-techdraw-page">Step 2: Open Your TechDraw
+Page</h3>
+<ol type="1">
+<li>Switch to the <strong>TechDraw Workbench</strong>.</li>
+<li>Double-click your existing drawing page in the tree view to open it
+in the main viewport. If you do not have a page yet, click
+<strong>Insert default Page</strong> or <strong>Insert Page using
+Template</strong>.</li>
+</ol>
+<h3 id="step-3-insert-the-spreadsheet-view">Step 3: Insert the
+Spreadsheet View</h3>
+<ol type="1">
+<li>In the tree view, click on the <strong>Spreadsheet</strong> you
+created to select it.</li>
+<li>In the TechDraw toolbar, click the <strong>Insert Spreadsheet
+View</strong> tool (icon showing a spreadsheet grid on a page).</li>
+<li>FreeCAD will insert a table projection onto your active TechDraw
+page.</li>
+</ol>
+<h3 id="step-4-configure-the-table-range-and-appearance">Step 4:
+Configure the Table Range and Appearance</h3>
+<ol type="1">
+<li>Select the <strong>SpreadsheetView</strong> object in the tree
+view.</li>
+<li>In the <strong>Property</strong> panel on the lower-left, locate the
+<strong>Data</strong> tab.</li>
+<li>Adjust the following properties:
+<ul>
+<li><strong>Cell Start</strong>: Enter the top-left cell of your table
+(e.g., <code>A1</code>).</li>
+<li><strong>Cell End</strong>: Enter the bottom-right cell of your table
+(e.g., <code>D6</code>).</li>
+<li><strong>Font</strong>: Change the font type or size to match your
+drawing standards.</li>
+<li><strong>Line Width</strong>: Adjust border thickness as needed.</li>
+</ul></li>
+<li>Drag the table on the drawing page to position it in your preferred
+location (typically the bottom-right or top-right corner).</li>
+</ol>
+<h3 id="step-5-refresh-the-drawing">Step 5: Refresh the Drawing</h3>
+<p>If you update part names, quantities, or rows in your spreadsheet
+later, return to your TechDraw page and click the <strong>Redraw
+page</strong> button (or press <code>Ctrl + R</code>) to update the
+table display.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-add-a-bom-to-free-cad-tech-draw';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

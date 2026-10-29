@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Part vs Part Design: What Is the Difference? - freecad</title>
+    <meta name="description" content="FreeCAD offers two primary environments for creating 3D solid models: the Part workbench and the Part Design workbench. While both tools generate 3D geometry, they rely on fundamentally different modeling philosophies, workflows, and underlying structures">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-part-vs-part-design-what-is-the-difference">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Part vs Part Design: What Is the Difference? - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-part-vs-part-design-what-is-the-difference" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FreeCAD offers two primary environments for creating 3D solid models: the Part workbench and the Part Design workbench. While both tools generate 3D geometry, they rely on fundamentally different modeling philosophies, workflows, and underlying structures" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-part-vs-part-design-what-is-the-difference">FreeCAD Part
+vs Part Design: What Is the Difference?</h1>
+<p>FreeCAD offers two primary environments for creating 3D solid models:
+the Part workbench and the Part Design workbench. While both tools
+generate 3D geometry, they rely on fundamentally different modeling
+philosophies, workflows, and underlying structures. The Part workbench
+uses a Constructive Solid Geometry (CSG) approach based on independent
+shapes and Boolean operations, whereas the Part Design workbench uses a
+modern, feature-based parametric workflow centered on sketches and
+single contiguous bodies.</p>
+<h2 id="modeling-philosophy-csg-vs-feature-based">Modeling Philosophy:
+CSG vs. Feature-Based</h2>
+<h3 id="part-workbench-constructive-solid-geometry">Part Workbench
+(Constructive Solid Geometry)</h3>
+<p>The Part workbench follows a traditional Constructive Solid Geometry
+(CSG) methodology. You create shapes by combining geometric
+primitives—such as cubes, cylinders, and spheres—or by extruding 2D
+shapes. Complex objects are created by applying Boolean operations
+(unions, cuts, intersections) between these individual shapes.</p>
+<p>In the Part workbench:</p>
+<ul>
+<li>Each object or primitive is an independent entity in the model
+tree.</li>
+<li>Solids can exist anywhere in 3D space without needing to be
+connected.</li>
+<li>The design tree represents a hierarchy of Boolean operations rather
+than a strict chronological timeline.</li>
+</ul>
+<h3 id="part-design-workbench-feature-based-parametric">Part Design
+Workbench (Feature-Based Parametric)</h3>
+<p>The Part Design workbench uses a modern feature-based approach common
+in industrial CAD software. Models are created sequentially within an
+explicit container called a <strong>Body</strong>.</p>
+<p>In the Part Design workbench:</p>
+<ul>
+<li>A single Body must always represent a single contiguous solid;
+disconnected geometry within the same body is generally not
+permitted.</li>
+<li>The workflow relies heavily on 2D sketches mapped to planes or
+existing faces, which are then transformed into 3D features via tools
+like Pad, Pocket, Revolve, or Loft.</li>
+<li>The model tree represents a strict linear history where each feature
+builds upon the previous one.</li>
+</ul>
+<h2 id="core-workflow-differences">Core Workflow Differences</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Feature / Aspect</th>
+<th style="text-align: left;">Part Workbench</th>
+<th style="text-align: left;">Part Design Workbench</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Primary Container</strong></td>
+<td style="text-align: left;">None required; objects exist
+globally.</td>
+<td style="text-align: left;">Requires a <strong>Body</strong> object
+(<code>PartDesign::Body</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Starting Point</strong></td>
+<td style="text-align: left;">3D primitives (cubes, cylinders) or 2D
+drafts.</td>
+<td style="text-align: left;">2D parametric sketch constrained via the
+Sketcher.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Modifications</strong></td>
+<td style="text-align: left;">Boolean cuts, unions, and
+intersections.</td>
+<td style="text-align: left;">Additive features (Pad, Revolve) and
+subtractive features (Pocket, Hole).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Multi-Part Handling</strong></td>
+<td style="text-align: left;">Can manipulate multiple unrelated solids
+simultaneously.</td>
+<td style="text-align: left;">Restricted to one continuous solid per
+Body container.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>History &amp; Tree</strong></td>
+<td style="text-align: left;">Branching Boolean tree.</td>
+<td style="text-align: left;">Chronological linear feature stack.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="strengths-and-use-cases">Strengths and Use Cases</h2>
+<h3 id="when-to-use-the-part-workbench">When to Use the Part
+Workbench</h3>
+<ul>
+<li><strong>Imported Geometry:</strong> Modifying or repairing imported
+STEP, IGES, or BREP files that lack parametric feature histories.</li>
+<li><strong>Direct Boolean Operations:</strong> Quickly combining,
+subtracting, or intersecting multiple complex shapes without sketch
+dependencies.</li>
+<li><strong>Multi-Solid Modeling:</strong> Working with models
+containing multiple disjointed parts in a single document without using
+an assembly workbench.</li>
+<li><strong>Low Parametric Dependency:</strong> Simple models that do
+not require heavily constrained dimensions or iterative design
+revisions.</li>
+</ul>
+<h3 id="when-to-use-the-part-design-workbench">When to Use the Part
+Design Workbench</h3>
+<ul>
+<li><strong>Mechanical Components:</strong> Designing parts for 3D
+printing, CNC machining, or injection molding that require exact
+parametric constraints.</li>
+<li><strong>Sketch-Driven Design:</strong> Parts that rely heavily on
+fully constrained 2D profiles with dimensions, symmetries, and geometric
+constraints.</li>
+<li><strong>Sequential Features:</strong> Designs requiring standard
+mechanical features such as countersunk holes, fillets, chamfers, and
+patterns (circular or linear).</li>
+<li><strong>Iterative Design:</strong> Projects where changing a single
+dimension in an early sketch needs to automatically and predictably
+update the rest of the model.</li>
+</ul>
+<h2 id="combining-both-workbenches">Combining Both Workbenches</h2>
+<p>While the two workbenches serve distinct functions, they can be used
+together in a single project. A common approach is to design individual
+components inside separate Part Design Bodies, then switch to the Part
+workbench to perform global Boolean operations between those finished
+bodies. However, referencing features from one workbench inside the
+active tree of the other should be done with caution to avoid
+topological naming issues and broken model dependencies.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-part-vs-part-design-what-is-the-difference';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

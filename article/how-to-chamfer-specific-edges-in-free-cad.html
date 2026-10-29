@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Chamfer Specific Edges in FreeCAD - freecad</title>
+    <meta name="description" content="Applying a chamfer to specific edges of a FreeCAD model is a straightforward process primarily handled within the Part Design Workbench. This guide walks you through selecting targeted edges, activating the chamfer tool, adjusting dimensional parameters,">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-chamfer-specific-edges-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Chamfer Specific Edges in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-chamfer-specific-edges-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Applying a chamfer to specific edges of a FreeCAD model is a straightforward process primarily handled within the Part Design Workbench. This guide walks you through selecting targeted edges, activating the chamfer tool, adjusting dimensional parameters," />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-chamfer-specific-edges-in-freecad">How to Chamfer
+Specific Edges in FreeCAD</h1>
+<p>Applying a chamfer to specific edges of a FreeCAD model is a
+straightforward process primarily handled within the Part Design
+Workbench. This guide walks you through selecting targeted edges,
+activating the chamfer tool, adjusting dimensional parameters, and
+troubleshooting edge selection using FreeCAD's parametric task
+panel.</p>
+<h3 id="step-1-open-the-part-design-workbench">Step 1: Open the Part
+Design Workbench</h3>
+<ol type="1">
+<li>Ensure your 3D model is active inside a <strong>Body</strong>
+container within the <strong>Part Design Workbench</strong>.</li>
+<li>If your model was built using the Part Workbench, switch to the
+<strong>Part Workbench</strong> instead, as the workflow is nearly
+identical but relies on the Part Chamfer tool.</li>
+</ol>
+<h3 id="step-2-select-the-specific-edges">Step 2: Select the Specific
+Edges</h3>
+<ol type="1">
+<li>In the 3D viewport, click directly on the edge you want to beveled.
+The edge will turn green (or your system's highlight color) when
+selected.</li>
+<li>To select multiple specific edges, hold down the
+<strong>Ctrl</strong> key (or <strong>Cmd</strong> on macOS) while
+clicking each additional edge.</li>
+<li>Avoid clicking entire faces unless you intend to chamfer every
+boundary edge of that face.</li>
+</ol>
+<h3 id="step-3-activate-the-chamfer-tool">Step 3: Activate the Chamfer
+Tool</h3>
+<ol type="1">
+<li>With the edges selected, click the <strong>Chamfer</strong> icon in
+the toolbar (represented by a cube with a beveled edge) or navigate to
+<strong>Part Design &gt; Apply a dress-up feature &gt; Chamfer</strong>
+from the top menu.</li>
+<li>A Chamfer task panel will appear in the <strong>Tasks</strong> tab
+on the left side of the screen, and a preview will display in the 3D
+view.</li>
+</ol>
+<h3 id="step-4-adjust-edge-selections-in-the-task-panel">Step 4: Adjust
+Edge Selections in the Task Panel</h3>
+<p>If you need to modify your selection while the tool is open:</p>
+<ul>
+<li>Click the <strong>Add</strong> button in the task panel, then click
+any additional edges in the 3D view to include them.</li>
+<li>Click the <strong>Remove</strong> button, then click an active edge
+in the 3D view to exclude it from the operation.</li>
+</ul>
+<h3 id="step-5-configure-chamfer-parameters">Step 5: Configure Chamfer
+Parameters</h3>
+<p>Choose your chamfer type and dimensions in the task panel:</p>
+<ul>
+<li><strong>Equal distance:</strong> Applies a uniform 45-degree cut
+using a single specified size.</li>
+<li><strong>Two distances:</strong> Allows distinct bevel depths along
+the two adjacent faces.</li>
+<li><strong>Distance and Angle:</strong> Sets a primary depth along one
+face and an angle (e.g., 30° or 60°) relative to it.</li>
+</ul>
+<h3 id="step-6-complete-the-operation">Step 6: Complete the
+Operation</h3>
+<ol type="1">
+<li>Enter your desired dimension in the <strong>Size</strong> field.
+Ensure the size does not exceed the dimensions of adjacent geometry,
+which causes the operation to fail.</li>
+<li>Click <strong>OK</strong> to apply the chamfer. The feature will
+appear as a <code>Chamfer</code> object under your active Body in the
+tree view.</li>
+</ol>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<ul>
+<li><strong>Failed to create chamfer:</strong> If the operation returns
+an error, reduce the chamfer size. Large chamfers often self-intersect
+or consume adjacent features entirely.</li>
+<li><strong>Selection issues:</strong> If you cannot select edges
+individually, ensure the model's display mode is set to
+<strong>Shaded</strong> or <strong>As Is</strong> with wireframe
+visibility turned on (press <code>V</code> then <code>3</code> on your
+keyboard).</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-chamfer-specific-edges-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

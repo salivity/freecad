@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Path 3D Surface Milling Guide - freecad</title>
+    <meta name="description" content="Performing a 3D surface contour milling operation in FreeCAD allows you to machine complex, curved, and non-planar geometries directly from your 3D models. This guide outlines the complete workflow for setting up your model in the Path (now CAM) workbench">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-path-3-d-surface-milling-guide">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Path 3D Surface Milling Guide - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-path-3-d-surface-milling-guide" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Performing a 3D surface contour milling operation in FreeCAD allows you to machine complex, curved, and non-planar geometries directly from your 3D models. This guide outlines the complete workflow for setting up your model in the Path (now CAM) workbench" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-path-3d-surface-milling-guide">FreeCAD Path 3D Surface
+Milling Guide</h1>
+<p>Performing a 3D surface contour milling operation in FreeCAD allows
+you to machine complex, curved, and non-planar geometries directly from
+your 3D models. This guide outlines the complete workflow for setting up
+your model in the Path (now CAM) workbench, creating a dedicated 3D
+Surface operation, configuring critical toolpath parameters such as
+stepover and cut patterns, and inspecting the generated toolpaths for
+accurate CNC production.</p>
+<h3 id="1-switch-to-the-campath-workbench-and-create-a-job">1. Switch to
+the CAM/Path Workbench and Create a Job</h3>
+<ol type="1">
+<li>Open your 3D solid model in FreeCAD.</li>
+<li>In the workbench dropdown menu, select <strong>CAM</strong> (or
+<strong>Path</strong> in older FreeCAD versions).</li>
+<li>Click the <strong>Job</strong> button in the toolbar to create a new
+machining project.</li>
+<li>In the Job dialog:
+<ul>
+<li>Select your solid model as the base object.</li>
+<li>On the <strong>Stock</strong> tab, define your stock dimensions (add
+margin if necessary).</li>
+<li>On the <strong>Tools</strong> tab, assign a tool controller
+(typically a ball nose end mill is best suited for 3D curved
+surfaces).</li>
+<li>Confirm the setup by clicking <strong>OK</strong>.</li>
+</ul></li>
+</ol>
+<h3 id="2-add-the-3d-surface-operation">2. Add the 3D Surface
+Operation</h3>
+<ol type="1">
+<li>Ensure your Job is active in the model tree.</li>
+<li>In the top menu, navigate to <strong>CAM</strong> (or
+<strong>Path</strong>) &gt; <strong>3D Surface</strong>, or click the
+<strong>3D Surface</strong> icon in the toolbar.</li>
+<li>A new dialog will open with several configuration tabs: <em>Base
+Geometry</em>, <em>Depths</em>, <em>Heights</em>, and
+<em>Operation</em>.</li>
+</ol>
+<h3 id="3-define-geometry-and-bound-box">3. Define Geometry and Bound
+Box</h3>
+<ol type="1">
+<li>Go to the <strong>Base Geometry</strong> tab.</li>
+<li>If you want to mill specific faces rather than the entire model:
+<ul>
+<li>Select the target curved faces on your 3D model in the
+viewport.</li>
+<li>Click the <strong>Add</strong> button in the Base Geometry
+list.</li>
+</ul></li>
+<li>If no specific faces are selected, FreeCAD will use the entire
+bounding region of the model.</li>
+<li>On the <strong>Operation</strong> tab, configure the
+<strong>BoundBox</strong> setting:
+<ul>
+<li>Choose <strong>Base Geometry</strong> to constrain tool movement
+only to the selected faces.</li>
+<li>Choose <strong>Stock</strong> to cover the entire work area.</li>
+</ul></li>
+</ol>
+<h3 id="4-configure-machining-parameters">4. Configure Machining
+Parameters</h3>
+<p>Switch to the <strong>Operation</strong> tab to refine how the cutter
+moves over the surface:</p>
+<ul>
+<li><strong>Cut Mode</strong>: Select <strong>Climb</strong>,
+<strong>Conventional</strong>, or <strong>ZigZag</strong> depending on
+your material and tooling requirements. ZigZag minimizes rapid travel
+moves.</li>
+<li><strong>Pattern</strong>: Choose a scanning strategy. Common options
+include:
+<ul>
+<li><strong>Line</strong>: Scans back and forth across a specified axis
+(set via the <em>Drive Line Direction</em> property).</li>
+<li><strong>Circular</strong> or <strong>Spiral</strong>: Useful for
+round or contoured parts.</li>
+</ul></li>
+<li><strong>Step Over</strong>: Set the horizontal distance between
+adjacent cutting passes. For 3D surfacing with a ball end mill, a
+smaller stepover (e.g., 5% to 15% of tool diameter) reduces the height
+of remaining cusps and provides a smoother finish.</li>
+<li><strong>Step Down</strong>: Set the maximum vertical depth the tool
+can remove per pass. If roughing has already cleared bulk material, this
+can be set to the full depth of the target contour.</li>
+<li><strong>Sample Interval</strong>: Determines the resolution of the
+surface calculation. Smaller values yield more accurate toolpaths along
+intricate curves at the cost of longer computation times.</li>
+</ul>
+<h3 id="5-set-depths-and-clearance-heights">5. Set Depths and Clearance
+Heights</h3>
+<ol type="1">
+<li>Open the <strong>Depths</strong> tab to define the <strong>Start
+Depth</strong> and <strong>Final Depth</strong>. Set the Final Depth to
+the lowest point of your contour.</li>
+<li>Open the <strong>Heights</strong> tab to ensure the
+<strong>Clearance Height</strong> and <strong>Safe Height</strong>
+provide adequate clearance above clamps and fixtures.</li>
+</ol>
+<h3 id="6-generate-and-inspect-the-toolpath">6. Generate and Inspect the
+Toolpath</h3>
+<ol type="1">
+<li>Click <strong>Apply</strong> and then <strong>OK</strong> to
+generate the toolpath.</li>
+<li>Inspect the green toolpath lines directly in the 3D viewport to
+ensure the cutter stays within the intended boundaries.</li>
+<li>Select the CAM Job in the tree and click the <strong>CAM
+Simulator</strong> button to run a virtual simulation of the cutting
+process to verify that there are no gouges, unexpected rapid moves, or
+collisions.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-path-3-d-surface-milling-guide';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

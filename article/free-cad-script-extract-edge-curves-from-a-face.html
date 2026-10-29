@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Script: Extract Edge Curves from a Face - freecad</title>
+    <meta name="description" content="Extracting edge curves from a solid face in FreeCAD can be automated using Python through the built-in Part module. By navigating FreeCAD&#39;s Boundary Representation (B-Rep) hierarchy, you can target a specific face of an object, access its boundary edges,">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-script-extract-edge-curves-from-a-face">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Script: Extract Edge Curves from a Face - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-script-extract-edge-curves-from-a-face" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Extracting edge curves from a solid face in FreeCAD can be automated using Python through the built-in Part module. By navigating FreeCAD&#39;s Boundary Representation (B-Rep) hierarchy, you can target a specific face of an object, access its boundary edges," />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-script-extract-edge-curves-from-a-face">FreeCAD Script:
+Extract Edge Curves from a Face</h1>
+<p>Extracting edge curves from a solid face in FreeCAD can be automated
+using Python through the built-in <code>Part</code> module. By
+navigating FreeCAD's Boundary Representation (B-Rep) hierarchy, you can
+target a specific face of an object, access its boundary edges, and
+extract either the raw mathematical curves or generate new geometric
+edge objects directly in your active document.</p>
+<h3 id="understanding-the-geometry-hierarchy">Understanding the Geometry
+Hierarchy</h3>
+<p>In FreeCAD's <code>Part</code> module, topological entities follow a
+strict hierarchy:</p>
+<ol type="1">
+<li><strong>Solid / CompSolid:</strong> The complete 3D body.</li>
+<li><strong>Face:</strong> A bounded surface on the solid.</li>
+<li><strong>Wire:</strong> A sequence of connected edges forming the
+face boundary (outer perimeter or inner holes).</li>
+<li><strong>Edge:</strong> The topological segment bounding a
+surface.</li>
+<li><strong>Curve:</strong> The underlying mathematical geometry of an
+edge (e.g., <code>GeomLine</code>, <code>GeomCircle</code>,
+<code>GeomBSplineCurve</code>).</li>
+</ol>
+<p>To extract edge data, you retrieve the <code>Face</code> from the
+object's <code>Shape</code>, iterate through its <code>Edges</code>
+collection, and access either the topological <code>Edge</code> or its
+underlying <code>Curve</code>.</p>
+<h3 id="step-by-step-python-script">Step-by-Step Python Script</h3>
+<p>The following script accesses the first face of an active object,
+extracts its bounding edges, and creates separate parametric edge
+objects in the FreeCAD tree.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> Part</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get active document and selected or targeted object</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> App.ActiveDocument</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> doc.ActiveObject</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> obj <span class="kw">or</span> <span class="kw">not</span> <span class="bu">hasattr</span>(obj, <span class="st">&quot;Shape&quot;</span>):</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">&quot;Please select or specify an object with valid shape geometry.&quot;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Target a specific face (for example, the first face)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>target_face <span class="op">=</span> obj.Shape.Faces[<span class="dv">0</span>]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate through each edge of the face</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, edge <span class="kw">in</span> <span class="bu">enumerate</span>(target_face.Edges):</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1. Access the underlying mathematical curve geometry</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    curve_geometry <span class="op">=</span> edge.Curve</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Edge </span><span class="sc">{</span>index<span class="sc">}</span><span class="ss"> Curve Type: </span><span class="sc">{</span><span class="bu">type</span>(curve_geometry)<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2. Create a new document object from the edge</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    edge_feature <span class="op">=</span> doc.addObject(<span class="st">&quot;Part::Feature&quot;</span>, <span class="ss">f&quot;ExtractedEdge_</span><span class="sc">{</span>index<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    edge_feature.Shape <span class="op">=</span> edge</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Recompute the document to display new objects in the tree</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>doc.recompute()</span></code></pre></div>
+<h3 id="accessing-curve-parameters-directly">Accessing Curve Parameters
+Directly</h3>
+<p>If you do not need to create document objects, but instead need
+coordinates, tangent vectors, or points along the boundary for
+calculations, query the <code>Curve</code> object directly:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> edge <span class="kw">in</span> target_face.Edges:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    curve <span class="op">=</span> edge.Curve</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get start and end parameter range</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    first_param <span class="op">=</span> edge.FirstParameter</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    last_param <span class="op">=</span> edge.LastParameter</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate 3D points at specific parameters</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    start_point <span class="op">=</span> curve.value(first_param)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    end_point <span class="op">=</span> curve.value(last_param)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    mid_point <span class="op">=</span> curve.value((first_param <span class="op">+</span> last_param) <span class="op">/</span> <span class="fl">2.0</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Start: </span><span class="sc">{</span>start_point<span class="sc">}</span><span class="ss">, Mid: </span><span class="sc">{</span>mid_point<span class="sc">}</span><span class="ss">, End: </span><span class="sc">{</span>end_point<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<h3 id="extracting-ordered-boundary-wires">Extracting Ordered Boundary
+Wires</h3>
+<p>A face often contains both outer boundaries and inner cutouts
+(holes). If you need the edges grouped by continuous loops, access
+<code>target_face.Wires</code> instead:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Outer wire is usually the first wire</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>outer_wire <span class="op">=</span> target_face.Wires[<span class="dv">0</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract edges specifically from the outer boundary loop</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> edge <span class="kw">in</span> outer_wire.Edges:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Process outer boundary edge</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div>
+<p>This ensures that edges remain logically connected in sequential
+order around the perimeter of the face.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-script-extract-edge-curves-from-a-face';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

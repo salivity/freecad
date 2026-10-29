@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Fully Constrain a Sketch in FreeCAD - freecad</title>
+    <meta name="description" content="A fully constrained sketch in FreeCAD ensures your 3D models remain robust, predictable, and free from unexpected geometry errors during parametric changes. This article walks you through the essential process of eliminating degrees of freedom using geome">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-fully-constrain-a-sketch-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Fully Constrain a Sketch in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-fully-constrain-a-sketch-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="A fully constrained sketch in FreeCAD ensures your 3D models remain robust, predictable, and free from unexpected geometry errors during parametric changes. This article walks you through the essential process of eliminating degrees of freedom using geome" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-fully-constrain-a-sketch-in-freecad">How to Fully
+Constrain a Sketch in FreeCAD</h1>
+<p>A fully constrained sketch in FreeCAD ensures your 3D models remain
+robust, predictable, and free from unexpected geometry errors during
+parametric changes. This article walks you through the essential process
+of eliminating degrees of freedom using geometric and dimensional
+constraints within the Sketcher workbench, transforming unconstrained
+geometry into a stable, fully defined profile ready for 3D
+operations.</p>
+<h3 id="1-create-a-sketch-attached-to-an-origin">1. Create a Sketch
+Attached to an Origin</h3>
+<p>Open the <strong>Sketcher workbench</strong> or the <strong>Part
+Design workbench</strong>. Create a new sketch and select a base plane
+(such as the XY_Plane). Starting with a defined plane ensures your
+sketch has a fixed reference orientation relative to the document's
+global coordinate system.</p>
+<h3 id="2-draw-your-base-geometry">2. Draw Your Base Geometry</h3>
+<p>Use the drawing tools (lines, arcs, circles, polygons) to sketch the
+rough shape of your design. Do not worry about exact dimensions or
+alignment at this stage. Keep the initial layout as close to the
+intended design as possible to prevent lines from flipping inside out
+when constraints are applied.</p>
+<h3 id="3-monitor-degrees-of-freedom">3. Monitor Degrees of Freedom</h3>
+<p>Open the <strong>Tasks</strong> tab on the left panel to view the
+<strong>Solver messages</strong>. FreeCAD displays the remaining degrees
+of freedom (DoF) in your sketch:</p>
+<ul>
+<li><strong>White geometry:</strong> Under-constrained (can be moved or
+resized).</li>
+<li><strong>Green geometry:</strong> Fully constrained (locked in
+position, orientation, and size).</li>
+<li><strong>Orange/Red geometry:</strong> Over-constrained or
+conflicting (contains redundant or contradictory constraints).</li>
+</ul>
+<p>Click on the blue link in the Solver message (e.g.,
+<em>"Under-constrained: 4 degrees of freedom"</em>) to highlight which
+elements still have movement.</p>
+<h3 id="4-apply-geometric-constraints-first">4. Apply Geometric
+Constraints First</h3>
+<p>Geometric constraints define how elements relate to each other
+without using specific numbers. Always apply these before dimensional
+constraints:</p>
+<ul>
+<li><strong>Coincident:</strong> Join two endpoints or place a point
+onto a line.</li>
+<li><strong>Point On Object:</strong> Lock a point anywhere along a line
+or curve.</li>
+<li><strong>Horizontal / Vertical:</strong> Lock lines to the horizontal
+or vertical axes.</li>
+<li><strong>Parallel / Perpendicular:</strong> Ensure lines run
+alongside or at 90 degrees to one another.</li>
+<li><strong>Tangent:</strong> Create smooth transitions between lines
+and curves.</li>
+<li><strong>Equality:</strong> Make multiple lines the same length or
+circles the same radius.</li>
+<li><strong>Symmetry:</strong> Center elements symmetrically around an
+axis or reference point.</li>
+</ul>
+<h3 id="5-anchor-the-geometry-to-the-origin">5. Anchor the Geometry to
+the Origin</h3>
+<p>A common reason sketches remain under-constrained is that they float
+freely in space. You must lock the sketch's position relative to the
+coordinate center:</p>
+<ol type="1">
+<li>Select a key vertex of your shape and the red <strong>origin
+point</strong> <span class="math inline">\((0,0)\)</span>.</li>
+<li>Apply a <strong>Coincident constraint</strong> to lock a corner
+directly to the origin, or apply horizontal and vertical distance
+constraints between the origin and your sketch elements.</li>
+</ol>
+<h3 id="6-apply-dimensional-constraints">6. Apply Dimensional
+Constraints</h3>
+<p>Once the general behavior and shape are fixed, lock the physical size
+using dimensional tools:</p>
+<ul>
+<li><strong>Horizontal Distance / Vertical Distance:</strong> Lock
+precise distances along the grid axes.</li>
+<li><strong>Length / Distance:</strong> Lock the direct length of an
+angled line or the shortest distance between two features.</li>
+<li><strong>Radius / Diameter:</strong> Define circle and arc
+sizes.</li>
+<li><strong>Angle:</strong> Define the angular relationship between two
+intersecting lines.</li>
+</ul>
+<h3 id="7-resolve-over-constraining-and-finish">7. Resolve
+Over-Constraining and Finish</h3>
+<p>Add constraints methodically until the Solver message reads:
+<strong>"Fully constrained"</strong>. When this happens, all sketch
+lines will turn bright green.</p>
+<p>If you accidentally add an unnecessary constraint, the solver will
+turn orange and report an over-constrained sketch. Simply select the
+redundant constraint listed in the Solver messages or click on its icon
+in the 3D view and press <strong>Delete</strong>.</p>
+<p>Once fully constrained, click <strong>Close</strong> in the Tasks
+panel to proceed with 3D features such as Pad, Pocket, or Revolve.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-fully-constrain-a-sketch-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

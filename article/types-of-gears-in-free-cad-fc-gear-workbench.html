@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Types of Gears in FreeCAD FCGear Workbench - freecad</title>
+    <meta name="description" content="The FCGear workbench is a dedicated extension for FreeCAD designed to automate the parametric modeling of various mechanical transmission elements. This article provides a comprehensive overview of the specific types of gears you can model within the FCGe">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/types-of-gears-in-free-cad-fc-gear-workbench">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Types of Gears in FreeCAD FCGear Workbench - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/types-of-gears-in-free-cad-fc-gear-workbench" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The FCGear workbench is a dedicated extension for FreeCAD designed to automate the parametric modeling of various mechanical transmission elements. This article provides a comprehensive overview of the specific types of gears you can model within the FCGe" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="types-of-gears-in-freecad-fcgear-workbench">Types of Gears in
+FreeCAD FCGear Workbench</h1>
+<p>The FCGear workbench is a dedicated extension for FreeCAD designed to
+automate the parametric modeling of various mechanical transmission
+elements. This article provides a comprehensive overview of the specific
+types of gears you can model within the FCGear workbench, detailing the
+profile options, typical applications, and primary geometric
+capabilities supported by each tool.</p>
+<h3 id="involute-spur-and-helical-gears">Involute Spur and Helical
+Gears</h3>
+<p>The standard Involute Gear tool generates external gears based on the
+widely used involute tooth profile. Users can model standard spur gears
+with straight teeth or apply a helix angle (beta) to create helical
+gears. The workbench also supports double helical (herringbone)
+configurations to eliminate axial thrust. Fully customizable parameters
+include the module, number of teeth, pressure angle, clearance, and
+head/root coefficients.</p>
+<h3 id="internal-involute-gears">Internal Involute Gears</h3>
+<p>The Internal Involute Gear tool models ring gears featuring teeth
+facing inward toward the center. These components are primarily utilized
+in planetary (epicyclic) gear assemblies. Like external involute gears,
+internal gears can be configured with specific modules, pressure angles,
+and tooth numbers, ensuring accurate meshing with standard external
+planetary pinions.</p>
+<h3 id="involute-gear-racks">Involute Gear Racks</h3>
+<p>The Involute Rack tool creates linear gear bars designed to pair with
+rotary pinion gears to convert rotational motion into linear motion.
+Designers can set parameters such as pitch (derived from module),
+height, length, tooth count, and pressure angle, with support for angled
+teeth to mate with helical pinions.</p>
+<h3 id="bevel-gears">Bevel Gears</h3>
+<p>The Bevel Gear tool models conical gears used for transmitting torque
+between intersecting shafts, typically oriented at a 90-degree angle.
+The workbench allows for the configuration of straight-tooth bevel gears
+as well as spiral bevel gears, which offer quieter operation and
+smoother engagement at higher speeds.</p>
+<h3 id="crown-gears">Crown Gears</h3>
+<p>Crown gears (also called face gears) feature teeth perpendicular to
+the plane of the gear's wheel, resembling a crown. In FCGear, crown
+gears can be generated to mesh with conventional cylindrical spur
+pinions, providing an alternative to bevel gears for perpendicular power
+transmission.</p>
+<h3 id="worm-drives">Worm Drives</h3>
+<p>FCGear includes capabilities to generate worm gear systems,
+consisting of two distinct components:</p>
+<ul>
+<li><strong>Worm Screw:</strong> A threaded, screw-like shaft that
+drives the system.</li>
+<li><strong>Worm Wheel:</strong> A specialized concave-face gear that
+meshes with the worm screw.</li>
+</ul>
+<p>These gears are commonly utilized to achieve high-ratio speed
+reduction and non-reversible (self-locking) setups between
+non-intersecting, perpendicular axes.</p>
+<h3 id="cycloid-and-hypocycloid-gears">Cycloid and Hypocycloid
+Gears</h3>
+<p>Unlike involute profiles, cycloid and hypocycloid gears utilize
+cycloidal curves to generate tooth geometry. The FCGear workbench
+provides dedicated generators for:</p>
+<ul>
+<li><strong>Cycloid Gears:</strong> Commonly used in horology (clocks
+and watches) and specific low-friction mechanisms.</li>
+<li><strong>Hypocycloid Gears:</strong> Essential for designing
+high-reduction, zero-backlash cycloidal speed reducers widely found in
+robotics and precision drive systems.</li>
+</ul>
+<h3 id="lantern-gears">Lantern Gears</h3>
+<p>Lantern gears consist of cylindrical pins (rollers) arranged in a
+circle rather than traditional cut gear teeth. In FCGear, lantern
+pinions can be modeled to interface efficiently with cycloidal wheels or
+custom low-friction mechanical mechanisms.</p>
+<h3 id="timing-pulleys-and-sprockets">Timing Pulleys and Sprockets</h3>
+<p>The workbench also features utilities for creating toothed timing
+belt pulleys (such as GT2, T-series, and HTD profiles). While
+technically pulleys rather than power transmission gears, they share
+identical parametric workflows within the FCGear environment for
+belt-driven automation projects.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/types-of-gears-in-free-cad-fc-gear-workbench';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

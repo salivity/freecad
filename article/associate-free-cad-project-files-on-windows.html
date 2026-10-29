@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Associate FreeCAD Project Files on Windows - freecad</title>
+    <meta name="description" content="Registering file associations for FreeCAD ensures that double-clicking any .FCStd project file automatically opens it within the FreeCAD application. This guide outlines the standard methods to link FreeCAD files to Windows using the File Explorer context">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/associate-free-cad-project-files-on-windows">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Associate FreeCAD Project Files on Windows - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/associate-free-cad-project-files-on-windows" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Registering file associations for FreeCAD ensures that double-clicking any .FCStd project file automatically opens it within the FreeCAD application. This guide outlines the standard methods to link FreeCAD files to Windows using the File Explorer context" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="associate-freecad-project-files-on-windows">Associate FreeCAD
+Project Files on Windows</h1>
+<p>Registering file associations for FreeCAD ensures that
+double-clicking any <code>.FCStd</code> project file automatically opens
+it within the FreeCAD application. This guide outlines the standard
+methods to link FreeCAD files to Windows using the File Explorer context
+menu, Windows Settings, and direct executable targeting.</p>
+<h3 id="method-1-using-the-open-with-menu">Method 1: Using the "Open
+With" Menu</h3>
+<p>The fastest way to register the <code>.FCStd</code> extension is
+directly through Windows File Explorer.</p>
+<ol type="1">
+<li>Locate any FreeCAD project file (<code>.FCStd</code>) on your
+computer.</li>
+<li>Right-click the file and hover over <strong>Open with</strong>, then
+select <strong>Choose another app</strong>.</li>
+<li>In the pop-up window, look for <strong>FreeCAD</strong> in the list
+of applications.
+<ul>
+<li>If FreeCAD is listed, select it.</li>
+<li>If FreeCAD is not listed, scroll down, click <strong>More
+apps</strong>, then click <strong>Look for another app on this
+PC</strong>. Navigate to your FreeCAD installation directory (typically
+<code>C:\Program Files\FreeCAD &lt;version&gt;\bin\FreeCAD.exe</code>),
+select <code>FreeCAD.exe</code>, and click <strong>Open</strong>.</li>
+</ul></li>
+<li>Check the box labeled <strong>Always use this app to open .FCStd
+files</strong>.</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<p>The file icon will update to the FreeCAD logo, and double-clicking
+any <code>.FCStd</code> file will now launch it in FreeCAD.</p>
+<h3 id="method-2-using-windows-settings">Method 2: Using Windows
+Settings</h3>
+<p>If you prefer to configure associations globally through the
+operating system:</p>
+<ol type="1">
+<li>Press <strong>Windows Key + I</strong> to open the
+<strong>Settings</strong> menu.</li>
+<li>Navigate to <strong>Apps</strong> &gt; <strong>Default
+apps</strong>.</li>
+<li>In the search bar under "Enter a file type or link type", type
+<code>.FCStd</code>.</li>
+<li>Click on the current default application (or the prompt to choose a
+default).</li>
+<li>Select <strong>FreeCAD</strong> from the list, or browse your PC to
+select <code>FreeCAD.exe</code> from the program's <code>bin</code>
+folder.</li>
+<li>Click <strong>Set default</strong>.</li>
+</ol>
+<h3 id="method-3-reinstalling-or-updating-freecad">Method 3:
+Reinstalling or Updating FreeCAD</h3>
+<p>If file associations fail to persist due to permission errors or
+broken registry entries:</p>
+<ol type="1">
+<li>Download the latest official FreeCAD installer.</li>
+<li>Run the installer with administrator privileges.</li>
+<li>During the setup process, ensure the option to <strong>Associate
+.FCStd files with FreeCAD</strong> is checked.</li>
+<li>Complete the installation to allow the installer to write the
+necessary registry keys automatically.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/associate-free-cad-project-files-on-windows';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

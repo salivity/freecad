@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Convert Mesh to Solid in FreeCAD - freecad</title>
+    <meta name="description" content="Converting a mesh object, such as an imported STL or OBJ file, into a functional solid shape in FreeCAD is essential for performing parametric modeling, boolean operations, and technical drawings. This guide walks you through the step-by-step process of i">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-convert-mesh-to-solid-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Convert Mesh to Solid in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-convert-mesh-to-solid-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Converting a mesh object, such as an imported STL or OBJ file, into a functional solid shape in FreeCAD is essential for performing parametric modeling, boolean operations, and technical drawings. This guide walks you through the step-by-step process of i" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-convert-mesh-to-solid-in-freecad">How to Convert Mesh to
+Solid in FreeCAD</h1>
+<p>Converting a mesh object, such as an imported STL or OBJ file, into a
+functional solid shape in FreeCAD is essential for performing parametric
+modeling, boolean operations, and technical drawings. This guide walks
+you through the step-by-step process of importing a mesh, converting it
+into a boundary representation (B-rep) shape, generating a true solid,
+and refining the geometry to eliminate unnecessary triangular
+facets.</p>
+<h3 id="step-1-import-the-mesh-file">Step 1: Import the Mesh File</h3>
+<ol type="1">
+<li>Open FreeCAD and start a new document.</li>
+<li>Go to <strong>File</strong> &gt; <strong>Import</strong> from the
+top menu.</li>
+<li>Select your mesh file (such as <code>.stl</code>, <code>.obj</code>,
+or <code>.ply</code>) and click <strong>Open</strong>.</li>
+<li>The imported mesh will appear in the Tree View on the left side of
+the screen.</li>
+</ol>
+<h3 id="step-2-switch-to-the-part-workbench">Step 2: Switch to the Part
+Workbench</h3>
+<ol type="1">
+<li>Click on the Workbench dropdown menu at the top center of the
+FreeCAD interface (which may default to "Start" or "Mesh Design").</li>
+<li>Select <strong>Part</strong> from the list.</li>
+</ol>
+<h3 id="step-3-create-a-shape-from-the-mesh">Step 3: Create a Shape from
+the Mesh</h3>
+<ol type="1">
+<li>In the Tree View, click on the imported mesh object to select
+it.</li>
+<li>In the top menu bar, navigate to <strong>Part</strong> &gt;
+<strong>Create shape from mesh...</strong>.</li>
+<li>A dialog box will appear asking for a <strong>Sewing
+tolerance</strong>. The default value of <code>0.1</code> works well for
+most models.</li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<p>FreeCAD will generate a shell shape composed of triangular faces,
+visible in the Tree View with the same name as your mesh followed by
+<code>(Shape)</code>.</p>
+<h3 id="step-4-convert-the-shape-to-a-solid">Step 4: Convert the Shape
+to a Solid</h3>
+<ol type="1">
+<li>Select the newly created shape object in the Tree View.</li>
+<li>In the top menu bar, navigate to <strong>Part</strong> &gt;
+<strong>Convert to solid</strong>.</li>
+<li>FreeCAD will create a solid object, typically named with
+<code>(Solid)</code> at the end of the original label.</li>
+</ol>
+<h3 id="step-5-refine-the-shape">Step 5: Refine the Shape</h3>
+<p>Mesh conversions leave behind many triangular facet lines across flat
+surfaces. Cleaning these up improves performance and makes the model
+easier to work with.</p>
+<ol type="1">
+<li>Select the solid object in the Tree View.</li>
+<li>In the top menu bar, navigate to <strong>Part</strong> &gt;
+<strong>Create a copy</strong> &gt; <strong>Refine shape</strong>.</li>
+<li>FreeCAD will generate a cleaned solid object labeled with
+<code>(Refined)</code> at the end. Co-planar triangular faces on flat
+surfaces are now merged into single planar faces.</li>
+</ol>
+<h3 id="step-6-clean-up-the-workspace">Step 6: Clean Up the
+Workspace</h3>
+<ol type="1">
+<li>In the Tree View, select the original mesh, the intermediate shape,
+and the unrefined solid.</li>
+<li>Press the <strong>Spacebar</strong> to hide them, or press the
+<strong>Delete</strong> key to remove them if they are no longer
+needed.</li>
+<li>You are left with a fully functional solid shape that can be
+modified using the Part, PartDesign, or TechDraw workbenches.</li>
+</ol>
+<h3 id="troubleshooting-complex-meshes">Troubleshooting Complex
+Meshes</h3>
+<ul>
+<li><strong>Non-Manifold Meshes:</strong> If FreeCAD fails to create a
+solid, the original mesh may have holes, self-intersections, or inverted
+normals. Switch to the <strong>Mesh Design</strong> workbench, select
+the mesh, and use <strong>Meshes</strong> &gt; <strong>Analyze</strong>
+&gt; <strong>Evaluate &amp; Repair mesh...</strong> to fix defects
+before conversion.</li>
+<li><strong>High Polygon Counts:</strong> FreeCAD's geometry engine is
+designed for CAD features rather than high-density organic meshes. If a
+model contains tens of thousands of triangles, simplify or decimate the
+mesh in a tool like Blender or MeshLab before importing it into
+FreeCAD.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-convert-mesh-to-solid-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

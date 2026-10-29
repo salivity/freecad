@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Check Installed FreeCAD Version - freecad</title>
+    <meta name="description" content="Checking your installed FreeCAD version is essential for troubleshooting issues, ensuring compatibility with workbenches, or determining if an update is required. This guide provides clear, step-by-step instructions to quickly find the version and build d">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-check-installed-free-cad-version">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Check Installed FreeCAD Version - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-check-installed-free-cad-version" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Checking your installed FreeCAD version is essential for troubleshooting issues, ensuring compatibility with workbenches, or determining if an update is required. This guide provides clear, step-by-step instructions to quickly find the version and build d" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-check-installed-freecad-version">How to Check Installed
+FreeCAD Version</h1>
+<p>Checking your installed FreeCAD version is essential for
+troubleshooting issues, ensuring compatibility with workbenches, or
+determining if an update is required. This guide provides clear,
+step-by-step instructions to quickly find the version and build details
+of FreeCAD using either the graphical interface on any operating system
+or the command-line interface.</p>
+<h2
+id="method-1-check-via-the-freecad-graphical-interface-all-platforms">Method
+1: Check via the FreeCAD Graphical Interface (All Platforms)</h2>
+<p>This method works consistently across Windows, macOS, and Linux.</p>
+<ol type="1">
+<li>Launch <strong>FreeCAD</strong>.</li>
+<li>In the top menu bar, click on <strong>Help</strong>.</li>
+<li>Select <strong>About FreeCAD</strong> from the dropdown menu.</li>
+<li>A window will appear displaying the major version number, release
+date, and build information.</li>
+<li><em>(Optional)</em> Click the <strong>Copy to clipboard</strong>
+button if you need to paste your complete system and build information
+into a forum or issue tracker for technical support.</li>
+</ol>
+<h2 id="method-2-check-via-the-command-line">Method 2: Check via the
+Command Line</h2>
+<p>If you are using a terminal or running FreeCAD in a headless
+environment, you can check the version directly from the console.</p>
+<h3 id="windows">Windows</h3>
+<ol type="1">
+<li><p>Open <strong>Command Prompt</strong> or
+<strong>PowerShell</strong>.</p></li>
+<li><p>Navigate to your FreeCAD installation's <code>bin</code> folder
+(default is usually <code>C:\Program Files\FreeCAD 0.XX\bin</code>) or
+run:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode cmd"><code class="sourceCode dosbat"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>freecad -<span class="at">-version</span></span></code></pre></div>
+<p><em>(Note: This requires FreeCAD to be added to your system's PATH
+variable.)</em></p></li>
+</ol>
+<h3 id="linux-and-macos">Linux and macOS</h3>
+<ol type="1">
+<li><p>Open your <strong>Terminal</strong>.</p></li>
+<li><p>Run the following command:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">freecad</span> <span class="at">--version</span></span></code></pre></div>
+<p>If you have installed FreeCAD as a console-only tool, you can also
+run:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">freecadcmd</span> <span class="at">--version</span></span></code></pre></div></li>
+</ol>
+<h3 id="flatpak-or-snap-linux">Flatpak or Snap (Linux)</h3>
+<p>If you installed FreeCAD as a sandbox package on Linux, run the
+appropriate command:</p>
+<ul>
+<li><p><strong>Flatpak:</strong></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> info org.freecadweb.FreeCAD</span></code></pre></div></li>
+<li><p><strong>Snap:</strong></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">snap</span> list freecad</span></code></pre></div></li>
+</ul>
+<h2 id="method-3-check-via-system-settings">Method 3: Check via System
+Settings</h2>
+<p>You can also determine the installed version through your operating
+system's native application managers:</p>
+<ul>
+<li><strong>Windows:</strong> Open <strong>Settings</strong> &gt;
+<strong>Apps</strong> &gt; <strong>Installed apps</strong>, locate
+<strong>FreeCAD</strong>, and view the version number listed next to the
+application name.</li>
+<li><strong>macOS:</strong> Open <strong>Finder</strong>, navigate to
+the <strong>Applications</strong> folder, click
+<strong>FreeCAD</strong>, and press <code>Command + I</code> to open the
+"Get Info" panel, which lists the version.</li>
+<li><strong>Linux (Debian/Ubuntu):</strong> Run
+<code>dpkg -l | grep freecad</code> in the terminal to view the
+installed repository package version.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-check-installed-free-cad-version';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

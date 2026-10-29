@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Fuse Multiple Shapes in FreeCAD - freecad</title>
+    <meta name="description" content="This guide explains how to combine two or more 3D solids into a single, seamless object using the Union (Fuse) tool in the FreeCAD Part workbench. You will learn the exact steps to select your shapes, execute the boolean union operation, and clean up resi">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-fuse-multiple-shapes-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Fuse Multiple Shapes in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-fuse-multiple-shapes-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to combine two or more 3D solids into a single, seamless object using the Union (Fuse) tool in the FreeCAD Part workbench. You will learn the exact steps to select your shapes, execute the boolean union operation, and clean up resi" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-fuse-multiple-shapes-in-freecad">How to Fuse Multiple
+Shapes in FreeCAD</h1>
+<p>This guide explains how to combine two or more 3D solids into a
+single, seamless object using the Union (Fuse) tool in the FreeCAD Part
+workbench. You will learn the exact steps to select your shapes, execute
+the boolean union operation, and clean up residual seam lines on the
+resulting geometry.</p>
+<h3 id="step-1-open-the-part-workbench">Step 1: Open the Part
+Workbench</h3>
+<ol type="1">
+<li>Launch FreeCAD and open your project containing the shapes you want
+to merge.</li>
+<li>In the workbench selector dropdown at the top of the interface,
+select <strong>Part</strong>.</li>
+</ol>
+<h3 id="step-2-select-the-shapes-to-fuse">Step 2: Select the Shapes to
+Fuse</h3>
+<ol type="1">
+<li>In the <strong>Tree View</strong> on the left panel (or directly
+within the 3D viewport), locate the shapes you want to combine.</li>
+<li>Hold down the <code>Ctrl</code> key (or <code>Cmd</code> on macOS)
+and click on each shape you want to include in the fusion.</li>
+<li>Ensure the shapes intersect or make direct contact. While disjoint
+shapes can be fused, the tool is primarily designed to merge overlapping
+solids.</li>
+</ol>
+<h3 id="step-3-execute-the-union-fuse-operation">Step 3: Execute the
+Union (Fuse) Operation</h3>
+<ol type="1">
+<li>Click the <strong>Union</strong> icon in the Part workbench toolbar.
+The icon resembles two overlapping blue spheres.</li>
+<li>Alternatively, go to the top menu and select <strong>Part</strong>
+&gt; <strong>Boolean</strong> &gt; <strong>Union</strong>.</li>
+<li>FreeCAD will hide the original individual shapes and generate a new
+object named <strong>Fusion</strong> in the Tree View. Expanding the
+Fusion object will show the original components nested beneath it.</li>
+</ol>
+<h3 id="step-4-remove-seam-lines-refine-shape">Step 4: Remove Seam Lines
+(Refine Shape)</h3>
+<p>After a fusion, FreeCAD often leaves visible seam lines where the
+original geometries intersected coplanar faces. To create a clean,
+single surface:</p>
+<ol type="1">
+<li>Select the newly created <strong>Fusion</strong> object in the Tree
+View.</li>
+<li>In the <strong>Property View</strong> below the Tree View, click the
+<strong>Data</strong> tab.</li>
+<li>Locate the <strong>Refine</strong> property and change its value
+from <code>false</code> to <code>true</code>.</li>
+<li>The redundant edges will disappear, leaving clean, continuous faces
+across the fused geometry.</li>
+</ol>
+<h3 id="alternative-method-using-the-boolean-dialog">Alternative Method:
+Using the Boolean Dialog</h3>
+<p>If you have a large number of shapes and prefer a checklist
+interface:</p>
+<ol type="1">
+<li>Ensure nothing is selected, then navigate to <strong>Part</strong>
+&gt; <strong>Boolean...</strong> in the top menu.</li>
+<li>In the Task panel, select <strong>Union</strong> as the Boolean
+operation.</li>
+<li>Check the boxes next to all the shapes you want to combine.</li>
+<li>Click <strong>Apply</strong>, then <strong>Close</strong>.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-fuse-multiple-shapes-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

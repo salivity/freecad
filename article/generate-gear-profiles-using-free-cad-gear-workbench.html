@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Gear Profiles Using FreeCAD Gear Workbench - freecad</title>
+    <meta name="description" content="This guide explains how to quickly design and generate accurate, parametric 2D and 3D gear profiles using the FreeCAD Gear workbench (FCGear). You will learn how to install the workbench through the FreeCAD Addon Manager, select from various gear types su">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/generate-gear-profiles-using-free-cad-gear-workbench">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Generate Gear Profiles Using FreeCAD Gear Workbench - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/generate-gear-profiles-using-free-cad-gear-workbench" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to quickly design and generate accurate, parametric 2D and 3D gear profiles using the FreeCAD Gear workbench (FCGear). You will learn how to install the workbench through the FreeCAD Addon Manager, select from various gear types su" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="generate-gear-profiles-using-freecad-gear-workbench">Generate
+Gear Profiles Using FreeCAD Gear Workbench</h1>
+<p>This guide explains how to quickly design and generate accurate,
+parametric 2D and 3D gear profiles using the FreeCAD Gear workbench
+(FCGear). You will learn how to install the workbench through the
+FreeCAD Addon Manager, select from various gear types such as involute
+or bevel gears, configure critical mechanical parameters like module and
+tooth count, and prepare the generated model for 3D printing, machining,
+or integration into larger assemblies.</p>
+<h2 id="1-install-the-gear-workbench">1. Install the Gear Workbench</h2>
+<p>If you do not already have the Gear workbench installed, you can add
+it directly through FreeCAD:</p>
+<ol type="1">
+<li>Open FreeCAD and navigate to the top menu.</li>
+<li>Select <strong>Tools</strong> &gt; <strong>Addon
+manager</strong>.</li>
+<li>Under the <strong>Workbenches</strong> tab, search for
+<code>FCGear</code> or <code>Gear</code>.</li>
+<li>Select the workbench and click <strong>Install</strong>.</li>
+<li>Once installation completes, restart FreeCAD to load the new
+tools.</li>
+</ol>
+<h2 id="2-create-a-new-document-and-select-the-gear-type">2. Create a
+New Document and Select the Gear Type</h2>
+<ol type="1">
+<li>Create a new document by clicking <strong>File</strong> &gt;
+<strong>New</strong>.</li>
+<li>In the workbench dropdown menu on the main toolbar, switch from your
+current workbench to <strong>Gear</strong>.</li>
+<li>The toolbar will display various gear generation tools. Click the
+icon for the gear type you need:
+<ul>
+<li><strong>Involute Gear:</strong> Standard external spur or helical
+gear.</li>
+<li><strong>Internal Involute Gear:</strong> Ring gear used in planetary
+systems.</li>
+<li><strong>Bevel Gear:</strong> Conical gear for intersecting
+shafts.</li>
+<li><strong>Crown Gear:</strong> Cylindrical gear mating with a spur
+gear at a 90-degree angle.</li>
+<li><strong>Worm Gear:</strong> Helical screw profile designed to mesh
+with a worm wheel.</li>
+</ul></li>
+</ol>
+<p>Clicking any of these icons instantly places a parametric gear object
+into your document with default dimensions.</p>
+<h2 id="3-customize-gear-parameters">3. Customize Gear Parameters</h2>
+<p>To tailor the gear to your specific mechanical requirements, adjust
+its values in the Property panel:</p>
+<ol type="1">
+<li>In the <strong>Tree view</strong> (left sidebar), select the
+generated gear object.</li>
+<li>In the <strong>Property view</strong> below the tree, switch to the
+<strong>Data</strong> tab.</li>
+<li>Modify the primary parameters:
+<ul>
+<li><strong>teeth (<code>num_teeth</code>):</strong> Set the total
+number of teeth.</li>
+<li><strong>module (<code>module</code>):</strong> Defines the size of
+the teeth (pitch diameter divided by the number of teeth). Both mating
+gears must share the same module.</li>
+<li><strong>pressure_angle:</strong> Typically set to
+<code>20 deg</code> for modern standard gears, or <code>14.5 deg</code>
+for older standards.</li>
+<li><strong>height:</strong> Sets the face width (extrusion thickness)
+of the gear. Set this to <code>0</code> if you only need a 2D profile
+sketch.</li>
+<li><strong>beta:</strong> Sets the helix angle. Leave at
+<code>0 deg</code> for standard spur gears, or increase for helical
+gears.</li>
+<li><strong>clearance / head / dedendum:</strong> Fine-tune tooth depth
+and tip clearances if custom tolerances are required.</li>
+</ul></li>
+</ol>
+<p>The 3D model automatically updates in the viewport as you change
+these parameters.</p>
+<h2 id="4-integrate-into-a-part-design-workflow">4. Integrate into a
+Part Design Workflow</h2>
+<p>To add center bores, keyways, or mounting holes to the generated
+gear:</p>
+<ol type="1">
+<li>Switch to the <strong>Part Design</strong> workbench.</li>
+<li>Create a new <strong>Body</strong>.</li>
+<li>Drag and drop the gear object from the Tree view into the newly
+created Body (or use <strong>Part Design</strong> &gt; <strong>Create a
+base feature</strong> with the gear selected).</li>
+<li>Select the flat front face of the gear, click <strong>Create
+sketch</strong>, and draw your center bore or shaft attachment
+profile.</li>
+<li>Use the <strong>Pocket</strong> tool to cut the hole through the
+gear thickness.</li>
+</ol>
+<p>The gear is now fully modeled, parametrically linked, and ready for
+export to STEP or STL format.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/generate-gear-profiles-using-free-cad-gear-workbench';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

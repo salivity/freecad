@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why FreeCAD Sketcher Reports Redundant Constraints - freecad</title>
+    <meta name="description" content="In FreeCAD, the Sketcher solver reports redundant constraints when an applied constraint attempts to define a geometric condition that is already mathematically locked by existing constraints. This article explains the underlying mechanics of degrees of f">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/why-free-cad-sketcher-reports-redundant-constraints">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why FreeCAD Sketcher Reports Redundant Constraints - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/why-free-cad-sketcher-reports-redundant-constraints" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In FreeCAD, the Sketcher solver reports redundant constraints when an applied constraint attempts to define a geometric condition that is already mathematically locked by existing constraints. This article explains the underlying mechanics of degrees of f" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-freecad-sketcher-reports-redundant-constraints">Why FreeCAD
+Sketcher Reports Redundant Constraints</h1>
+<p>In FreeCAD, the Sketcher solver reports redundant constraints when an
+applied constraint attempts to define a geometric condition that is
+already mathematically locked by existing constraints. This article
+explains the underlying mechanics of degrees of freedom in the Sketcher
+workbench, details the common modeling actions that trigger redundancy
+warnings, and provides direct solutions for troubleshooting and
+maintaining fully constrained sketches.</p>
+<h2 id="how-the-sketcher-solver-works">How the Sketcher Solver
+Works</h2>
+<p>The FreeCAD Sketcher uses a geometric constraint solver to calculate
+the positions, orientations, and dimensions of 2D geometry. Every
+geometric entity introduced into a sketch possesses a specific number of
+degrees of freedom (DoF). For instance, a free point on a 2D plane has
+two degrees of freedom (<span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> coordinates), while a free line segment
+has four degrees of freedom (start point <span class="math inline">\(X,
+Y\)</span> and end point <span class="math inline">\(X, Y\)</span>).</p>
+<p>Each constraint you apply—such as horizontal, vertical, distance,
+coincidence, or tangency—removes one or more degrees of freedom. A
+sketch reaches a "fully constrained" state when zero degrees of freedom
+remain, fixing the geometry into an unambiguous configuration.</p>
+<h2 id="what-causes-a-redundant-constraint">What Causes a Redundant
+Constraint?</h2>
+<p>A redundant constraint occurs when a newly applied constraint targets
+a parameter that has zero remaining degrees of freedom to satisfy that
+specific rule, yet the rule does not mathematically contradict the
+existing geometry.</p>
+<p>Because the solver's algorithm constructs a system of equations,
+adding a redundant constraint introduces a linearly dependent equation.
+The solver detects that the new constraint provides no new geometric
+information:</p>
+<ul>
+<li><strong>Mathematically Satisfied:</strong> The condition enforced by
+the constraint is already true based on the cumulative network of
+previous constraints.</li>
+<li><strong>Non-Conflicting:</strong> Unlike an over-constrained
+conflict (which turns the solver red because two constraints physically
+contradict each other), a redundant constraint is geometrically
+compatible but mathematically superfluous.</li>
+</ul>
+<h2 id="common-scenarios-triggering-redundancy">Common Scenarios
+Triggering Redundancy</h2>
+<ol type="1">
+<li><p><strong>Auto-Constraints on Parallel or Perpendicular
+Elements:</strong> When drawing shapes like rectangles or polylines,
+FreeCAD often applies automatic horizontal and vertical constraints.
+Adding an explicit perpendicularity constraint or a parallel constraint
+between these segments introduces redundancy because their orientation
+is already locked relative to the coordinate axes.</p></li>
+<li><p><strong>Symmetry Combined with Explicit Dimensions:</strong> If a
+line or pair of points is defined as symmetrical across an axis, its
+opposing distances are tied together. Specifying the length of both
+individual segments, or dimensioning from the axis to both endpoints
+independently, triggers a redundancy warning on the second
+dimension.</p></li>
+<li><p><strong>Tangency on Arcs with Fixed Centers and Radii:</strong>
+If the center point and radius of an arc are fully defined, and an
+adjacent line is also fully positioned, applying a tangency constraint
+will be redundant if the line already lies tangent to the perimeter of
+the defined arc.</p></li>
+<li><p><strong>Coincident Points on Constrained Lines:</strong> Placing
+a point coincident with an intersection that is already established by
+two fixed, intersecting paths can cause the solver to mark the
+coincidence or an alignment constraint as redundant.</p></li>
+</ol>
+<h2 id="resolving-redundant-constraints">Resolving Redundant
+Constraints</h2>
+<p>To clear redundant constraints and return the solver to a healthy
+state:</p>
+<ul>
+<li><strong>Use Solver Notifications:</strong> In the
+<strong>Tasks</strong> tab under the <strong>Solver messages</strong>
+section, FreeCAD displays a message stating "Redundant constraints"
+followed by clickable indices. Clicking the highlighted number
+automatically selects the redundant constraint in the 3D view and
+tree.</li>
+<li><strong>Delete the Constraint:</strong> Once the highlighted
+constraint is selected, press the <code>Delete</code> key. Removing it
+restores the system of equations to linear independence without altering
+the shape of the geometry.</li>
+<li><strong>Switch to Reference Dimensions:</strong> If a dimension is
+needed for informational purposes or technical drawings, toggle the
+constraint into a reference (driven) dimension instead of a driving
+dimension. Reference dimensions display measurements without passing
+constraints into the solver.</li>
+<li><strong>Enable Auto-Remove Redundants:</strong> In the Sketcher
+workbench preferences or toolbar, enable the "Auto remove redundants"
+toggle. When active, FreeCAD automatically discards new constraints that
+do not remove any degrees of freedom.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/why-free-cad-sketcher-reports-redundant-constraints';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

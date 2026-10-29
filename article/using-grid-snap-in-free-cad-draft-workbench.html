@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Grid Snap in FreeCAD Draft Workbench - freecad</title>
+    <meta name="description" content="This article provides an overview of the grid snap function within the FreeCAD Draft workbench, detailing its primary purpose, operational mechanics, and practical applications. Readers will learn how grid snapping facilitates geometric accuracy in 2D and">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/using-grid-snap-in-free-cad-draft-workbench">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Using Grid Snap in FreeCAD Draft Workbench - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/using-grid-snap-in-free-cad-draft-workbench" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of the grid snap function within the FreeCAD Draft workbench, detailing its primary purpose, operational mechanics, and practical applications. Readers will learn how grid snapping facilitates geometric accuracy in 2D and" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="using-grid-snap-in-freecad-draft-workbench">Using Grid Snap in
+FreeCAD Draft Workbench</h1>
+<p>This article provides an overview of the grid snap function within
+the FreeCAD Draft workbench, detailing its primary purpose, operational
+mechanics, and practical applications. Readers will learn how grid
+snapping facilitates geometric accuracy in 2D and 3D modeling, how it
+integrates with custom working planes, and how to configure its settings
+for efficient drafting workflows.</p>
+<p>The grid snap function in the FreeCAD Draft workbench is a
+precision-drawing tool that forces the cursor to latch onto
+predetermined intervals on the active coordinate grid. Instead of
+placing points freely in 3D space, grid snap constrains cursor placement
+strictly to the intersections of grid lines. This eliminates manual
+positioning errors and ensures dimensional consistency across technical
+drawings and 3D wireframe models.</p>
+<h3 id="primary-uses-of-grid-snap">Primary Uses of Grid Snap</h3>
+<ul>
+<li><strong>Accurate Coordinate-Based Drawing:</strong> Grid snap allows
+designers to place points, lines, arcs, and polygons at precise,
+repeatable distances without manually typing coordinates into the
+numerical input fields.</li>
+<li><strong>Modular and Layout Design:</strong> In architectural and
+floor plan drafting, standard structural elements—such as walls,
+columns, and door placements—often conform to standard modular intervals
+(e.g., 100 mm, 500 mm, or 1 m). Grid snap simplifies laying out these
+repeated units quickly.</li>
+<li><strong>Rapid Prototyping in 2D:</strong> When sketching basic
+profiles or mechanical layouts, grid snap allows users to establish
+exact dimensions visually by counting grid subdivisions, drastically
+speeding up preliminary drafting.</li>
+<li><strong>Reference for Object Placement:</strong> It provides a
+reliable spatial reference when translating, rotating, or scaling
+existing shapes relative to one another.</li>
+</ul>
+<h3 id="how-grid-snap-operates">How Grid Snap Operates</h3>
+<p>Grid snap works in tandem with the Draft Workbench's Working Plane.
+The grid automatically aligns with the active plane—such as the standard
+XY (Top), XZ (Front), or YZ (Side) planes—or can be mapped onto any
+custom face of an existing 3D solid.</p>
+<p>When the grid snap toggle is activated in the Draft Snap toolbar or
+the Draft Tray at the bottom of the interface, the cursor calculates its
+proximity to the nearest grid intersection. Once within a defined
+snapping radius, FreeCAD snaps the input point to that intersection,
+visually indicating the snap with a dedicated grid snap marker.</p>
+<h3 id="integration-with-other-snapping-modes">Integration with Other
+Snapping Modes</h3>
+<p>While object snaps (such as snapping to endpoints, midpoints, or
+centers) rely on existing geometry, grid snap functions independently of
+any existing model geometry. It can be used alone to generate the
+initial foundation of a drawing, or concurrently with other snap modes
+to blend geometry-based references with absolute spatial
+constraints.</p>
+<h3 id="customization-and-control">Customization and Control</h3>
+<p>Users can fully customize the behavior of the grid snap via the Draft
+preferences and the Draft Tray:</p>
+<ul>
+<li><strong>Grid Spacing:</strong> Sets the primary distance between
+main grid lines.</li>
+<li><strong>Subdivisions:</strong> Defines the number of smaller
+intervals between major grid lines for fine-detail work.</li>
+<li><strong>Visibility:</strong> The visual grid lines can be turned on
+or off without disabling the snap function itself, allowing users to
+draw with precision on a clean viewport.</li>
+<li><strong>Shortcut Toggling:</strong> Grid snapping can be quickly
+toggled on and off using the snap toolbar, allowing for seamless
+transitions between freehand placement, geometry snapping, and
+grid-locked input.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/using-grid-snap-in-free-cad-draft-workbench';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

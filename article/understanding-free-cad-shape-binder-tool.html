@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding FreeCAD Shape Binder Tool - freecad</title>
+    <meta name="description" content="The Shape Binder tool in FreeCAD is an essential feature within the PartDesign workbench designed to enable robust multi-body modeling. This article explains the primary purpose of the Shape Binder, how it functions to bridge geometries between separate b">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/understanding-free-cad-shape-binder-tool">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding FreeCAD Shape Binder Tool - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/understanding-free-cad-shape-binder-tool" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Shape Binder tool in FreeCAD is an essential feature within the PartDesign workbench designed to enable robust multi-body modeling. This article explains the primary purpose of the Shape Binder, how it functions to bridge geometries between separate b" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-freecad-shape-binder-tool">Understanding FreeCAD
+Shape Binder Tool</h1>
+<p>The Shape Binder tool in FreeCAD is an essential feature within the
+PartDesign workbench designed to enable robust multi-body modeling. This
+article explains the primary purpose of the Shape Binder, how it
+functions to bridge geometries between separate bodies, and why it is
+critical for creating stable, parametric relationships in complex
+assemblies without introducing circular dependencies or model
+corruption.</p>
+<h2 id="what-is-the-shape-binder">What Is the Shape Binder?</h2>
+<p>In FreeCAD's PartDesign workbench, each "Body" represents a single,
+contiguous solid that operates within its own local coordinate system.
+By default, features inside one Body cannot directly reference features
+or geometry in another Body. The Shape Binder solves this limitation by
+creating a parametric proxy—or reference copy—of an external geometry
+(such as an edge, face, vertex, or entire solid) inside the active
+Body.</p>
+<h2 id="key-purposes-of-the-shape-binder">Key Purposes of the Shape
+Binder</h2>
+<h3 id="1-enabling-cross-body-references">1. Enabling Cross-Body
+References</h3>
+<p>The primary purpose of the Shape Binder is to allow you to design
+parts that depend on the dimensions and contours of neighboring parts.
+When designing mating components, such as an enclosure and its lid, you
+can use a Shape Binder to import the perimeter or mounting hole
+locations of the enclosure directly into the lid’s active coordinate
+system. This eliminates the need to manually recreate measurements or
+sketches across different parts.</p>
+<h3 id="2-supporting-top-down-design">2. Supporting Top-Down Design</h3>
+<p>Top-down design is an assembly modeling approach where parts are
+built relative to a shared skeleton, master sketch, or base component.
+The Shape Binder serves as the structural link in this workflow. By
+referencing a central reference model, changes made to the base
+dimensions automatically propagate to all bodies utilizing the Shape
+Binder, maintaining design intent and fit.</p>
+<h3 id="3-preserving-parametric-integrity">3. Preserving Parametric
+Integrity</h3>
+<p>Referencing geometry across separate bodies without an intermediary
+often leads to dependency errors, cyclic links, or displacement issues
+due to mismatched coordinate spaces. The Shape Binder transforms the
+referenced geometry from the global coordinate system into the local
+coordinate system of the target Body. This keeps the dependency tree
+clean and ensures FreeCAD computes the model logically and
+predictably.</p>
+<h2 id="shape-binder-vs-sub-shape-binder">Shape Binder vs. Sub-Shape
+Binder</h2>
+<p>In modern versions of FreeCAD, you will encounter two variants of
+this tool:</p>
+<ul>
+<li><strong>Shape Binder:</strong> The legacy tool, primarily used to
+copy an entire object or body as a reference into another body.</li>
+<li><strong>Sub-Shape Binder:</strong> The newer and more flexible tool
+that allows you to select specific sub-elements—such as individual
+faces, edges, or vertices—from one or more bodies. It provides enhanced
+stability against the Topological Naming Problem and is generally
+recommended for current FreeCAD workflows.</li>
+</ul>
+<h2 id="practical-use-cases">Practical Use Cases</h2>
+<ul>
+<li><strong>Hole Alignments:</strong> Projecting bolt hole locations
+from a base frame into a mounting bracket to guarantee perfect
+alignment.</li>
+<li><strong>Interlocking Profiles:</strong> Offset-sketching around a
+drafted edge copied via a Shape Binder to design custom seals or
+tongue-and-groove joints.</li>
+<li><strong>Clearance Checking:</strong> Using imported reference
+surfaces to model moving parts with precise gap tolerances.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/understanding-free-cad-shape-binder-tool';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Generate FEM Mesh Using Gmsh in FreeCAD - freecad</title>
+    <meta name="description" content="Generating a finite element mesh using Gmsh in FreeCAD allows you to convert solid CAD models into high-quality 1D, 2D, or 3D meshes suitable for numerical simulation. This article provides a clear, step-by-step guide to configuring the Gmsh binary path i">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-generate-fem-mesh-using-gmsh-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Generate FEM Mesh Using Gmsh in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-generate-fem-mesh-using-gmsh-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Generating a finite element mesh using Gmsh in FreeCAD allows you to convert solid CAD models into high-quality 1D, 2D, or 3D meshes suitable for numerical simulation. This article provides a clear, step-by-step guide to configuring the Gmsh binary path i" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-generate-fem-mesh-using-gmsh-in-freecad">How to Generate
+FEM Mesh Using Gmsh in FreeCAD</h1>
+<p>Generating a finite element mesh using Gmsh in FreeCAD allows you to
+convert solid CAD models into high-quality 1D, 2D, or 3D meshes suitable
+for numerical simulation. This article provides a clear, step-by-step
+guide to configuring the Gmsh binary path in FreeCAD, creating an
+analysis container, defining mesh sizing parameters, and generating the
+final mesh within the Finite Element Method (FEM) workbench.</p>
+<h3 id="step-1-configure-gmsh-in-freecad">Step 1: Configure Gmsh in
+FreeCAD</h3>
+<p>Before generating a mesh, FreeCAD needs to know where the Gmsh
+executable is located on your system:</p>
+<ol type="1">
+<li>Download Gmsh from its official source if it was not bundled with
+your FreeCAD installation.</li>
+<li>Open FreeCAD and go to <strong>Edit &gt; Preferences</strong>.</li>
+<li>Select the <strong>FEM</strong> tab in the sidebar.</li>
+<li>Go to the <strong>Gmsh</strong> sub-tab.</li>
+<li>In the <strong>Gmsh binary path</strong> field, browse to and select
+the <code>gmsh</code> executable file on your computer.</li>
+<li>Click <strong>Apply</strong> and then <strong>OK</strong>.</li>
+</ol>
+<h3 id="step-2-set-up-the-fem-workbench">Step 2: Set Up the FEM
+Workbench</h3>
+<ol type="1">
+<li>Open the 3D part or assembly you wish to mesh.</li>
+<li>Switch to the <strong>FEM Workbench</strong> using the workbench
+dropdown selector in the top toolbar.</li>
+<li>Click the <strong>Analysis container</strong> button (represented by
+a yellow capital "A" icon) to create a new simulation environment in the
+tree view.</li>
+</ol>
+<h3 id="step-3-create-the-gmsh-object">Step 3: Create the Gmsh
+Object</h3>
+<ol type="1">
+<li>Select the solid geometry you want to mesh from the tree view or the
+3D viewport.</li>
+<li>Click the <strong>FEM mesh from shape by Gmsh</strong> icon in the
+toolbar, or navigate to <strong>Mesh &gt; FEM mesh from shape by
+Gmsh</strong> in the menu.</li>
+<li>A Gmsh mesh dialog will open in the <strong>Tasks</strong> panel on
+the left, and a mesh object will be added inside your Analysis
+container.</li>
+</ol>
+<h3 id="step-4-configure-mesh-settings">Step 4: Configure Mesh
+Settings</h3>
+<p>In the Gmsh task panel, define the parameters for your mesh:</p>
+<ul>
+<li><strong>Element dimension:</strong> Choose <strong>From
+Shape</strong> (auto-detects 3D/2D), or explicitly force
+<strong>3D</strong>, <strong>2D</strong>, or <strong>1D</strong>.</li>
+<li><strong>Max element size:</strong> Sets the upper bound for element
+edge lengths. Lower values create a finer, denser mesh.</li>
+<li><strong>Min element size:</strong> Sets the lower bound for element
+edge lengths, useful around curved surfaces or sharp features.</li>
+<li><strong>Mesh order:</strong> Choose between <strong>1st
+Order</strong> (linear elements, faster solving) and <strong>2nd
+Order</strong> (quadratic elements with mid-side nodes, higher
+mechanical simulation accuracy).</li>
+<li><strong>Algorithm:</strong> Select 2D and 3D meshing algorithms
+(e.g., Delaunay, Frontal) if default settings produce poor element
+quality.</li>
+</ul>
+<h3 id="step-5-generate-and-verify-the-mesh">Step 5: Generate and Verify
+the Mesh</h3>
+<ol type="1">
+<li>Click the <strong>Apply</strong> button in the task panel. FreeCAD
+runs Gmsh in the background, which generates the elements and logs
+progress in the FreeCAD Report View.</li>
+<li>Once the log indicates completion, click <strong>OK</strong> to
+close the task panel.</li>
+<li>In the Model tree view, select the original solid part and press the
+<strong>Spacebar</strong> to hide it. This reveals the generated FEM
+mesh for visual inspection.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-generate-fem-mesh-using-gmsh-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

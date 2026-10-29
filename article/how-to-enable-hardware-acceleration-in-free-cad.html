@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Enable Hardware Acceleration in FreeCAD - freecad</title>
+    <meta name="description" content="This article explains how to configure FreeCAD and your operating system to utilize dedicated GPU hardware acceleration for improved 3D viewport performance. FreeCAD relies on the Coin3D library and OpenGL to render complex geometry. By ensuring your dedi">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-enable-hardware-acceleration-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Enable Hardware Acceleration in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-enable-hardware-acceleration-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how to configure FreeCAD and your operating system to utilize dedicated GPU hardware acceleration for improved 3D viewport performance. FreeCAD relies on the Coin3D library and OpenGL to render complex geometry. By ensuring your dedi" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-enable-hardware-acceleration-in-freecad">How to Enable
+Hardware Acceleration in FreeCAD</h1>
+<p>This article explains how to configure FreeCAD and your operating
+system to utilize dedicated GPU hardware acceleration for improved 3D
+viewport performance. FreeCAD relies on the Coin3D library and OpenGL to
+render complex geometry. By ensuring your dedicated graphics card
+handles FreeCAD and optimizing the software's internal rendering
+preferences, you can eliminate viewport stutter, improve frame rates,
+and handle large assemblies smoothly.</p>
+<h3 id="step-1-force-dedicated-gpu-usage">Step 1: Force Dedicated GPU
+Usage</h3>
+<p>FreeCAD often defaults to integrated CPU graphics on laptops and
+multi-GPU systems. You must force the operating system to use your
+dedicated GPU (NVIDIA or AMD).</p>
+<h4 id="on-windows">On Windows:</h4>
+<ol type="1">
+<li>Open <strong>Windows Settings</strong> &gt; <strong>System</strong>
+&gt; <strong>Display</strong> &gt; <strong>Graphics</strong>.</li>
+<li>Click <strong>Browse</strong> under "Custom options for apps" and
+locate <code>FreeCAD.exe</code> (typically in
+<code>C:\Program Files\FreeCAD [version]\bin\</code>).</li>
+<li>Select <strong>FreeCAD</strong>, click <strong>Options</strong>,
+choose <strong>High Performance</strong> (your dedicated GPU), and click
+<strong>Save</strong>.</li>
+<li><em>NVIDIA Users:</em> Alternatively, open the <strong>NVIDIA
+Control Panel</strong>, go to <strong>Manage 3D Settings</strong> &gt;
+<strong>Program Settings</strong>, add FreeCAD, and set the preferred
+graphics processor to <strong>High-performance NVIDIA
+processor</strong>.</li>
+</ol>
+<h4 id="on-linux">On Linux:</h4>
+<p>Run FreeCAD using your system’s dedicated GPU offloading wrapper:</p>
+<ul>
+<li>For NVIDIA: <code>prime-run freecad</code> or
+<code>__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia freecad</code></li>
+<li>For AMD: <code>DRI_PRIME=1 freecad</code></li>
+</ul>
+<h3 id="step-2-enable-vertex-buffer-objects-vbo-in-freecad">Step 2:
+Enable Vertex Buffer Objects (VBO) in FreeCAD</h3>
+<p>Vertex Buffer Objects (VBOs) allow FreeCAD to upload 3D model data
+directly to GPU memory rather than sending it through the CPU every
+frame.</p>
+<ol type="1">
+<li>Open FreeCAD.</li>
+<li>Navigate to <strong>Edit</strong> &gt; <strong>Preferences</strong>
+&gt; <strong>Display</strong>.</li>
+<li>Under the <strong>3D View</strong> tab, locate the
+<strong>Rendering</strong> section.</li>
+<li>Check the box for <strong>Use OpenGL VBO (Vertex Buffer
+Object)</strong>.</li>
+<li>Set the <strong>Render Cache</strong> dropdown to
+<strong>Auto</strong> or <strong>Always</strong>.</li>
+<li>Click <strong>Apply</strong> and <strong>OK</strong>.</li>
+</ol>
+<h3 id="step-3-optimize-viewport-display-settings">Step 3: Optimize
+Viewport Display Settings</h3>
+<p>High tessellation and heavy anti-aliasing can degrade viewport
+performance regardless of your hardware.</p>
+<ol type="1">
+<li>Go to <strong>Edit</strong> &gt; <strong>Preferences</strong> &gt;
+<strong>Display</strong> &gt; <strong>3D View</strong>.</li>
+<li>Set <strong>Anti-Aliasing (MSAA)</strong> to <strong>None</strong>
+or <strong>2x</strong> if viewport rotation feels sluggish.</li>
+<li>Go to <strong>Edit</strong> &gt; <strong>Preferences</strong> &gt;
+<strong>Part Design</strong> &gt; <strong>Shape view</strong>.</li>
+<li>Adjust <strong>Maximum deviation depending on the bounding
+box</strong>:
+<ul>
+<li>The default is typically <code>0.5%</code>. Increasing this value
+slightly (e.g., to <code>1.0%</code> or <code>2.0%</code>) reduces the
+polygon count generated for curved surfaces, significantly improving
+rendering speeds on complex parts.</li>
+</ul></li>
+</ol>
+<h3 id="step-4-verify-hardware-acceleration">Step 4: Verify Hardware
+Acceleration</h3>
+<p>To confirm that FreeCAD is utilizing your dedicated OpenGL
+driver:</p>
+<ol type="1">
+<li><p>In FreeCAD, go to <strong>View</strong> &gt;
+<strong>Panels</strong> and ensure the <strong>Python console</strong>
+is visible.</p></li>
+<li><p>In the Python console, type the following commands:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pivy <span class="im">import</span> coin</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coin.SoRenderManager.isSupported(coin.SoRenderManager.VBO))</span></code></pre></div>
+<p>A return value of <code>True</code> confirms that
+hardware-accelerated VBOs are active.</p></li>
+<li><p>Check <strong>Help</strong> &gt; <strong>About FreeCAD</strong>
+&gt; <strong>Copy to clipboard</strong>, then paste the text into an
+editor to confirm your dedicated graphics card is listed under the
+system details.</p></li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-enable-hardware-acceleration-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Advanced NURBS Curves in FreeCAD - freecad</title>
+    <meta name="description" content="Non-Uniform Rational B-Splines (NURBS) provide the mathematical foundation for generating complex, smooth, and precise freeform geometry in computer-aided design. This guide explains how to construct and fine-tune advanced NURBS curves using the FreeCAD C">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/create-advanced-nurbs-curves-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Create Advanced NURBS Curves in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/create-advanced-nurbs-curves-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Non-Uniform Rational B-Splines (NURBS) provide the mathematical foundation for generating complex, smooth, and precise freeform geometry in computer-aided design. This guide explains how to construct and fine-tune advanced NURBS curves using the FreeCAD C" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="create-advanced-nurbs-curves-in-freecad">Create Advanced NURBS
+Curves in FreeCAD</h1>
+<p>Non-Uniform Rational B-Splines (NURBS) provide the mathematical
+foundation for generating complex, smooth, and precise freeform geometry
+in computer-aided design. This guide explains how to construct and
+fine-tune advanced NURBS curves using the FreeCAD Curves Workbench,
+covering the setup process, control point manipulation, degree
+modification, weight adjustments, and curvature evaluation.</p>
+<h3 id="1-install-the-curves-workbench">1. Install the Curves
+Workbench</h3>
+<p>The Curves Workbench is an external add-on that expands FreeCAD's
+native surface-modeling capabilities.</p>
+<ol type="1">
+<li>Open FreeCAD.</li>
+<li>Navigate to <strong>Tools</strong> &gt; <strong>Addon
+Manager</strong>.</li>
+<li>Search for <strong>Curves</strong> in the Workbenches tab.</li>
+<li>Select it, click <strong>Install</strong>, and restart FreeCAD when
+prompted.</li>
+<li>Switch to the <strong>Curves</strong> workbench from the workbench
+selector dropdown.</li>
+</ol>
+<h3 id="2-generate-base-control-points-or-geometry">2. Generate Base
+Control Points or Geometry</h3>
+<p>Advanced NURBS curves are typically generated from ordered point
+clouds, intersecting sketch geometries, or existing edge
+extractions.</p>
+<ul>
+<li><strong>From Points:</strong> Create a sequence of 3D points using
+the Draft workbench or import a coordinates table. In the Curves
+workbench, select your points in sequence and click the
+<strong>Approximate a points curve</strong> tool.</li>
+<li><strong>From Sketches:</strong> Draw a baseline shape in the
+Sketcher workbench using standard B-splines or line segments to act as a
+structural rail.</li>
+</ul>
+<h3 id="3-convert-and-parameterize-to-nurbs">3. Convert and Parameterize
+to NURBS</h3>
+<p>To gain access to rational B-spline controls (poles and weights),
+standard lines or B-splines must be parameterized:</p>
+<ol type="1">
+<li>Select the wire, sketch, or edge you want to convert.</li>
+<li>Click the <strong>Parametric Comb</strong> or use the
+<strong>Interpolate</strong> tool to convert the geometry into an
+editable curve object.</li>
+<li>In the <strong>Tree View</strong>, select the generated curve to
+view its properties in the <strong>Data Tab</strong>.</li>
+</ol>
+<h3 id="4-modifying-degree-poles-and-knot-vectors">4. Modifying Degree,
+Poles, and Knot Vectors</h3>
+<p>The shape and flexibility of a NURBS curve depend directly on its
+mathematical degree and knot distribution:</p>
+<ul>
+<li><strong>Degree:</strong> Locate the <code>Degree</code> property in
+the Data tab. Increasing the degree (commonly to 3 or 5 for industrial
+design) increases smoothness across the span.</li>
+<li><strong>Control Points (Poles):</strong> Enable the visibility of
+poles by setting <code>Show Poles</code> to <code>True</code> in the
+View tab. Use the <strong>Edit Curve</strong> tool to drag poles
+interactively in the 3D view.</li>
+<li><strong>Non-Uniform Knot Distribution:</strong> By setting the knot
+vector distribution manually or using the <strong>Discretize</strong>
+tools, you can insert knots closer together where sharp transitions are
+required, or space them out for continuous, flowing sweeps.</li>
+</ul>
+<h3 id="5-adjusting-rational-weights">5. Adjusting Rational Weights</h3>
+<p>The "Rational" attribute of a NURBS curve allows individual control
+points to exert varying levels of gravitational pull on the curve
+path:</p>
+<ol type="1">
+<li>With the curve selected, access the <strong>Weights</strong> array
+within the Data properties.</li>
+<li>Increasing a control point’s weight pulls the curve closer to that
+specific pole without adding extra geometry.</li>
+<li>Decreasing the weight flattens the curve away from that pole. This
+method allows the generation of exact conic sections (ellipses,
+parabolas, and hyperbolas) that non-rational B-splines cannot accurately
+represent.</li>
+</ol>
+<h3 id="6-analyzing-curve-quality">6. Analyzing Curve Quality</h3>
+<p>High-quality NURBS modeling requires monitoring continuity and
+curvature transitions:</p>
+<ol type="1">
+<li>Select the curve and click the <strong>Curvature Comb</strong>
+tool.</li>
+<li>Adjust the comb scale and sample density in the Data
+properties.</li>
+<li>Inspect the distribution of the comb needles: a smooth, continuous
+needle progression indicates G2 (curvature) continuity, ensuring the
+curve is free of unwanted inflections, kinks, or flat spots.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/create-advanced-nurbs-curves-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

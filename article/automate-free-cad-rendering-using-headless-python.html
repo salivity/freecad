@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automate FreeCAD Rendering Using Headless Python - freecad</title>
+    <meta name="description" content="Automating FreeCAD rendering tasks using a headless Python script enables developers to generate 3D model previews, technical drawings, and ray-traced images without opening the graphical user interface. This article explains how to configure a headless e">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/automate-free-cad-rendering-using-headless-python">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Automate FreeCAD Rendering Using Headless Python - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/automate-free-cad-rendering-using-headless-python" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Automating FreeCAD rendering tasks using a headless Python script enables developers to generate 3D model previews, technical drawings, and ray-traced images without opening the graphical user interface. This article explains how to configure a headless e" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="automate-freecad-rendering-using-headless-python">Automate
+FreeCAD Rendering Using Headless Python</h1>
+<p>Automating FreeCAD rendering tasks using a headless Python script
+enables developers to generate 3D model previews, technical drawings,
+and ray-traced images without opening the graphical user interface. This
+article explains how to configure a headless environment using a virtual
+framebuffer, access the FreeCAD Python API, and execute batch rendering
+tasks directly from the command line for automated workflows and
+continuous integration pipelines.</p>
+<h2 id="prerequisites-and-environment-setup">Prerequisites and
+Environment Setup</h2>
+<p>Rendering in FreeCAD typically relies on Coin3D or specialized
+rendering backends (such as POV-Ray or LuxCoreRender via the Render
+Workbench) which require an active graphics display context. When
+running on a server or container without a physical monitor, you must
+provide a virtual display using Xvfb (X Virtual Framebuffer).</p>
+<p>On a Debian/Ubuntu-based system, install FreeCAD and Xvfb:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install <span class="at">-y</span> freecad xvfb</span></code></pre></div>
+<p>Ensure your Python path includes FreeCAD's library modules if running
+from a system Python interpreter rather than the built-in
+<code>FreeCADCmd</code> interpreter:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">&quot;/usr/lib/freecad/lib&quot;</span>)</span></code></pre></div>
+<h2 id="creating-the-headless-rendering-script">Creating the Headless
+Rendering Script</h2>
+<p>FreeCAD provides <code>FreeCADGui</code> and the Coin3D library for
+off-screen rendering. The following script loads a CAD file, configures
+the camera view, and renders the scene to an image file using
+<code>SoOffscreenRenderer</code>.</p>
+<p>Save this script as <code>headless_render.py</code>:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCADGui</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pivy <span class="im">import</span> coin</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> render_model(fcstd_path, output_image_path, width<span class="op">=</span><span class="dv">1920</span>, height<span class="op">=</span><span class="dv">1080</span>):</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize the GUI framework in headless mode</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    FreeCADGui.showMainWindow()</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Open the target FreeCAD document</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    doc <span class="op">=</span> FreeCAD.<span class="bu">open</span>(fcstd_path)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    gui_doc <span class="op">=</span> FreeCADGui.getDocument(doc.Name)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Access the active 3D view</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    view <span class="op">=</span> gui_doc.ActiveView</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    view.viewIsometric()</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    view.fitAll()</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the Coin3D scene graph from the view</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    sg <span class="op">=</span> view.getSceneGraph()</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Configure the off-screen renderer</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    renderer <span class="op">=</span> coin.SoOffscreenRenderer(coin.SbViewportRegion(width, height))</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    renderer.setBackgroundColor(coin.SbColor(<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">1.0</span>)) <span class="co"># White background</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Render the scene graph</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> renderer.render(sg):</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        renderer.writeToRGBFile(output_image_path)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Render successfully saved to </span><span class="sc">{</span>output_image_path<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Rendering failed&quot;</span>, <span class="bu">file</span><span class="op">=</span>sys.stderr)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Cleanup</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    FreeCAD.closeDocument(doc.Name)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">&lt;</span> <span class="dv">3</span>:</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Usage: FreeCADCmd headless_render.py &lt;input.FCStd&gt; &lt;output.png&gt;&quot;</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>        sys.exit(<span class="dv">1</span>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    input_file <span class="op">=</span> sys.argv[<span class="dv">1</span>]</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    output_file <span class="op">=</span> sys.argv[<span class="dv">2</span>]</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    render_model(input_file, output_file)</span></code></pre></div>
+<h2 id="alternative-native-view-image-export">Alternative: Native View
+Image Export</h2>
+<p>If you prefer using FreeCAD's built-in view export methods instead of
+low-level Coin3D bindings, you can replace the off-screen renderer calls
+with the <code>saveImage</code> method:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set background color to white</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>view.setBackgroundColor(<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">1.0</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the current view directly</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>view.saveImage(output_image_path, width, height, <span class="st">&quot;White&quot;</span>)</span></code></pre></div>
+<h2 id="executing-the-script-headlessly">Executing the Script
+Headlessly</h2>
+<p>To execute the rendering pipeline without a physical X-server, wrap
+the command with <code>xvfb-run</code>:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xvfb-run</span> <span class="at">-a</span> FreeCADCmd headless_render.py input_model.FCStd output_render.png</span></code></pre></div>
+<p>Key arguments explained:</p>
+<ul>
+<li><code>xvfb-run -a</code>: Automatically finds a free server number
+for the virtual display.</li>
+<li><code>FreeCADCmd</code>: Launches FreeCAD's command-line interpreter
+with all internal modules pre-linked.</li>
+</ul>
+<h2 id="automating-batch-rendering">Automating Batch Rendering</h2>
+<p>To process multiple files programmatically, accept a directory path
+in your Python script and iterate over all CAD files:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> batch_render(input_dir, output_dir):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    files <span class="op">=</span> glob.glob(os.path.join(input_dir, <span class="st">&quot;*.FCStd&quot;</span>))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> file_path <span class="kw">in</span> files:</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        base_name <span class="op">=</span> os.path.basename(file_path).replace(<span class="st">&quot;.FCStd&quot;</span>, <span class="st">&quot;.png&quot;</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        out_path <span class="op">=</span> os.path.join(output_dir, base_name)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        render_model(file_path, out_path)</span></code></pre></div>
+<p>This workflow enables automated thumbnail generation, automated
+visual regression testing, and scheduled export routines in continuous
+delivery environments.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/automate-free-cad-rendering-using-headless-python';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

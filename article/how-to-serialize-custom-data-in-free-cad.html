@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Serialize Custom Data in FreeCAD - freecad</title>
+    <meta name="description" content="This article provides a practical guide on serializing and deserializing custom data structures within FreeCAD. You will learn how to leverage FreeCAD’s native property framework, implement state restoration using Python proxy objects via getstate and set">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-serialize-custom-data-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Serialize Custom Data in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-serialize-custom-data-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a practical guide on serializing and deserializing custom data structures within FreeCAD. You will learn how to leverage FreeCAD’s native property framework, implement state restoration using Python proxy objects via getstate and set" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-serialize-custom-data-in-freecad">How to Serialize Custom
+Data in FreeCAD</h1>
+<p>This article provides a practical guide on serializing and
+deserializing custom data structures within FreeCAD. You will learn how
+to leverage FreeCAD’s native property framework, implement state
+restoration using Python proxy objects via <code>__getstate__</code> and
+<code>__setstate__</code>, and use C++ <code>Save</code> and
+<code>Restore</code> routines for low-level property
+implementations.</p>
+<hr />
+<h3 id="method-1-using-built-in-freecad-properties">Method 1: Using
+Built-in FreeCAD Properties</h3>
+<p>The most robust way to manage custom data in FreeCAD is to use native
+<code>App::Property</code> types. Native properties automatically handle
+serialization into the FreeCAD XML/document archive
+(<code>.FCStd</code>) when saved and restored.</p>
+<p>If your data can be expressed as primitive structures (lists,
+dictionaries, or strings), store it as a JSON-encoded string within an
+<code>App::PropertyString</code>:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a generic feature object</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> App.ActiveDocument.addObject(<span class="st">&quot;App::FeaturePython&quot;</span>, <span class="st">&quot;CustomDataHolder&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a string property to hold serialized data</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>obj.addProperty(<span class="st">&quot;App::PropertyString&quot;</span>, <span class="st">&quot;CustomPayload&quot;</span>, <span class="st">&quot;Data&quot;</span>, <span class="st">&quot;Stores serialized JSON&quot;</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Serialization</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>data_to_store <span class="op">=</span> {<span class="st">&quot;node_ids&quot;</span>: [<span class="dv">101</span>, <span class="dv">102</span>, <span class="dv">103</span>], <span class="st">&quot;tolerance&quot;</span>: <span class="fl">0.005</span>, <span class="st">&quot;enabled&quot;</span>: <span class="va">True</span>}</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>obj.CustomPayload <span class="op">=</span> json.dumps(data_to_store)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Deserialization</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>retrieved_data <span class="op">=</span> json.loads(obj.CustomPayload)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(retrieved_data[<span class="st">&quot;tolerance&quot;</span>])</span></code></pre></div>
+<hr />
+<h3
+id="method-2-python-proxy-state-__getstate__-and-__setstate__">Method 2:
+Python Proxy State (<code>__getstate__</code> and
+<code>__setstate__</code>)</h3>
+<p>When building scripted objects (<code>FeaturePython</code>),
+non-property attributes attached to your Python proxy class are not
+saved by default. FreeCAD uses Python's standard <code>pickle</code>
+mechanism via <code>__getstate__</code> and <code>__setstate__</code> to
+persist internal proxy attributes.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CustomFeature:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, obj):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        obj.Proxy <span class="op">=</span> <span class="va">self</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.internal_matrix <span class="op">=</span> [[<span class="dv">1</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">1</span>]]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.version <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> execute(<span class="va">self</span>, obj):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> __getstate__(<span class="va">self</span>):</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Serialize custom proxy variables into a dictionary/tuple.&quot;&quot;&quot;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;internal_matrix&quot;</span>: <span class="va">self</span>.internal_matrix,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;version&quot;</span>: <span class="va">self</span>.version</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> __setstate__(<span class="va">self</span>, state):</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Deserialize and restore state when the document is opened.&quot;&quot;&quot;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.internal_matrix <span class="op">=</span> state.get(<span class="st">&quot;internal_matrix&quot;</span>, [])</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.version <span class="op">=</span> state.get(<span class="st">&quot;version&quot;</span>, <span class="fl">1.0</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiation</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> App.ActiveDocument</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>feature <span class="op">=</span> doc.addObject(<span class="st">&quot;App::FeaturePython&quot;</span>, <span class="st">&quot;StatefulObject&quot;</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>CustomFeature(feature)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>doc.recompute()</span></code></pre></div>
+<p>When saving the document, FreeCAD calls <code>__getstate__</code> and
+writes the resulting byte stream to the <code>.FCStd</code> container.
+When reopening, it instantiates the class and calls
+<code>__setstate__</code>.</p>
+<hr />
+<h3
+id="method-3-handling-large-binary-structures-external-document-files">Method
+3: Handling Large Binary Structures (External Document Files)</h3>
+<p>If you have large binary payloads (such as raw point clouds or mesh
+arrays) that should not inflate the main <code>Document.xml</code> file,
+you can hook into FreeCAD's document stream writers.</p>
+<p>In Python scripted objects, implement <code>SaveDocFile</code> and
+<code>RestoreDocFile</code>:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BinaryDataFeature:</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, obj):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        obj.Proxy <span class="op">=</span> <span class="va">self</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.raw_bytes <span class="op">=</span> <span class="st">b&quot;</span><span class="ch">\x00\x01\x02\x03\x04</span><span class="st">&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> SaveDocFile(<span class="va">self</span>, file_path):</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Called by FreeCAD during document save. Writes to an auxiliary file in the archive.&quot;&quot;&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">&quot;wb&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="va">self</span>.raw_bytes)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> RestoreDocFile(<span class="va">self</span>, file_path):</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Called by FreeCAD during document load.&quot;&quot;&quot;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">&quot;rb&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.raw_bytes <span class="op">=</span> f.read()</span></code></pre></div>
+<hr />
+<h3 id="method-4-c-custom-property-implementation">Method 4: C++ Custom
+Property Implementation</h3>
+<p>When developing compiled C++ extensions, you inherit from
+<code>App::Property</code> and override the XML read/write methods:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;App/Property.h&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Base/Writer.h&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Base/XMLReader.h&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> PropertyCustomData <span class="op">:</span> <span class="kw">public</span> App<span class="op">::</span>Property</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    TYPESYSTEM_HEADER<span class="op">();</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> values<span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> Save<span class="op">(</span>Base<span class="op">::</span>Writer <span class="op">&amp;</span>writer<span class="op">)</span> <span class="at">const</span> <span class="kw">override</span> <span class="op">{</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        writer<span class="op">.</span>Stream<span class="op">()</span> <span class="op">&lt;&lt;</span> writer<span class="op">.</span>ind<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;&lt;CustomData count=</span><span class="sc">\&quot;</span><span class="st">&quot;</span> <span class="op">&lt;&lt;</span> values<span class="op">.</span>size<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> v <span class="op">:</span> values<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            writer<span class="op">.</span>Stream<span class="op">()</span> <span class="op">&lt;&lt;</span> v <span class="op">&lt;&lt;</span> <span class="st">&quot; &quot;</span><span class="op">;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        writer<span class="op">.</span>Stream<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;&lt;/CustomData&gt;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> Restore<span class="op">(</span>Base<span class="op">::</span>XMLReader <span class="op">&amp;</span>reader<span class="op">)</span> <span class="kw">override</span> <span class="op">{</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        reader<span class="op">.</span>readElement<span class="op">(</span><span class="st">&quot;CustomData&quot;</span><span class="op">);</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> count <span class="op">=</span> reader<span class="op">.</span>getAttributeAsInteger<span class="op">(</span><span class="st">&quot;count&quot;</span><span class="op">);</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        values<span class="op">.</span>clear<span class="op">();</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        values<span class="op">.</span>reserve<span class="op">(</span>count<span class="op">);</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> count<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> val<span class="op">;</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>            reader <span class="op">&gt;&gt;</span> val<span class="op">;</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            values<span class="op">.</span>push_back<span class="op">(</span>val<span class="op">);</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        reader<span class="op">.</span>readEndElement<span class="op">(</span><span class="st">&quot;CustomData&quot;</span><span class="op">);</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<p>This ensures your C++ data types integrate directly with FreeCAD's
+XML parser and schema validator.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-serialize-custom-data-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

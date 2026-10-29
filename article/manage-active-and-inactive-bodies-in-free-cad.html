@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Active and Inactive Bodies in FreeCAD - freecad</title>
+    <meta name="description" content="Working with multiple bodies in FreeCAD&#39;s PartDesign workbench requires a solid understanding of the active body workflow. In FreeCAD, new features like sketches, pads, and pockets are strictly assigned to whichever body is currently set as &quot;active.&quot; This">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/manage-active-and-inactive-bodies-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Manage Active and Inactive Bodies in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/manage-active-and-inactive-bodies-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Working with multiple bodies in FreeCAD&#39;s PartDesign workbench requires a solid understanding of the active body workflow. In FreeCAD, new features like sketches, pads, and pockets are strictly assigned to whichever body is currently set as &quot;active.&quot; This" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="manage-active-and-inactive-bodies-in-freecad">Manage Active and
+Inactive Bodies in FreeCAD</h1>
+<p>Working with multiple bodies in FreeCAD's PartDesign workbench
+requires a solid understanding of the active body workflow. In FreeCAD,
+new features like sketches, pads, and pockets are strictly assigned to
+whichever body is currently set as "active." This guide explains how to
+toggle active and inactive bodies, manage their visibility, reference
+geometry across bodies safely, and avoid common modeling errors in
+multi-body projects.</p>
+<h2 id="understanding-the-active-body-concept">Understanding the Active
+Body Concept</h2>
+<p>In the PartDesign workbench, a <strong>Body</strong> is a container
+that holds a single, contiguous solid constructed through a sequential
+feature tree. FreeCAD enforces a single-active-body rule: <strong>only
+one body can be active at any given time</strong>.</p>
+<p>When a body is active:</p>
+<ul>
+<li>Its label appears in <strong>bold text</strong> within the Tree
+View.</li>
+<li>Any new sketches, datum tools, or additive/subtractive features are
+automatically placed inside this body.</li>
+<li>Inactive bodies remain static background objects, serving as visual
+references or components for assemblies and boolean operations.</li>
+</ul>
+<h2 id="how-to-activate-a-body">How to Activate a Body</h2>
+<p>To direct your modeling operations into a specific body, make it
+active using either of these methods:</p>
+<ol type="1">
+<li><strong>Double-Click:</strong> Double-click the target Body in the
+Tree View. Its text will turn bold.</li>
+<li><strong>Context Menu:</strong> Right-click the Body in the Tree View
+and select <strong>Toggle active body</strong>.</li>
+</ol>
+<p>Activating a body automatically deactivates the previously active
+body.</p>
+<h2 id="how-to-deactivate-a-body">How to Deactivate a Body</h2>
+<p>If you want no body to be active (for example, to inspect the model
+or prevent accidental modifications):</p>
+<ul>
+<li>Right-click the currently active (bold) body in the Tree View and
+select <strong>Toggle active body</strong>.</li>
+<li>The bold styling will disappear, indicating that no body is
+receiving new features.</li>
+</ul>
+<h2 id="managing-visibility-of-inactive-bodies">Managing Visibility of
+Inactive Bodies</h2>
+<p>Body activity and body visibility are separate properties:</p>
+<ul>
+<li><strong>Toggle Visibility:</strong> Select any body (active or
+inactive) in the Tree View and press the <strong>Spacebar</strong> to
+hide or show it.</li>
+<li><strong>Ghosting/Transparency:</strong> If an inactive body
+obstructs your view while working on the active body, select the
+inactive body, go to the <strong>View</strong> tab in the Property
+panel, and adjust its <strong>Transparency</strong> (e.g., 50–70%)
+instead of hiding it entirely.</li>
+</ul>
+<h2 id="referencing-inactive-bodies-safely">Referencing Inactive Bodies
+Safely</h2>
+<p>Modeling features in an active body that depend on an inactive body
+requires caution to avoid cyclic dependencies and broken links:</p>
+<ul>
+<li><strong>Use ShapeBinder or SubShapeBinder:</strong> Never map a
+sketch directly to the face of an inactive body. Instead, activate your
+target body, select the face or edge from the inactive body, and click
+the <strong>SubShapeBinder</strong> tool. This creates a stable internal
+reference inside the active body that you can safely constrain sketches
+to.</li>
+<li><strong>Boolean Operations:</strong> To combine, cut, or intersect
+bodies, make the primary body active, select the <strong>Boolean
+operation</strong> tool from PartDesign, and add the inactive bodies
+into the operation list.</li>
+</ul>
+<h2 id="best-practices-for-multi-body-projects">Best Practices for
+Multi-Body Projects</h2>
+<ul>
+<li><strong>Name Bodies Immediately:</strong> Default names like
+<code>Body</code>, <code>Body001</code>, and <code>Body002</code>
+quickly lead to confusion. Right-click and choose
+<strong>Rename</strong> (or press <strong>F2</strong>) to give each body
+a descriptive name based on its function.</li>
+<li><strong>Check the Bold Label Before Modeling:</strong> Always glance
+at the Tree View before creating a sketch to ensure the bold body is the
+one you intend to modify.</li>
+<li><strong>Keep Bodies Contiguous:</strong> If an additive or
+subtractive feature creates separated, disjoint solids inside the active
+body, FreeCAD will produce errors. Use separate bodies for physically
+separate parts.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/manage-active-and-inactive-bodies-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

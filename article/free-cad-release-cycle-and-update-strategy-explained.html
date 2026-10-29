@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Release Cycle and Update Strategy Explained - freecad</title>
+    <meta name="description" content="FreeCAD utilizes a structured software release cycle designed to balance stability for production engineering with the rapid introduction of open-source innovations. This article outlines the mechanics of the FreeCAD update roadmap, explaining its major r">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-release-cycle-and-update-strategy-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Release Cycle and Update Strategy Explained - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-release-cycle-and-update-strategy-explained" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FreeCAD utilizes a structured software release cycle designed to balance stability for production engineering with the rapid introduction of open-source innovations. This article outlines the mechanics of the FreeCAD update roadmap, explaining its major r" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-release-cycle-and-update-strategy-explained">FreeCAD
+Release Cycle and Update Strategy Explained</h1>
+<p>FreeCAD utilizes a structured software release cycle designed to
+balance stability for production engineering with the rapid introduction
+of open-source innovations. This article outlines the mechanics of the
+FreeCAD update roadmap, explaining its major release cadences,
+maintenance patches, stabilization freeze phases, and continuous
+development channels.</p>
+<h3 id="the-core-release-cadence">The Core Release Cadence</h3>
+<p>FreeCAD operates primarily on a milestone-driven schedule that
+typically yields a new stable release every 9 to 18 months. While
+historically governed strictly by a "release when ready" philosophy, the
+formalization of the FreeCAD Project Association (FPA) and developer
+funding initiatives has shifted the community toward more predictable,
+annual release targets. Major and minor version increments (such as
+0.20, 0.21, and 1.0) introduce architectural overhauls, new workbenches,
+and substantial core changes like the integrated Topological Naming
+Problem (TNP) mitigation.</p>
+<h3 id="bugfix-and-point-releases">Bugfix and Point Releases</h3>
+<p>Following any major version launch, the development team shifts focus
+to maintenance and stabilization. Point releases (such as 0.21.1 or
+0.21.2) are issued periodically to resolve critical regressions,
+hardware compatibility issues, and security vulnerabilities discovered
+by the broader user base.</p>
+<p>Point releases strictly adhere to stability principles:</p>
+<ul>
+<li>No breaking changes to existing APIs or user interfaces.</li>
+<li>No experimental or incomplete workbenches introduced.</li>
+<li>Backported fixes cherry-picked directly from the main development
+branch.</li>
+</ul>
+<h3 id="feature-freezes-and-release-candidates">Feature Freezes and
+Release Candidates</h3>
+<p>Before a major version is tagged and published, the repository enters
+a multi-stage freeze period that generally lasts between two and four
+months:</p>
+<ol type="1">
+<li><strong>Feature Freeze:</strong> Developers stop merging large
+architectural changes or new capabilities into the main branch. The
+focus shifts entirely to resolving open issues labeled as
+release-blockers.</li>
+<li><strong>String Freeze:</strong> The user interface text is locked to
+allow international localization teams to update translations through
+platforms like Crowdin without target text shifting.</li>
+<li><strong>Release Candidates (RC):</strong> Pre-release builds (e.g.,
+RC1, RC2) are distributed to power users and community testers to
+validate real-world workflows across Linux, Windows, and macOS.</li>
+</ol>
+<h3 id="continuous-development-tracks-nightlies">Continuous Development
+Tracks (Nightlies)</h3>
+<p>For users requiring the latest capabilities or developers working on
+add-ons, FreeCAD provides continuous integration builds, often referred
+to as "Nightly" or weekly builds. These builds automatically compile the
+current state of the main Git repository. They provide early access to
+upcoming features and give developers immediate telemetry on potential
+regressions before they reach the formal feature freeze stage.</p>
+<h3 id="workbench-and-addon-management">Workbench and Addon
+Management</h3>
+<p>FreeCAD decouples core system releases from the broader ecosystem via
+its built-in Addon Manager. External workbenches, macros, and preference
+packs maintain independent versioning and release cadences managed by
+third-party maintainers. This modular architecture allows specialized
+tools (such as specific CAM post-processors, sheet metal modules, or BIM
+extensions) to update continuously without requiring a core FreeCAD
+platform update.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-release-cycle-and-update-strategy-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>
