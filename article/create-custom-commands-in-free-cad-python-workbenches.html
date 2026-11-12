@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Custom Commands in FreeCAD Python Workbenches - freecad</title>
+    <meta name="description" content="Creating custom command classes in FreeCAD allows developers to extend the software&#39;s functionality by binding Python logic to graphical user interface elements like toolbar buttons and menu items. This guide covers how to structure a FreeCAD Python comma">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/create-custom-commands-in-free-cad-python-workbenches">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Create Custom Commands in FreeCAD Python Workbenches - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/create-custom-commands-in-free-cad-python-workbenches" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Creating custom command classes in FreeCAD allows developers to extend the software&#39;s functionality by binding Python logic to graphical user interface elements like toolbar buttons and menu items. This guide covers how to structure a FreeCAD Python comma" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="create-custom-commands-in-freecad-python-workbenches">Create
+Custom Commands in FreeCAD Python Workbenches</h1>
+<p>Creating custom command classes in FreeCAD allows developers to
+extend the software's functionality by binding Python logic to graphical
+user interface elements like toolbar buttons and menu items. This guide
+covers how to structure a FreeCAD Python command class using standard
+methods such as <code>GetResources</code>, <code>Activated</code>, and
+<code>IsActive</code>, register it with the FreeCAD GUI, and add it to a
+custom workbench toolbar and menu.</p>
+<h2 id="structure-of-a-custom-command-class">Structure of a Custom
+Command Class</h2>
+<p>In FreeCAD, a GUI command is defined as a Python class. This class
+must implement specific methods that the FreeCAD interface expects:</p>
+<ul>
+<li><strong><code>GetResources(self)</code></strong>: Returns a
+dictionary defining the tool's metadata, such as its display name,
+tooltip, accelerator key, and icon path.</li>
+<li><strong><code>Activated(self)</code></strong>: Contains the primary
+logic executed when the user clicks the tool button or menu item.</li>
+<li><strong><code>IsActive(self)</code></strong> <em>(Optional)</em>:
+Returns a boolean indicating whether the command should currently be
+enabled or grayed out (for example, requiring an active document or a
+specific selection).</li>
+</ul>
+<h3 id="basic-command-implementation">Basic Command Implementation</h3>
+<p>Create a Python file (such as <code>my_commands.py</code>) within
+your workbench directory and define your command class:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCADGui</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CreateBoxCommand:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;A custom command that creates a standard box.&quot;&quot;&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> GetResources(<span class="va">self</span>):</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Pixmap&#39;</span>: <span class="st">&#39;path/to/icon.svg&#39;</span>,  <span class="co"># Optional: Path to icon or standard FreeCAD icon name</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;MenuText&#39;</span>: <span class="st">&#39;Create Custom Box&#39;</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;ToolTip&#39;</span>: <span class="st">&#39;Creates a custom box in the active document&#39;</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Accel&#39;</span>: <span class="st">&#39;Shift+B&#39;</span>             <span class="co"># Optional keyboard shortcut</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> IsActive(<span class="va">self</span>):</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># The command is only active if an open document exists</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> FreeCAD.ActiveDocument <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> Activated(<span class="va">self</span>):</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Logic executed when triggered</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        doc <span class="op">=</span> FreeCAD.ActiveDocument</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        box <span class="op">=</span> doc.addObject(<span class="st">&quot;Part::Box&quot;</span>, <span class="st">&quot;CustomBox&quot;</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        box.Length <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        box.Width <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        box.Height <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        doc.recompute()</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        FreeCAD.Console.PrintMessage(<span class="st">&quot;Custom Box created successfully.</span><span class="ch">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<h2 id="registering-the-command">Registering the Command</h2>
+<p>Before the command can be used in menus or toolbars, it must be
+registered with the FreeCAD GUI using
+<code>FreeCADGui.addCommand()</code>. This connects an internal string
+identifier to an instance of your command class.</p>
+<p>At the bottom of your command file (or in your workbench
+initialization), register the class:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>FreeCADGui.addCommand(<span class="st">&#39;MyWorkbench_CreateBox&#39;</span>, CreateBoxCommand())</span></code></pre></div>
+<p>Use a unique prefix (like your workbench name) to prevent naming
+collisions with core FreeCAD commands or other add-ons.</p>
+<h2 id="adding-the-command-to-a-workbench">Adding the Command to a
+Workbench</h2>
+<p>To expose the command in your workbench interface, reference the
+registered command name inside your workbench's <code>InitGui.py</code>
+file.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCADGui</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MyWorkbench(FreeCADGui.Workbench):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    MenuText <span class="op">=</span> <span class="st">&quot;My Workbench&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    ToolTip <span class="op">=</span> <span class="st">&quot;A custom FreeCAD workbench&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> Initialize(<span class="va">self</span>):</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Import command definitions so they register themselves</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="im">import</span> my_commands</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Define toolbar and menu items using the registered command name</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        command_list <span class="op">=</span> [<span class="st">&quot;MyWorkbench_CreateBox&quot;</span>]</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.appendToolbar(<span class="st">&quot;Custom Tools&quot;</span>, command_list)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.appendMenu(<span class="st">&quot;Custom Menu&quot;</span>, command_list)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> GetClassName(<span class="va">self</span>):</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;Gui::PythonWorkbench&quot;</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>FreeCADGui.addWorkbench(MyWorkbench())</span></code></pre></div>
+<p>Once the workbench is loaded in FreeCAD, the command will appear in
+the specified toolbar and menu, dynamically updating its availability
+based on the <code>IsActive</code> method and running the
+<code>Activated</code> method upon invocation.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/create-custom-commands-in-free-cad-python-workbenches';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

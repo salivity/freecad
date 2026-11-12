@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Fix Self-Intersecting Loops in FreeCAD - freecad</title>
+    <meta name="description" content="A self-intersecting loop occurs in FreeCAD when lines, arcs, or curves within a single sketch cross over themselves or share identical paths, preventing tools like Pad or Revolve from creating a solid body. This guide explains how to identify, locate, and">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-fix-self-intersecting-loops-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Fix Self-Intersecting Loops in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-fix-self-intersecting-loops-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="A self-intersecting loop occurs in FreeCAD when lines, arcs, or curves within a single sketch cross over themselves or share identical paths, preventing tools like Pad or Revolve from creating a solid body. This guide explains how to identify, locate, and" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-fix-self-intersecting-loops-in-freecad">How to Fix
+Self-Intersecting Loops in FreeCAD</h1>
+<p>A self-intersecting loop occurs in FreeCAD when lines, arcs, or
+curves within a single sketch cross over themselves or share identical
+paths, preventing tools like Pad or Revolve from creating a solid body.
+This guide explains how to identify, locate, and repair these
+intersections using FreeCAD’s built-in validation tools and manual
+repair techniques, ensuring your sketches form clean, valid, closed
+profiles.</p>
+<h3 id="use-the-validate-sketch-tool">Use the "Validate Sketch"
+Tool</h3>
+<p>The fastest way to locate overlapping or crossing geometry is by
+using FreeCAD’s native diagnostic utility:</p>
+<ol type="1">
+<li>Close your sketch if it is currently open.</li>
+<li>Ensure you are in the <strong>Sketcher Workbench</strong> or
+<strong>Part Design Workbench</strong>.</li>
+<li>Select the problematic sketch in the tree view.</li>
+<li>Go to the top menu and select <strong>Sketch</strong> &gt;
+<strong>Validate sketch...</strong>.</li>
+<li>Under the <strong>Self-intersection</strong> section, click
+<strong>Detect</strong>.</li>
+</ol>
+<p>FreeCAD will highlight any points or segments where geometry crosses
+itself with a yellow or pink marker, directing you immediately to the
+problem area.</p>
+<h3 id="common-causes-and-how-to-repair-them">Common Causes and How to
+Repair Them</h3>
+<h4 id="1-overlapping-or-crossing-edges">1. Overlapping or Crossing
+Edges</h4>
+<p>A loop must be a continuous, non-branching boundary. If two lines
+form an "X" or a figure-eight pattern:</p>
+<ul>
+<li>Open the sketch for editing.</li>
+<li>Select the <strong>Trim edge</strong> tool (shortcut:
+<code>W</code>).</li>
+<li>Click the intersecting segments to remove the excess segments, or
+delete one of the crossing lines entirely.</li>
+<li>Redraw the boundary so the path forms two distinct loops or a single
+perimeter that does not cross over itself.</li>
+</ul>
+<h4 id="2-duplicate-or-coincident-segments">2. Duplicate or Coincident
+Segments</h4>
+<p>Sometimes two lines are drawn directly on top of each other, making
+the overlap invisible at a glance:</p>
+<ul>
+<li>In the <strong>Validate sketch</strong> dialog, use the
+<strong>Reversed points</strong> or <strong>Highlight missing
+coincidences</strong> checks.</li>
+<li>In the sketch editor, box-select suspicious areas and check the
+<strong>Elements</strong> panel on the left. If a single visually
+apparent segment contains multiple IDs, select and delete the
+duplicate.</li>
+</ul>
+<h4 id="3-internal-geometry-not-set-to-construction-mode">3. Internal
+Geometry Not Set to Construction Mode</h4>
+<p>Lines used purely for alignment, centering, or measurement inside a
+profile can register as intersecting edges:</p>
+<ul>
+<li>Select any interior reference line, circle, or arc.</li>
+<li>Toggle it to a construction element by clicking the <strong>Toggle
+construction geometry</strong> icon in the toolbar or pressing
+<code>G</code> then <code>N</code>.</li>
+<li>Construction geometry turns blue and will not be calculated as part
+of the solid profile.</li>
+</ul>
+<h4 id="4-shared-vertices-creating-multiple-loops">4. Shared Vertices
+Creating Multiple Loops</h4>
+<p>If two closed shapes share a single vertex (touching corners like an
+hourglass), FreeCAD cannot determine the volume:</p>
+<ul>
+<li>Separate the shapes so that a small gap exists between them, or</li>
+<li>Merge them into a single continuous outline using the <strong>Trim
+edge</strong> tool to remove the common touching point.</li>
+</ul>
+<h3 id="verifying-the-fix">Verifying the Fix</h3>
+<p>Once modifications are complete, close the sketch editor and run
+<strong>Sketch</strong> &gt; <strong>Validate sketch...</strong> once
+more. When the detection tool returns no self-intersections and reports
+that all endpoints are properly coincident, the sketch is fully prepared
+for 3D operations.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-fix-self-intersecting-loops-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

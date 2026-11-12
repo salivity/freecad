@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Set Material Properties in FreeCAD FEM - freecad</title>
+    <meta name="description" content="Setting up material properties such as Young&#39;s modulus and Poisson&#39;s ratio in FreeCAD&#39;s Finite Element Method (FEM) workbench is a fundamental step for running structural simulations. This guide walks you through navigating the FEM workbench, generating a">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-set-material-properties-in-free-cad-fem">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Set Material Properties in FreeCAD FEM - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-set-material-properties-in-free-cad-fem" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Setting up material properties such as Young&#39;s modulus and Poisson&#39;s ratio in FreeCAD&#39;s Finite Element Method (FEM) workbench is a fundamental step for running structural simulations. This guide walks you through navigating the FEM workbench, generating a" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-set-material-properties-in-freecad-fem">How to Set
+Material Properties in FreeCAD FEM</h1>
+<p>Setting up material properties such as Young's modulus and Poisson's
+ratio in FreeCAD's Finite Element Method (FEM) workbench is a
+fundamental step for running structural simulations. This guide walks
+you through navigating the FEM workbench, generating a material object,
+selecting standard presets, assigning custom elastic values, and mapping
+those properties directly to your 3D geometry.</p>
+<h3 id="step-1-initialize-the-fem-analysis-container">Step 1: Initialize
+the FEM Analysis Container</h3>
+<p>Before defining any physics or material data, you must have an active
+analysis container:</p>
+<ol type="1">
+<li>Open your 3D model in FreeCAD.</li>
+<li>Switch to the <strong>FEM Workbench</strong> using the workbench
+dropdown selector at the top of the interface.</li>
+<li>Click the <strong>Analysis container</strong> button (represented by
+a yellow folder with a red "A") or select <strong>Model &gt; Analysis
+container</strong> from the top menu. This creates the primary tree
+structure required for your simulation setup.</li>
+</ol>
+<h3 id="step-2-create-a-solid-material-object">Step 2: Create a Solid
+Material Object</h3>
+<p>Once the analysis container exists, you can add material
+parameters:</p>
+<ol type="1">
+<li>Ensure your analysis container is selected in the Model tree.</li>
+<li>Click the <strong>Material for solid</strong> button in the toolbar
+(represented by three colored spheres) or navigate to <strong>Model &gt;
+Material for solid</strong>.</li>
+<li>A new material object named <code>MaterialSolid</code> will appear
+under your analysis container, and the material settings panel will open
+in the <strong>Tasks</strong> tab on the left.</li>
+</ol>
+<h3 id="step-3-configure-youngs-modulus-and-poissons-ratio">Step 3:
+Configure Young's Modulus and Poisson's Ratio</h3>
+<p>In the material task panel, you have two approaches for defining
+mechanical values:</p>
+<ul>
+<li><strong>Using a Preset:</strong> Click the <strong>Material</strong>
+dropdown menu to select a predefined substance (such as Steel-C45,
+Aluminum-Generic, or Titanium). Selecting a preset automatically
+populates physical constants including Young's modulus, Poisson's ratio,
+and density.</li>
+<li><strong>Entering Custom Properties:</strong> To input your own
+Young's modulus, locate the <strong>Young's modulus</strong> input field
+in the task panel. Enter your value along with the relevant unit (for
+example, <code>210 GPa</code> or <code>70000 MPa</code>). FreeCAD
+handles unit conversions automatically based on your application
+preferences. Ensure you also provide a valid <strong>Poisson's
+ratio</strong> (typically between <code>0.25</code> and
+<code>0.35</code> for isotropic metals), as both properties are
+mathematically required for linear elastic solvers.</li>
+</ul>
+<h3 id="step-4-assign-material-to-geometry">Step 4: Assign Material to
+Geometry</h3>
+<p>By default, FreeCAD applies the defined material to all active solid
+bodies within the analysis. If your model contains multiple parts or you
+want to assign the material to specific solids:</p>
+<ol type="1">
+<li>Look at the <strong>Geometry</strong> section at the bottom of the
+material task panel.</li>
+<li>Click <strong>Add</strong>, then click the target solid body in the
+3D viewport.</li>
+<li>Verify that the correct object appears in the selection list.</li>
+<li>Click <strong>OK</strong> to confirm your changes and save the
+material configuration to the model tree.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-set-material-properties-in-free-cad-fem';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Create Ribbed Supports in FreeCAD - freecad</title>
+    <meta name="description" content="Ribbed supports, or gussets, provide structural stiffness to brackets without significantly increasing material weight. In FreeCAD, adding a rib involves defining a 2D profile on an intersecting plane and using the dedicated Rib tool within the Part Desig">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-create-ribbed-supports-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Create Ribbed Supports in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-create-ribbed-supports-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Ribbed supports, or gussets, provide structural stiffness to brackets without significantly increasing material weight. In FreeCAD, adding a rib involves defining a 2D profile on an intersecting plane and using the dedicated Rib tool within the Part Desig" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-create-ribbed-supports-in-freecad">How to Create Ribbed
+Supports in FreeCAD</h1>
+<p>Ribbed supports, or gussets, provide structural stiffness to brackets
+without significantly increasing material weight. In FreeCAD, adding a
+rib involves defining a 2D profile on an intersecting plane and using
+the dedicated Rib tool within the Part Design workbench. This guide
+walks through the exact steps required to sketch, project, and generate
+a clean ribbed support structure on an existing L-bracket model.</p>
+<h2
+id="step-1-open-the-part-design-workbench-and-select-the-active-body">Step
+1: Open the Part Design Workbench and Select the Active Body</h2>
+<ol type="1">
+<li>Open your bracket model in FreeCAD.</li>
+<li>Ensure you are in the <strong>Part Design</strong> workbench.</li>
+<li>In the Model tree, ensure the <strong>Body</strong> containing the
+bracket is active (highlighted in bold). If not, double-click the Body
+to activate it.</li>
+</ol>
+<h2 id="step-2-establish-the-sketch-plane">Step 2: Establish the Sketch
+Plane</h2>
+<p>A rib typically sits perpendicular to the inner corners of the
+bracket, often running down the center.</p>
+<ol type="1">
+<li>If the bracket is centered on the origin, select the origin plane
+that bisects the bracket (e.g., the <strong>XZ_Plane</strong> or
+<strong>YZ_Plane</strong>).</li>
+<li>If your bracket is not centered on an origin plane, create a
+<strong>Datum Plane</strong>:
+<ul>
+<li>Select a flat face parallel to the desired rib location.</li>
+<li>Click <strong>Create a new datum plane</strong>.</li>
+<li>Adjust the offset distance until the datum plane aligns with the
+center of the bracket where the rib will be positioned.</li>
+</ul></li>
+<li>With the plane selected, click <strong>Create a new
+sketch</strong>.</li>
+</ol>
+<h2 id="step-3-draw-the-rib-profile">Step 3: Draw the Rib Profile</h2>
+<p>The Part Design Rib tool requires only an open single line or an open
+polyline that connects the two faces being reinforced.</p>
+<ol type="1">
+<li>Click <strong>Create an external geometry reference</strong> (the
+icon showing a cube edge highlighted).</li>
+<li>Click the two internal edges or surfaces of the bracket where the
+rib will attach. This creates reference lines that allow your sketch to
+snap directly to the model.</li>
+<li>Select the <strong>Create a line</strong> tool.</li>
+<li>Draw a single diagonal line connecting the two reference
+features.</li>
+<li>Apply dimensions, such as the distance from the internal corner to
+the line endpoints, or specify an angle and a single length to fully
+constrain the sketch.</li>
+<li>Click <strong>Close</strong> to exit the Sketcher.</li>
+</ol>
+<h2 id="step-4-apply-the-rib-feature">Step 4: Apply the Rib Feature</h2>
+<ol type="1">
+<li>With the newly created sketch selected in the tree view, click the
+<strong>Rib</strong> tool (represented by a profile between two
+perpendicular walls).</li>
+<li>In the Rib parameters panel on the left:
+<ul>
+<li><strong>Thickness</strong>: Enter the desired thickness of the
+rib.</li>
+<li><strong>Midplane</strong>: Check this box if you want the thickness
+distributed evenly on both sides of the sketch plane.</li>
+<li><strong>Direction</strong>: If the rib generates outward or fails to
+form, toggle the <strong>Reverse Direction</strong> option to ensure it
+extrudes inward toward the bracket geometry.</li>
+</ul></li>
+<li>Click <strong>OK</strong> to generate the solid rib. FreeCAD will
+automatically extend the open line profile until it meets the solid
+walls of the bracket.</li>
+</ol>
+<h2 id="step-5-duplicate-for-multiple-ribs-optional">Step 5: Duplicate
+for Multiple Ribs (Optional)</h2>
+<p>If your bracket requires multiple evenly spaced ribs:</p>
+<ol type="1">
+<li>Select the completed <strong>Rib</strong> feature in the tree
+view.</li>
+<li>Click the <strong>Linear Pattern</strong> tool.</li>
+<li>Select the direction axis perpendicular to the rib plane.</li>
+<li>Set the <strong>Length</strong> and the <strong>Occurrences</strong>
+count to distribute identical ribs across the width of the bracket.</li>
+<li>Click <strong>OK</strong> to apply the pattern.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-create-ribbed-supports-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

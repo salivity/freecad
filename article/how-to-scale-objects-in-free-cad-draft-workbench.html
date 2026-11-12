@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Scale Objects in FreeCAD Draft Workbench - freecad</title>
+    <meta name="description" content="Scaling geometry in the FreeCAD Draft workbench allows you to resize objects proportionally or distort them along individual axes to fit specific design dimensions. This guide details how to use the Draft Scale tool to execute both uniform and non-uniform">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-scale-objects-in-free-cad-draft-workbench">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Scale Objects in FreeCAD Draft Workbench - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-scale-objects-in-free-cad-draft-workbench" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Scaling geometry in the FreeCAD Draft workbench allows you to resize objects proportionally or distort them along individual axes to fit specific design dimensions. This guide details how to use the Draft Scale tool to execute both uniform and non-uniform" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-scale-objects-in-freecad-draft-workbench">How to Scale
+Objects in FreeCAD Draft Workbench</h1>
+<p>Scaling geometry in the FreeCAD Draft workbench allows you to resize
+objects proportionally or distort them along individual axes to fit
+specific design dimensions. This guide details how to use the Draft
+Scale tool to execute both uniform and non-uniform scaling operations,
+set base origin points, create scaled copies, and modify scale factors
+non-destructively using parametric clones.</p>
+<h2 id="accessing-the-draft-scale-tool">Accessing the Draft Scale
+Tool</h2>
+<ol type="1">
+<li>Switch to the <strong>Draft</strong> workbench using the workbench
+dropdown menu.</li>
+<li>Select the object or multiple objects you want to scale from the
+tree view or the 3D viewport.</li>
+<li>Click the <strong>Scale</strong> icon in the toolbar, or navigate to
+<strong>Draft → Modification → Scale</strong> from the top menu.</li>
+</ol>
+<h2 id="how-to-scale-objects-uniformly">How to Scale Objects
+Uniformly</h2>
+<p>Uniform scaling adjusts the dimensions of an object by equal
+proportions across all axes simultaneously.</p>
+<ol type="1">
+<li><strong>Pick the Base Point:</strong> Click a point in the 3D view
+or type coordinates into the Draft task panel to define the center of
+the scaling operation. The object will expand or contract relative to
+this point.</li>
+<li><strong>Enable Uniform Scaling:</strong> In the Scale task panel on
+the left, check the <strong>Uniform scaling</strong> option.</li>
+<li><strong>Set the Scale Factor:</strong> Enter your desired multiplier
+in the <strong>X factor</strong> field. Because uniform scaling is
+active, the Y and Z values will automatically mirror the X value. For
+example, entering <code>2.0</code> doubles the size, while
+<code>0.5</code> reduces it by half.</li>
+<li><strong>Choose Modify or Copy:</strong> Leave <strong>Create a
+copy</strong> unchecked to alter the original object directly, or check
+the box to retain the original object and output a new, scaled
+duplicate.</li>
+<li><strong>Finalize:</strong> Press <strong>Enter</strong> or click
+anywhere in the 3D viewport to apply the transformation.</li>
+</ol>
+<h2 id="how-to-scale-objects-non-uniformly">How to Scale Objects
+Non-Uniformly</h2>
+<p>Non-uniform scaling modifies geometry by independent factors along
+the X, Y, and Z axes, which is useful for stretching, flattening, or
+distorting elements.</p>
+<ol type="1">
+<li><strong>Pick the Base Point:</strong> Select the reference origin in
+the 3D view from which the scaling should originate.</li>
+<li><strong>Disable Uniform Scaling:</strong> In the task panel, ensure
+the <strong>Uniform scaling</strong> box is unchecked.</li>
+<li><strong>Input Independent Axis Factors:</strong>
+<ul>
+<li>Enter the multiplier for the <strong>X factor</strong> (e.g.,
+<code>1.5</code> to stretch width by 50%).</li>
+<li>Enter the multiplier for the <strong>Y factor</strong> (e.g.,
+<code>1.0</code> to leave depth unchanged).</li>
+<li>Enter the multiplier for the <strong>Z factor</strong> (e.g.,
+<code>0.5</code> to reduce height by half).</li>
+</ul></li>
+<li><strong>Select Output Type:</strong> Check <strong>Create a
+copy</strong> if you wish to preserve the initial shape.</li>
+<li><strong>Apply:</strong> Press <strong>Enter</strong> to confirm the
+operation.</li>
+</ol>
+<h2 id="parametric-scaling-with-draft-clones">Parametric Scaling with
+Draft Clones</h2>
+<p>For a non-destructive workflow where you can adjust scale values at
+any time, use a Draft Clone instead of applying a static scale
+operation:</p>
+<ol type="1">
+<li>Select your target object.</li>
+<li>Click the <strong>Clone</strong> button in the Draft workbench
+(<strong>Draft → Clone</strong>).</li>
+<li>Select the newly generated <code>Clone</code> object in the tree
+view.</li>
+<li>Go to the <strong>Data</strong> tab in the Property view panel below
+the tree.</li>
+<li>Expand the <strong>Scale</strong> property vector.</li>
+<li>Enter different values for <strong>x</strong>, <strong>y</strong>,
+and <strong>z</strong> for non-uniform scaling, or enter identical
+values across all three fields for uniform scaling. The model updates
+automatically in the viewport without altering the underlying source
+geometry.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-scale-objects-in-free-cad-draft-workbench';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

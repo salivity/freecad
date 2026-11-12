@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Model a Spring in FreeCAD Part Design - freecad</title>
+    <meta name="description" content="This guide explains how to model a 3D spring or coil using the Part Design workbench in FreeCAD. By creating a wire profile sketch and utilizing the native Additive Helix tool, you can quickly generate parametric compression, extension, or custom coil spr">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-model-a-spring-in-free-cad-part-design">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Model a Spring in FreeCAD Part Design - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-model-a-spring-in-free-cad-part-design" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to model a 3D spring or coil using the Part Design workbench in FreeCAD. By creating a wire profile sketch and utilizing the native Additive Helix tool, you can quickly generate parametric compression, extension, or custom coil spr" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-model-a-spring-in-freecad-part-design">How to Model a
+Spring in FreeCAD Part Design</h1>
+<p>This guide explains how to model a 3D spring or coil using the Part
+Design workbench in FreeCAD. By creating a wire profile sketch and
+utilizing the native Additive Helix tool, you can quickly generate
+parametric compression, extension, or custom coil springs without
+switching workbenches.</p>
+<h3 id="step-1-set-up-the-body-and-sketch">Step 1: Set Up the Body and
+Sketch</h3>
+<ol type="1">
+<li>Open FreeCAD and switch to the <strong>Part Design</strong>
+workbench.</li>
+<li>Click <strong>Create body</strong>, then click <strong>Create
+sketch</strong>.</li>
+<li>Choose a vertical plane (such as the <strong>XZ-Plane</strong> or
+<strong>YZ-Plane</strong>) and click <strong>OK</strong>.</li>
+</ol>
+<h3 id="step-2-draw-the-wire-profile">Step 2: Draw the Wire Profile</h3>
+<ol type="1">
+<li>Select the <strong>Circle</strong> tool from the sketcher
+toolbar.</li>
+<li>Draw a circle off to one side of the vertical axis. The circle's
+diameter represents the wire thickness, while the distance from the
+vertical axis to the circle's center represents the mean radius of the
+spring.</li>
+<li>Apply constraints to define:
+<ul>
+<li>The diameter of the circle (wire diameter).</li>
+<li>The horizontal distance from the vertical axis to the center of the
+circle (spring radius).</li>
+<li>The vertical distance from the horizontal axis (optional, to
+position the base of the spring).</li>
+</ul></li>
+<li>Click <strong>Close</strong> to exit the sketcher.</li>
+</ol>
+<h3 id="step-3-apply-the-additive-helix-tool">Step 3: Apply the Additive
+Helix Tool</h3>
+<ol type="1">
+<li>With the sketch selected, click the <strong>Additive helix</strong>
+tool in the Part Design toolbar.</li>
+<li>In the <strong>Tasks</strong> panel, configure the helix parameters:
+<ul>
+<li><strong>Axis</strong>: Choose the axis of revolution (typically the
+<strong>Vertical sketch axis</strong> or <strong>Base Z
+axis</strong>).</li>
+<li><strong>Mode</strong>: Select how you want to define the spring
+dimensions:
+<ul>
+<li><em>Pitch-Height-Angle</em>: Set the distance between coils and
+total height.</li>
+<li><em>Pitch-Turns-Angle</em>: Set the distance between coils and total
+turn count.</li>
+<li><em>Height-Turns-Angle</em>: Set the total height and turn
+count.</li>
+</ul></li>
+<li><strong>Pitch</strong>: The distance between each coil loop.</li>
+<li><strong>Height / Turns</strong>: Define the total length or number
+of rotations according to your selected mode.</li>
+<li><strong>Cone Angle</strong>: Keep at <code>0°</code> for a standard
+cylindrical spring, or enter an angle to create a conical spring.</li>
+<li><strong>Left handed</strong>: Check this box if you need a
+reverse-wound spring.</li>
+</ul></li>
+<li>Click <strong>OK</strong> to generate the solid spring.</li>
+</ol>
+<h3 id="step-4-flatten-the-spring-ends-optional">Step 4: Flatten the
+Spring Ends (Optional)</h3>
+<p>If you are designing a compression spring that requires ground, flat
+ends:</p>
+<ol type="1">
+<li>Create a sketch on a plane perpendicular to the spring's axis (such
+as the <strong>XY-Plane</strong>).</li>
+<li>Draw a large rectangle that covers the protruding tip of the spring
+wire.</li>
+<li>Close the sketch and use the <strong>Pocket</strong> tool through
+all to slice the end flat.</li>
+<li>Repeat the process for the opposite end using a parallel datum plane
+positioned at the top of the spring.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-model-a-spring-in-free-cad-part-design';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

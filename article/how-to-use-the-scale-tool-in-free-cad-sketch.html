@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use the Scale Tool in FreeCAD Sketch - freecad</title>
+    <meta name="description" content="Scaling geometry within the FreeCAD Sketcher allows you to resize 2D elements proportionally without redrawing them from scratch. This guide walks through the exact steps to locate the Scale tool, select your geometry, set a center reference point, and ap">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-use-the-scale-tool-in-free-cad-sketch">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Use the Scale Tool in FreeCAD Sketch - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-use-the-scale-tool-in-free-cad-sketch" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Scaling geometry within the FreeCAD Sketcher allows you to resize 2D elements proportionally without redrawing them from scratch. This guide walks through the exact steps to locate the Scale tool, select your geometry, set a center reference point, and ap" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-use-the-scale-tool-in-freecad-sketch">How to Use the
+Scale Tool in FreeCAD Sketch</h1>
+<p>Scaling geometry within the FreeCAD Sketcher allows you to resize 2D
+elements proportionally without redrawing them from scratch. This guide
+walks through the exact steps to locate the Scale tool, select your
+geometry, set a center reference point, and apply the scaling factor
+directly inside an active sketch.</p>
+<h3 id="step-1-open-your-sketch-in-edit-mode">Step 1: Open Your Sketch
+in Edit Mode</h3>
+<p>Ensure you are inside the <strong>Sketcher Workbench</strong>.
+Double-click your sketch in the tree view to enter edit mode. You should
+see the sketch grid and existing geometric entities (lines, circles,
+arcs).</p>
+<h3 id="step-2-select-the-geometry-to-scale">Step 2: Select the Geometry
+to Scale</h3>
+<p>Use the selection tool (default mouse cursor) to highlight the
+elements you wish to resize.</p>
+<ul>
+<li>To select multiple elements, hold <code>Ctrl</code> and click each
+element.</li>
+<li>Alternatively, click and drag a selection box around the entire
+profile you want to resize.</li>
+</ul>
+<h3 id="step-3-activate-the-scale-tool">Step 3: Activate the Scale
+Tool</h3>
+<p>With your elements highlighted, access the tool:</p>
+<ol type="1">
+<li>Locate the <strong>Sketcher tools</strong> toolbar.</li>
+<li>Click the dropdown arrow next to the Clone or Move tool icon.</li>
+<li>Select <strong>Scale</strong> (represented by an icon showing
+geometry expanding outward). <em>Alternatively, you can go to the top
+menu and navigate to <strong>Sketch &gt; Sketcher tools &gt;
+Scale</strong>.</em></li>
+</ol>
+<h3 id="step-4-pick-the-base-center-point">Step 4: Pick the Base Center
+Point</h3>
+<p>Once the tool is active, the cursor prompts for a reference
+point:</p>
+<ol type="1">
+<li>Click in the 3D view to choose the <strong>center point of
+scaling</strong>. This point serves as the anchor; geometry will expand
+away from or shrink toward this location.</li>
+<li>For predictable results, choose an existing vertex, the sketch
+origin <code>(0,0)</code>, or the geometric center of your profile.</li>
+</ol>
+<h3 id="step-5-define-the-scale-factor">Step 5: Define the Scale
+Factor</h3>
+<p>After choosing the base point:</p>
+<ol type="1">
+<li>Click a starting reference point to establish the initial distance
+from the base point.</li>
+<li>Move your cursor away from or toward the base point to dynamically
+preview the scaled geometry.</li>
+<li>Click a second time to complete the transformation, or type specific
+coordinates in the task panel if prompted by your FreeCAD version.</li>
+</ol>
+<h3 id="handling-constraints-after-scaling">Handling Constraints After
+Scaling</h3>
+<ul>
+<li><strong>Unconstrained Geometry:</strong> Resizes smoothly to the new
+size.</li>
+<li><strong>Constrained Geometry:</strong> If elements contain strict
+dimensional constraints (such as fixed lengths or radius constraints),
+FreeCAD may display a solver error or over-constrained warning. It is
+best practice to delete or temporarily disable rigid dimensional
+constraints before scaling, then reapply appropriate dimensions to the
+newly sized shape.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-use-the-scale-tool-in-free-cad-sketch';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

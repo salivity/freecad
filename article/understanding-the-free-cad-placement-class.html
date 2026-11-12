@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding the FreeCAD Placement Class - freecad</title>
+    <meta name="description" content="The FreeCAD Placement class is a core geometric construct used to define the exact position and orientation of an object within 3D space. It serves as the primary mechanism for executing rigid body transformations, allowing components to be translated and">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/understanding-the-free-cad-placement-class">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding the FreeCAD Placement Class - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/understanding-the-free-cad-placement-class" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The FreeCAD Placement class is a core geometric construct used to define the exact position and orientation of an object within 3D space. It serves as the primary mechanism for executing rigid body transformations, allowing components to be translated and" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-the-freecad-placement-class">Understanding the
+FreeCAD Placement Class</h1>
+<p>The FreeCAD <code>Placement</code> class is a core geometric
+construct used to define the exact position and orientation of an object
+within 3D space. It serves as the primary mechanism for executing rigid
+body transformations, allowing components to be translated and rotated
+without altering their underlying geometry or shape definitions.
+Understanding this class is fundamental for manipulating parts, managing
+assembly hierarchies, and scripting automated modeling tasks within the
+FreeCAD Python API.</p>
+<h3 id="core-components-of-a-placement">Core Components of a
+Placement</h3>
+<p>A <code>Placement</code> object is composed of two primary geometric
+entities:</p>
+<ol type="1">
+<li><strong>Base (Vector):</strong> Defines the spatial position of the
+object along the X, Y, and Z Cartesian axes. It represents the
+translation offset from the global origin <code>(0, 0, 0)</code> or from
+a parent coordinate system.</li>
+<li><strong>Rotation (Quaternion):</strong> Defines the orientation of
+the object. While represented internally as a quaternion to avoid gimbal
+lock, it can be defined or manipulated using Euler angles (Yaw, Pitch,
+Roll) or an axis-and-angle pair.</li>
+</ol>
+<p>By binding translation and rotation into a single unified object,
+FreeCAD simplifies spatial calculations and ensures consistency across
+different modeling workbenches.</p>
+<h3 id="the-purpose-and-role-in-freecad">The Purpose and Role in
+FreeCAD</h3>
+<p>The primary objective of the <code>Placement</code> class is to
+decouple an object's geometric definition from its location in the 3D
+scene.</p>
+<ul>
+<li><strong>Rigid Body Transformations:</strong> Modifying a shape's
+vertices directly to move it is computationally expensive and
+destructive. Instead, FreeCAD keeps the original geometric shape intact
+and applies the <code>Placement</code> transformation matrix dynamically
+during rendering and export.</li>
+<li><strong>Assembly and Hierarchical Positioning:</strong> In complex
+models, such as those inside the PartDesign Workbench or third-party
+assembly workbenches, objects often exist within sub-coordinate systems.
+A child object's placement can be computed relative to its parent
+container by chaining placement properties.</li>
+<li><strong>Non-Destructive Modeling:</strong> Because the placement
+does not alter internal topological dimensions (such as edge lengths or
+surface areas), users can reposition, orient, and animate parts
+reversibly at any stage of the modeling pipeline.</li>
+</ul>
+<h3 id="mathematical-representation-and-matrix-conversion">Mathematical
+Representation and Matrix Conversion</h3>
+<p>Under the hood, a <code>Placement</code> represents a 4x4 affine
+transformation matrix limited to rigid motion (it does not include shear
+or non-uniform scaling). FreeCAD allows seamless conversion between a
+placement and a matrix:</p>
+<ul>
+<li><strong>Matrix Transformation:</strong> Calling
+<code>Placement.toMatrix()</code> outputs the corresponding 4x4
+transformation matrix.</li>
+<li><strong>Composition:</strong> Multiple transformations can be
+chained together by multiplying placements (e.g.,
+<code>Placement3 = Placement1.multiply(Placement2)</code>), enabling
+complex multi-axis rotations and offsets in localized reference
+frames.</li>
+</ul>
+<h3 id="usage-in-python-scripting">Usage in Python Scripting</h3>
+<p>In Python, the <code>Placement</code> class is part of the
+<code>FreeCAD</code> base module (<code>App.Placement</code>). It can be
+initialized empty, via an existing matrix, or by explicitly passing a
+vector and a rotation:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define translation and rotation</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>position <span class="op">=</span> App.Vector(<span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">5</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>rotation <span class="op">=</span> App.Rotation(App.Vector(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">45</span>)  <span class="co"># 45 degrees around Z-axis</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the Placement object</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>placement <span class="op">=</span> App.Placement(position, rotation)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign to an existing object</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> App.ActiveDocument.ActiveObject</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>obj.Placement <span class="op">=</span> placement</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>App.ActiveDocument.recompute()</span></code></pre></div>
+<p>The <code>Placement</code> class provides a predictable, performant,
+and standardized method to navigate and position objects, making it one
+of the foundational building blocks of the FreeCAD architecture.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/understanding-the-free-cad-placement-class';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

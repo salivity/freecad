@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avoid Collisions in FreeCAD Path Simulation - freecad</title>
+    <meta name="description" content="Simulating toolpaths in FreeCAD’s CAM Workbench (formerly Path) is critical for protecting your CNC machine, cutting tools, and workpieces from costly damage. Avoiding collisions during these simulations requires setting accurate tool and holder dimension">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/avoid-collisions-in-free-cad-path-simulation">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Avoid Collisions in FreeCAD Path Simulation - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/avoid-collisions-in-free-cad-path-simulation" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Simulating toolpaths in FreeCAD’s CAM Workbench (formerly Path) is critical for protecting your CNC machine, cutting tools, and workpieces from costly damage. Avoiding collisions during these simulations requires setting accurate tool and holder dimension" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="avoid-collisions-in-freecad-path-simulation">Avoid Collisions in
+FreeCAD Path Simulation</h1>
+<p>Simulating toolpaths in FreeCAD’s CAM Workbench (formerly Path) is
+critical for protecting your CNC machine, cutting tools, and workpieces
+from costly damage. Avoiding collisions during these simulations
+requires setting accurate tool and holder dimensions, configuring proper
+clearance planes, including fixtures in your collision model, and
+properly utilizing the simulation player. This guide details how to
+configure these parameters in FreeCAD to ensure clean, crash-free
+toolpaths before sending code to your machine.</p>
+<h3 id="accurately-define-tools-and-holders">Accurately Define Tools and
+Holders</h3>
+<p>Collisions often occur not at the cutting edge, but when a tool’s
+shank, collet, or holder impacts the raw stock or clamps.</p>
+<ul>
+<li>Open the <strong>ToolBit Dock</strong> and select the tool used in
+your operation.</li>
+<li>Enter precise values for cutting edge height (flute length), tool
+diameter, and overall length.</li>
+<li>Assign a specific <strong>Tool Holder</strong> model to the toolbit.
+If a holder is not defined, FreeCAD assumes an infinite tool length
+above the flute, failing to warn you if a collet nut collides with the
+workpiece during deep pocket operations.</li>
+</ul>
+<h3 id="configure-safety-and-clearance-heights">Configure Safety and
+Clearance Heights</h3>
+<p>Improper transition moves between cutting operations are the primary
+cause of rapid-traverse crashes.</p>
+<ul>
+<li>In the <strong>Job</strong> setup or within individual operations,
+navigate to the <strong>Depths</strong> tab.</li>
+<li>Set the <strong>Clearance Height</strong> well above the highest
+point of your setup, including any clamps, bolts, or fixtures. A
+standard offset is 5 mm to 10 mm above the tallest obstruction.</li>
+<li>Set the <strong>Safe Height</strong> slightly above the raw stock
+surface (typically 2 mm to 3 mm). This defines the threshold where the
+machine switches from rapid positioning (<code>G0</code>) to a
+controlled plunge feed (<code>G1</code>).</li>
+<li>Never set the clearance height flush with the top of the stock if
+your setup utilizes top-down step clamps.</li>
+</ul>
+<h3 id="add-fixtures-to-the-job-geometry">Add Fixtures to the Job
+Geometry</h3>
+<p>By default, FreeCAD generates toolpaths based only on the target part
+geometry, completely ignoring holding clamps or vices unless explicitly
+instructed.</p>
+<ul>
+<li>Model your clamps, vice jaws, or vacuum pods directly inside the
+FreeCAD project.</li>
+<li>In your CAM Job tree, select the setup or operation and ensure
+fixtures are defined. While FreeCAD CAM paths avoid the primary model,
+modeling clamps visually allows you to verify clearances during
+simulation.</li>
+<li>Keep 2D bounding boxes and lead-in/lead-out vectors outside the
+fixture envelopes.</li>
+</ul>
+<h3 id="control-entry-and-exit-strategies">Control Entry and Exit
+Strategies</h3>
+<p>Plunging vertically straight into material can deflect the tool or
+trigger gouging warnings.</p>
+<ul>
+<li>On operations like <strong>Pocket Shape</strong> or
+<strong>Profile</strong>, switch the ramp mode from <code>None</code> to
+<code>Ramp</code> or <code>Helix</code>.</li>
+<li>Adjust the ramp angle (typically 2° to 5° for metals, higher for
+softwoods and plastics) to ensure gradual entry.</li>
+<li>For profile paths, set dedicated <strong>Lead-In</strong> and
+<strong>Lead-Out</strong> moves with an arc or tangent path to avoid
+scraping the finished part walls during retracts.</li>
+</ul>
+<h3 id="utilize-the-cam-simulation-tool">Utilize the CAM Simulation
+Tool</h3>
+<p>FreeCAD includes a dedicated path simulator to visually verify tool
+movements against the raw stock.</p>
+<ul>
+<li>Select your Job in the tree and click the <strong>CAM
+Simulator</strong> tool on the toolbar.</li>
+<li>Adjust the simulation speed slider to a manageable rate to avoid
+skipping frames.</li>
+<li>Watch the simulation for:
+<ul>
+<li>Red visual flags or gouge alerts indicating non-cutting areas of the
+tool striking stock.</li>
+<li>Rapid traversals (<code>G0</code>) intersecting uncut stock
+material.</li>
+<li>Holder contact against sidewalls during deep pocketing.</li>
+</ul></li>
+<li>If a collision occurs, stop the simulation, inspect the specific
+operation in the CAM tree, increase the tool stickout or clearance
+height, and re-run the simulation.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/avoid-collisions-in-free-cad-path-simulation';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

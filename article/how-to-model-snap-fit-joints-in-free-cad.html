@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Model Snap-Fit Joints in FreeCAD - freecad</title>
+    <meta name="description" content="Designing reliable snap-fit joints in FreeCAD is best achieved using a parametric workflow within the Part Design Workbench, driven by dynamic sketches, spreadsheets, and root filleting to prevent mechanical failure. This guide explains how to calculate s">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-model-snap-fit-joints-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Model Snap-Fit Joints in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-model-snap-fit-joints-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Designing reliable snap-fit joints in FreeCAD is best achieved using a parametric workflow within the Part Design Workbench, driven by dynamic sketches, spreadsheets, and root filleting to prevent mechanical failure. This guide explains how to calculate s" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-model-snap-fit-joints-in-freecad">How to Model Snap-Fit
+Joints in FreeCAD</h1>
+<p>Designing reliable snap-fit joints in FreeCAD is best achieved using
+a parametric workflow within the Part Design Workbench, driven by
+dynamic sketches, spreadsheets, and root filleting to prevent mechanical
+failure. This guide explains how to calculate snap-fit dimensions, model
+cantilever beams and catch hooks step-by-step, manage clearance
+tolerances for mating parts, and utilize parametric constraints to
+ensure your joints assemble smoothly without yielding or breaking.</p>
+<h3 id="1-set-up-parametric-variables">1. Set Up Parametric
+Variables</h3>
+<p>Before placing geometry, establish your material and dimensional
+constraints using the Spreadsheet Workbench. Cantilever snap-fits depend
+heavily on the material’s allowable strain limit (typically 1–2% for ABS
+or PLA, higher for Nylon).</p>
+<p>Create a spreadsheet and define the following variables:</p>
+<ul>
+<li><strong>BeamLength (<span
+class="math inline">\(L\)</span>):</strong> The length of the flexible
+arm.</li>
+<li><strong>BeamThickness (<span
+class="math inline">\(h\)</span>):</strong> The thickness at the base
+and the tip (tapered beams distribute stress more evenly).</li>
+<li><strong>Deflection (<span
+class="math inline">\(y\)</span>):</strong> The depth of the catch that
+needs to clear during assembly.</li>
+<li><strong>Clearance (<span class="math inline">\(c\)</span>):</strong>
+The mechanical tolerance between mating parts (typically 0.2 mm to 0.4
+mm for FDM 3D printing, 0.1 mm for injection molding).</li>
+</ul>
+<h3 id="2-base-geometry-and-the-master-sketch">2. Base Geometry and the
+Master Sketch</h3>
+<p>Open the <strong>Part Design Workbench</strong> and create a new
+<strong>Body</strong>. Model the primary wall or housing that will host
+the snap-fit.</p>
+<p>To model the cantilever arm:</p>
+<ol type="1">
+<li>Create a sketch on a plane perpendicular to the attachment
+wall.</li>
+<li>Sketch the profile of the cantilever arm extending outward from the
+parent body.</li>
+<li>Bind the arm's length and thickness to your spreadsheet aliases
+using the formula editor (<code>Spreadsheet.BeamLength</code>).</li>
+<li>Pad the sketch symmetrically to establish the beam width (<span
+class="math inline">\(b\)</span>).</li>
+</ol>
+<h3 id="3-model-the-snap-hook-catch">3. Model the Snap Hook (Catch)</h3>
+<p>The retention head consists of two critical angles: the lead-in angle
+(insertion) and the retention angle (removal).</p>
+<ol type="1">
+<li>Create a sketch on the side face of the extended beam.</li>
+<li>Draw the triangular hook geometry:
+<ul>
+<li><strong>Lead-in face:</strong> Angle this between 30° and 45° to
+minimize the insertion force required to deflect the beam.</li>
+<li><strong>Retaining face:</strong> Set this to 90° for a permanent
+lock, or between 45° and 60° for a push-to-release joint.</li>
+</ul></li>
+<li>Pad the hook across the width of the beam.</li>
+</ol>
+<h3 id="4-mitigate-stress-concentrations">4. Mitigate Stress
+Concentrations</h3>
+<p>Sharp internal corners are the primary cause of snap-fit failure. In
+FreeCAD, apply a structural <strong>Fillet</strong> at the root where
+the cantilever meets the main wall. The fillet radius should be at least
+0.5 times the beam thickness (<span class="math inline">\(R \ge
+0.5h\)</span>). This dramatically reduces the stress concentration
+factor without significantly increasing the stiffness of the beam. Add a
+small fillet (0.5 mm) to the leading edge of the hook to reduce initial
+friction.</p>
+<h3 id="5-model-the-mating-part-with-proper-clearance">5. Model the
+Mating Part with Proper Clearance</h3>
+<p>Switch to the mating body or open a second body within the same
+project.</p>
+<ol type="1">
+<li>Project the profile of the catch using the <strong>Sub-Shape
+Binder</strong> tool to reference the snap hook from the first
+body.</li>
+<li>Sketch the catch recess or mating ledge.</li>
+<li>Apply an offset dimension incorporating your <code>Clearance</code>
+variable between the mating hook and the catch cavity on all touching
+faces to prevent binding.</li>
+</ol>
+<h3 id="6-verification-and-iteration">6. Verification and Iteration</h3>
+<p>Use FreeCAD’s measurement tools to verify that the deflection
+clearance matches the catch depth. If testing shows the joint is too
+stiff or permanent deformation occurs, adjust the values in your
+spreadsheet: increase the beam length or decrease the beam thickness.
+Because the model was built parametrically in the Part Design tree, all
+downstream features, clearances, and fillets will update
+automatically.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-model-snap-fit-joints-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

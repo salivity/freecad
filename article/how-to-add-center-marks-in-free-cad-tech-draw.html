@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Add Center Marks in FreeCAD TechDraw - freecad</title>
+    <meta name="description" content="This guide explains how to place center marks on circles, arcs, and holes within the FreeCAD TechDraw workbench. You will learn the exact steps to apply center marks to individual circular geometries, configure their appearance, and adjust centerline exte">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-add-center-marks-in-free-cad-tech-draw">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Add Center Marks in FreeCAD TechDraw - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-add-center-marks-in-free-cad-tech-draw" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to place center marks on circles, arcs, and holes within the FreeCAD TechDraw workbench. You will learn the exact steps to apply center marks to individual circular geometries, configure their appearance, and adjust centerline exte" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-add-center-marks-in-freecad-techdraw">How to Add Center
+Marks in FreeCAD TechDraw</h1>
+<p>This guide explains how to place center marks on circles, arcs, and
+holes within the FreeCAD TechDraw workbench. You will learn the exact
+steps to apply center marks to individual circular geometries, configure
+their appearance, and adjust centerline extension lengths to conform to
+technical drawing standards.</p>
+<h3 id="method-1-using-the-add-centerline-to-faces-tool">Method 1: Using
+the "Add Centerline to Faces" Tool</h3>
+<p>The most direct way to create a standard crosshair center mark on a
+circular edge or cylindrical hole is with the face centerline tool.</p>
+<ol type="1">
+<li><strong>Open the TechDraw Page:</strong> Open your document and
+switch to the page containing the view with the holes or circles you
+wish to annotate.</li>
+<li><strong>Select the Circular Edge or Face:</strong> Click on the
+circular edge or the cylindrical face of the hole in the drawing view.
+The selected feature will highlight (usually green).</li>
+<li><strong>Apply the Center Mark:</strong> In the TechDraw toolbar,
+click the <strong>Add Centerline to Faces</strong> icon (a blue circle
+intersected by crosshair centerlines), or navigate to the menu:
+<strong>TechDraw &gt; Centerlines &gt; Add Centerline to
+Faces</strong>.</li>
+<li><strong>Inspect the Result:</strong> TechDraw will generate a
+horizontal and vertical centerline intersecting at the center of the
+circle.</li>
+</ol>
+<h3 id="method-2-adding-centerlines-between-two-points-or-lines">Method
+2: Adding Centerlines Between Two Points or Lines</h3>
+<p>If your hole is shown in a side/section view rather than a top-down
+view, you will need a linear centerline rather than a crosshair.</p>
+<ol type="1">
+<li>Select two parallel edges representing the diameter of the hole, or
+select two opposite vertices.</li>
+<li>Click <strong>Add 2-Line Centerline</strong> (for parallel edges) or
+<strong>Add 2-Point Centerline</strong> (for vertices) from the TechDraw
+toolbar.</li>
+<li>The centerline will appear halfway between the selected
+entities.</li>
+</ol>
+<h3 id="adjusting-center-mark-properties">Adjusting Center Mark
+Properties</h3>
+<p>Once a center mark is placed, you can customize its dimensions and
+visibility in the Property View (Data tab):</p>
+<ul>
+<li><strong>ExtendBy:</strong> Determines how far the crosshair extends
+past the edge of the circle. Enter a measurement (e.g.,
+<code>2 mm</code> or <code>0.1 in</code>) based on your drafting
+standard.</li>
+<li><strong>Style:</strong> Change the dash pattern from continuous to
+standard centerline patterns (e.g., DashDot).</li>
+<li><strong>Color and Weight:</strong> Modify the line thickness and
+color if your drawing requires different visual weights for annotations
+versus solid object boundaries.</li>
+<li><strong>Flip / Orientation:</strong> If the centerline appears
+rotated incorrectly, use the angle or orientation properties to align it
+with your drawing axis.</li>
+</ul>
+<h3 id="removing-or-modifying-center-marks">Removing or Modifying Center
+Marks</h3>
+<p>To delete a center mark, select it in the TechDraw tree view (listed
+under the parent View object as a CenterLine or Cosmetic feature) and
+press <strong>Delete</strong>. To refresh center marks after modifying
+the underlying 3D model, click the <strong>Redraw Page</strong> button
+in the TechDraw toolbar.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-add-center-marks-in-free-cad-tech-draw';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

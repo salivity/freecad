@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documenting Custom FreeCAD Python Workbenches - freecad</title>
+    <meta name="description" content="Documenting a custom FreeCAD Python workbench ensures that end users and contributors can easily install, navigate, and utilize your tools. This guide outlines the essential layers of workbench documentation, including in-app command tooltips, structured">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/documenting-custom-free-cad-python-workbenches">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Documenting Custom FreeCAD Python Workbenches - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/documenting-custom-free-cad-python-workbenches" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Documenting a custom FreeCAD Python workbench ensures that end users and contributors can easily install, navigate, and utilize your tools. This guide outlines the essential layers of workbench documentation, including in-app command tooltips, structured" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="documenting-custom-freecad-python-workbenches">Documenting
+Custom FreeCAD Python Workbenches</h1>
+<p>Documenting a custom FreeCAD Python workbench ensures that end users
+and contributors can easily install, navigate, and utilize your tools.
+This guide outlines the essential layers of workbench documentation,
+including in-app command tooltips, structured repository files,
+context-sensitive help integration, and community wiki publishing,
+giving you a straightforward framework to support your project.</p>
+<h3 id="1-in-app-ui-documentation-and-tooltips">1. In-App UI
+Documentation and Tooltips</h3>
+<p>The first point of contact for users is inside FreeCAD itself. Every
+Python command in your workbench should provide clear interface feedback
+using the <code>GetResources</code> method.</p>
+<p>When defining your command class, specify descriptive text
+fields:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CustomCommand:</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> GetResources(<span class="va">self</span>):</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Pixmap&quot;</span>: <span class="st">&quot;path/to/icon.svg&quot;</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;MenuText&quot;</span>: <span class="st">&quot;Run Custom Tool&quot;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;ToolTip&quot;</span>: <span class="st">&quot;Short one-sentence explanation of what the tool does.&quot;</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;WhatsThis&quot;</span>: <span class="st">&quot;Detailed explanation of inputs, expected selections, and outputs.&quot;</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;StatusTip&quot;</span>: <span class="st">&quot;Displays brief instructions in the FreeCAD status bar.&quot;</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        }</span></code></pre></div>
+<ul>
+<li><strong>ToolTip:</strong> Keep it under 10 words. Focus on the
+direct action (e.g., "Generates a parametric bracket from a selected
+face").</li>
+<li><strong>WhatsThis:</strong> Use this to explain required
+prerequisites, such as specific geometry selections or required document
+states.</li>
+</ul>
+<h3 id="2-the-repository-readme">2. The Repository README</h3>
+<p>For users installing via Git or the FreeCAD Addon Manager, the
+<code>README.md</code> in your root repository is the primary reference.
+Structure your README with the following sections:</p>
+<ul>
+<li><strong>Overview:</strong> A concise summary of the workbench's
+purpose and primary use cases.</li>
+<li><strong>Prerequisites:</strong> Dependencies such as external Python
+libraries (e.g., NumPy, SciPy) and minimum compatible FreeCAD versions
+(e.g., FreeCAD 0.21 or 1.0+).</li>
+<li><strong>Installation:</strong> Instructions for installing through
+the native Addon Manager (<code>Tools &gt; Addon manager</code>) as well
+as manual installation via the <code>Mod/</code> directory.</li>
+<li><strong>Workflow Guide:</strong> Step-by-step instructions for core
+operations, accompanied by explicit input/output expectations.</li>
+<li><strong>Reporting Issues:</strong> Direct links to your bug tracker
+and instructions on what information to provide (e.g., OS, FreeCAD
+version info from <code>Help &gt; About FreeCAD</code>).</li>
+</ul>
+<h3 id="3-native-help-system-integration">3. Native Help System
+Integration</h3>
+<p>FreeCAD includes an internal help system accessible when users press
+<code>F1</code> or click contextual help icons. You can hook your
+workbench commands directly into this system.</p>
+<p>Associate your commands with external documentation URLs or local
+HTML files by directing the <code>WhatsThis</code> attribute to open
+your documentation:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCADGui</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> webbrowser</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> HelpCommand:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> Activated(<span class="va">self</span>):</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        webbrowser.<span class="bu">open</span>(<span class="st">&quot;https://your-documentation-url.org&quot;</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> GetResources(<span class="va">self</span>):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Pixmap&quot;</span>: <span class="st">&quot;help_icon.svg&quot;</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;MenuText&quot;</span>: <span class="st">&quot;Workbench Documentation&quot;</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;ToolTip&quot;</span>: <span class="st">&quot;Opens online documentation in your web browser&quot;</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        }</span></code></pre></div>
+<p>For offline documentation, bundle a <code>doc/</code> directory
+containing static HTML files within your workbench package and resolve
+the relative file path using Python's <code>os.path</code> module to
+load it into FreeCAD's built-in web browser:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCADGui</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>doc_path <span class="op">=</span> os.path.join(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    os.path.dirname(<span class="va">__file__</span>), <span class="st">&quot;doc&quot;</span>, <span class="st">&quot;index.html&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>FreeCADGui.getMainWindow().findChild(QtGui.QAction, <span class="st">&quot;Std_OnlineHelp&quot;</span>).trigger()</span></code></pre></div>
+<h3 id="4-freecad-community-wiki-pages">4. FreeCAD Community Wiki
+Pages</h3>
+<p>If your workbench is distributed through the official Addon Manager,
+creating pages on the official FreeCAD Wiki helps standardize your tool
+for the broader community.</p>
+<p>Follow the standard FreeCAD Wiki page structure:</p>
+<ul>
+<li><strong>Header:</strong> Workbench metadata, including author,
+version, and repository URL.</li>
+<li><strong>Description:</strong> Detailed explanation of the concepts
+behind the workbench.</li>
+<li><strong>Tool List:</strong> Dedicated sub-sections for each tool
+featuring the tool icon, menu path, keyboard shortcut, and step-by-step
+execution procedure.</li>
+<li><strong>Scripting / API:</strong> Code snippets showing how to
+invoke workbench functions headlessly via the Python console.</li>
+</ul>
+<h3 id="5-code-level-and-api-documentation">5. Code-Level and API
+Documentation</h3>
+<p>For power users and macro writers, document the underlying Python
+modules using standard docstrings (PEP 257). Use Google or NumPy
+docstring format:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_custom_feature(base_object, thickness<span class="op">=</span><span class="fl">2.0</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Creates a custom parametric feature from an existing Part object.</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">        base_object (Part.Feature): The parent object to bind the feature to.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">        thickness (float, optional): Wall thickness in millimeters. Defaults to 2.0.</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">        App.DocumentObject: The created FeaturePython object.</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div>
+<p>Automating API documentation via tools like Sphinx or MkDocs allows
+you to publish developer references directly to GitHub Pages or Read the
+Docs, providing complete coverage for users extending your code.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/documenting-custom-free-cad-python-workbenches';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Contribute FreeCAD Translations - freecad</title>
+    <meta name="description" content="Contributing translations to FreeCAD is a straightforward process managed through Crowdin, a collaborative localization platform. This guide explains how to set up an account, join the FreeCAD localization project, translate interface strings and document">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-contribute-free-cad-translations">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Contribute FreeCAD Translations - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-contribute-free-cad-translations" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Contributing translations to FreeCAD is a straightforward process managed through Crowdin, a collaborative localization platform. This guide explains how to set up an account, join the FreeCAD localization project, translate interface strings and document" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-contribute-freecad-translations">How to Contribute
+FreeCAD Translations</h1>
+<p>Contributing translations to FreeCAD is a straightforward process
+managed through Crowdin, a collaborative localization platform. This
+guide explains how to set up an account, join the FreeCAD localization
+project, translate interface strings and documentation, follow key
+formatting rules, and see your work integrated into upcoming software
+releases.</p>
+<h3 id="1-create-an-account-on-crowdin">1. Create an Account on
+Crowdin</h3>
+<p>FreeCAD manages its official localization through the Crowdin
+platform. To start:</p>
+<ol type="1">
+<li>Visit Crowdin (crowdin.com) and create a free account if you do not
+already have one.</li>
+<li>Verify your email address and complete your profile setup.</li>
+</ol>
+<h3 id="2-join-the-freecad-project">2. Join the FreeCAD Project</h3>
+<p>Once registered:</p>
+<ol type="1">
+<li>Navigate to the official FreeCAD project page on Crowdin (search for
+"FreeCAD" in the Crowdin search bar or access the project
+directly).</li>
+<li>Click the <strong>Join</strong> button to request access or join the
+translation team.</li>
+<li>Select your target language from the list of available languages. If
+your native language is not listed, you can request its addition through
+the FreeCAD forum or the Crowdin project discussions.</li>
+</ol>
+<h3 id="3-select-files-to-translate">3. Select Files to Translate</h3>
+<p>Inside your chosen language, you will see various components of
+FreeCAD:</p>
+<ul>
+<li><strong>FreeCAD Core:</strong> Contains strings for the main user
+interface, workbenches, and standard tools.</li>
+<li><strong>Addons and Workbenches:</strong> Contains strings for
+external or modular workbenches.</li>
+<li><strong>Documentation/Website:</strong> Covers the project website
+and user documentation where applicable.</li>
+</ul>
+<p>Click on a file to open Crowdin's translation editor.</p>
+<h3 id="4-translate-strings-in-the-crowdin-editor">4. Translate Strings
+in the Crowdin Editor</h3>
+<p>The Crowdin editor displays the original English text on the left and
+input fields for your translation on the right:</p>
+<ul>
+<li><strong>Translate Untranslated Strings:</strong> Filter the file by
+"Untranslated" to locate strings needing conversion.</li>
+<li><strong>Vote on Existing Translations:</strong> If an entry already
+has multiple suggestions, vote for the most accurate one or submit a
+better alternative.</li>
+<li><strong>Review Context:</strong> Check the contextual notes,
+screenshots, or code references provided in the editor to ensure your
+translation fits the intended technical meaning.</li>
+</ul>
+<h3 id="5-follow-translation-and-formatting-rules">5. Follow Translation
+and Formatting Rules</h3>
+<p>To avoid software bugs and broken interfaces, adhere strictly to
+these rules:</p>
+<ul>
+<li><strong>Preserve Variables and Placeholders:</strong> Do not
+translate formatting tags or code placeholders such as <code>%1</code>,
+<code>%s</code>, <code>{0}</code>, or HTML tags like
+<code>&lt;b&gt;</code> and <code>&lt;/b&gt;</code>. Keep them in the
+exact form required by the application.</li>
+<li><strong>Maintain Keyboard Shortcuts:</strong> Strings containing an
+ampersand (<code>&amp;</code>) indicate keyboard shortcuts (e.g.,
+<code>&amp;File</code>). Place the ampersand before the corresponding
+letter in your language if possible.</li>
+<li><strong>Use Consistent Terminology:</strong> Refer to established
+CAD terminology in your language. Consult the FreeCAD glossary feature
+within Crowdin to maintain consistency across workbenches.</li>
+</ul>
+<h3 id="6-integration-and-testing">6. Integration and Testing</h3>
+<ul>
+<li><strong>Approval:</strong> Proofreaders and language managers
+regularly review and approve submitted strings.</li>
+<li><strong>Export and Releases:</strong> Approved translations are
+automatically pulled into the FreeCAD source code repository
+periodically. They will appear in the weekly development builds and
+subsequent official stable releases.</li>
+<li><strong>Testing in FreeCAD:</strong> To test your work locally,
+download a recent FreeCAD development build, navigate to <strong>Edit
+&gt; Preferences &gt; General</strong>, and change the language setting
+to your target language.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-contribute-free-cad-translations';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

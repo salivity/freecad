@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Create a Countersunk Hole in FreeCAD Part Design - freecad</title>
+    <meta name="description" content="Creating a countersunk hole in FreeCAD Part Design is easily accomplished using the built-in Hole feature rather than manually revolving a cut. This guide covers the entire workflow, from placing the hole center using a sketch point to setting the counter">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-create-a-countersunk-hole-in-free-cad-part-design">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Create a Countersunk Hole in FreeCAD Part Design - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-create-a-countersunk-hole-in-free-cad-part-design" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Creating a countersunk hole in FreeCAD Part Design is easily accomplished using the built-in Hole feature rather than manually revolving a cut. This guide covers the entire workflow, from placing the hole center using a sketch point to setting the counter" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-create-a-countersunk-hole-in-freecad-part-design">How to
+Create a Countersunk Hole in FreeCAD Part Design</h1>
+<p>Creating a countersunk hole in FreeCAD Part Design is easily
+accomplished using the built-in Hole feature rather than manually
+revolving a cut. This guide covers the entire workflow, from placing the
+hole center using a sketch point to setting the countersink angle,
+diameter, and depth parameters to fit standard fasteners.</p>
+<h3 id="step-1-define-the-hole-location">Step 1: Define the Hole
+Location</h3>
+<ol type="1">
+<li>Open your model in the <strong>Part Design</strong> workbench.</li>
+<li>Select the planar face where you want to place the countersunk
+hole.</li>
+<li>Click <strong>Create a new sketch</strong> (or attach a sketch to
+the selected face).</li>
+<li>Select the <strong>Create a point</strong> tool from the sketcher
+toolbar and place a point where the center of the hole should be
+located.</li>
+<li>Apply dimensional constraints to position the point accurately on
+the face.</li>
+<li>Click <strong>Close</strong> to exit the sketcher.</li>
+</ol>
+<h3 id="step-2-open-the-hole-tool">Step 2: Open the Hole Tool</h3>
+<ol type="1">
+<li>Ensure the sketch containing your point is selected in the tree
+view.</li>
+<li>Click the <strong>Hole</strong> icon in the Part Design toolbar (or
+go to <strong>Part Design &gt; Create a substractive feature &gt;
+Hole</strong>).</li>
+<li>The model will display a preview of a basic hole, and the
+<strong>Hole parameters</strong> panel will appear in the Tasks tab on
+the left.</li>
+</ol>
+<h3 id="step-3-configure-countersink-parameters">Step 3: Configure
+Countersink Parameters</h3>
+<p>In the Tasks panel, adjust the following settings to create the
+countersink:</p>
+<ul>
+<li><strong>Hole Cut Type:</strong> Click the dropdown menu currently
+set to "Regular" and change it to <strong>Countersunk</strong>.</li>
+<li><strong>Countersink Diameter:</strong> Enter the outer diameter of
+the conical depression to match your screw head.</li>
+<li><strong>Countersink Angle:</strong> Set the angle of the conical
+cut. Standard metric flat-head screws typically use
+<strong>90°</strong>, while imperial/inch fasteners often use
+<strong>82°</strong>.</li>
+<li><strong>Diameter:</strong> Set the clearance or pilot diameter for
+the screw shank.</li>
+<li><strong>Depth:</strong> Choose the termination condition for the
+through-hole:
+<ul>
+<li>Select <strong>Through all</strong> if the hole should pass entirely
+through the body.</li>
+<li>Select <strong>Dimension</strong> if you need a blind hole, and
+specify the depth value.</li>
+</ul></li>
+</ul>
+<h3 id="step-4-finalize-the-feature">Step 4: Finalize the Feature</h3>
+<p>Review the 3D viewport to ensure the preview matches your design
+requirements. Click <strong>OK</strong> at the top of the Tasks panel to
+complete the countersunk hole. The new feature will appear in your model
+tree as a "Hole" object, which you can double-click at any time to
+modify the dimensions.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-create-a-countersunk-hole-in-free-cad-part-design';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

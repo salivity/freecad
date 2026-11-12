@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create 2D Floor Plans in FreeCAD Draft Workbench - freecad</title>
+    <meta name="description" content="This guide explains how to draft precise 2D architectural floor plans using the Draft workbench in FreeCAD. You will learn how to configure the drafting environment, sketch walls and openings using geometric tools, organize components with layers, add sta">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/create-2-d-floor-plans-in-free-cad-draft-workbench">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Create 2D Floor Plans in FreeCAD Draft Workbench - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/create-2-d-floor-plans-in-free-cad-draft-workbench" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to draft precise 2D architectural floor plans using the Draft workbench in FreeCAD. You will learn how to configure the drafting environment, sketch walls and openings using geometric tools, organize components with layers, add sta" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="create-2d-floor-plans-in-freecad-draft-workbench">Create 2D
+Floor Plans in FreeCAD Draft Workbench</h1>
+<p>This guide explains how to draft precise 2D architectural floor plans
+using the Draft workbench in FreeCAD. You will learn how to configure
+the drafting environment, sketch walls and openings using geometric
+tools, organize components with layers, add standard dimensions, and
+prepare the finished layout for technical documentation or export.</p>
+<h3 id="1-set-up-the-workspace-and-grid">1. Set Up the Workspace and
+Grid</h3>
+<p>Switch to the <strong>Draft Workbench</strong> via the workbench
+dropdown menu. Before drawing, configure your workspace:</p>
+<ol type="1">
+<li><strong>Set the Working Plane</strong>: Click the <strong>Select
+Plane</strong> button in the Draft toolbar and set it to <strong>Top
+(XY)</strong>. This ensures all drawn geometry stays flat on the ground
+plane.</li>
+<li><strong>Configure the Grid</strong>: Toggle the grid on using the
+<strong>Grid</strong> button. Adjust the grid spacing in
+<code>Edit &gt; Preferences &gt; Draft &gt; Grid and Snapping</code> to
+match standard architectural increments (e.g., 100 mm or 1 foot).</li>
+<li><strong>Enable Snapping</strong>: Ensure essential snapping
+modes—such as Endpoint, Midpoint, Intersection, and Grid—are active in
+the Draft snap toolbar to maintain dimensional accuracy.</li>
+</ol>
+<h3 id="2-draw-the-wall-geometry">2. Draw the Wall Geometry</h3>
+<p>Walls form the foundation of your 2D layout. You can create them
+using single lines with offsets or closed polylines.</p>
+<ol type="1">
+<li><strong>Exterior Footprint</strong>: Select the <strong>Draft
+Wire</strong> (Polyline) tool. Click in the viewport or enter exact
+numeric values in the X, Y, and Z coordinate fields in the task panel to
+trace the outer perimeter of your building. Press <code>A</code> to lock
+angles or hold <code>Shift</code> to constrain lines to the X or Y axes.
+Close the wire to complete the loop.</li>
+<li><strong>Wall Thickness</strong>: Select the exterior wire and click
+the <strong>Draft Offset</strong> tool. Move the cursor inward and enter
+your wall thickness (e.g., 200 mm or 8 inches) in the parameter panel,
+then confirm.</li>
+<li><strong>Interior Partitions</strong>: Use the <strong>Draft
+Line</strong> tool to draw centerlines or face lines for interior
+dividing walls. Use the <strong>Draft Offset</strong> tool on these
+lines to give them appropriate partition thickness (e.g., 100 mm or 4
+inches).</li>
+<li><strong>Clean Intersections</strong>: Use the <strong>Draft
+Trimex</strong> tool or boolean operations to clean up wall junctions
+and remove overlapping lines.</li>
+</ol>
+<h3 id="3-add-door-and-window-openings">3. Add Door and Window
+Openings</h3>
+<p>To represent openings and architectural symbols:</p>
+<ol type="1">
+<li><strong>Cut Openings</strong>: Draw reference rectangles across wall
+segments where doors or windows will be located. Use the <strong>Draft
+Upgrade/Downgrade</strong> tools or boolean cut operations to remove the
+wall line segments within the opening.</li>
+<li><strong>Door Swings</strong>: Select the <strong>Draft Arc</strong>
+tool to draw a 90-degree swing arc originating from the hinge point. Use
+the <strong>Draft Line</strong> tool to draw the door leaf extending
+from the hinge point.</li>
+<li><strong>Windows</strong>: Use the <strong>Draft Rectangle</strong>
+or multiple parallel <strong>Draft Lines</strong> within the opening to
+indicate glass panes and frame boundaries.</li>
+</ol>
+<h3 id="4-organize-with-draft-layers">4. Organize with Draft Layers</h3>
+<p>Keep the drawing clean and manageable by categorizing elements using
+layers:</p>
+<ol type="1">
+<li>Click the <strong>Draft Layer</strong> button to create a new
+layer.</li>
+<li>Rename the layers in the Tree view (e.g., <code>Walls</code>,
+<code>Doors</code>, <code>Windows</code>, <code>Dimensions</code>).</li>
+<li>Set line weights, colors, and line styles per layer. For example,
+assign thicker lines to walls and thinner lines to door swings.</li>
+<li>Drag and drop objects from the Tree view into their respective
+layers.</li>
+</ol>
+<h3 id="5-add-dimensions-and-annotations">5. Add Dimensions and
+Annotations</h3>
+<p>Complete the technical drawing by adding readable measurements and
+room tags:</p>
+<ol type="1">
+<li><strong>Dimensions</strong>: Select the <strong>Draft
+Dimension</strong> tool. Click the start and end points of a wall or
+opening, then click to position the dimension line. Set the dimension
+orientation to match the wall alignment.</li>
+<li><strong>Room Labels</strong>: Select the <strong>Draft Text</strong>
+tool, click inside a room, and enter the room name and area
+specifications in the dialog. You can adjust text size and font in the
+properties panel under the <strong>View</strong> tab.</li>
+</ol>
+<h3 id="6-export-the-floor-plan">6. Export the Floor Plan</h3>
+<p>Once the plan is complete, you can export it for fabrication or
+presentation:</p>
+<ol type="1">
+<li><strong>Export to CAD</strong>: Select all elements in the Tree view
+and go to <code>File &gt; Export</code>. Choose <strong>Autodesk
+DXF</strong> or <strong>SVG</strong> to use the drawing in other CAD or
+vector illustration programs.</li>
+<li><strong>Create Printable Sheets</strong>: Switch to the
+<strong>TechDraw Workbench</strong>, insert a standard drawing page
+template, and use the <strong>Insert Draft View</strong> tool to place
+your 2D plan onto an architectural sheet complete with title blocks and
+scales for PDF export.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/create-2-d-floor-plans-in-free-cad-draft-workbench';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

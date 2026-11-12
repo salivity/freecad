@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Create an Architectural BOM in FreeCAD - freecad</title>
+    <meta name="description" content="Generating a Bill of Materials (BOM) for architectural elements in FreeCAD allows you to track project components, estimate costs, and manage material quantities efficiently. By utilizing the BIM and Spreadsheet workbenches, FreeCAD can automatically extr">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-create-an-architectural-bom-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Create an Architectural BOM in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-create-an-architectural-bom-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Generating a Bill of Materials (BOM) for architectural elements in FreeCAD allows you to track project components, estimate costs, and manage material quantities efficiently. By utilizing the BIM and Spreadsheet workbenches, FreeCAD can automatically extr" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-create-an-architectural-bom-in-freecad">How to Create an
+Architectural BOM in FreeCAD</h1>
+<p>Generating a Bill of Materials (BOM) for architectural elements in
+FreeCAD allows you to track project components, estimate costs, and
+manage material quantities efficiently. By utilizing the BIM and
+Spreadsheet workbenches, FreeCAD can automatically extract geometric and
+metadata properties—such as length, volume, object type, and assigned
+materials—directly from your 3D model into an organized table. This
+guide walks you through preparing your architectural elements,
+generating a schedule, and exporting the final material list.</p>
+<h3 id="1-prepare-your-architectural-elements">1. Prepare Your
+Architectural Elements</h3>
+<p>Before creating a BOM, ensure your model is properly structured:</p>
+<ul>
+<li>Model your components using dedicated architectural tools (Walls,
+Structures, Windows, Doors, or Roofs) in the <strong>BIM
+Workbench</strong> (or <strong>Arch Workbench</strong> in older FreeCAD
+versions).</li>
+<li>Assign explicit names or labels to your objects in the Tree View to
+make identification straightforward.</li>
+<li>Attach specific materials to each element using the
+<strong>Material</strong> tool so the BOM can aggregate quantities by
+material type.</li>
+<li>Verify that objects have standard IFC roles or properties assigned
+(such as <code>IfcWall</code> or <code>IfcWindow</code>), which helps
+with filtering.</li>
+</ul>
+<h3 id="2-create-a-schedule-using-the-bim-schedule-tool">2. Create a
+Schedule Using the BIM Schedule Tool</h3>
+<p>FreeCAD features a dedicated schedule tool to extract architectural
+data automatically:</p>
+<ol type="1">
+<li>Switch to the <strong>BIM Workbench</strong>.</li>
+<li>Click the <strong>BIM Schedule</strong> button (or navigate to
+<strong>BIM &gt; Reporting &gt; Schedule</strong>).</li>
+<li>In the dialog that appears, click <strong>Add</strong> to specify
+the types of objects you want to query (for example, filtering by
+<code>Type == "Wall"</code> or collecting all objects with an active
+material).</li>
+<li>Define the properties to extract. Common columns include:
+<ul>
+<li><strong>Label</strong>: The object’s name.</li>
+<li><strong>Material</strong>: The assigned material.</li>
+<li><strong>Volume</strong> or <strong>Length</strong>: The calculated
+geometric measurement.</li>
+<li><strong>Count</strong>: The total number of identical elements.</li>
+</ul></li>
+</ol>
+<h3 id="3-generate-the-spreadsheet">3. Generate the Spreadsheet</h3>
+<p>Once your schedule parameters are defined, FreeCAD links the
+extracted data to a native spreadsheet:</p>
+<ol type="1">
+<li>Click <strong>OK</strong> in the Schedule dialog. FreeCAD will
+create a new <strong>Spreadsheet</strong> object in your Tree View.</li>
+<li>Double-click the generated spreadsheet to open it in the main
+view.</li>
+<li>Review the populated cells. The data remains dynamically linked to
+the model; if you alter the geometry of a wall or add new components,
+the values can be updated by recomputing the document
+(<code>Ctrl + R</code>).</li>
+</ol>
+<h3 id="4-group-and-calculate-quantities">4. Group and Calculate
+Quantities</h3>
+<p>To compute totals directly inside FreeCAD:</p>
+<ol type="1">
+<li>Use standard spreadsheet formulas within empty cells (such as
+<code>=SUM(C2:C15)</code> to calculate total concrete volume).</li>
+<li>Format column headers and cell alignments to prepare the document
+for presentation.</li>
+</ol>
+<h3 id="5-export-the-bill-of-materials">5. Export the Bill of
+Materials</h3>
+<p>To use the schedule in external estimating or spreadsheet
+software:</p>
+<ol type="1">
+<li>Open the spreadsheet tab.</li>
+<li>Go to <strong>File &gt; Export</strong>.</li>
+<li>Select <strong>CSV</strong> (<code>.csv</code>) from the file format
+dropdown.</li>
+<li>Save the file. You can now import this data into applications like
+Microsoft Excel, LibreOffice Calc, or specialized estimation tools.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-create-an-architectural-bom-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

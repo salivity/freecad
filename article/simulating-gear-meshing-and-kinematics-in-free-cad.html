@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulating Gear Meshing and Kinematics in FreeCAD - freecad</title>
+    <meta name="description" content="Simulating gear meshing and kinematics in FreeCAD allows you to verify gear ratios, check tooth clearances, and visualize rotational movement before manufacturing. This guide walks through generating geometrically accurate gears with the FCGear workbench,">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/simulating-gear-meshing-and-kinematics-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Simulating Gear Meshing and Kinematics in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/simulating-gear-meshing-and-kinematics-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Simulating gear meshing and kinematics in FreeCAD allows you to verify gear ratios, check tooth clearances, and visualize rotational movement before manufacturing. This guide walks through generating geometrically accurate gears with the FCGear workbench," />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="simulating-gear-meshing-and-kinematics-in-freecad">Simulating
+Gear Meshing and Kinematics in FreeCAD</h1>
+<p>Simulating gear meshing and kinematics in FreeCAD allows you to
+verify gear ratios, check tooth clearances, and visualize rotational
+movement before manufacturing. This guide walks through generating
+geometrically accurate gears with the FCGear workbench, positioning them
+precisely using pitch circle calculations, and configuring a dynamic
+kinematic simulation using the Assembly4 workbench and mathematical
+expressions.</p>
+<h3 id="step-1-install-required-workbenches">Step 1: Install Required
+Workbenches</h3>
+<p>FreeCAD uses add-on workbenches to handle specialized tasks like
+parametric gear generation and kinematic assembly.</p>
+<ol type="1">
+<li>Open FreeCAD and navigate to <strong>Tools &gt; Addon
+Manager</strong>.</li>
+<li>Locate and install <strong>FCGear</strong> (for generating accurate
+involute gear profiles).</li>
+<li>Locate and install <strong>Assembly4</strong> (for coordinate
+systems, assemblies, and kinematic animation).</li>
+<li>Restart FreeCAD to load the new workbenches.</li>
+</ol>
+<h3 id="step-2-generate-compatible-gears">Step 2: Generate Compatible
+Gears</h3>
+<p>Proper meshing requires both gears to share identical tooth profile
+parameters.</p>
+<ol type="1">
+<li>Switch to the <strong>FCGear</strong> workbench.</li>
+<li>Click <strong>Involute Gear</strong> to create the driver gear (Gear
+1).</li>
+<li>In the Property panel, define the parameters:
+<ul>
+<li><strong>module</strong>: Set a standard value (e.g.,
+<code>2.0</code>).</li>
+<li><strong>teeth</strong>: Set the number of teeth (e.g.,
+<code>20</code>).</li>
+<li><strong>pressure_angle</strong>: Keep the standard
+<code>20 deg</code>.</li>
+<li><strong>height</strong>: Set your desired gear thickness.</li>
+</ul></li>
+<li>Repeat the process to generate the driven gear (Gear 2), keeping the
+<strong>module</strong> (<code>2.0</code>) and
+<strong>pressure_angle</strong> (<code>20 deg</code>) identical, while
+altering the tooth count (e.g., <code>40</code>).</li>
+</ol>
+<h3 id="step-3-calculate-the-center-distance">Step 3: Calculate the
+Center Distance</h3>
+<p>Gears will only mesh correctly if their rotational axes are placed at
+the exact pitch diameter distance.</p>
+<p>Use the center-distance formula:<br />
+<strong>Distance (<span class="math inline">\(a\)</span>) = <span
+class="math inline">\(\frac{m \times (z_1 +
+z_2)}{2}\)</span></strong></p>
+<ul>
+<li><span class="math inline">\(m\)</span> = module</li>
+<li><span class="math inline">\(z_1\)</span> = teeth on Gear 1</li>
+<li><span class="math inline">\(z_2\)</span> = teeth on Gear 2</li>
+</ul>
+<p>For a module of 2.0 with 20 and 40 teeth:<br />
+<span class="math inline">\(a = \frac{2.0 \times (20 + 40)}{2} =
+60\text{ mm}\)</span></p>
+<h3 id="step-4-create-the-kinematic-assembly">Step 4: Create the
+Kinematic Assembly</h3>
+<ol type="1">
+<li>Create a new document and switch to the <strong>Assembly4</strong>
+workbench.</li>
+<li>Click <strong>New Model</strong> to initialize an Assembly4
+container.</li>
+<li>Add a variable to drive the animation:
+<ul>
+<li>In the tree view, select <strong>Variables</strong>.</li>
+<li>Right-click and choose <strong>Add variable</strong>. Name it
+<code>Angle</code> and set its type to <code>Float</code>.</li>
+</ul></li>
+<li>Create the attachment points:
+<ul>
+<li>Select the Model and click <strong>New Coordinate System
+(LCS)</strong>. Name it <code>LCS_Gear1</code> and place it at
+<code>(0, 0, 0)</code>.</li>
+<li>Create a second LCS named <code>LCS_Gear2</code>. Set its X
+translation to the calculated center distance (e.g.,
+<code>60 mm</code>).</li>
+</ul></li>
+</ol>
+<h3 id="step-5-link-gears-and-apply-kinematic-expressions">Step 5: Link
+Gears and Apply Kinematic Expressions</h3>
+<ol type="1">
+<li>Insert Gear 1 into the assembly using <strong>Insert
+Part</strong>.</li>
+<li>Attach Gear 1 to <code>LCS_Gear1</code>.</li>
+<li>In the properties of Gear 1's placement or coordinate attachment,
+locate the Z-axis rotation field and enter the expression:<br />
+<code>Variables.Angle</code></li>
+<li>Insert Gear 2 and attach it to <code>LCS_Gear2</code>.</li>
+<li>For Gear 2, external spur gears rotate in opposite directions
+proportional to the gear ratio (<span class="math inline">\(z_1 /
+z_2\)</span>). Set the Z-axis rotation expression to:<br />
+<code>-Variables.Angle * (20 / 40) + Offset</code><br />
+<em>(Replace <code>Offset</code> with a manual angle value, such as
+<code>9 deg</code>, to align tooth valleys and peaks so the teeth do not
+overlap).</em></li>
+</ol>
+<h3 id="step-6-run-the-kinematic-simulation">Step 6: Run the Kinematic
+Simulation</h3>
+<ol type="1">
+<li>Click the <strong>Animate Assembly</strong> button on the Assembly4
+toolbar.</li>
+<li>Set the target variable to <code>Angle</code>.</li>
+<li>Configure the range:
+<ul>
+<li><strong>Start</strong>: <code>0</code></li>
+<li><strong>End</strong>: <code>360</code> (or multiples of 360 for
+longer simulations)</li>
+<li><strong>Step</strong>: <code>2</code></li>
+</ul></li>
+<li>Click <strong>Run</strong>.</li>
+</ol>
+<p>FreeCAD will cycle through the values of the variable, rotating the
+driver gear and mechanically driving the driven gear according to your
+kinematic expression, allowing you to visually inspect meshing
+performance and tooth engagement.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/simulating-gear-meshing-and-kinematics-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

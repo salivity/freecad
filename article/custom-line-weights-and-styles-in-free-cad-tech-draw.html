@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Line Weights and Styles in FreeCAD TechDraw - freecad</title>
+    <meta name="description" content="This guide explains how to configure and apply custom line weights and line styles within the FreeCAD TechDraw workbench. You will learn how to modify global default settings, apply custom visual properties directly to specific drawing views and edges, an">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/custom-line-weights-and-styles-in-free-cad-tech-draw">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Custom Line Weights and Styles in FreeCAD TechDraw - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/custom-line-weights-and-styles-in-free-cad-tech-draw" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to configure and apply custom line weights and line styles within the FreeCAD TechDraw workbench. You will learn how to modify global default settings, apply custom visual properties directly to specific drawing views and edges, an" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="custom-line-weights-and-styles-in-freecad-techdraw">Custom Line
+Weights and Styles in FreeCAD TechDraw</h1>
+<p>This guide explains how to configure and apply custom line weights
+and line styles within the FreeCAD TechDraw workbench. You will learn
+how to modify global default settings, apply custom visual properties
+directly to specific drawing views and edges, and configure custom Line
+Groups using standard-compliant configuration files.</p>
+<h2 id="setting-global-line-defaults">Setting Global Line Defaults</h2>
+<p>To define universal line widths and patterns across all new
+drawings:</p>
+<ol type="1">
+<li>Open FreeCAD and navigate to <strong>Edit &gt;
+Preferences</strong>.</li>
+<li>Select the <strong>TechDraw</strong> workbench icon from the left
+sidebar.</li>
+<li>Switch to the <strong>Lines</strong> or <strong>Dimensions</strong>
+tab (depending on your FreeCAD version).</li>
+<li>Locate the <strong>Line Width</strong> settings. You can set the
+exact millimeter thickness for:
+<ul>
+<li><strong>Thin Line:</strong> Typically used for dimensions, hatching,
+and hidden lines (e.g., 0.18 mm or 0.25 mm).</li>
+<li><strong>Medium Line:</strong> Used for secondary features or
+annotations (e.g., 0.35 mm).</li>
+<li><strong>Thick Line:</strong> Used for primary visible outlines and
+borders (e.g., 0.5 mm or 0.7 mm).</li>
+</ul></li>
+<li>Locate the <strong>Line Pattern</strong> section to define default
+spacing for hidden, center, and phantom line dash arrays.</li>
+<li>Click <strong>Apply</strong> and <strong>OK</strong> to save the
+changes.</li>
+</ol>
+<h2 id="customizing-lines-for-specific-views-and-edges">Customizing
+Lines for Specific Views and Edges</h2>
+<p>You can override global styles directly on individual views or
+selected geometric edges.</p>
+<h3 id="for-an-entire-view">For an Entire View:</h3>
+<ol type="1">
+<li>In the <strong>Tree View</strong>, select the TechDraw view you want
+to modify.</li>
+<li>In the <strong>Property View</strong> panel below the tree, switch
+to the <strong>View</strong> tab.</li>
+<li>Modify the relevant line attributes:
+<ul>
+<li><strong>Line Width:</strong> Enter a custom width value in
+millimeters.</li>
+<li><strong>Line Style:</strong> Choose from standard styles such as
+<em>Continuous</em>, <em>Dashed</em>, <em>Dotted</em>, or
+<em>DashDot</em>.</li>
+<li><strong>Hidden Line Color / Width / Style:</strong> Configure these
+options to visually distinguish non-visible edges.</li>
+</ul></li>
+</ol>
+<h3 id="for-individual-edges">For Individual Edges:</h3>
+<ol type="1">
+<li>Open the drawing page containing the part.</li>
+<li>Select the specific edge or segment you wish to alter directly on
+the page.</li>
+<li>In the TechDraw toolbar, click the <strong>Change Edge
+Appearance</strong> tool (or right-click the edge and choose appearance
+settings).</li>
+<li>Set custom parameters for <strong>Color</strong>, <strong>Line
+Width</strong>, and <strong>Line Style</strong>.</li>
+<li>Click <strong>OK</strong> to apply the overrides to the selected
+geometry only.</li>
+</ol>
+<h2 id="creating-custom-line-groups-via-csv">Creating Custom Line Groups
+via CSV</h2>
+<p>FreeCAD TechDraw uses external CSV configuration files to manage
+standardized line groups (such as ISO, ASME, or custom company
+standards).</p>
+<ol type="1">
+<li>Navigate to the FreeCAD resource directory containing TechDraw
+templates and line definitions (typically located under
+<code>FreeCAD/Mod/TechDraw/LineGroup</code> or your user data
+directory).</li>
+<li>Open an existing <code>.csv</code> line group file (such as
+<code>LineGroup.csv</code>) in a plain text editor or spreadsheet
+program.</li>
+<li>Define custom rows using the following standard format:
+<ul>
+<li><strong>GroupName:</strong> Unique name for the style set.</li>
+<li><strong>VisibleLine:</strong> Width in mm and dash pattern
+definition.</li>
+<li><strong>HiddenLine:</strong> Width in mm and dash pattern
+definition.</li>
+<li><strong>CenterLine:</strong> Width in mm and dash pattern
+definition.</li>
+</ul></li>
+<li>Save the file with a distinct name (e.g.,
+<code>Custom_LineGroup.csv</code>).</li>
+<li>In FreeCAD, go to <strong>Edit &gt; Preferences &gt; TechDraw &gt;
+General</strong>.</li>
+<li>Under <strong>Line Group File</strong>, browse to and select your
+custom <code>.csv</code> file.</li>
+<li>Views configured to use Line Groups will now adhere to your custom
+definitions automatically.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/custom-line-weights-and-styles-in-free-cad-tech-draw';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

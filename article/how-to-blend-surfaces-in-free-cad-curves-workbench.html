@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Blend Surfaces in FreeCAD Curves Workbench - freecad</title>
+    <meta name="description" content="Blending surfaces smoothly in FreeCAD is essential for achieving professional, organic CAD models with high-grade visual and aerodynamic quality. This guide demonstrates how to install the Curves workbench, prepare your source geometry, and utilize specia">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-blend-surfaces-in-free-cad-curves-workbench">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Blend Surfaces in FreeCAD Curves Workbench - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-blend-surfaces-in-free-cad-curves-workbench" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Blending surfaces smoothly in FreeCAD is essential for achieving professional, organic CAD models with high-grade visual and aerodynamic quality. This guide demonstrates how to install the Curves workbench, prepare your source geometry, and utilize specia" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-blend-surfaces-in-freecad-curves-workbench">How to Blend
+Surfaces in FreeCAD Curves Workbench</h1>
+<p>Blending surfaces smoothly in FreeCAD is essential for achieving
+professional, organic CAD models with high-grade visual and aerodynamic
+quality. This guide demonstrates how to install the Curves workbench,
+prepare your source geometry, and utilize specialized tools such as the
+Blend Surface and Gordon Surface tools to create G1 (tangential) and G2
+(curvature) continuous transitions between separate geometric faces.</p>
+<h2 id="1-install-and-activate-the-curves-workbench">1. Install and
+Activate the Curves Workbench</h2>
+<p>The Curves workbench is an external add-on that provides advanced
+NURBS modeling capabilities.</p>
+<ol type="1">
+<li>Open FreeCAD and navigate to <strong>Tools &gt; Addon
+manager</strong>.</li>
+<li>Locate <strong>Curves</strong> in the list of workbenches.</li>
+<li>Click <strong>Install</strong>, then restart FreeCAD when
+prompted.</li>
+<li>Select <strong>Curves</strong> from the workbench dropdown
+menu.</li>
+</ol>
+<h2 id="2-prepare-the-adjacent-edges">2. Prepare the Adjacent Edges</h2>
+<p>Smooth surface blending requires clean boundary curves. Before
+generating the blend:</p>
+<ol type="1">
+<li>Identify the two existing surfaces or solids you wish to
+bridge.</li>
+<li>Ensure the edges bounding the gap are clean and uninterrupted.</li>
+<li>If your edges belong to complex solids, extract them as sub-shapes
+or profile curves using the <strong>Curves &gt; Sub-shape
+Binder</strong> or the <strong>Extract Subshape</strong> tool to isolate
+the boundary paths.</li>
+</ol>
+<h2 id="3-generate-the-blend-surface">3. Generate the Blend Surface</h2>
+<p>The dedicated <strong>Blend Surface</strong> tool creates a
+transition patch between two surface boundaries while matching boundary
+continuity.</p>
+<ol type="1">
+<li>Hold <code>Ctrl</code> and select the two opposing boundary edges
+where the blend will connect.</li>
+<li>Click the <strong>Blend Surface</strong> icon in the Curves
+toolbar.</li>
+<li>FreeCAD will generate an initial NURBS patch between the
+selections.</li>
+<li>Select the newly created <code>BlendSurface</code> object in the
+tree view and inspect its <strong>Data</strong> tab in the Property
+View:
+<ul>
+<li><strong>Continuity:</strong> Set the continuity level for each
+boundary (Edge 1 and Edge 2). Choose <strong>G1 (Tangent)</strong> to
+eliminate sharp creases, or <strong>G2 (Curvature)</strong> for
+aesthetic surfaces where the rate of curvature change must remain
+continuous.</li>
+<li><strong>Scale/Weight:</strong> Adjust the tangent scale factors
+(often labeled as <code>Scale 1</code> and <code>Scale 2</code> or
+<code>Tangent Length</code>) to increase or decrease the influence that
+adjacent surfaces exert on the blend patch.</li>
+</ul></li>
+</ol>
+<h2 id="4-alternate-approach-gordon-surface-for-complex-boundaries">4.
+Alternate Approach: Gordon Surface for Complex Boundaries</h2>
+<p>When a simple two-edge blend lacks shape control, use a Gordon
+Surface to blend along a network of guide curves.</p>
+<ol type="1">
+<li>Create or extract two sets of curves: <strong>Ribs</strong> (profile
+curves running across the gap) and <strong>Rails</strong> (boundary
+curves running along the edges of the surfaces to be joined).</li>
+<li>Ensure the ribs physically intersect the rails at all junction
+points.</li>
+<li>Select all intersecting curves in the tree view.</li>
+<li>Click the <strong>Gordon Surface</strong> tool.</li>
+<li>In the properties panel, link the adjoining surface faces under the
+boundary continuity options to enforce G1 or G2 curvature alignment
+across the shared boundaries.</li>
+</ol>
+<h2 id="5-inspect-surface-smoothness">5. Inspect Surface Smoothness</h2>
+<p>To confirm the blend is visually smooth and free from undesirable
+wrinkles:</p>
+<ol type="1">
+<li>Switch to the <strong>Surface</strong> or <strong>Draft</strong>
+workbench.</li>
+<li>Enable the <strong>Zebra Tool</strong> to project parallel stripes
+across your model.</li>
+<li>Inspect the stripe transitions across the blend seams:
+<ul>
+<li><strong>Discontinuous lines</strong> indicate G0 continuity (a sharp
+edge).</li>
+<li><strong>Lines that meet at an angle</strong> indicate G1 continuity
+(smooth angle, but sudden curvature shift).</li>
+<li><strong>Lines that flow seamlessly without sharp bends</strong>
+indicate G2 continuity (ideal curvature blend).</li>
+</ul></li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-blend-surfaces-in-free-cad-curves-workbench';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

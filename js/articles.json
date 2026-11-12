@@ -1,0 +1,2342 @@
+[
+  [
+    390,
+    "FreeCAD Backward Compatibility for Custom Scripts",
+    "Maintaining custom Python scripts across major FreeCAD releases requires handling underlying architectural changes, such as shifts in the core C++ bindings, GUI toolkit migrations, and Python API refactoring. This guide outlines practical strategies to ke",
+    false
+  ],
+  [
+    389,
+    "FreeCAD Core Architecture Developments",
+    "This article provides an overview of the ongoing and planned architectural developments for the FreeCAD open-source parametric 3D modeler. Driven by the FreeCAD Project Association and community contributors, these future core changes focus on stabilizing",
+    false
+  ],
+  [
+    388,
+    "Documenting Custom FreeCAD Python Workbenches",
+    "Documenting a custom FreeCAD Python workbench ensures that end users and contributors can easily install, navigate, and utilize your tools. This guide outlines the essential layers of workbench documentation, including in-app command tooltips, structured",
+    false
+  ],
+  [
+    387,
+    "Fix Memory Leaks in FreeCAD Python Scripts",
+    "Long-running FreeCAD Python automation scripts often suffer from memory bloat due to the boundary between Python and FreeCAD's underlying C++ core (OpenCASCADE and Coin3D). This article covers how to identify, profile, and resolve memory leaks in FreeCAD",
+    false
+  ],
+  [
+    386,
+    "Best Practices for Large FreeCAD Projects",
+    "Managing large models in FreeCAD requires deliberate project organization to maintain software stability, prevent file corruption, and ensure efficient collaboration. This guide outlines essential best practices for structuring complex CAD projects, focus",
+    false
+  ],
+  [
+    385,
+    "How to Integrate FreeCAD with Git Version Control",
+    "Integrating FreeCAD with Git allows parametric 3D modelers to track design history, collaborate with teams, and maintain reliable backups. Because native FreeCAD files (.FCStd) are compressed archives containing XML, shape definitions, and preview images,",
+    false
+  ],
+  [
+    384,
+    "Batch Engineering Drawings with FreeCAD Python",
+    "Automating the creation of 2D technical drawings from 3D CAD models saves significant engineering time and eliminates repetitive manual drafting. This article explains how to use FreeCAD's headless Python environment and the TechDraw workbench to batch-pr",
+    false
+  ],
+  [
+    383,
+    "Automate FreeCAD Rendering Using Headless Python",
+    "Automating FreeCAD rendering tasks using a headless Python script enables developers to generate 3D model previews, technical drawings, and ray-traced images without opening the graphical user interface. This article explains how to configure a headless e",
+    false
+  ],
+  [
+    382,
+    "Python Security Boundaries in FreeCAD",
+    "This article provides an overview of the security model surrounding Python execution within FreeCAD. It explores the inherent lack of sandboxing in FreeCAD's embedded interpreter, details how Python scripts interact directly with the host operating system",
+    false
+  ],
+  [
+    381,
+    "How to Fix Deprecation Warnings in FreeCAD Python Macros",
+    "Updating legacy FreeCAD macros often triggers deprecation warnings caused by transitions between major Python versions, shifts across Qt toolkits (PySide to PySide2/PySide6), and internal FreeCAD API refactoring. This guide outlines how to identify the so",
+    false
+  ],
+  [
+    380,
+    "Create Custom Parametric Features in FreeCAD Python",
+    "This guide provides a practical walkthrough for building custom parametric features in FreeCAD using its Python Feature framework (FeaturePython). You will learn how to create a custom document object, attach a Python proxy class to define dynamic propert",
+    false
+  ],
+  [
+    379,
+    "FreeCAD Python: Query Faces, Edges, and Vertices",
+    "This guide explains how to inspect and query a 3D model's topological elements—faces, edges, and vertices—using FreeCAD’s built-in Python console and the Part module. By accessing the boundary representation (B-Rep) stored within an object's Shape propert",
+    false
+  ],
+  [
+    378,
+    "FreeCAD Script: Extract Edge Curves from a Face",
+    "Extracting edge curves from a solid face in FreeCAD can be automated using Python through the built-in Part module. By navigating FreeCAD's Boundary Representation (B-Rep) hierarchy, you can target a specific face of an object, access its boundary edges,",
+    false
+  ],
+  [
+    377,
+    "Python Matrix Transformations on FreeCAD Objects",
+    "Performing matrix transformations on FreeCAD objects using Python allows you to precisely manipulate geometry through 4x4 transformation matrices, enabling translation, rotation, scaling, and shearing. This guide covers how to construct transformation mat",
+    false
+  ],
+  [
+    376,
+    "Understanding the FreeCAD Placement Class",
+    "The FreeCAD Placement class is a core geometric construct used to define the exact position and orientation of an object within 3D space. It serves as the primary mechanism for executing rigid body transformations, allowing components to be translated and",
+    false
+  ],
+  [
+    375,
+    "How to Serialize Custom Data in FreeCAD",
+    "This article provides a practical guide on serializing and deserializing custom data structures within FreeCAD. You will learn how to leverage FreeCAD’s native property framework, implement state restoration using Python proxy objects via getstate and set",
+    false
+  ],
+  [
+    374,
+    "Create Custom Property Groups in FreeCAD Scripts",
+    "Organizing custom parameters into logical property groups makes parametric objects in FreeCAD much easier to navigate and maintain. In FreeCAD's Python API, property groups are not separate containers that need explicit initialization; instead, they are c",
+    false
+  ],
+  [
+    373,
+    "Suppress UI Redraws in FreeCAD Batch Processing",
+    "Executing heavy automated modeling or batch operations in FreeCAD can cause severe performance bottlenecks if the graphical interface redraws after every change. This article explains how to temporarily disable user interface updates in FreeCAD using Pyth",
+    false
+  ],
+  [
+    372,
+    "FreeCADGui Update Mechanism Explained",
+    "The FreeCADGui update mechanism is the core subsystem responsible for synchronizing FreeCAD's visual interface with its underlying data model. This article explores the primary purposes of this mechanism, detailing how it manages 3D scene rendering, preve",
+    false
+  ],
+  [
+    371,
+    "Calculate Center of Mass in FreeCAD with Python",
+    "This guide explains how to determine the center of mass of any 3D object in FreeCAD using its built-in Python API. By accessing an object's underlying topological shape, you can query its geometric properties directly and extract the precise X, Y, and Z c",
+    false
+  ],
+  [
+    370,
+    "Get Bounding Box Coordinates in FreeCAD Using Python",
+    "This article explains how to retrieve and utilize the bounding box coordinates of a 3D object in FreeCAD using its built-in Python API. By accessing an object's topological shape and querying its BoundBox property, you can quickly extract minimum and maxi",
+    false
+  ],
+  [
+    369,
+    "FreeCAD Scripting: How to Rollback Transactions",
+    "This article explains how to safely discard modifications made by Python scripts in FreeCAD using built-in transaction methods. When automating parametric modeling, scripts can encounter unexpected runtime exceptions or invalid geometries. By wrapping you",
+    false
+  ],
+  [
+    368,
+    "FreeCAD Document Transaction System Explained",
+    "The FreeCAD document transaction system is an underlying architectural mechanism designed to track and manage state changes within a project, primarily powering reliable undo and redo functionality while preserving model integrity. By grouping parametric",
+    false
+  ],
+  [
+    367,
+    "How to Bind Shortcuts to Custom FreeCAD Macros",
+    "Assigning keyboard shortcuts to custom macros in FreeCAD allows you to automate repetitive modeling tasks and trigger custom Python scripts with a single keystroke. This process involves using FreeCAD's built-in customization settings to register the macr",
+    false
+  ],
+  [
+    366,
+    "Create Custom Commands in FreeCAD Python Workbenches",
+    "Creating custom command classes in FreeCAD allows developers to extend the software's functionality by binding Python logic to graphical user interface elements like toolbar buttons and menu items. This guide covers how to structure a FreeCAD Python comma",
+    false
+  ],
+  [
+    365,
+    "How to Check Object Visibility in FreeCAD",
+    "Checking whether an object is visible or hidden in FreeCAD using Python requires accessing its visual representation rather than its underlying geometry data. Because FreeCAD maintains a strict separation between the document model (App) and the graphical",
+    false
+  ],
+  [
+    364,
+    "Modify Object Placement in FreeCAD Python",
+    "Modifying an object's placement in FreeCAD using Python involves manipulating its Placement property, which controls both position (translation) and orientation (rotation) in 3D space. By interacting with the FreeCAD.Vector and FreeCAD.Rotation classes, y",
+    false
+  ],
+  [
+    363,
+    "FreeCAD Part makeBox Function in Python Scripts",
+    "The Part.makeBox function in FreeCAD is a core scripting method used to programmatically generate 3D rectangular cuboids (boxes) within the application's Python environment. This article explains the primary purpose of Part.makeBox, details its syntax and",
+    false
+  ],
+  [
+    362,
+    "How to Connect External Sensors to FreeCAD Using Python",
+    "Connecting external hardware and sensors to FreeCAD transforms the parametric 3D modeling software into an interactive digital twin or real-time visualization platform. By leveraging FreeCAD’s embedded Python interpreter along with serial communication li",
+    false
+  ],
+  [
+    361,
+    "FreeCAD Custom Property Editors Using PySide",
+    "This article explains how to build custom property editors in FreeCAD using Python and PySide. You will learn the architectural relationship between FreeCAD document objects, their ViewProviders, and the Qt-based user interface. The guide covers designing",
+    false
+  ],
+  [
+    360,
+    "FreeCAD Color and Texture Export File Formats",
+    "FreeCAD is primarily a parametric CAD modeler focused on dimensional geometry, but several export formats allow you to preserve color and texture data for rendering, 3D printing, or asset exchange. While standard CAD formats typically ignore or limit surf",
+    false
+  ],
+  [
+    359,
+    "Export FreeCAD Assembly to STEP AP214",
+    "Exporting assemblies from FreeCAD to the STEP AP214 format allows you to retain component hierarchy, sub-assemblies, and object colors when sharing CAD data with other engineering platforms. This guide explains how to properly configure FreeCAD's import/e",
+    false
+  ],
+  [
+    358,
+    "Import Point Clouds and Create Surfaces in FreeCAD",
+    "Working with point cloud data in FreeCAD allows you to transform raw 3D scan data into solid, editable CAD geometry. This guide covers the complete workflow for importing point cloud files, cleaning the data, generating a polygon mesh, and converting that",
+    false
+  ],
+  [
+    357,
+    "What Is the FreeCAD Points Workbench?",
+    "The FreeCAD Points workbench is a dedicated toolset designed for reading, inspecting, and manipulating 3D point clouds within the FreeCAD ecosystem. This article outlines the workbench's core purpose, its primary tools for managing raw coordinate data fro",
+    false
+  ],
+  [
+    356,
+    "How to Decimate a Mesh in FreeCAD",
+    "This guide explains how to reduce the polygon count of a 3D model in FreeCAD using the built-in Mesh Design workbench. Whether you are preparing a heavy STL file for 3D printing, improving viewport performance, or optimizing assets for rendering, decimati",
+    false
+  ],
+  [
+    355,
+    "How to Fill Holes in Meshes in FreeCAD",
+    "Filling holes in a polygon mesh is a crucial step for repairing damaged 3D scans, fixing non-manifold geometry, and preparing models for 3D printing or CAD solid conversion. This guide explains how to quickly identify open boundaries and patch holes in a",
+    false
+  ],
+  [
+    354,
+    "Convert a Solid to a Mesh in FreeCAD",
+    "Converting a solid shape into a polygon mesh in FreeCAD allows you to prepare parametric 3D CAD models for 3D printing, rendering, or use in external polygon-modeling software. This guide covers the straightforward process of transforming solid bodies cre",
+    false
+  ],
+  [
+    353,
+    "How to Convert Mesh to Solid in FreeCAD",
+    "Converting a mesh object, such as an imported STL or OBJ file, into a functional solid shape in FreeCAD is essential for performing parametric modeling, boolean operations, and technical drawings. This guide walks you through the step-by-step process of i",
+    false
+  ],
+  [
+    352,
+    "Purpose of the FreeCAD Mesh Workbench",
+    "The FreeCAD Mesh workbench is a dedicated environment designed to create, analyze, repair, and convert polygon meshes within FreeCAD. While FreeCAD operates primarily as a parametric boundary-representation (B-Rep) solid modeler, the Mesh workbench provid",
+    false
+  ],
+  [
+    351,
+    "Repair Corrupted Geometry and Open Shells in FreeCAD",
+    "Importing CAD models into FreeCAD via neutral formats such as STEP, IGES, or STL frequently introduces broken topologies, inverted normals, self-intersecting faces, or open shells that fail to register as solids. This guide provides direct, practical proc",
+    false
+  ],
+  [
+    350,
+    "Limitations of Importing DWG Files into FreeCAD",
+    "While FreeCAD supports the import of Autodesk DWG files, users frequently encounter workflow hurdles due to the proprietary nature of the format. This article outlines the primary limitations of DWG import in FreeCAD, including third-party software depend",
+    false
+  ],
+  [
+    349,
+    "Import IGES Files into FreeCAD Without Losing Continuity",
+    "Importing IGES files into FreeCAD often introduces broken faces, micro-gaps, or disrupted surface continuity because the format frequently represents geometry as unstitched independent surfaces. This article explains how to configure FreeCAD’s internal Op",
+    false
+  ],
+  [
+    348,
+    "Adjust STL Tessellation and Tolerance in FreeCAD",
+    "Exporting a 3D model to STL in FreeCAD converts smooth analytical surfaces into a polygonal mesh, a process known as tessellation. Adjusting the tessellation quality, specifically the surface deviation (chord length tolerance) and angular deviation, ensur",
+    false
+  ],
+  [
+    347,
+    "FreeCAD STL Export Settings for 3D Printing",
+    "Exporting a 3D model from FreeCAD to an STL format requires configuring mesh resolution settings properly to ensure smooth curves without creating unnecessarily massive file sizes. FreeCAD treats solid models as precise mathematical representations, where",
+    false
+  ],
+  [
+    346,
+    "FreeCAD Import and Export Guide: STL, OBJ, and STEP",
+    "FreeCAD is a powerful open-source parametric 3D modeler capable of interfacing with a wide range of standard 3D file formats. This guide provides a straightforward walkthrough on how to import and export STEP, STL, and OBJ files in FreeCAD. It covers the",
+    false
+  ],
+  [
+    345,
+    "Add Custom UI Dialogs and Buttons to FreeCAD",
+    "Extending FreeCAD with custom user interface elements allows users and developers to automate workflows, solicit user input, and streamline complex modeling tasks. This guide explains how to build custom user interface dialogs using Python and PySide (Qt)",
+    false
+  ],
+  [
+    344,
+    "How to Share Custom Python Macros in FreeCAD",
+    "Sharing custom Python macros with the FreeCAD community ensures your tools reach other designers, receive peer feedback, and help expand the software's open-source ecosystem. The most effective way to distribute a macro is through the official FreeCAD Add",
+    false
+  ],
+  [
+    343,
+    "How to Import STEP Files in FreeCAD Using Python",
+    "This article explains how to programmatically import external STEP (.step or .stp) CAD files into FreeCAD using its built-in Python scripting environment. You will learn the primary methods for loading these files both with and without the graphical inter",
+    false
+  ],
+  [
+    342,
+    "Export Shape to STEP Programmatically in FreeCAD",
+    "Exporting shapes to the STEP format programmatically in FreeCAD can be achieved using its built-in Python scripting API. By utilizing either the Part module or the export methods available on underlying CAD shapes, you can automate conversions, batch-proc",
+    false
+  ],
+  [
+    341,
+    "Iterate Through Shapes in FreeCAD with Python",
+    "This guide explains how to programmatically access and iterate through all geometric shapes within an open FreeCAD document using Python. By accessing the document's object tree and filtering for elements that contain shape representations, you can inspec",
+    false
+  ],
+  [
+    340,
+    "Understanding the FreeCAD ActiveDocument Object",
+    "The ActiveDocument object in FreeCAD serves as the primary programmatic gateway to whichever 3D project document is currently selected and focused by the user. In FreeCAD's Python scripting environment, it represents the active workspace, allowing develop",
+    false
+  ],
+  [
+    339,
+    "How to Debug Python Scripts in FreeCAD",
+    "Debugging Python scripts inside the FreeCAD environment can be accomplished through several methods depending on your workflow complexity. This guide covers the primary techniques to inspect and troubleshoot your code, ranging from lightweight built-in to",
+    false
+  ],
+  [
+    338,
+    "How to Install Python Modules for FreeCAD",
+    "This guide explains how to install third-party Python packages for use within FreeCAD extensions, workbenches, and macros. Because FreeCAD uses its own Python environment on Windows and macOS—and typically uses the system Python environment on Linux—addin",
+    false
+  ],
+  [
+    337,
+    "Add Custom Properties with Python in FreeCAD",
+    "Custom parameter properties in FreeCAD allow you to attach user-defined variables—such as dimensions, strings, integers, or booleans—to any document object, making your parametric designs significantly more flexible. By leveraging FreeCAD’s built-in Pytho",
+    false
+  ],
+  [
+    336,
+    "FreeCAD App Module vs Gui Module Differences Explained",
+    "FreeCAD operates on a strictly decoupled architecture that separates underlying engineering data from its visual representation. This article explains the fundamental differences between FreeCAD’s App module and Gui module, detailing their respective role",
+    false
+  ],
+  [
+    335,
+    "Access FreeCAD Document Objects Using Python API",
+    "Interacting with FreeCAD programmatically allows you to automate 3D modeling workflows, modify parametric features, and extract design data. This guide demonstrates how to access open documents, retrieve specific document objects using their internal name",
+    false
+  ],
+  [
+    334,
+    "FreeCAD Python Script to Create a 3D Box",
+    "Automating 3D modeling in FreeCAD via its built-in Python console allows users to generate parametric geometry programmatically without manual GUI interaction. This guide demonstrates how to set up an active document, instantiate a standard 3D solid box,",
+    false
+  ],
+  [
+    333,
+    "Where Are FreeCAD Macros Saved by Default?",
+    "In FreeCAD, recorded macros are stored locally on your computer inside dedicated user-profile directories tailored to your specific operating system. This article covers the default file system paths used by FreeCAD for Windows, macOS, and Linux, as well",
+    false
+  ],
+  [
+    332,
+    "How to Record a Macro in FreeCAD",
+    "Recording macros in FreeCAD allows you to automate repetitive 3D modeling tasks by capturing your graphical interface actions and translating them into executable Python code. This guide explains how to start macro recording, perform the intended operatio",
+    false
+  ],
+  [
+    331,
+    "How to Open and Use the Python Console in FreeCAD",
+    "FreeCAD is built from the ground up to be fully controlled via Python, allowing users to automate modeling tasks, build custom tools, and inspect geometric data. This guide explains how to display the integrated Python console in the FreeCAD interface, na",
+    false
+  ],
+  [
+    330,
+    "FreeCAD Built-In Simulation Capabilities",
+    "FreeCAD provides native simulation tools primarily centered around its integrated Finite Element Method (FEM) Workbench and assembly-level motion constraints. This article outlines the core simulation tools available directly within the FreeCAD applicatio",
+    false
+  ],
+  [
+    329,
+    "How to Export Animations to Video in FreeCAD",
+    "FreeCAD does not feature a native one-click tool to export animated assemblies or camera paths directly into containerized video formats like MP4 or AVI. Instead, the standard workflow requires generating the animation inside a specialized workbench, rend",
+    false
+  ],
+  [
+    328,
+    "How to Animate Mechanical Movements in FreeCAD",
+    "This guide provides a step-by-step walkthrough for creating keyframe animations of mechanical movements in FreeCAD. You will learn how to install the appropriate animation tools, prepare your mechanical parts, define keyframes along a timeline, adjust mov",
+    false
+  ],
+  [
+    327,
+    "FreeCAD Animation Workbench Explained",
+    "The FreeCAD Animation workbench is an external add-on designed to create dynamic, timeline-based motion and kinematic simulations using parametric 3D CAD models. This article explores the primary purpose of the workbench, its key functionalities, and how",
+    false
+  ],
+  [
+    326,
+    "Simulating Gear Meshing and Kinematics in FreeCAD",
+    "Simulating gear meshing and kinematics in FreeCAD allows you to verify gear ratios, check tooth clearances, and visualize rotational movement before manufacturing. This guide walks through generating geometrically accurate gears with the FCGear workbench,",
+    false
+  ],
+  [
+    325,
+    "FreeCAD OpenSCAD Integration for CSG Modeling",
+    "This article explores the purpose and advantages of integrating OpenSCAD into FreeCAD for Constructive Solid Geometry (CSG) modeling. It covers how this integration bridges procedural, code-based 3D design with a graphical parametric modeling environment,",
+    false
+  ],
+  [
+    324,
+    "How to Export FreeCAD Tool Libraries for Reuse",
+    "This guide explains how to export, locate, and transfer tool libraries created in FreeCAD's CAM (formerly Path) Workbench so they can be reused across different projects or migrated to other machines. By leveraging FreeCAD’s ToolBit architecture, you can",
+    false
+  ],
+  [
+    323,
+    "Organize Multiple Operations in a FreeCAD Path Job",
+    "Managing multiple machining operations within a single FreeCAD Path (CAM) job allows you to streamline your CNC workflow, optimize tool changes, and export a single unified G-code file. This guide covers how to structure, sequence, and group various opera",
+    false
+  ],
+  [
+    322,
+    "Chip Load Calculations in FreeCAD Path Explained",
+    "Chip load calculation in the FreeCAD Path workbench is a fundamental CNC preparation step used to determine the ideal relationship between tool feed rate, spindle speed, and cutter geometry. Calculating the correct chip load ensures that cutting tools ope",
+    false
+  ],
+  [
+    321,
+    "FreeCAD Path Lead-In and Lead-Out Moves",
+    "This guide provides an overview of configuring lead-in and lead-out strategies within the FreeCAD Path (CAM) workbench. You will learn why these cutting transitions are critical for surface finish, how to locate and modify entry and exit properties in 2.5",
+    false
+  ],
+  [
+    320,
+    "How to Create a Slot Milling Toolpath in FreeCAD",
+    "This guide explains how to generate a slot milling toolpath using FreeCAD's Path (CAM) workbench. You will learn how to set up a machining job, select the correct geometry, configure tool parameters and cutting depths, and simulate the generated toolpath",
+    false
+  ],
+  [
+    319,
+    "Adaptive Clearing and Rest Milling in FreeCAD Path",
+    "Adaptive clearing and rest milling are advanced roughing strategies within the FreeCAD Path (CAM) workbench designed to maximize machining efficiency and protect tooling. Adaptive clearing maintains a constant tool load throughout bulk material removal, w",
+    false
+  ],
+  [
+    318,
+    "FreeCAD Path 3D Surface Milling Guide",
+    "Performing a 3D surface contour milling operation in FreeCAD allows you to machine complex, curved, and non-planar geometries directly from your 3D models. This guide outlines the complete workflow for setting up your model in the Path (now CAM) workbench",
+    false
+  ],
+  [
+    317,
+    "Set Spindle Speed and Feed Rate in FreeCAD Path",
+    "Configuring accurate spindle speeds and feed rates in FreeCAD's Path (CAM) Workbench is essential for achieving clean cuts, protecting cutting tools, and preventing machine damage. This guide explains how to set and adjust these cutting parameters directl",
+    false
+  ],
+  [
+    316,
+    "Set Safe Travel Heights in FreeCAD Path Operations",
+    "Defining safe travel heights in the FreeCAD Path Workbench (renamed to CAM in recent versions) is crucial for preventing machine collisions with workpieces, fixtures, and clamps during rapid transit moves. This guide explains how to properly configure cle",
+    false
+  ],
+  [
+    315,
+    "Understanding the FreeCAD CAM Job Object",
+    "The FreeCAD CAM Job object serves as the foundational container for all Computer-Aided Manufacturing (CAM) workflows within the software's CAM Workbench (formerly Path Workbench). This article explores the core purpose of the Job object, detailing how it",
+    false
+  ],
+  [
+    314,
+    "Inspect Displacement Vectors in FreeCAD FEM Results",
+    "This guide explains how to inspect displacement vectors in FreeCAD's Finite Element Method (FEM) workbench to understand structural deformation. You will learn how to activate the VTK-based post-processing pipeline, generate 3D vector arrows (glyphs) indi",
+    false
+  ],
+  [
+    313,
+    "How to Set Up Gravity Loads in FreeCAD FEM",
+    "Setting up gravity loads—also referred to as self-weight—in FreeCAD's Finite Element Method (FEM) workbench allows you to simulate the internal stresses and deformation caused by an object's own mass. This process requires creating an FEM analysis contain",
+    false
+  ],
+  [
+    312,
+    "Purpose of Shell Elements in FreeCAD FEM",
+    "Shell elements in FreeCAD's Finite Element Method (FEM) workbench are 2D elements used to model thin-walled structures efficiently without requiring full 3D solid meshes. By assigning a mathematical thickness to a 2D surface, shell elements capture both m",
+    false
+  ],
+  [
+    311,
+    "FreeCAD 2D Axisymmetric FEM Modeling Guide",
+    "This guide provides a step-by-step overview of setting up and running a two-dimensional (2D) axisymmetric Finite Element Method (FEM) simulation using FreeCAD and the integrated CalculiX solver. By reducing a rotationally symmetric 3D component to a 2D pl",
+    false
+  ],
+  [
+    310,
+    "Troubleshoot FreeCAD FEM Solver Convergence Errors",
+    "Solver convergence errors in FreeCAD FEM typically occur when the underlying solver (most commonly CalculiX) cannot find a stable equilibrium state within the allocated iterations. This guide provides a direct, structured approach to diagnosing and resolv",
+    false
+  ],
+  [
+    309,
+    "How to Export FreeCAD FEM Mesh to External Solvers",
+    "FreeCAD's Finite Element Method (FEM) Workbench allows users to model, mesh, and apply boundary conditions to physical designs before solving. While FreeCAD has built-in integration for solvers like CalculiX and Elmer, users often need to export either ra",
+    false
+  ],
+  [
+    308,
+    "Setup Nonlinear Structural Analysis in FreeCAD FEM",
+    "Setting up a nonlinear structural analysis in FreeCAD's Finite Element Method (FEM) workbench allows you to simulate models subject to large deformations, geometric nonlinearities, or nonlinear material behaviors. This guide details the step-by-step proce",
+    false
+  ],
+  [
+    307,
+    "FreeCAD FEM Contact Constraints Explained",
+    "Contact constraints in the FreeCAD Finite Element Method (FEM) workbench are specialized boundary conditions used to simulate mechanical interactions between separate, touching parts. This article explains the primary function of contact constraints, how",
+    false
+  ],
+  [
+    306,
+    "Apply Centrifugal Force in FreeCAD FEM Analyses",
+    "This guide explains how to apply centrifugal loads to rotating components using the FreeCAD Finite Element Method (FEM) workbench. You will learn how to configure the centrifugal force constraint, define the rotation axis, set angular velocity, and run th",
+    false
+  ],
+  [
+    305,
+    "How to Analyze Harmonic Response in FreeCAD FEM",
+    "Harmonic response analysis predicts how a structure behaves under continuous cyclic or vibrating loads across a range of frequencies. In FreeCAD, this dynamic structural evaluation is performed using the Finite Element Method (FEM) workbench powered by th",
+    false
+  ],
+  [
+    304,
+    "FreeCAD Plot Workbench for Scientific Data",
+    "The FreeCAD Plot workbench provides integrated data visualization tools designed to analyze, plot, and display scientific and engineering data directly inside the FreeCAD environment. By utilizing Python’s Matplotlib library, it allows users to transform",
+    false
+  ],
+  [
+    303,
+    "Export Robot Motion Programs From FreeCAD",
+    "Exporting robot motion programs from FreeCAD allows you to translate CAD-designed toolpaths and waypoints into machine-readable code for industrial robotic arms. By utilizing FreeCAD's built-in Robot Workbench alongside custom Python post-processors, you",
+    false
+  ],
+  [
+    302,
+    "Simulate Industrial Robots in FreeCAD",
+    "Simulating industrial robot trajectories and pick-and-place tasks in FreeCAD requires using the dedicated Robot Workbench to model kinematic chains, define motion trajectories, and script event-driven tasks. This guide walks you through setting up a stand",
+    false
+  ],
+  [
+    301,
+    "FreeCAD Robot Workbench Purpose and Features",
+    "The FreeCAD Robot workbench is a specialized environment within the open-source parametric modeler designed to simulate and analyze the movements of industrial 6-axis serial robots. It allows engineers, designers, and hobbyists to set up robotic workcells",
+    false
+  ],
+  [
+    300,
+    "Visualize Velocity Vectors in FreeCAD CFD",
+    "Visualizing velocity vector fields from a FreeCAD Computational Fluid Dynamics (CFD) simulation allows you to clearly inspect flow patterns, recirculation zones, and velocity gradients across your model. This guide explains how to extract, configure, and",
+    false
+  ],
+  [
+    299,
+    "Define Inlet and Outlet Boundaries in FreeCAD CFD",
+    "This article provides a concise, step-by-step guide on how to properly set up inlet and outlet boundary conditions in FreeCAD using the CfdOF (Computational Fluid Dynamics OpenFOAM) workbench. You will learn how to select geometry faces, assign boundary t",
+    false
+  ],
+  [
+    298,
+    "How to Run OpenFOAM CFD Simulations in FreeCAD",
+    "Setting up computational fluid dynamics (CFD) simulations using OpenFOAM directly within FreeCAD is accomplished via the CfdOF workbench. This workflow bridges FreeCAD's 3D parametric CAD modeling capabilities with OpenFOAM’s powerful numerical solver, ha",
+    false
+  ],
+  [
+    297,
+    "FreeCAD CFD Workbench for Fluid Dynamics",
+    "This article provides an overview of the FreeCAD Computational Fluid Dynamics (CFD) workbench, examining its core purpose, integrated simulation capabilities, and practical workflow. Readers will learn how this open-source tool bridges standard CAD modeli",
+    false
+  ],
+  [
+    296,
+    "Check FEM Mesh Quality and Aspect Ratio in FreeCAD",
+    "Evaluating mesh quality metrics like aspect ratio, skewness, and Jacobian ratios is critical for obtaining accurate finite element analysis (FEA) results. This article provides a direct guide on how to inspect these metrics in FreeCAD's FEM Workbench usin",
+    false
+  ],
+  [
+    295,
+    "How to Refine Mesh Density in FreeCAD FEM",
+    "Refining the mesh density around high-stress concentrations—such as holes, fillets, notches, and sharp corners—is essential for obtaining accurate stress results in FreeCAD's Finite Element Method (FEM) workbench without unnecessarily increasing computati",
+    false
+  ],
+  [
+    294,
+    "How to Mesh Assemblies with Netgen in FreeCAD FEM",
+    "Meshing complex multi-part assemblies using the Netgen mesher in FreeCAD's Finite Element Method (FEM) workbench requires turning discrete solid components into a single, conformal geometric structure before running the mesh generator. This guide explains",
+    false
+  ],
+  [
+    293,
+    "Beam Elements in FreeCAD FEM Analysis",
+    "Beam elements in FreeCAD FEM analysis provide a computationally efficient method for simulating long, slender structural members without the high overhead of full 3D solid meshing. This article outlines the primary purpose of 1D beam elements in FreeCAD,",
+    false
+  ],
+  [
+    292,
+    "FreeCAD FEM Thermal Heat Transfer Simulation Guide",
+    "Setting up a thermal heat transfer simulation in FreeCAD requires using the Finite Element Method (FEM) workbench paired with the default CalculiX solver. This guide covers the complete workflow for conducting steady-state and transient thermal analyses,",
+    false
+  ],
+  [
+    291,
+    "Modal Vibration Analysis in FreeCAD FEM",
+    "Modal vibration analysis allows engineers and designers to identify the natural frequencies and corresponding mode shapes of a structure to prevent mechanical resonance. In FreeCAD, this process is carried out within the built-in Finite Element Method (FE",
+    false
+  ],
+  [
+    290,
+    "Create Custom FreeCAD Path Post-Processors in Python",
+    "This guide explains how to build a custom post-processor for the FreeCAD CAM (formerly Path) Workbench using Python. You will learn where to store your post-processor script, how the core export function works, how to parse FreeCAD toolpath commands into",
+    false
+  ],
+  [
+    289,
+    "2.5-Axis vs 3-Axis Milling in FreeCAD Path",
+    "This article explains the core differences between 2.5-axis and 3-axis milling within the FreeCAD Path (CAM) workbench. It covers how machine movement differs across the X, Y, and Z axes, the specific FreeCAD operations associated with each method, the ty",
+    false
+  ],
+  [
+    288,
+    "Avoid Collisions in FreeCAD Path Simulation",
+    "Simulating toolpaths in FreeCAD’s CAM Workbench (formerly Path) is critical for protecting your CNC machine, cutting tools, and workpieces from costly damage. Avoiding collisions during these simulations requires setting accurate tool and holder dimension",
+    false
+  ],
+  [
+    287,
+    "How to Perform Facing Operation in FreeCAD",
+    "Performing a facing operation in FreeCAD prepares raw stock by machining the top surface flat and bringing the material down to the exact final Z-height. Using the CAM Workbench (formerly called the Path Workbench in earlier versions), you define your raw",
+    false
+  ],
+  [
+    286,
+    "Understanding Stock Models in FreeCAD Path",
+    "In FreeCAD’s Path Workbench (also referred to as the CAM Workbench), the stock model represents the raw, unmachined block of material from which the final physical part is cut. This article explains the fundamental purpose of stock models, detailing how t",
+    false
+  ],
+  [
+    285,
+    "Custom Peck Drilling Toolpaths in FreeCAD Path",
+    "This article explains how to set up and configure custom peck drilling toolpaths in FreeCAD's CAM (formerly Path) Workbench. You will learn how to initialize a drilling operation, select the appropriate canned cycle or peck routine, adjust custom variable",
+    false
+  ],
+  [
+    284,
+    "How to Set Up Profile Cutting in FreeCAD Path",
+    "This guide provides a straightforward walkthrough on setting up a 2D profile cutting operation using the Path (CAM) workbench in FreeCAD. You will learn how to create a machining job, assign your cutting tool, select the appropriate model geometry, config",
+    false
+  ],
+  [
+    283,
+    "How to Post-Process FreeCAD Toolpaths",
+    "Post-processing in FreeCAD converts generic internal toolpaths generated in the CAM (formerly Path) workbench into machine-specific G-code dialects tailored to your CNC controller, such as GRBL, LinuxCNC, Mach3, or Fanuc. This guide explains how to select",
+    false
+  ],
+  [
+    282,
+    "How to Simulate CNC Machining in FreeCAD Path",
+    "Simulating CNC toolpaths in FreeCAD allows you to verify cutting sequences, inspect raw stock removal, and detect errors or collisions before exporting G-code to a physical machine. This guide outlines the exact steps to configure, launch, and control the",
+    false
+  ],
+  [
+    281,
+    "How to Configure Cutting Tools in FreeCAD Path",
+    "This guide explains the function of Tool Controllers in FreeCAD's Path (CAM) workbench and details how to define, configure, and assign cutting tools for CNC machining projects. You will learn the difference between physical tool geometry and operational",
+    false
+  ],
+  [
+    280,
+    "How to Generate Pocket Toolpaths in FreeCAD",
+    "Generating G-code toolpaths for pocket milling in FreeCAD involves preparing a 3D model, setting up a machining Job within the CAM (formerly Path) Workbench, applying a Pocket Shape operation, and running a post-processor. This step-by-step guide covers h",
+    false
+  ],
+  [
+    279,
+    "FreeCAD Path Workbench for CNC Machining",
+    "The FreeCAD Path workbench—renamed to the CAM workbench in newer releases—is an integrated Computer-Aided Manufacturing module designed to generate G-code instructions for CNC machines directly from 3D models. This article explains the primary purpose of",
+    false
+  ],
+  [
+    278,
+    "View Stress Concentration Heatmaps in FreeCAD FEM",
+    "Viewing stress concentration heatmaps in FreeCAD FEM involves running your finite element analysis, accessing the post-processing tools, and displaying the stress tensor fields—most commonly von Mises stress—on a color-mapped 3D gradient. This guide expla",
+    false
+  ],
+  [
+    277,
+    "How to Run a CalculiX Simulation in FreeCAD",
+    "This article provides a concise, step-by-step guide to setting up and executing a Finite Element Analysis (FEA) using the CalculiX solver directly within FreeCAD. By utilizing FreeCAD's built-in FEM (Finite Element Method) workbench, you will learn how to",
+    false
+  ],
+  [
+    276,
+    "How to Apply Force and Pressure in FreeCAD FEM",
+    "Applying force loads and surface pressure in FreeCAD’s Finite Element Method (FEM) workbench is essential for simulating real-world structural stresses on a 3D model. This guide covers how to set up an analysis container, select the target faces, and appl",
+    false
+  ],
+  [
+    275,
+    "Apply Fixed Boundary Constraints in FreeCAD FEM",
+    "Applying a fixed boundary constraint in FreeCAD’s Finite Element Method (FEM) workbench is essential for anchoring parts and preventing rigid body motion during structural simulations. This guide explains how to prepare your model, activate the FEM workbe",
+    false
+  ],
+  [
+    274,
+    "How to Set Material Properties in FreeCAD FEM",
+    "Setting up material properties such as Young's modulus and Poisson's ratio in FreeCAD's Finite Element Method (FEM) workbench is a fundamental step for running structural simulations. This guide walks you through navigating the FEM workbench, generating a",
+    false
+  ],
+  [
+    273,
+    "How to Generate FEM Mesh Using Gmsh in FreeCAD",
+    "Generating a finite element mesh using Gmsh in FreeCAD allows you to convert solid CAD models into high-quality 1D, 2D, or 3D meshes suitable for numerical simulation. This article provides a clear, step-by-step guide to configuring the Gmsh binary path i",
+    false
+  ],
+  [
+    272,
+    "Supported Solvers in FreeCAD FEM Workbench",
+    "The FreeCAD Finite Element Method (FEM) workbench allows engineers and designers to perform structural, thermal, and multiphysics simulations directly inside FreeCAD's parametric modeling environment. Because FreeCAD functions primarily as a pre-processor",
+    false
+  ],
+  [
+    271,
+    "FreeCAD FEM Workbench Stress Analysis Guide",
+    "This guide provides a comprehensive walkthrough for performing a linear static stress analysis on a solid mechanical component using FreeCAD's built-in Finite Element Method (FEM) workbench. You will learn how to initialize an analysis container, assign m",
+    false
+  ],
+  [
+    270,
+    "Role of Coin3D in FreeCAD Rendering Pipeline",
+    "Coin3D serves as the primary scene graph library and 3D visualization engine within FreeCAD, bridging the gap between mathematical CAD models and visual output. While FreeCAD uses Open CASCADE Technology to compute exact geometric representations, Coin3D",
+    false
+  ],
+  [
+    269,
+    "How FreeCAD Uses the OpenCASCADE Geometry Kernel",
+    "This article explores how FreeCAD integrates OpenCASCADE Technology (OCCT) as its foundational geometric modeling engine. It outlines how FreeCAD bridges its parametric interface with OCCT’s Boundary Representation (B-Rep) architecture, the way standard m",
+    false
+  ],
+  [
+    268,
+    "FreeCAD Source Code Architecture Layers Explained",
+    "FreeCAD relies on a modular, multi-tier software architecture designed to strictly separate core application logic, data modeling, graphical rendering, and end-user extensions. By isolating business logic from user interfaces, the software can run both in",
+    false
+  ],
+  [
+    267,
+    "How to Contribute to FreeCAD: Funding and Code",
+    "FreeCAD is a powerful, open-source parametric 3D modeler that relies on a global community of developers, designers, and users for its continued growth and stability. This guide outlines the most effective ways to support the FreeCAD project, detailing ho",
+    false
+  ],
+  [
+    266,
+    "FreeCAD Stable vs Weekly Development Builds",
+    "When choosing FreeCAD for parametric 3D modeling, users must decide between the official Stable release and the Weekly development builds. This article breaks down the primary differences between both versions, examining their stability, access to new fea",
+    false
+  ],
+  [
+    265,
+    "How to Participate in FreeCAD Community Testing",
+    "Participating in community testing for upcoming FreeCAD releases is essential for catching regressions, improving stability, and ensuring new features work across diverse operating systems before official release. This guide outlines how you can contribut",
+    false
+  ],
+  [
+    264,
+    "How to Contribute FreeCAD Translations",
+    "Contributing translations to FreeCAD is a straightforward process managed through Crowdin, a collaborative localization platform. This guide explains how to set up an account, join the FreeCAD localization project, translate interface strings and document",
+    false
+  ],
+  [
+    263,
+    "FreeCAD Release Cycle and Update Strategy Explained",
+    "FreeCAD utilizes a structured software release cycle designed to balance stability for production engineering with the rapid introduction of open-source innovations. This article outlines the mechanics of the FreeCAD update roadmap, explaining its major r",
+    false
+  ],
+  [
+    262,
+    "Where to Find FreeCAD Stable Release Notes",
+    "Finding the official release notes for new stable versions of FreeCAD is essential for tracking new features, workflow changes, and bug fixes. This guide outlines the primary official locations where the FreeCAD project publishes detailed release document",
+    false
+  ],
+  [
+    261,
+    "How to Report a Bug or Crash in FreeCAD",
+    "Reporting a bug or crash to the FreeCAD development team ensures that software defects are tracked and resolved efficiently. This guide outlines the essential steps to prepare, document, and submit an issue, including gathering system information, discuss",
+    false
+  ],
+  [
+    260,
+    "Debugging Tools for FreeCAD UI Development",
+    "FreeCAD provides a robust suite of built-in features and integration points designed to help developers build, test, and troubleshoot user interfaces directly inside the application environment. By combining an interactive Python runtime with native Qt in",
+    false
+  ],
+  [
+    259,
+    "How to Create a Custom FreeCAD Workbench in Python",
+    "This guide provides a step-by-step overview of creating a custom workbench in FreeCAD using Python. You will learn where to locate the extensions directory, how to configure the necessary file structure, how to define the workbench class using InitGui.py,",
+    false
+  ],
+  [
+    258,
+    "How to Enable or Disable Workbenches in FreeCAD",
+    "FreeCAD offers a wide range of specialized workbenches for various design tasks, but keeping every tool active can clutter the interface and slow down your workflow. This guide explains how to streamline your workspace by enabling or disabling specific wo",
+    false
+  ],
+  [
+    257,
+    "FreeCAD Start Page Workbench: Purpose and Features",
+    "The FreeCAD Start page workbench serves as the central launching pad and dashboard for users opening the software. This overview explains the primary purpose of the Start page, detailing its role in project management, system navigation, access to communi",
+    false
+  ],
+  [
+    256,
+    "How to Customize FreeCAD Toolbars and Menus",
+    "FreeCAD provides deep interface flexibility, allowing you to streamline your 3D modeling workflow by personalizing your workspace. This guide explains how to customize toolbars and menus across different workbenches, create your own dedicated tool sets, a",
+    false
+  ],
+  [
+    255,
+    "How to Plot Mathematical Functions in FreeCAD",
+    "This guide explains how to generate 2D and 3D mathematical function plots directly within FreeCAD. You will learn the two most effective methods: using the GUI-based Curves Workbench for parametric equations, and utilizing FreeCAD’s built-in Python consol",
+    false
+  ],
+  [
+    254,
+    "What Is the FreeCAD Plot Workbench?",
+    "The FreeCAD Plot workbench is a specialized visualization tool designed to generate, customize, and analyze 2D mathematical and engineering plots directly within the FreeCAD interface. Built upon Python's robust Matplotlib library, this module allows user",
+    false
+  ],
+  [
+    253,
+    "How to Export FreeCAD Models to OpenSCAD Code",
+    "Exporting 3D designs from FreeCAD into OpenSCAD code allows you to convert visual, boundary-representation (B-Rep) models into programmatic, script-based geometry. This guide outlines the direct process for exporting parts into .scad and .csg formats usin",
+    false
+  ],
+  [
+    252,
+    "Import and Execute OpenSCAD Files in FreeCAD",
+    "FreeCAD features native interoperability with OpenSCAD through a dedicated workbench, enabling you to import, process, and convert .scad scripts directly into parametric 3D CAD models. This guide covers how to set up the OpenSCAD executable within FreeCAD",
+    false
+  ],
+  [
+    251,
+    "FreeCAD OpenSCAD Workbench: Purpose and Features",
+    "The FreeCAD OpenSCAD workbench provides seamless interoperability between FreeCAD's visual, boundary-representation (B-rep) environment and OpenSCAD's programmatic, Constructive Solid Geometry (CSG) modeling system. This article outlines the primary purpo",
+    false
+  ],
+  [
+    250,
+    "How to Change FreeCAD 3D View Background Color",
+    "Customizing the FreeCAD workspace allows you to reduce eye strain and improve the visual contrast between your models and the viewport. This guide explains how to access the preferences settings in FreeCAD to switch the 3D view background between a solid",
+    false
+  ],
+  [
+    249,
+    "FreeCAD Clipping Planes: Inspect Internal Features",
+    "Clipping planes in FreeCAD allow you to cut away portions of a 3D model non-destructively to inspect internal cavities, clearances, and hidden geometries without altering the underlying CAD data. This guide provides a straightforward walkthrough on how to",
+    false
+  ],
+  [
+    248,
+    "How to Set Custom View Presets in FreeCAD",
+    "This guide explains how to configure and save custom view presets in FreeCAD to quickly recall specific camera angles, rotations, and zoom levels. By utilizing the built-in Draft Working Plane Proxy, the standard Freeze View command, or a custom Python ma",
+    false
+  ],
+  [
+    247,
+    "How to Check Wall Thickness in FreeCAD for 3D Printing",
+    "Ensuring proper wall thickness is critical for 3D printing to prevent structural failure, warping, or slicer interpretation errors. While FreeCAD does not offer a single, automated color-mapped thickness analyzer natively, it provides several built-in mea",
+    false
+  ],
+  [
+    246,
+    "How to Export 3D HTML Files from FreeCAD",
+    "FreeCAD allows users to export 3D CAD models directly into standalone HTML files that can be viewed and interacted with in any standard web browser. This article covers the step-by-step process of using FreeCAD's built-in WebGL export tool to generate vie",
+    false
+  ],
+  [
+    245,
+    "How to Create 3D PDFs from FreeCAD Models",
+    "Creating interactive 3D PDF documents from FreeCAD models allows you to share rotatable, dynamic CAD designs with stakeholders who do not have specialized CAD software installed. While FreeCAD can natively export standard 2D drawing sheets to PDF, embeddi",
+    false
+  ],
+  [
+    244,
+    "Best Ways to Present FreeCAD Models to Stakeholders",
+    "Presenting 3D CAD designs to non-technical stakeholders requires translating complex engineering data into clear, accessible, and visually engaging formats. While engineers are comfortable navigating the dense interface of FreeCAD, clients, project manage",
+    false
+  ],
+  [
+    243,
+    "How to Create Assembly Instructions in FreeCAD",
+    "Documenting assembly instructions in FreeCAD involves breaking down a 3D model into logical sequential steps, creating exploded assembly states, and generating clean 2D technical drawings with part lists and callouts. This guide walks you through the enti",
+    false
+  ],
+  [
+    242,
+    "How to Generate Deviation Maps in FreeCAD",
+    "This guide explains how to generate deviation maps in FreeCAD to verify manufacturing tolerances by comparing 3D scan data against a nominal CAD model. By leveraging FreeCAD’s Mesh and Reverse Engineering workbenches, you can import manufactured parts, al",
+    false
+  ],
+  [
+    241,
+    "How to Compare Shapes with FreeCAD Inspection",
+    "This guide explains how to compare two different mesh or solid shapes using the Inspection Workbench in FreeCAD. You will learn how to prepare your 3D models, align them in the coordinate space, run the visual inspection tool to compute surface deviations",
+    false
+  ],
+  [
+    240,
+    "Purpose of the FreeCAD Inspection Workbench",
+    "The FreeCAD Inspection workbench is a specialized toolset designed to evaluate, verify, and detect geometric deviations between different 3D models. This article outlines the core purpose of the workbench, detailing how it compares physical 3D scan data a",
+    false
+  ],
+  [
+    239,
+    "How to Protect IP When Exporting from FreeCAD",
+    "FreeCAD is an open-source parametric 3D modeler that relies on open, accessible file standards, meaning it does not feature a native \"DRM lock\" or proprietary encryption export button. However, you can effectively safeguard your intellectual property (IP)",
+    false
+  ],
+  [
+    238,
+    "Embed Custom Metadata and Author Info in FreeCAD",
+    "Embedding custom metadata and author information into a FreeCAD project is essential for tracking revisions, maintaining intellectual property records, and streamlining collaboration. FreeCAD provides multiple methods to achieve this, including global use",
+    false
+  ],
+  [
+    237,
+    "FreeCAD Spreadsheet Workbench for Documentation",
+    "The FreeCAD Spreadsheet workbench serves as a critical bridge between 3D parametric geometry and technical documentation, enabling designers to organize, calculate, and present project data efficiently. This article explores how the Spreadsheet workbench",
+    false
+  ],
+  [
+    236,
+    "Create Isometric View in FreeCAD TechDraw",
+    "Creating an isometric projected view in FreeCAD's TechDraw workbench allows you to present a clear, three-dimensional representation of your model on a standard technical drawing sheet. This guide outlines the most efficient methods to generate an isometr",
+    false
+  ],
+  [
+    235,
+    "How to Fix Out of Date FreeCAD TechDraw Views",
+    "When 3D models are modified in FreeCAD, linked TechDraw pages do not always update automatically, resulting in out-of-date views indicated by orange clock icons, hatched patterns, or stale geometry. This guide covers how to quickly identify out-of-date vi",
+    false
+  ],
+  [
+    234,
+    "Link FreeCAD TechDraw Dimensions to 3D Parameters",
+    "This article explains how to link dimension values and annotations in FreeCAD's TechDraw workbench directly to 3D model parameters and spreadsheet values. While standard TechDraw dimensions measure projected 3D geometry automatically, integrating explicit",
+    false
+  ],
+  [
+    233,
+    "FreeCAD TechDraw Balloon Tool Explained",
+    "This article explores the core functions, features, and practical applications of the Balloon Annotation tool in the FreeCAD TechDraw workbench. Readers will learn how this drafting feature enables clear part identification, links components to a Bill of",
+    false
+  ],
+  [
+    232,
+    "How to Add Center Marks in FreeCAD TechDraw",
+    "This guide explains how to place center marks on circles, arcs, and holes within the FreeCAD TechDraw workbench. You will learn the exact steps to apply center marks to individual circular geometries, configure their appearance, and adjust centerline exte",
+    false
+  ],
+  [
+    231,
+    "Custom Line Weights and Styles in FreeCAD TechDraw",
+    "This guide explains how to configure and apply custom line weights and line styles within the FreeCAD TechDraw workbench. You will learn how to modify global default settings, apply custom visual properties directly to specific drawing views and edges, an",
+    false
+  ],
+  [
+    230,
+    "Calibrate Reference Image Scale in FreeCAD",
+    "Calibrating an imported reference image in FreeCAD ensures that background blueprints or sketches match real-world dimensions for precise 3D modeling. This guide provides a straightforward, step-by-step process to import an image plane, use the calibratio",
+    false
+  ],
+  [
+    229,
+    "How to Import Blueprint Images in FreeCAD",
+    "Importing a blueprint or reference image into the FreeCAD 3D viewport allows you to trace contours and match real-world dimensions directly within your design environment. By using the dedicated Image Workbench, you can place 2D raster files onto specific",
+    false
+  ],
+  [
+    228,
+    "What Is the FreeCAD Image Workbench Used For?",
+    "The FreeCAD Image workbench is a utility designed to import, manipulate, and manage 2D raster images directly within the 3D modeling environment. Its primary objective is to allow users to bring external visual data—such as scanned blueprints, technical d",
+    false
+  ],
+  [
+    227,
+    "How to Take High-Res Screenshots in FreeCAD",
+    "Capturing detailed, publication-ready images of 3D models in FreeCAD is straightforward using the software's built-in image export utility. This guide explains how to bypass your physical monitor's screen resolution limits by setting custom pixel dimensio",
+    false
+  ],
+  [
+    226,
+    "How to Set Perspective View in FreeCAD",
+    "Switching to a perspective view in FreeCAD allows you to visualize your 3D models with natural depth perception and realistic vanishing points, contrasting with the default parallel orthographic projection. This guide covers the quickest and most reliable",
+    false
+  ],
+  [
+    225,
+    "Material Properties for FreeCAD Raytracing Quality",
+    "Achieving photorealistic results in FreeCAD raytracing depends directly on how physical surfaces are configured to interact with light. FreeCAD integrates raytracing capabilities primarily through the Render or Raytracing workbenches, outputting geometry",
+    false
+  ],
+  [
+    224,
+    "How to Set Up Lighting and Camera in FreeCAD",
+    "Rendering a 3D model in FreeCAD requires configuring a dedicated camera view and an appropriate lighting environment using external rendering engines integrated via the Render Workbench. This guide covers how to install the necessary tools, establish prec",
+    false
+  ],
+  [
+    223,
+    "How to Export FreeCAD Scenes to LuxCoreRender",
+    "This guide outlines the complete process of exporting 3D models from FreeCAD into LuxCoreRender to achieve photorealistic visualizations. Readers will learn two primary workflows: using the integrated FreeCAD Render Workbench for direct rendering, and uti",
+    false
+  ],
+  [
+    222,
+    "How to Render FreeCAD Models with POV-Ray",
+    "This guide provides a straightforward walkthrough on rendering 3D models created in FreeCAD using the open-source POV-Ray raytracer. You will learn how to configure the external POV-Ray executable inside FreeCAD, set up a rendering project, position camer",
+    false
+  ],
+  [
+    221,
+    "Purpose of the FreeCAD Raytracing Workbench",
+    "This article explores the purpose, functionality, and current status of the FreeCAD Raytracing workbench. It explains how the workbench bridges parametric CAD modeling with external rendering engines to generate photorealistic images, outlines its primary",
+    false
+  ],
+  [
+    220,
+    "Customize Borders and Title Blocks in FreeCAD TechDraw",
+    "Customizing borders and title blocks in FreeCAD's TechDraw Workbench allows you to generate professional, standard-compliant technical drawings tailored to your organization's specific requirements. Because FreeCAD uses standard Scalable Vector Graphics (",
+    false
+  ],
+  [
+    219,
+    "How to Export FreeCAD TechDraw to DXF or SVG",
+    "FreeCAD allows you to export TechDraw sheets directly to both DXF and SVG formats without needing third-party converters. This guide covers the straightforward methods to convert your 2D technical drawings into editable vector formats, ensuring compatibil",
+    false
+  ],
+  [
+    218,
+    "Export FreeCAD TechDraw Sheet to PDF",
+    "This guide provides a quick and reliable walkthrough for exporting technical drawings created in FreeCAD's TechDraw workbench into a standard PDF format. Converting your TechDraw sheets to PDF ensures your technical layouts, dimensions, and annotations ar",
+    false
+  ],
+  [
+    217,
+    "How to Add a BOM to FreeCAD TechDraw",
+    "Adding a Bill of Materials (BOM) to a technical drawing in FreeCAD allows you to display part lists, quantities, and component properties directly on your drawing sheet. This guide outlines how to prepare your part data, generate a BOM table, and project",
+    false
+  ],
+  [
+    216,
+    "How to Create a Detail View in FreeCAD TechDraw",
+    "A detail view in technical drafting is an enlarged representation of a specific section of a larger view, used to highlight complex features, add precise dimensions, and improve overall drawing legibility. This article explains the technical purpose of a",
+    false
+  ],
+  [
+    215,
+    "How to Create a Section View in FreeCAD TechDraw",
+    "Creating a cross-section view in FreeCAD's TechDraw Workbench allows you to reveal the internal details and hidden geometry of a 3D model on a technical 2D drawing sheet. This guide outlines the exact, step-by-step process for generating, positioning, and",
+    false
+  ],
+  [
+    214,
+    "How to Add Dimensions in FreeCAD TechDraw",
+    "Adding dimensions to a 2D drawing view in FreeCAD’s TechDraw workbench is essential for creating precise, production-ready technical documentation. This guide walks you through the step-by-step process of placing linear, radial, and angular dimensions dir",
+    false
+  ],
+  [
+    213,
+    "How to Insert Orthographic Views in FreeCAD TechDraw",
+    "Inserting orthographic views into FreeCAD is essential for generating standard multi-view engineering drawings from your 3D CAD models. This guide outlines the exact steps to create a drawing sheet, use TechDraw's Projection Group tool to generate primary",
+    false
+  ],
+  [
+    212,
+    "Purpose of FreeCAD TechDraw Templates",
+    "Drawing templates in the FreeCAD TechDraw Workbench serve as the foundational canvas for generating standard-compliant 2D technical documentation from 3D models. This article explains the primary purposes of these templates, including standardizing sheet",
+    false
+  ],
+  [
+    211,
+    "How to Create 2D Drawings in FreeCAD TechDraw",
+    "This guide explains how to convert a 3D CAD model into a standardized 2D engineering drawing using FreeCAD’s native TechDraw Workbench. You will learn the complete workflow, including selecting drawing templates, inserting primary and secondary orthograph",
+    false
+  ],
+  [
+    210,
+    "Share FreeCAD Assemblies with External Parts",
+    "Sharing a FreeCAD assembly containing external parts requires preserving the file paths between the master assembly and its linked components to prevent broken references. The most reliable approach for full parametric editing is packaging a dedicated pro",
+    false
+  ],
+  [
+    209,
+    "How to Check Interference in FreeCAD Assemblies",
+    "Checking for mechanical interference between components is a crucial step in mechanical design to ensure that parts fit together without colliding in the physical world. This guide outlines the most reliable methods to detect and analyze collisions betwee",
+    false
+  ],
+  [
+    208,
+    "FreeCAD A2plus Fixed and Floating Constraints Guide",
+    "This guide explains how to define and manage fixed and floating components within the FreeCAD A2plus workbench to create fully defined, error-free mechanical assemblies. You will learn the conceptual difference between fixed and floating parts, how to loc",
+    false
+  ],
+  [
+    207,
+    "FreeCAD A2plus Workbench for Multi-Part Design",
+    "The FreeCAD A2plus workbench is an add-on module designed to combine individual components into unified mechanical assemblies. This article details the core purpose of A2plus in multi-part 3D design, explaining how its constraint-based toolset functions,",
+    false
+  ],
+  [
+    206,
+    "How to Create Exploded Views in FreeCAD",
+    "Creating an exploded view of an assembly model in FreeCAD is essential for technical drawings, assembly instructions, and presentations. This guide walks you through the process of installing the dedicated ExplodedAssembly workbench, selecting parts, defi",
+    false
+  ],
+  [
+    205,
+    "How to Constrain Parts in FreeCAD Assembly 4",
+    "This guide explains how to constrain two parts together using Local Coordinate Systems (LCS) in the FreeCAD Assembly 4 workbench. Unlike traditional constraint solvers based on geometric mates like coincidence or tangency, Assembly 4 relies entirely on ma",
+    false
+  ],
+  [
+    204,
+    "A2plus vs Assembly4: FreeCAD Assembly Workbenches",
+    "FreeCAD offers multiple community-developed workbenches for assembling individual parts into complex models, with A2plus and Assembly4 being two of the most popular choices. While both tools allow users to construct multi-part mechanisms, they rely on fun",
+    false
+  ],
+  [
+    203,
+    "How to Manage Part Hierarchies in FreeCAD Assembly4",
+    "Managing part hierarchies in the FreeCAD Assembly4 workbench allows you to organize complex mechanical assemblies into logical, maintainable sub-assemblies and individual components. This article explains how Assembly4 handles hierarchical structures usin",
+    false
+  ],
+  [
+    202,
+    "How to Install FreeCAD Assembly4 Workbench",
+    "The FreeCAD Assembly4 workbench is an essential external add-on designed to create mechanical assemblies using coordinate systems and parametric attachments. This guide provides a clear, step-by-step procedure to locate, install, and activate the Assembly",
+    false
+  ],
+  [
+    201,
+    "FreeCAD Workbenches for Advanced Mechanical Design",
+    "While FreeCAD provides a robust set of native tools for parametric modeling, extending its capabilities with community-developed third-party workbenches is essential for advanced mechanical engineering. This article outlines the premier third-party add-on",
+    false
+  ],
+  [
+    200,
+    "How to Blend Surfaces in FreeCAD Curves Workbench",
+    "Blending surfaces smoothly in FreeCAD is essential for achieving professional, organic CAD models with high-grade visual and aerodynamic quality. This guide demonstrates how to install the Curves workbench, prepare your source geometry, and utilize specia",
+    false
+  ],
+  [
+    199,
+    "Create Advanced NURBS Curves in FreeCAD",
+    "Non-Uniform Rational B-Splines (NURBS) provide the mathematical foundation for generating complex, smooth, and precise freeform geometry in computer-aided design. This guide explains how to construct and fine-tune advanced NURBS curves using the FreeCAD C",
+    false
+  ],
+  [
+    198,
+    "What Is the FreeCAD Curves Workbench?",
+    "This article provides an overview of the FreeCAD Curves workbench, an advanced community-developed add-on tailored for complex surface modeling and Non-Uniform Rational B-Splines (NURBS) curve manipulation. It explores the workbench's primary purpose, key",
+    false
+  ],
+  [
+    197,
+    "Cable Routing and Pipe Runs in FreeCAD",
+    "Simulating cable routing and pipe runs in FreeCAD involves generating 3D paths between target coordinates and sweeping cross-sectional profiles along those trajectories. Depending on whether you are designing flexible electrical wire harnesses or rigid in",
+    false
+  ],
+  [
+    196,
+    "FreeCAD SheetMetal: How to Add Flanges and Bend Lines",
+    "Designing sheet metal components in FreeCAD requires the dedicated SheetMetal workbench to model manufacturing-ready features like folds, tabs, and flat projections. This guide covers the process of generating flanges from existing edges, folding flat pla",
+    false
+  ],
+  [
+    195,
+    "How to Create Flat Patterns in FreeCAD SheetMetal",
+    "This guide provides a straightforward walkthrough for generating accurate 2D flat patterns (unfolds) from 3D sheet metal parts using the FreeCAD SheetMetal workbench. You will learn how to prepare your model, select the appropriate reference face, utilize",
+    false
+  ],
+  [
+    194,
+    "Types of Gears in FreeCAD FCGear Workbench",
+    "The FCGear workbench is a dedicated extension for FreeCAD designed to automate the parametric modeling of various mechanical transmission elements. This article provides a comprehensive overview of the specific types of gears you can model within the FCGe",
+    false
+  ],
+  [
+    193,
+    "Generate Gear Profiles Using FreeCAD Gear Workbench",
+    "This guide explains how to quickly design and generate accurate, parametric 2D and 3D gear profiles using the FreeCAD Gear workbench (FCGear). You will learn how to install the workbench through the FreeCAD Addon Manager, select from various gear types su",
+    false
+  ],
+  [
+    192,
+    "How to Add Screws and Nuts in FreeCAD with Fasteners",
+    "This guide explains how to quickly insert and configure standard screws, bolts, and nuts in FreeCAD using the Fasteners Workbench. You will learn how to install the workbench, generate standard ISO or DIN hardware, adjust dimensional parameters like diame",
+    false
+  ],
+  [
+    191,
+    "FreeCAD Fasteners Workbench Explained",
+    "The FreeCAD Fasteners workbench is an essential add-on designed to streamline mechanical design by providing a comprehensive library of standardized hardware components. This article provides a clear overview of the workbench's primary purpose, its core f",
+    false
+  ],
+  [
+    190,
+    "How to Create a Panel from a Face in FreeCAD",
+    "Creating a panel object from a face in FreeCAD allows you to turn flat 2D geometry into parametric 3D sheet or board elements suitable for architectural, structural, or woodworking designs. This guide covers how to prepare a face using the Draft workbench",
+    false
+  ],
+  [
+    189,
+    "Assign Custom Properties to FreeCAD Arch Elements",
+    "This guide provides a straightforward walkthrough on assigning custom properties and metadata to architectural elements in FreeCAD. By leveraging built-in Property View tools, the BIM Workbench’s IFC property manager, and the Python console, you can easil",
+    false
+  ],
+  [
+    188,
+    "What Is the Draft Layer Container in FreeCAD?",
+    "The Draft layer container in FreeCAD is a specialized organization tool primarily used within the Draft and BIM Workbenches to manage, group, and control the visual properties of 2D and 3D objects. This article explains the core functions of Draft layers,",
+    false
+  ],
+  [
+    187,
+    "Using Draft Upgrade and Downgrade in FreeCAD",
+    "This guide explains how to use the Draft Upgrade and Draft Downgrade tools in FreeCAD to convert, join, split, and simplify 2D and 3D geometry. You will learn the purpose of each tool, where to locate them, and how to apply them progressively to transform",
+    false
+  ],
+  [
+    186,
+    "How to Create Dimensions in FreeCAD Draft Workbench",
+    "This guide explains how to create linear, radial, and angular dimension lines in FreeCAD using the Draft workbench. You will learn how to set up the working plane, snap to geometry, insert dimension lines accurately, and customize their visual properties",
+    false
+  ],
+  [
+    185,
+    "Working Planes in FreeCAD Draft Workbench",
+    "In FreeCAD's Draft workbench, working planes are virtual two-dimensional surfaces placed within the three-dimensional environment to define where new geometric elements are drawn and manipulated. This article explains what working planes are, why they are",
+    false
+  ],
+  [
+    184,
+    "Export FreeCAD Architectural Models to IFC",
+    "Exporting architectural models from FreeCAD to Industry Foundation Classes (IFC) format allows Building Information Modeling (BIM) data to be shared across various industry-standard CAD and BIM platforms. This process requires organizing your model with s",
+    false
+  ],
+  [
+    183,
+    "Managing Storey Levels in FreeCAD BIM Projects",
+    "Managing storey levels in a FreeCAD BIM project involves establishing a hierarchical spatial structure, defining floor elevations, and assigning architectural elements to their respective levels. By utilizing the Level and Building tools within the BIM wo",
+    false
+  ],
+  [
+    182,
+    "FreeCAD Arch Site: Structural Site Object Explained",
+    "In FreeCAD's Arch and BIM workbenches, the Site object serves as the spatial foundation of an architectural project, representing the physical terrain, geographical coordinates, and boundaries of a plot of land. This article explains what the Arch Site ob",
+    false
+  ],
+  [
+    181,
+    "Create a Polar Array of Columns in FreeCAD",
+    "Creating a circular arrangement of architectural columns in FreeCAD is a straightforward process that combines the BIM (or Arch) Workbench with the Draft Workbench. This guide walks you through modeling an initial column, positioning it relative to a cent",
+    false
+  ],
+  [
+    180,
+    "Project 3D Objects to 2D in FreeCAD Draft",
+    "Projecting a 3D object onto a 2D plane in FreeCAD is a straightforward process primarily handled by the Shape 2D View tool within the Draft Workbench. This guide explains how to orient your model, generate a flat 2D projection from a 3D part, and configur",
+    false
+  ],
+  [
+    179,
+    "What Is the FreeCAD Draft ShapeString Tool?",
+    "This article provides a comprehensive overview of the Draft ShapeString tool in FreeCAD, explaining its primary function, configuration, and practical applications. The Draft ShapeString tool is the standard method for generating 2D planar text geometries",
+    false
+  ],
+  [
+    178,
+    "How to Scale Objects in FreeCAD Draft Workbench",
+    "Scaling geometry in the FreeCAD Draft workbench allows you to resize objects proportionally or distort them along individual axes to fit specific design dimensions. This guide details how to use the Draft Scale tool to execute both uniform and non-uniform",
+    false
+  ],
+  [
+    177,
+    "How to Rotate Objects Around an Axis in FreeCAD",
+    "Rotating an object around a specific axis in FreeCAD's Draft workbench requires setting the working plane to control the axis of rotation, followed by using the Draft Rotate tool. Because the Draft Rotate command automatically rotates objects perpendicula",
+    false
+  ],
+  [
+    176,
+    "How to Offset a Wire or Curve in FreeCAD Draft",
+    "This guide provides a straightforward walkthrough on using the Offset tool within the FreeCAD Draft workbench to create parallel, expanded, or contracted variations of 2D wires and curves. You will learn the exact steps to select your geometry, activate t",
+    false
+  ],
+  [
+    175,
+    "Draft Wire vs Sketcher Sketch in FreeCAD",
+    "In FreeCAD, both Draft wires and Sketcher sketches are fundamental 2D profiles used to generate 3D models, but they are built on completely different modeling paradigms. While a Draft wire is a lightweight, coordinate-based polyline designed for tradition",
+    false
+  ],
+  [
+    174,
+    "Create Architectural Section Cuts in FreeCAD",
+    "Creating section cuts through an architectural model in FreeCAD allows you to inspect interior details and generate 2D construction drawings like plans, elevations, and cross-sections. This guide covers how to set up and position a Section Plane using the",
+    false
+  ],
+  [
+    173,
+    "How to Create an Architectural BOM in FreeCAD",
+    "Generating a Bill of Materials (BOM) for architectural elements in FreeCAD allows you to track project components, estimate costs, and manage material quantities efficiently. By utilizing the BIM and Spreadsheet workbenches, FreeCAD can automatically extr",
+    false
+  ],
+  [
+    172,
+    "FreeCAD BIM Workbench Purpose and Overview",
+    "The FreeCAD BIM workbench provides an open-source environment for Building Information Modeling (BIM) within the FreeCAD parametric 3D modeling ecosystem. It bridges traditional 2D computer-aided drafting and modern 3D data-rich architectural workflows by",
+    false
+  ],
+  [
+    171,
+    "How to Create Stairs in FreeCAD",
+    "This guide explains how to generate and customize parametric stairs for an architectural building model in FreeCAD. By utilizing the dedicated Stairs tool found in the BIM or Arch Workbench, you can quickly build straight, multi-flight, or landing-based s",
+    false
+  ],
+  [
+    170,
+    "How to Create Columns and Beams in FreeCAD Arch",
+    "This guide explains how to design and insert structural columns and beams using the Arch (or BIM) Workbench in FreeCAD. You will learn how to access the Structure tool, utilize predefined structural profiles such as standard steel sections or simple recta",
+    false
+  ],
+  [
+    169,
+    "FreeCAD IFC Guide: How to Import and Export",
+    "This article provides an overview of the Industry Foundation Classes (IFC) format and explains how FreeCAD handles IFC import and export operations. Readers will learn the fundamental purpose of IFC in open Building Information Modeling (BIM) workflows, t",
+    false
+  ],
+  [
+    168,
+    "Create Automatic Roofs in FreeCAD Arch",
+    "Generating a roof automatically in FreeCAD requires using the parametric Roof tool found in the BIM or Arch Workbench. By defining a closed base outline using a Draft wire or existing wall faces, FreeCAD can instantly calculate and generate standard roof",
+    false
+  ],
+  [
+    167,
+    "How to Insert Doors and Windows in FreeCAD Arch",
+    "Inserting doors and windows into walls in FreeCAD is a streamlined process managed primarily through the Arch or BIM Workbench. FreeCAD treats both doors and windows as \"Window\" objects that host parametric presets, which can be directly attached to an ex",
+    false
+  ],
+  [
+    166,
+    "How to Draw Walls in FreeCAD Arch Workbench",
+    "This guide explains how to design and model structural walls using the Arch (BIM) Workbench in FreeCAD. You will learn how to configure your workspace, create walls directly or from 2D baselines, adjust parametric dimensions like width and height, and pro",
+    false
+  ],
+  [
+    165,
+    "What Is the Arch Workbench in FreeCAD?",
+    "The Arch workbench in FreeCAD provides modern Building Information Modeling (BIM) capabilities within an open-source parametric modeler. It allows architects, engineers, and designers to create parametric architectural components such as walls, roofs, win",
+    false
+  ],
+  [
+    164,
+    "How to Create Text Annotations in FreeCAD Draft",
+    "This guide explains how to create, place, and customize 2D and 3D text annotations using the Draft Workbench in FreeCAD. You will learn the exact steps to insert standard text, attach leader lines using the Label tool, and adjust typography and formatting",
+    false
+  ],
+  [
+    163,
+    "FreeCAD Draft Move vs Standard Translation",
+    "In FreeCAD, moving an object can be achieved through either a standard translation or the Draft Move tool, but each serves a distinct role in modeling workflows. While a standard translation generally alters an object’s underlying numerical placement prop",
+    false
+  ],
+  [
+    162,
+    "How to Use the Draft Clone Tool in FreeCAD",
+    "This guide explains how to duplicate objects using the Draft Clone tool in FreeCAD, a powerful feature that creates linked, parametric copies of existing geometry. Unlike standard copy-and-paste commands, the Draft Clone tool creates a duplicate that auto",
+    false
+  ],
+  [
+    161,
+    "How to Create a Wire in FreeCAD Draft Workbench",
+    "This guide explains how to draw a wire (also known as a polyline) using the Draft workbench in FreeCAD. You will learn how to activate the Wire tool, define sequential points in 3D space, switch between straight segments and arcs, close shapes, and edit y",
+    false
+  ],
+  [
+    160,
+    "Using Grid Snap in FreeCAD Draft Workbench",
+    "This article provides an overview of the grid snap function within the FreeCAD Draft workbench, detailing its primary purpose, operational mechanics, and practical applications. Readers will learn how grid snapping facilitates geometric accuracy in 2D and",
+    false
+  ],
+  [
+    159,
+    "Create 2D Floor Plans in FreeCAD Draft Workbench",
+    "This guide explains how to draft precise 2D architectural floor plans using the Draft workbench in FreeCAD. You will learn how to configure the drafting environment, sketch walls and openings using geometric tools, organize components with layers, add sta",
+    false
+  ],
+  [
+    158,
+    "Check Shape Validity in FreeCAD Part Workbench",
+    "Ensuring that a 3D model is geometrically valid is critical in FreeCAD before performing boolean operations, meshing for finite element analysis, or exporting for 3D printing. Invalid shapes often contain self-intersecting faces, non-manifold edges, or de",
+    false
+  ],
+  [
+    157,
+    "What Is a Compound Shape in FreeCAD Part Workbench",
+    "In FreeCAD's Part workbench, a compound shape is a single topological entity that groups multiple distinct geometric shapes together without physically merging their geometry. This article provides a clear overview of what compound shapes are, how they fu",
+    false
+  ],
+  [
+    156,
+    "How to Fillet Edges in FreeCAD Part Workbench",
+    "This article provides a direct guide on how to fillet edges directly on a 3D solid using the Part workbench in FreeCAD. You will learn the step-by-step process of selecting a shape, launching the Fillet tool, picking specific edges or faces, adjusting the",
+    false
+  ],
+  [
+    155,
+    "Creating Geometric Primitives in FreeCAD Part",
+    "This guide provides a straightforward walkthrough on generating and customizing basic 3D geometric shapes, such as cylinders and spheres, using the Part Workbench in FreeCAD. You will learn how to access the proper workbench, insert primitives into your 3",
+    false
+  ],
+  [
+    154,
+    "FreeCAD Boolean Operations in Part Workbench",
+    "This article provides a concise overview of the core Boolean operations available in the FreeCAD Part workbench. It explains the purpose of Constructive Solid Geometry (CSG) tools, detailing how the Union, Cut, and Intersection operations function to comb",
+    false
+  ],
+  [
+    153,
+    "How to Fuse Multiple Shapes in FreeCAD",
+    "This guide explains how to combine two or more 3D solids into a single, seamless object using the Union (Fuse) tool in the FreeCAD Part workbench. You will learn the exact steps to select your shapes, execute the boolean union operation, and clean up resi",
+    false
+  ],
+  [
+    152,
+    "How to Do a Boolean Cut in FreeCAD Part Workbench",
+    "This guide explains how to perform a Boolean cut (subtraction) operation using the Part workbench in FreeCAD. You will learn the correct workflow for selecting your base and cutting shapes, executing the cut tool, managing the resulting parametric feature",
+    false
+  ],
+  [
+    151,
+    "FreeCAD Part vs Part Design: What Is the Difference?",
+    "FreeCAD offers two primary environments for creating 3D solid models: the Part workbench and the Part Design workbench. While both tools generate 3D geometry, they rely on fundamentally different modeling philosophies, workflows, and underlying structures",
+    false
+  ],
+  [
+    150,
+    "How to Optimize Large FreeCAD Part Design Models",
+    "Working with complex Part Design models in FreeCAD can lead to noticeable slowdowns, unresponsive viewports, and prolonged recomputation times. This guide covers essential optimization strategies to maintain high software performance, including adjusting",
+    false
+  ],
+  [
+    149,
+    "FreeCAD Topological Naming Limitations Explained",
+    "The topological naming problem in FreeCAD is a long-standing constraint where internal geometric references shift after modifications, often breaking parametric models. This article outlines the primary limitations of FreeCAD’s topological naming system,",
+    false
+  ],
+  [
+    148,
+    "Calculate Weight in FreeCAD with Material Density",
+    "Calculating the weight of a 3D model in FreeCAD requires defining the object's material density and evaluating its volume. This guide walks you through the straightforward process of assigning material cards with predefined densities, applying custom dens",
+    false
+  ],
+  [
+    147,
+    "Organize FreeCAD Assemblies with Part Containers",
+    "Managing complex assemblies in FreeCAD requires a disciplined structural approach to prevent dependency loops, model breakage, and visual clutter. This guide provides an efficient strategy for using FreeCAD containers—specifically the standard Part contai",
+    false
+  ],
+  [
+    146,
+    "FreeCAD Clearance Check Tool Explained",
+    "The Clearance check tool in FreeCAD is a diagnostic feature designed to measure and verify the minimum spatial distance between components within a 3D assembly. This article explains the primary functions of the Clearance check tool, how it identifies spa",
+    false
+  ],
+  [
+    145,
+    "Verify FreeCAD Solid Is Watertight and Manifold",
+    "Verifying that a 3D model is watertight and manifold in FreeCAD is essential for successful 3D printing, CNC machining, and finite element analysis. A manifold or watertight model has a continuous, fully enclosed outer boundary with no holes, self-interse",
+    false
+  ],
+  [
+    144,
+    "How to Create a Tapered Extrusion in FreeCAD",
+    "Creating a tapered extrusion in FreeCAD allows you to produce draft angles on 3D models, which is essential for injection molding, casting, or specific aerodynamic and aesthetic shapes. This guide outlines the most straightforward methods to achieve a tap",
+    false
+  ],
+  [
+    143,
+    "How to Add Embossed and Debossed Text in FreeCAD",
+    "Adding embossed (raised) or debossed (engraved) text to a 3D model in FreeCAD is accomplished by combining the Draft and Part Design workbenches. This process involves generating 2D text geometry using the ShapeString tool, positioning it precisely on the",
+    false
+  ],
+  [
+    142,
+    "Designing Injection Molded Parts in FreeCAD",
+    "Designing plastic injection molded components requires balancing functional part geometry with manufacturing constraints like uniform wall thickness, draft angles, and mold separation. In FreeCAD, the optimal workflow utilizes the Part Design Workbench to",
+    false
+  ],
+  [
+    141,
+    "How to Model a Spring in FreeCAD Part Design",
+    "This guide explains how to model a 3D spring or coil using the Part Design workbench in FreeCAD. By creating a wire profile sketch and utilizing the native Additive Helix tool, you can quickly generate parametric compression, extension, or custom coil spr",
+    false
+  ],
+  [
+    140,
+    "How to Use Sub-Shape Binders in FreeCAD",
+    "Referencing geometry between different bodies in FreeCAD requires specialized tools to prevent model corruption and topological naming issues. This guide demonstrates how to use the Sub-Shape Binder tool in the PartDesign workbench to reliably link faces,",
+    false
+  ],
+  [
+    139,
+    "Understanding FreeCAD Shape Binder Tool",
+    "The Shape Binder tool in FreeCAD is an essential feature within the PartDesign workbench designed to enable robust multi-body modeling. This article explains the primary purpose of the Shape Binder, how it functions to bridge geometries between separate b",
+    false
+  ],
+  [
+    138,
+    "Fix Broken Intermediate Sketches in FreeCAD",
+    "Modifying an intermediate sketch in FreeCAD frequently causes downstream features to fail due to the Topological Naming Problem, where internal names of faces, edges, and vertices shift after a parametric change. This guide outlines how to identify broken",
+    false
+  ],
+  [
+    137,
+    "Shelling an Open-Topped Box in FreeCAD",
+    "This guide explains how to convert a solid rectangular block into a hollow, open-topped container with custom wall thickness in FreeCAD. By utilizing the Part Design workbench and the Thickness feature, you can hollow out a solid model and designate which",
+    false
+  ],
+  [
+    136,
+    "FreeCAD: Pocket Up to Face vs Through All",
+    "In FreeCAD's PartDesign workbench, the Pocket tool subtracts material from an active body using a 2D sketch, with different termination types determining how deep the cut goes. The primary difference between \"Through all\" and \"Up to face\" is their termina",
+    false
+  ],
+  [
+    135,
+    "How to Extrude a Sketch Symmetrically in FreeCAD",
+    "Extruding a sketch symmetrically across its base plane is a fundamental operation in FreeCAD used to create balanced, centered 3D geometry. This guide outlines the straightforward steps to perform a symmetric extrusion in two opposite directions using bot",
+    false
+  ],
+  [
+    134,
+    "FreeCAD Pad to Last Option Explained",
+    "This article explains the function and practical usage of the \"To last\" pad option in FreeCAD's PartDesign Workbench. Readers will learn how this extrusion type operates, its parametric advantages over fixed-dimension pads, common use cases, and the key r",
+    false
+  ],
+  [
+    133,
+    "Manage Active and Inactive Bodies in FreeCAD",
+    "Working with multiple bodies in FreeCAD's PartDesign workbench requires a solid understanding of the active body workflow. In FreeCAD, new features like sketches, pads, and pockets are strictly assigned to whichever body is currently set as \"active.\" This",
+    false
+  ],
+  [
+    132,
+    "How to Create a Countersunk Hole in FreeCAD Part Design",
+    "Creating a countersunk hole in FreeCAD Part Design is easily accomplished using the built-in Hole feature rather than manually revolving a cut. This guide covers the entire workflow, from placing the hole center using a sketch point to setting the counter",
+    false
+  ],
+  [
+    131,
+    "How to Create a Counterbore Hole in FreeCAD",
+    "Creating a counterbore hole in FreeCAD is a straightforward process using the Part Design workbench. This guide covers how to set up your target geometry with a sketch point, open the dedicated Hole tool, configure counterbore specifications such as diame",
+    false
+  ],
+  [
+    130,
+    "How to Model Snap-Fit Joints in FreeCAD",
+    "Designing reliable snap-fit joints in FreeCAD is best achieved using a parametric workflow within the Part Design Workbench, driven by dynamic sketches, spreadsheets, and root filleting to prevent mechanical failure. This guide explains how to calculate s",
+    false
+  ],
+  [
+    129,
+    "How to Create an Intersecting Body in FreeCAD",
+    "Creating an intersecting body feature in FreeCAD allows you to retain only the overlapping volume shared by two or more solid objects. This tutorial covers the exact steps to perform an intersection (often called a \"Common\" operation) using both the Part",
+    false
+  ],
+  [
+    128,
+    "How to Create a Boss Feature in FreeCAD",
+    "This guide explains how to add a raised boss feature to any flat surface on an existing 3D model using FreeCAD's Part Design workbench. A boss is a common mechanical feature used to accept fasteners, provide alignment, or reinforce mounting points. By sel",
+    false
+  ],
+  [
+    127,
+    "How to Create Ribbed Supports in FreeCAD",
+    "Ribbed supports, or gussets, provide structural stiffness to brackets without significantly increasing material weight. In FreeCAD, adding a rib involves defining a 2D profile on an intersecting plane and using the dedicated Rib tool within the Part Desig",
+    false
+  ],
+  [
+    126,
+    "FreeCAD Refine Shape Property in Part Design",
+    "The Refine shape property in FreeCAD's Part Design workbench is a geometric cleanup tool that removes unnecessary edges and merges adjacent coplanar faces generated during 3D modeling operations. This article explains the primary function of this property",
+    false
+  ],
+  [
+    125,
+    "Change Color of Individual Faces in FreeCAD",
+    "Changing the color and visual appearance of individual faces in FreeCAD allows you to highlight specific features, differentiate mating surfaces, or prepare multi-material designs without separating the underlying solid geometry. This process is handled t",
+    false
+  ],
+  [
+    124,
+    "How to Check Volume and Mass in FreeCAD",
+    "Checking the volume and mass properties of a 3D body in FreeCAD is essential for engineering analysis, weight estimation, and manufacturing preparation. While volume is calculated directly from the geometry of the solid, determining the mass requires assi",
+    false
+  ],
+  [
+    123,
+    "FreeCAD Additive vs Subtractive Primitives",
+    "In FreeCAD's Part Design workbench, primitive shapes serve as quick, parametric 3D building blocks that do not require an initial 2D sketch. The core difference between additive and subtractive primitives is their fundamental boolean interaction with an e",
+    false
+  ],
+  [
+    122,
+    "How to Drive FreeCAD Dimensions with a Spreadsheet",
+    "Using a spreadsheet to drive dimensions in FreeCAD allows you to create fully parametric, easily configurable 3D models. This guide covers how to set up the Spreadsheet Workbench, assign cell aliases to represent design variables, link those values to ske",
+    false
+  ],
+  [
+    121,
+    "Create a Helix or Spiral in FreeCAD Part Design",
+    "This guide explains how to model helical and spiral features in FreeCAD Part Design, covering both the native Additive Helix tool for generating solid objects like springs and threads, as well as the workflow for creating standalone wire curves to use as",
+    false
+  ],
+  [
+    120,
+    "FreeCAD Part Design Scale Feature Explained",
+    "The Scale feature in FreeCAD’s Part Design workbench allows users to resize an entire solid body or a specific feature proportionally or along independent axes. This article covers what the tool does, how it functions within the Part Design workflow, its",
+    false
+  ],
+  [
+    119,
+    "How to Create a Draft Angle in FreeCAD Part Design",
+    "Adding a draft angle to extruded walls is an essential modeling step for designing parts intended for injection molding, casting, or 3D printing with overhangs. In the FreeCAD Part Design workbench, you can apply draft angles either directly during the ex",
+    false
+  ],
+  [
+    118,
+    "How to Attach a Sketch to a Face in FreeCAD",
+    "This article provides a step-by-step guide on how to map and attach sketches directly to the planar faces of existing geometry in FreeCAD rather than using the default global coordinate planes. You will learn the straightforward workflow for creating a ne",
+    false
+  ],
+  [
+    117,
+    "Deleting Parent Features in FreeCAD Part Design",
+    "In FreeCAD's Part Design workbench, 3D models are built using a strict parametric, history-based dependency tree where each step relies on the geometry of previous operations. Deleting a parent feature disrupts this chain of references, causing subsequent",
+    false
+  ],
+  [
+    116,
+    "How to Reorder Features in FreeCAD Part Design",
+    "Reordering features in the FreeCAD Part Design workbench allows you to modify the parametric history of your 3D model without having to delete and recreate operations. Because Part Design relies on a strict linear dependency tree, features can be rearrang",
+    false
+  ],
+  [
+    115,
+    "How to Create a Subtractive Loft in FreeCAD",
+    "A subtractive loft in FreeCAD allows you to carve a complex, transitioning cavity out of an existing solid body by interpolating between two or more cross-sectional profiles. This guide covers the essential steps to prepare your base geometry, position yo",
+    false
+  ],
+  [
+    114,
+    "What Is Additive Pipe in FreeCAD Part Design",
+    "The Additive Pipe tool is a modeling feature in FreeCAD's Part Design workbench used to create complex 3D geometry by sweeping a closed 2D profile along a specified path. This article explains the fundamentals of the Additive Pipe feature, its core geomet",
+    false
+  ],
+  [
+    113,
+    "How to Combine Multiple Bodies in FreeCAD",
+    "Combining multiple independent bodies into a single model in FreeCAD is a common task required for 3D printing, CNC machining, or simplifying your project tree. Depending on whether you want a seamless solid fusion or a grouped assembly, FreeCAD provides",
+    false
+  ],
+  [
+    112,
+    "How to Model Screw Threads in FreeCAD",
+    "Creating thread representations on a bolt or screw in FreeCAD can be done using standard parametric tools or specialized add-on workbenches. This guide covers the two most common and effective methods: using the Fasteners Workbench for fast, automated sta",
+    false
+  ],
+  [
+    111,
+    "Using the Boolean Tool in FreeCAD Part Design",
+    "The Boolean operation tool in FreeCAD's Part Design workbench is a specialized feature used to combine, subtract, or intersect distinct solid bodies within a parametric workflow. This article explains the primary function of the Part Design Boolean tool,",
+    false
+  ],
+  [
+    110,
+    "How to Solve FreeCAD Topological Naming Issues",
+    "The Topological Naming Problem (TNP) occurs in FreeCAD when altering an early sketch causes internal geometric references—such as Face1 or Edge3—to be re-indexed, which in turn breaks downstream operations attached to those elements. This guide provides a",
+    false
+  ],
+  [
+    109,
+    "What Is the Thickness Tool in FreeCAD?",
+    "The Thickness tool in the FreeCAD Part Design workbench is a feature used to transform a solid body into a hollow shell with defined wall boundaries. By removing selected faces and offsetting the remaining geometry inwards or outwards, it creates thin-wal",
+    false
+  ],
+  [
+    108,
+    "How to Hollow a Solid Model in FreeCAD",
+    "Hollowing out a solid model in FreeCAD is a straightforward process achieved by using the Thickness tool—commonly referred to in CAD terminology as the Shell tool. This guide provides a direct, step-by-step walkthrough for creating a hollow body with unif",
+    false
+  ],
+  [
+    107,
+    "How to Create a Datum Point in FreeCAD",
+    "This guide explains how to create and position a Datum Point using the Part Design workbench in FreeCAD. You will learn the exact steps to generate a reference point, bind it to existing 3D geometry using attachment modes, and use it as a robust, parametr",
+    false
+  ],
+  [
+    106,
+    "How to Position a Datum Axis in FreeCAD",
+    "A Datum Axis in FreeCAD is an essential reference geometry tool used in the PartDesign Workbench to guide modeling operations, create rotational features, and position complex objects. This guide explains what a Datum Axis is, why it is critical for robus",
+    false
+  ],
+  [
+    105,
+    "How to Mirror a Feature Across a Plane in FreeCAD",
+    "Mirroring a solid feature across a plane in FreeCAD allows you to duplicate symmetrical elements efficiently without redesigning them from scratch. This article provides a direct, step-by-step guide to using the Part Design Workbench to select a feature,",
+    false
+  ],
+  [
+    104,
+    "How to Create a Polar Array in FreeCAD",
+    "This guide explains how to create a polar array of features around a central axis in FreeCAD using the Part Design workbench. By utilizing the Polar Pattern tool, you can quickly replicate 3D features—such as holes, pockets, pads, or slots—in a circular d",
+    false
+  ],
+  [
+    103,
+    "How to Use Linear Pattern in FreeCAD Part Design",
+    "This guide provides a straightforward walkthrough on using the Linear Pattern tool in FreeCAD's Part Design workbench to duplicate features along a straight path. By applying this tool to features such as holes, pockets, or pads, you can quickly create ev",
+    false
+  ],
+  [
+    102,
+    "FreeCAD MultiTransform: What It Is and How to Use It",
+    "This article provides a concise overview of the MultiTransform feature in FreeCAD's Part Design workbench, explaining what it does, why it is advantageous for parametric modeling, and how to apply it step-by-step. You will learn how to combine transformat",
+    false
+  ],
+  [
+    101,
+    "How to Sweep a Profile Along a Path in FreeCAD",
+    "Sweeping in FreeCAD allows you to generate complex 3D geometry by extruding a 2D profile along an open or closed trajectory path. This guide covers the complete process of preparing your sketches, using the primary sweep tools in both the Part Design and",
+    false
+  ],
+  [
+    100,
+    "How to Loft Between Multiple Sketches in FreeCAD",
+    "Creating a loft across multiple cross-sections in FreeCAD allows you to generate complex, organic, or transitioning 3D shapes that cannot be created using standard extrusions. This guide explains how to prepare your sketches properly, set up offset planes",
+    false
+  ],
+  [
+    99,
+    "Using the FreeCAD Part Design Groove Tool",
+    "The Groove tool in FreeCAD's Part Design workbench is a subtractive modeling feature used to carve out material from an existing solid body by revolving a 2D sketch around a chosen axis. This article explains the core purpose of the Groove tool, how it fu",
+    false
+  ],
+  [
+    98,
+    "How to Chamfer Specific Edges in FreeCAD",
+    "Applying a chamfer to specific edges of a FreeCAD model is a straightforward process primarily handled within the Part Design Workbench. This guide walks you through selecting targeted edges, activating the chamfer tool, adjusting dimensional parameters,",
+    false
+  ],
+  [
+    97,
+    "How to Apply Fillets to Edges in FreeCAD",
+    "Applying fillets to sharp edges on a FreeCAD solid body smooths transitions, reduces stress concentrations, and improves visual appeal. This process is typically handled in the Part Design workbench using the parametric Fillet dress-up feature, though it",
+    false
+  ],
+  [
+    96,
+    "Understanding the Tip in FreeCAD PartDesign Body",
+    "In FreeCAD’s PartDesign workbench, the \"Tip\" is the specific feature within a Body that represents its active, final output state. This article explains what the Tip is, how it controls the sequential modeling history, why moving it is useful for editing,",
+    false
+  ],
+  [
+    95,
+    "How to Create a Rotational Solid in FreeCAD",
+    "This article provides a step-by-step guide on creating a 3D rotational solid using the Revolution tool in FreeCAD's Part Design workbench. You will learn the requirements for drawing a compatible 2D sketch profile, how to initiate the revolution operation",
+    false
+  ],
+  [
+    94,
+    "How to Create a Datum Plane in FreeCAD Part Design",
+    "A datum plane is an essential parametric reference tool in 3D computer-aided design (CAD) that serves as an artificial, flat workspace oriented anywhere in 3D space. This guide covers the definition and function of a datum plane within the FreeCAD Part De",
+    false
+  ],
+  [
+    93,
+    "Cut a Hole Through a Solid in FreeCAD Using Pocket",
+    "This guide explains how to use the Pocket tool in FreeCAD's Part Design workbench to cut a hole through an existing solid body. By creating a 2D sketch on the surface of your model and configuring the Pocket parameters, you can quickly create blind holes,",
+    false
+  ],
+  [
+    92,
+    "FreeCAD Body vs Part: What Is the Difference?",
+    "In FreeCAD, understanding the distinction between a Body and a Part container is fundamental to building clean, manageable 3D models. While both act as organizational containers in the tree view, they serve entirely different purposes: a Body is a special",
+    false
+  ],
+  [
+    91,
+    "How to Create a 3D Solid Using FreeCAD Pad Tool",
+    "This guide walks you through the essential process of converting a two-dimensional profile into a three-dimensional solid object using the Pad tool in FreeCAD's Part Design workbench. By learning how to create an active body, sketch a closed profile, and",
+    false
+  ],
+  [
+    90,
+    "How to Reset Sketch Plane Orientation in FreeCAD",
+    "Resetting the orientation of a sketch plane in FreeCAD is essential when a sketch is attached to the wrong face, inverted, or misaligned due to model changes. This guide provides direct, step-by-step instructions to reset or reorient a sketch plane using",
+    false
+  ],
+  [
+    89,
+    "Manage Sketch Visibility in Large FreeCAD Models",
+    "Managing sketch visibility in complex FreeCAD projects is critical for maintaining viewport performance and reducing visual clutter. As assemblies and parts scale up, hundreds of overlapping geometric constraints and construction lines can slow down rende",
+    false
+  ],
+  [
+    88,
+    "FreeCAD Angle Constraint to Horizontal Axis",
+    "Controlling the angular orientation of geometry relative to the horizontal plane is a fundamental step when creating fully defined sketches in FreeCAD. This guide explains how to quickly apply an angle constraint between any sketch line and the Sketcher w",
+    false
+  ],
+  [
+    87,
+    "How to Export FreeCAD Sketch to SVG and DXF",
+    "Exporting sketch data from FreeCAD into external vector graphic formats like SVG, DXF, and PDF allows you to transition your 2D designs to laser cutters, CNC machines, or graphic design software. FreeCAD provides multiple methods to accomplish this, rangi",
+    false
+  ],
+  [
+    86,
+    "FreeCAD Auto-Constraints Toggle Explained",
+    "The auto-constraints toggle in FreeCAD's Sketcher Workbench allows the software to automatically infer and apply geometric constraints as you draw. By dynamically analyzing cursor movement and existing geometry, this feature instantly assigns relationship",
+    false
+  ],
+  [
+    85,
+    "How to Fix Self-Intersecting Loops in FreeCAD",
+    "A self-intersecting loop occurs in FreeCAD when lines, arcs, or curves within a single sketch cross over themselves or share identical paths, preventing tools like Pad or Revolve from creating a solid body. This guide explains how to identify, locate, and",
+    false
+  ],
+  [
+    84,
+    "How to Use Carbon Copy in FreeCAD Sketcher",
+    "The Carbon Copy tool in FreeCAD allows you to duplicate the entire contents of an existing sketch—including geometry, constraints, and dimensions—directly into your active sketch. This guide provides a straightforward walkthrough on how to prepare your sk",
+    false
+  ],
+  [
+    83,
+    "Coordinate Constraint vs Absolute Origin in FreeCAD",
+    "In FreeCAD, navigating spatial positioning requires understanding the distinct roles of the absolute origin and coordinate system constraints. The absolute origin serves as the immutable, fixed zero-point (0,0,0) of the 3D workspace, while a coordinate sy",
+    false
+  ],
+  [
+    82,
+    "Create a Grid of Points in a FreeCAD Sketch",
+    "Creating a grid of points within a FreeCAD sketch is a straightforward process achieved by using the Sketcher workbench's native Rectangular Array tool. This guide provides a direct, step-by-step walkthrough for placing an initial point, utilizing the arr",
+    false
+  ],
+  [
+    81,
+    "Fix Solver Failures in Complex FreeCAD Sketches",
+    "Diagnosing solver failures in complex FreeCAD sketches requires a systematic approach to identify conflicting, redundant, or malformed constraints. When a sketch breaks, the Sketcher solver stops calculating degrees of freedom, turning elements orange or",
+    false
+  ],
+  [
+    80,
+    "Set FreeCAD Sketch Origin to Specific Coordinates",
+    "In FreeCAD, anchoring a sketch origin to specific 3D coordinates is accomplished by defining the sketch’s placement in the 3D space rather than moving the origin point inside the sketch editor itself. Because a sketch’s internal origin is permanently fixe",
+    false
+  ],
+  [
+    79,
+    "How to Create a Polygon in FreeCAD Sketcher",
+    "Creating a polygon with a custom number of sides in FreeCAD is a straightforward process handled directly within the Sketcher workbench. By utilizing the dedicated regular polygon tool, you can define any geometric shape ranging from standard triangles an",
+    false
+  ],
+  [
+    78,
+    "FreeCAD Sketcher Elements Filter Explained",
+    "The Elements filter in the FreeCAD Sketcher dialog is a workflow tool designed to organize and manage the geometric components of a sketch. In complex designs containing dozens or hundreds of lines, arcs, and points, finding specific items in the 3D viewp",
+    false
+  ],
+  [
+    77,
+    "How to Copy and Paste Sketch Elements in FreeCAD",
+    "Copying and pasting sketch elements within FreeCAD can be done directly inside an active sketch using built-in transformation tools, across different sketches using standard keyboard shortcuts, or via the Carbon Copy feature. This guide covers the quickes",
+    false
+  ],
+  [
+    76,
+    "How to Rotate Sketch Elements in FreeCAD",
+    "Rotating geometry around a specific center point in FreeCAD’s Sketcher workbench allows you to quickly reorient 2D profiles without redrawing them. This guide explains how to select your sketch elements, define an exact center of rotation, and apply the r",
+    false
+  ],
+  [
+    75,
+    "How to Use the Scale Tool in FreeCAD Sketch",
+    "Scaling geometry within the FreeCAD Sketcher allows you to resize 2D elements proportionally without redrawing them from scratch. This guide walks through the exact steps to locate the Scale tool, select your geometry, set a center reference point, and ap",
+    false
+  ],
+  [
+    74,
+    "Reference Dimensions Across Bodies in FreeCAD",
+    "In FreeCAD, you can reference external dimensions and geometry from another body inside a sketch, but you cannot directly click-select elements across different PartDesign bodies using the standard External Geometry tool without causing dependency conflic",
+    false
+  ],
+  [
+    73,
+    "How to Fix Flipped Normal in a FreeCAD Sketch",
+    "A flipped normal orientation in a FreeCAD sketch occurs when the local Z-axis of the sketch points in the opposite direction of your intended design, causing features like pads, pockets, and extrusions to generate backwards. This guide outlines how to ide",
+    false
+  ],
+  [
+    72,
+    "Using the Vertical Distance Constraint in FreeCAD",
+    "The vertical distance constraint in FreeCAD is a fundamental tool within the Sketcher workbench used to lock the vertical dimension between elements or fix the height of a component. This article explains the core functions of the vertical distance constr",
+    false
+  ],
+  [
+    71,
+    "How to Create a Bezier Curve in FreeCAD Sketcher",
+    "Creating a Bezier curve in FreeCAD allows you to design smooth, organic, and complex profiles within the Sketcher Workbench. While FreeCAD primarily categorizes these curves as B-splines, you can easily generate and manipulate standard Bezier curves using",
+    false
+  ],
+  [
+    70,
+    "Extend a Line to Another Line in FreeCAD Sketch",
+    "Extending an open line to meet another line or boundary in a FreeCAD sketch is a fundamental drafting task that ensures geometry forms closed profiles. This guide explains how to quickly bridge the gap between lines using either the dedicated Sketcher Ext",
+    false
+  ],
+  [
+    69,
+    "How to Trim Lines in FreeCAD Sketcher",
+    "The Trim tool in FreeCAD's Sketcher workbench allows you to quickly clean up intersecting geometry by cutting line segments back to their nearest intersection points. This guide provides a straightforward, step-by-step walk-through on how to activate the",
+    false
+  ],
+  [
+    68,
+    "How to Constrain Point to Line Midpoint in FreeCAD",
+    "Constraining a point to the exact midpoint of a line is a fundamental operation in FreeCAD's Sketcher workbench. While older versions relied exclusively on a three-point symmetry constraint, modern versions of FreeCAD (v0.21 and newer) feature a dedicated",
+    false
+  ],
+  [
+    67,
+    "Handling Complex Geometry in FreeCAD Sketches",
+    "Working with dense, intricate profiles within a single FreeCAD sketch often introduces performance lag, redundant constraint warnings, and unexpected geometry flipping. While FreeCAD generally encourages modular modeling across multiple features, masterin",
+    false
+  ],
+  [
+    66,
+    "Set Equal Radius Constraints on Circles in FreeCAD",
+    "Applying an equal radius constraint to multiple circles in FreeCAD ensures that all selected circles or arcs share the same dimension without having to define individual measurements for each one. This guide explains how to use the Sketcher Workbench's eq",
+    false
+  ],
+  [
+    65,
+    "Align Multiple Points Vertically in FreeCAD",
+    "Aligning multiple points along a vertical axis in a FreeCAD sketch ensures proper geometric alignment and prevents unintended movement during parametric modeling. This guide explains how to use FreeCAD’s Sketcher constraints—specifically the vertical cons",
+    false
+  ],
+  [
+    64,
+    "Why Does FreeCAD Show Conflicting Constraints?",
+    "A conflicting constraint error in a FreeCAD sketch occurs when the geometric solver is given two or more rules that are mathematically impossible to satisfy simultaneously, or when a feature is redundant and over-defines the shape. This article explains t",
+    false
+  ],
+  [
+    63,
+    "Create an Arc by Three Points in FreeCAD Sketcher",
+    "Creating an arc using three points in FreeCAD allows you to define a curved segment precisely by its endpoints and a point along its perimeter. This guide provides a straightforward walkthrough on selecting the correct tool in the Sketcher workbench, plac",
+    false
+  ],
+  [
+    62,
+    "FreeCAD Toggle Driving Reference Mode Explained",
+    "The \"Toggle Driving/Reference Mode\" in FreeCAD's Sketcher workbench is a tool that switches dimensional constraints between active controllers of geometry and passive measurement indicators. This article explains the difference between driving and referen",
+    false
+  ],
+  [
+    61,
+    "How to Use MultiTransform in FreeCAD",
+    "This guide explains how to combine multiple geometric transformations in FreeCAD. While FreeCAD features a dedicated MultiTransform tool in the Part Design Workbench to sequentially pattern 3D features derived from sketches, users looking to multiply 2D s",
+    false
+  ],
+  [
+    60,
+    "How to Make Construction Lines in FreeCAD",
+    "This guide explains how to convert standard geometry lines into construction lines within FreeCAD's Sketcher workbench. You will learn the purpose of construction geometry, the exact steps to toggle existing lines between regular and construction modes us",
+    false
+  ],
+  [
+    59,
+    "How to Make Non-Adjacent Lines Parallel in FreeCAD",
+    "Applying a parallel constraint to non-adjacent lines in FreeCAD allows you to align the direction of separated edges within the Sketcher workbench without creating physical connections between them. This guide provides a direct, step-by-step process for s",
+    false
+  ],
+  [
+    58,
+    "FreeCAD Validate Sketch Tool Explained",
+    "The Validate Sketch tool in FreeCAD is a built-in diagnostic and repair utility designed to identify, highlight, and resolve geometric and topological errors within 2D sketches. Primarily used in the Sketcher workbench, it checks for common issues such as",
+    false
+  ],
+  [
+    57,
+    "How to Create an Ellipse in FreeCAD Sketch",
+    "Creating an ellipse inside a FreeCAD sketch is a straightforward process using the Sketcher workbench's dedicated conic tools. This guide explains how to locate the ellipse tool, place an ellipse by defining its center point and axes, and apply the approp",
+    false
+  ],
+  [
+    56,
+    "Why Moving a Sketch Element Distorts Others in FreeCAD",
+    "When you move a sketch element in FreeCAD and another part of the geometry shifts, twists, or collapses, the issue is almost always caused by an under-constrained sketch interacting with the software’s parametric solver. Because FreeCAD computes sketches",
+    false
+  ],
+  [
+    55,
+    "How to Create a Slot in FreeCAD Sketcher",
+    "Creating a slot shape in FreeCAD is a fundamental task for designing mechanical parts such as bolt channels and adjustment tracks. This guide explains how to quickly generate and dimension a standard slot using the dedicated Slot tool in FreeCAD's Sketche",
+    false
+  ],
+  [
+    54,
+    "FreeCAD Vertical Distance vs Length Constraint",
+    "In FreeCAD's Sketcher workbench, understanding how geometric constraints restrict movement is essential for fully defining sketches. While both the vertical distance constraint and the length (distance) constraint define dimensions between elements or alo",
+    false
+  ],
+  [
+    53,
+    "How to Edit Constraint Values in FreeCAD Sketch",
+    "Editing an existing dimensional constraint in FreeCAD is a fundamental parametric modeling task that allows you to resize sketch geometry accurately. This guide explains how to quickly modify dimensional values—such as lengths, distances, radii, and angle",
+    false
+  ],
+  [
+    52,
+    "What Does the Lock Sketch Tool Do in FreeCAD?",
+    "The Lock constraint tool in FreeCAD's Sketcher Workbench fixes a selected sketch point to a specific coordinate location relative to the sketch origin. This article explains the core functionality of the Lock tool, how it works behind the scenes, ideal us",
+    false
+  ],
+  [
+    51,
+    "FreeCAD: Create a Polar Pattern in Sketcher",
+    "This guide explains how to duplicate and arrange 2D geometric elements in a circular array directly inside the FreeCAD Sketcher workbench. Creating a polar pattern within a sketch allows you to design radially symmetrical geometry—such as bolt circles, sl",
+    false
+  ],
+  [
+    50,
+    "Import 2D DXF Files into FreeCAD Sketches",
+    "You can import 2D DXF files into FreeCAD and use them as sketches, though the software typically imports DXF geometry as Draft objects first rather than directly into an active Sketcher session. By using FreeCAD's built-in conversion tools, you can quickl",
+    false
+  ],
+  [
+    49,
+    "Find Open Contours and Duplicate Lines in FreeCAD",
+    "When creating 3D features like pads or pockets in FreeCAD, sketches must usually consist of closed, non-intersecting profiles without redundant geometry. This guide explains how to quickly identify and fix open contours, unconstrained gaps, and duplicate",
+    false
+  ],
+  [
+    48,
+    "Delete All Sketch Constraints in FreeCAD",
+    "Removing constraints one by one in FreeCAD can be tedious and time-consuming, especially in complex geometry. This guide explains how to quickly select and delete every constraint in an active sketch simultaneously using the built-in Sketcher tools in the",
+    false
+  ],
+  [
+    47,
+    "FreeCAD Point on Object Constraint Explained",
+    "In FreeCAD's Sketcher workbench, the point-on-object constraint is a fundamental tool used to attach a point or vertex to a continuous geometric element, such as a line, arc, circle, or spline. This article provides a clear overview of what the constraint",
+    false
+  ],
+  [
+    46,
+    "Mirror Sketch Elements Across an Axis in FreeCAD",
+    "Mirroring sketch elements across an axis in FreeCAD allows you to create symmetrical 2D geometry efficiently, ensuring balanced designs while cutting design time in half. This guide walks you through the exact steps required to use the Sketcher Workbench’",
+    false
+  ],
+  [
+    45,
+    "FreeCAD Sketch Not Turning Green When Fully Constrained",
+    "In FreeCAD, a sketch typically changes color to bright green once all degrees of freedom are resolved, visually confirming that the profile is fully constrained. However, users frequently encounter situations where the sketch appears complete or the solve",
+    false
+  ],
+  [
+    44,
+    "How to Make a Line Tangent to an Arc in FreeCAD",
+    "Applying a tangent constraint between a line and an arc in FreeCAD is a fundamental skill in the Sketcher workbench that ensures smooth, continuous transitions between straight edges and curves. This guide provides a clear, step-by-step walkthrough on how",
+    false
+  ],
+  [
+    43,
+    "Project an Edge into a FreeCAD Sketch",
+    "Referencing existing geometry is a fundamental technique in parametric modeling, allowing new sketch elements to align precisely with previously generated shapes. In FreeCAD, you project an edge from an existing 3D body into an active sketch using the Ext",
+    false
+  ],
+  [
+    42,
+    "FreeCAD Horizontal Distance Constraint Explained",
+    "This article provides an overview of the horizontal distance constraint in FreeCAD’s Sketcher workbench, explaining its primary functions, practical applications, and behavior. You will learn how this tool locks horizontal dimensions between sketch elemen",
+    false
+  ],
+  [
+    41,
+    "Fillet Corners on a Rectangle in FreeCAD Sketch",
+    "This guide provides a straightforward method for creating filleted corners on a rectangle within FreeCAD's Sketcher workbench. You will learn how to activate the Fillet tool, apply rounded corners to intersecting lines or vertices, and apply constraints t",
+    false
+  ],
+  [
+    40,
+    "Using Formulas in FreeCAD Sketch Constraints",
+    "FreeCAD allows users to use mathematical formulas and expressions directly inside sketch dimension constraints. By utilizing the built-in Expression Engine, you can create fully parametric sketches driven by basic arithmetic, trigonometric calculations, o",
+    false
+  ],
+  [
+    39,
+    "How to Make Circles Concentric in FreeCAD Sketch",
+    "Making two circles concentric in FreeCAD means aligning their centers so they share the exact same midpoint. This article provides a straightforward guide on how to use FreeCAD's Sketcher constraints—specifically the Coincident constraint—to quickly lock",
+    false
+  ],
+  [
+    38,
+    "FreeCAD Sketcher Degrees of Freedom Explained",
+    "In FreeCAD's Sketcher workbench, the degree of freedom (DOF) counter indicates the number of ways geometric elements within a sketch can still move, resize, or rotate. It serves as a real-time diagnostic tool that guides designers toward achieving a fully",
+    false
+  ],
+  [
+    37,
+    "How to Create a B-Spline in FreeCAD Sketcher",
+    "Creating a B-spline curve in FreeCAD allows you to design smooth, complex, non-uniform curves within a 2D sketch for your 3D models. FreeCAD's Sketcher workbench provides two primary methods for generating B-splines: using control points or using knots (i",
+    false
+  ],
+  [
+    36,
+    "Why FreeCAD Sketcher Reports Redundant Constraints",
+    "In FreeCAD, the Sketcher solver reports redundant constraints when an applied constraint attempts to define a geometric condition that is already mathematically locked by existing constraints. This article explains the underlying mechanics of degrees of f",
+    false
+  ],
+  [
+    35,
+    "FreeCAD Symmetry Constraint Between Two Lines",
+    "Applying a symmetry constraint between two lines in FreeCAD Sketcher ensures that the lines mirror each other across a designated axis, reference line, or center point. Because lines are defined by their endpoints, establishing full symmetry requires cons",
+    false
+  ],
+  [
+    34,
+    "Construction vs Normal Geometry in FreeCAD Sketches",
+    "In FreeCAD's Sketcher workbench, geometry is divided into two primary types: normal geometry and construction geometry. While normal geometry forms the actual physical boundaries used to generate 3D solid features like pads, pockets, and revolves, constru",
+    false
+  ],
+  [
+    33,
+    "How to Use External Geometry in FreeCAD Sketcher",
+    "The External Geometry tool in FreeCAD allows you to reference edges, vertices, and curves from an existing 3D body directly within an active sketch. This guide provides a direct, step-by-step walkthrough explaining how to locate the tool, project outside",
+    false
+  ],
+  [
+    32,
+    "Causes of Over-Constrained FreeCAD Sketches",
+    "An over-constrained sketch in FreeCAD occurs when the sketch solver receives more geometric or dimensional rules than necessary to define the geometry, resulting in mathematical conflicts or redundancy. This article explains the primary causes of over-con",
+    false
+  ],
+  [
+    31,
+    "How to Fully Constrain a Sketch in FreeCAD",
+    "A fully constrained sketch in FreeCAD ensures your 3D models remain robust, predictable, and free from unexpected geometry errors during parametric changes. This article walks you through the essential process of eliminating degrees of freedom using geome",
+    false
+  ],
+  [
+    30,
+    "Security Risks of FreeCAD Macros",
+    "FreeCAD macros are powerful Python-based automation scripts that streamline 3D modeling workflows, but executing untrusted macros exposes your system to severe cybersecurity risks. Because FreeCAD executes these scripts with the user's full operating syst",
+    false
+  ],
+  [
+    29,
+    "Associate FreeCAD Project Files on Windows",
+    "Registering file associations for FreeCAD ensures that double-clicking any .FCStd project file automatically opens it within the FreeCAD application. This guide outlines the standard methods to link FreeCAD files to Windows using the File Explorer context",
+    false
+  ],
+  [
+    28,
+    "Best FreeCAD Community Forums for Help and Support",
+    "Navigating issues in open-source parametric 3D modeling software requires access to knowledgeable and active user bases. This guide outlines the most effective community forums and platforms available for troubleshooting FreeCAD issues, getting modeling a",
+    false
+  ],
+  [
+    27,
+    "Share FreeCAD Configuration Across Multiple Computers",
+    "Sharing your FreeCAD configuration across multiple computers allows you to maintain identical user interfaces, custom toolbars, keyboard shortcuts, macros, and installed addons on every workstation you use. This guide outlines the two most effective metho",
+    false
+  ],
+  [
+    26,
+    "How to Fix FreeCAD Out of Memory Errors",
+    "FreeCAD can consume excessive system RAM when processing complex parametric features, dense meshes, or long modeling histories, which often results in severe lag or abrupt crashes. This troubleshooting guide provides direct, actionable methods to resolve",
+    false
+  ],
+  [
+    25,
+    "How to Change the FreeCAD Interface Language",
+    "This guide provides a straightforward walkthrough on how to change the display language of the FreeCAD user interface. Whether you need to switch to your native tongue or set the software to a specific language for tutorials, the steps below detail how to",
+    false
+  ],
+  [
+    24,
+    "Can FreeCAD Be Installed Safely via Flatpak or Snap?",
+    "FreeCAD can be safely installed using both Flatpak and Snap package formats on modern Linux distributions. Both packaging systems run FreeCAD in isolated environments that shield your base operating system from unwanted modifications while bundling the co",
+    false
+  ],
+  [
+    23,
+    "How to Fix Missing Icons in FreeCAD",
+    "Missing or invisible icons in the FreeCAD user interface typically stem from corrupted configuration files, incompatible custom themes, High-DPI display scaling glitches, or missing Qt SVG dependencies. This guide covers direct, practical troubleshooting",
+    false
+  ],
+  [
+    22,
+    "Where FreeCAD Stores Temporary Files",
+    "During an active modeling session, FreeCAD extracts project data and writes working assets to the operating system's default temporary directory. Because FreeCAD's native .FCStd file format is essentially a zip archive containing XML metadata, brep shapes",
+    false
+  ],
+  [
+    21,
+    "How to Change Mouse Navigation in FreeCAD",
+    "FreeCAD provides multiple 3D navigation presets that mimic controls from other major 3D modeling programs such as Blender, OpenSCAD, Revit, and TinkerCAD. This guide explains how to change your mouse navigation style using both the quick status-bar method",
+    false
+  ],
+  [
+    20,
+    "Optimal OpenGL Version for FreeCAD Rendering",
+    "This article covers the recommended OpenGL specifications for running FreeCAD efficiently, detailing the minimum versus optimal version requirements, the performance impact on viewport operations, and best practices for configuring graphics drivers. Reade",
+    false
+  ],
+  [
+    19,
+    "How to Check Installed FreeCAD Version",
+    "Checking your installed FreeCAD version is essential for troubleshooting issues, ensuring compatibility with workbenches, or determining if an update is required. This guide provides clear, step-by-step instructions to quickly find the version and build d",
+    false
+  ],
+  [
+    18,
+    "FreeCAD License Explained: Distribution and Use",
+    "FreeCAD is distributed under the GNU Lesser General Public License version 2 or later (LGPLv2+), which grants users the freedom to download, run, modify, and share the software for both private and commercial purposes. This article explains the core princ",
+    false
+  ],
+  [
+    17,
+    "How to Manually Install FreeCAD Workbenches",
+    "This guide explains how to manually install third-party workbenches into FreeCAD by downloading the extension source files and placing them into the application's dedicated user directory. While the built-in Addon Manager is the standard way to install pl",
+    false
+  ],
+  [
+    16,
+    "What Is the FreeCAD user.cfg Configuration File?",
+    "The user.cfg file is the primary configuration file used by FreeCAD to store user-defined preferences, graphical interface layouts, and application settings. This article explains the core purpose of user.cfg, details where it is located across different",
+    false
+  ],
+  [
+    15,
+    "How to Reset FreeCAD to Default Settings",
+    "This guide explains how to restore FreeCAD to its original factory settings by removing or resetting its user configuration files. Because FreeCAD automatically generates fresh default configuration files whenever existing ones are missing, clearing these",
+    false
+  ],
+  [
+    14,
+    "Run FreeCAD Headless for Server Processing",
+    "FreeCAD can be run in a headless environment for server-side processing, automated workflows, and cloud-based CAD pipelines. This guide explains how to execute FreeCAD without a graphical user interface (GUI), covering the native command-line binaries, ut",
+    false
+  ],
+  [
+    13,
+    "Back Up FreeCAD Preferences and Custom Toolbars",
+    "Backing up your FreeCAD setup ensures you do not lose custom toolbars, keyboard shortcuts, workbench layouts, and parameter settings during updates, system crashes, or migrations to a new computer. FreeCAD stores all user-defined interface customizations",
+    false
+  ],
+  [
+    12,
+    "FreeCAD Command Line Arguments Guide",
+    "FreeCAD offers a variety of command-line arguments that allow users and developers to customize startup behavior, run automated background tasks, diagnose bugs, and execute Python scripts without loading the graphical user interface. By executing FreeCAD",
+    false
+  ],
+  [
+    11,
+    "How to Enable Hardware Acceleration in FreeCAD",
+    "This article explains how to configure FreeCAD and your operating system to utilize dedicated GPU hardware acceleration for improved 3D viewport performance. FreeCAD relies on the Coin3D library and OpenGL to render complex geometry. By ensuring your dedi",
+    false
+  ],
+  [
+    10,
+    "FreeCAD Documentation and Official User Manuals",
+    "This guide provides a straightforward overview of where to access official documentation, user manuals, and learning resources for FreeCAD. Whether you need an introduction for beginners, in-depth workbench references, or Python scripting guides, FreeCAD",
+    false
+  ],
+  [
+    9,
+    "How to Change FreeCAD Units to Imperial",
+    "This guide explains how to switch the default unit system in FreeCAD from the standard metric system to imperial units. By adjusting the application's global preferences, you can configure FreeCAD to automatically display, input, and calculate all dimensi",
+    false
+  ],
+  [
+    8,
+    "Fix FreeCAD Crash on Startup Graphics Driver Issue",
+    "FreeCAD startup crashes related to graphics drivers are typically caused by missing OpenGL support, outdated GPU drivers, or conflicts between integrated and dedicated graphics cards. This guide provides actionable steps to diagnose and resolve these rend",
+    false
+  ],
+  [
+    7,
+    "How to Update FreeCAD Addons and Extensions",
+    "Updating your extensions, workbenches, and macros in FreeCAD ensures you have the latest features, bug fixes, and compatibility improvements. This guide outlines the quick process of using the built-in FreeCAD Addon Manager to check for available updates,",
+    false
+  ],
+  [
+    6,
+    "Package Managers for Installing FreeCAD on Ubuntu",
+    "FreeCAD, the open-source parametric 3D modeler, can be installed on Ubuntu through several package managers depending on your preference for stability, ease of updates, or sandboxed environments. This guide outlines the primary package managers supporting",
+    false
+  ],
+  [
+    5,
+    "How to Compile FreeCAD from Source on macOS",
+    "Compiling FreeCAD from source on macOS allows developers and enthusiasts to access the latest features, test bug fixes, and contribute directly to the project. This guide outlines the complete process for setting up your development environment using Xcod",
+    false
+  ],
+  [
+    4,
+    "FreeCAD Configuration and Preference File Locations",
+    "This article outlines the exact storage locations for FreeCAD's user configuration, preferences, and custom settings across Windows, macOS, and Linux operating systems. FreeCAD primarily stores user-defined interface layouts, workbench setups, and applica",
+    false
+  ],
+  [
+    3,
+    "How to Enable Dark Theme in FreeCAD",
+    "This guide explains how to configure FreeCAD to use a dark theme to reduce eye strain and modernize the interface. You will learn how to apply the built-in dark stylesheets for the user interface, adjust the 3D viewport canvas background to match, and ins",
+    false
+  ],
+  [
+    2,
+    "FreeCAD System Requirements for Windows",
+    "This guide outlines the essential hardware and software specifications needed to run FreeCAD efficiently on a Windows operating system. While FreeCAD can function on modest setups, complex 3D modeling, rendering, and finite element analysis (FEA) demand s",
+    false
+  ],
+  [
+    1,
+    "How to Install FreeCAD on Linux Using AppImage",
+    "Installing FreeCAD on Linux using an AppImage is one of the fastest and most reliable methods to run the open-source 3D parametric modeler. This guide walks you through downloading the official AppImage, granting the necessary execution permissions, and r",
+    false
+  ]
+]

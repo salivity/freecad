@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD 2D Axisymmetric FEM Modeling Guide - freecad</title>
+    <meta name="description" content="This guide provides a step-by-step overview of setting up and running a two-dimensional (2D) axisymmetric Finite Element Method (FEM) simulation using FreeCAD and the integrated CalculiX solver. By reducing a rotationally symmetric 3D component to a 2D pl">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-2-d-axisymmetric-fem-modeling-guide">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD 2D Axisymmetric FEM Modeling Guide - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-2-d-axisymmetric-fem-modeling-guide" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide provides a step-by-step overview of setting up and running a two-dimensional (2D) axisymmetric Finite Element Method (FEM) simulation using FreeCAD and the integrated CalculiX solver. By reducing a rotationally symmetric 3D component to a 2D pl" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-2d-axisymmetric-fem-modeling-guide">FreeCAD 2D
+Axisymmetric FEM Modeling Guide</h1>
+<p>This guide provides a step-by-step overview of setting up and running
+a two-dimensional (2D) axisymmetric Finite Element Method (FEM)
+simulation using FreeCAD and the integrated CalculiX solver. By reducing
+a rotationally symmetric 3D component to a 2D planar cross-section, you
+can dramatically decrease computational time while maintaining high
+analytical accuracy. The process covers profile modeling, coordinate
+alignment, material and element property definition, meshing with Gmsh,
+boundary condition application, and result evaluation.</p>
+<h3 id="1-model-the-2d-cross-section">1. Model the 2D Cross-Section</h3>
+<ol type="1">
+<li>Open FreeCAD and switch to the <strong>Sketcher
+Workbench</strong>.</li>
+<li>Create a new sketch on the <strong>X-Y Plane</strong>.</li>
+<li>Draw half of the cross-section of your rotationally symmetric
+body.</li>
+<li><strong>Crucial Alignment Rules for CalculiX:</strong>
+<ul>
+<li>The axis of revolution must be the <strong>Y-axis</strong> (<span
+class="math inline">\(X = 0\)</span>).</li>
+<li>The entire geometry must exist in the <strong>positive X
+domain</strong> (<span class="math inline">\(X \ge 0\)</span>). No part
+of the sketch may cross into negative X coordinates.</li>
+</ul></li>
+<li>Close the sketch, switch to the <strong>Part Workbench</strong>, and
+use the <strong>Make face from wires</strong> tool (or use a Part Design
+Body with a planar face) to convert the closed profile into a 2D
+surface.</li>
+</ol>
+<h3 id="2-set-up-the-fem-analysis-container">2. Set Up the FEM Analysis
+Container</h3>
+<ol type="1">
+<li>Switch to the <strong>FEM Workbench</strong>.</li>
+<li>Click the <strong>Analysis container</strong> button (yellow capital
+'A' icon) to initialize the simulation tree.</li>
+<li>Select your 2D face object and click <strong>FEM mesh from shape by
+Gmsh</strong>.</li>
+<li>In the Gmsh task panel:
+<ul>
+<li>Set the <strong>Element dimension</strong> to <code>2D</code>.</li>
+<li>Set the element order to <code>Second order</code> (quadratic
+elements, such as 8-node quadrilaterals or 6-node triangles, yield
+superior accuracy for axisymmetric stress calculations).</li>
+<li>Define the max and min element sizes appropriate for your
+geometry.</li>
+</ul></li>
+<li>Click <strong>Apply</strong>, then <strong>OK</strong> to generate
+the planar surface mesh.</li>
+</ol>
+<h3 id="3-assign-2d-axisymmetric-element-properties">3. Assign 2D
+Axisymmetric Element Properties</h3>
+<ol type="1">
+<li>In the FEM Workbench toolbar, select <strong>Element geometry
+2D</strong> (represented by a 2D sheet icon).</li>
+<li>In the properties panel, change the <strong>Element Type</strong>
+dropdown to <strong>Axisymmetric</strong>.</li>
+<li>Select your 2D planar face as the geometry reference and click
+<strong>OK</strong>. This signals CalculiX to expand the 2D elements
+mathematically into 3D rings during matrix formulation.</li>
+</ol>
+<h3 id="4-assign-material-and-loads">4. Assign Material and Loads</h3>
+<ol type="1">
+<li>Click <strong>Material for solid</strong> to open the material
+properties panel.</li>
+<li>Choose a preset material (e.g., Steel-Generic) or define your own
+Young's modulus and Poisson's ratio, then ensure your geometry is added
+to the selection list.</li>
+<li>Apply structural boundary conditions:
+<ul>
+<li><strong>Constraint Fixed / Displacement:</strong> Select edges to
+restrain. Edges lying precisely along the Y-axis (<span
+class="math inline">\(X = 0\)</span>) can be allowed to slide axially
+while being constrained radially (<span
+class="math inline">\(X\)</span>-direction displacement = 0 mm) to
+respect the axis of symmetry.</li>
+<li><strong>Constraint Pressure / Force:</strong> Select the target
+boundary edges to apply internal or external pressure loads.</li>
+</ul></li>
+</ol>
+<h3 id="5-configure-and-run-the-solver">5. Configure and Run the
+Solver</h3>
+<ol type="1">
+<li>Double-click the <strong>SolverCalculiX</strong> object inside the
+Analysis container.</li>
+<li>In the solver properties, ensure the analysis type is set to
+<strong>Static</strong>.</li>
+<li>In the Task panel:
+<ul>
+<li>Click <strong>Write .inp file</strong> to generate the CalculiX
+input deck.</li>
+<li>Click <strong>Run CalculiX</strong> to execute the simulation.</li>
+</ul></li>
+</ol>
+<h3 id="6-post-processing">6. Post-Processing</h3>
+<ol type="1">
+<li>Once the solver finishes with no errors, a results object will
+appear in the tree view.</li>
+<li>Double-click the results object or use the <strong>Post Pipeline
+from Result</strong> tool to view scalar fields such as von Mises
+stress, radial displacement, or axial displacement directly mapped on
+the 2D planar profile.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-2-d-axisymmetric-fem-modeling-guide';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Copy and Paste Sketch Elements in FreeCAD - freecad</title>
+    <meta name="description" content="Copying and pasting sketch elements within FreeCAD can be done directly inside an active sketch using built-in transformation tools, across different sketches using standard keyboard shortcuts, or via the Carbon Copy feature. This guide covers the quickes">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-copy-and-paste-sketch-elements-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Copy and Paste Sketch Elements in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-copy-and-paste-sketch-elements-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Copying and pasting sketch elements within FreeCAD can be done directly inside an active sketch using built-in transformation tools, across different sketches using standard keyboard shortcuts, or via the Carbon Copy feature. This guide covers the quickes" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-copy-and-paste-sketch-elements-in-freecad">How to Copy
+and Paste Sketch Elements in FreeCAD</h1>
+<p>Copying and pasting sketch elements within FreeCAD can be done
+directly inside an active sketch using built-in transformation tools,
+across different sketches using standard keyboard shortcuts, or via the
+Carbon Copy feature. This guide covers the quickest, most reliable
+methods to duplicate geometry and constraints within the same FreeCAD
+document.</p>
+<h2 id="method-1-duplicate-elements-within-the-same-sketch">Method 1:
+Duplicate Elements Within the Same Sketch</h2>
+<p>To copy specific lines, arcs, or shapes inside an open sketch without
+leaving edit mode:</p>
+<ol type="1">
+<li>Double-click your sketch in the tree view to enter <strong>Edit
+Mode</strong>.</li>
+<li>Select the geometry elements you want to duplicate. You can click
+individual lines while holding <code>Ctrl</code> or drag a selection box
+around them.</li>
+<li>In the Sketcher toolbar, locate the transformation tools dropdown
+(often grouped under the <strong>Clone</strong> or <strong>Rectangular
+Array</strong> icon).</li>
+<li>Click the <strong>Clone</strong> or <strong>Copy</strong> tool
+(available in FreeCAD 0.20 and later).</li>
+<li>Click in the 3D viewport to specify the base point, move your cursor
+to the desired location, and click again to place the copied
+elements.</li>
+</ol>
+<p><em>Note: Cloned geometry retains dimensional relationships relative
+to the original, while copied geometry creates independent
+elements.</em></p>
+<h2 id="method-2-copy-and-paste-between-different-sketches">Method 2:
+Copy and Paste Between Different Sketches</h2>
+<p>To duplicate elements from one sketch into another sketch within the
+same document:</p>
+<ol type="1">
+<li>Double-click the source sketch to enter <strong>Edit
+Mode</strong>.</li>
+<li>Select the geometry you want to transfer.</li>
+<li>Press <code>Ctrl + C</code> (or <code>Cmd + C</code> on macOS) to
+copy the selection.</li>
+<li>Close the source sketch by clicking <strong>Close</strong> in the
+Tasks panel.</li>
+<li>Create a new sketch or double-click an existing target sketch to
+open it.</li>
+<li>Press <code>Ctrl + V</code> (or <code>Cmd + V</code> on macOS). The
+elements, along with their internal constraints, will paste into the
+active sketch at their original coordinates.</li>
+</ol>
+<h2 id="method-3-use-the-carbon-copy-tool">Method 3: Use the Carbon Copy
+Tool</h2>
+<p>The Carbon Copy tool is ideal when you need to replicate an entire
+sketch's geometry into a new sketch on a different plane or
+location:</p>
+<ol type="1">
+<li>Create and open your new, empty target sketch.</li>
+<li>In the Sketcher toolbar, click the <strong>Create Carbon
+Copy</strong> tool.</li>
+<li>In the 3D view or the Tree View, click on the existing source sketch
+you wish to duplicate.</li>
+<li>All geometry and constraints from the original sketch will be copied
+into your active sketch.</li>
+<li>Hold <code>Ctrl</code> when clicking to make the constraints
+independent, or leave it as default to maintain linked dimensions
+between the two sketches.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-copy-and-paste-sketch-elements-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

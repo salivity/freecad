@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Create a Polar Array in FreeCAD - freecad</title>
+    <meta name="description" content="This guide explains how to create a polar array of features around a central axis in FreeCAD using the Part Design workbench. By utilizing the Polar Pattern tool, you can quickly replicate 3D features—such as holes, pockets, pads, or slots—in a circular d">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-create-a-polar-array-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Create a Polar Array in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-create-a-polar-array-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to create a polar array of features around a central axis in FreeCAD using the Part Design workbench. By utilizing the Polar Pattern tool, you can quickly replicate 3D features—such as holes, pockets, pads, or slots—in a circular d" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-create-a-polar-array-in-freecad">How to Create a Polar
+Array in FreeCAD</h1>
+<p>This guide explains how to create a polar array of features around a
+central axis in FreeCAD using the Part Design workbench. By utilizing
+the Polar Pattern tool, you can quickly replicate 3D features—such as
+holes, pockets, pads, or slots—in a circular distribution. The following
+steps cover feature selection, axis designation, and configuration of
+spacing and instance counts.</p>
+<h3 id="step-1-open-the-part-design-workbench">Step 1: Open the Part
+Design Workbench</h3>
+<ol type="1">
+<li>Open your project in FreeCAD.</li>
+<li>Ensure your active body contains the base geometry and the specific
+feature (e.g., a Pad, Pocket, or Hole) you want to duplicate.</li>
+<li>Switch to the <strong>Part Design</strong> workbench via the
+workbench dropdown menu.</li>
+</ol>
+<h3 id="step-2-select-the-feature-to-replicate">Step 2: Select the
+Feature to Replicate</h3>
+<ol type="1">
+<li>In the <strong>Model</strong> tree view, click on the feature you
+wish to pattern.</li>
+<li>Alternatively, you can select a face of the feature directly in the
+3D view.</li>
+</ol>
+<h3 id="step-3-launch-the-polar-pattern-tool">Step 3: Launch the Polar
+Pattern Tool</h3>
+<ol type="1">
+<li>With the feature selected, click the <strong>Create a polar pattern
+feature</strong> icon in the Part Design toolbar (represented by
+multiple yellow cubes arranged in a circle).</li>
+<li>Alternatively, navigate to the top menu and select
+<strong>PartDesign &gt; Apply a pattern &gt; PolarPattern</strong>.</li>
+<li>The <strong>Tasks</strong> tab will open on the left panel showing
+the pattern parameters.</li>
+</ol>
+<h3 id="step-4-define-the-axis-of-rotation">Step 4: Define the Axis of
+Rotation</h3>
+<p>In the Tasks panel under <strong>Axis</strong>:</p>
+<ul>
+<li><strong>Standard Axes:</strong> Select <strong>Base Z axis</strong>,
+<strong>Base X axis</strong>, or <strong>Base Y axis</strong> if your
+model is centered around the global coordinate system.</li>
+<li><strong>Custom Reference:</strong> Choose <strong>Select
+reference...</strong> and click on an existing cylindrical face,
+circular edge, or a pre-defined Datum Line in the 3D view to use it as
+the center of rotation.</li>
+</ul>
+<h3 id="step-5-configure-pattern-parameters">Step 5: Configure Pattern
+Parameters</h3>
+<ol type="1">
+<li><strong>Occurrences:</strong> Set the total number of instances you
+want in the array (this count includes the original feature).</li>
+<li><strong>Angle:</strong> Set the total angle coverage for the
+pattern. Use <strong>360°</strong> for a full circle, or a smaller angle
+(e.g., 180° or 90°) for a partial arc.</li>
+<li><strong>Reverse Direction:</strong> Check this box if you need the
+pattern to sweep in the opposite angular direction.</li>
+</ol>
+<h3 id="step-6-confirm-and-finalize">Step 6: Confirm and Finalize</h3>
+<ol type="1">
+<li>Review the preview in the 3D viewport to ensure the positioning is
+correct.</li>
+<li>Click <strong>OK</strong> in the Tasks panel to generate the polar
+array.</li>
+</ol>
+<p>The new <code>PolarPattern</code> object will now appear in your tree
+view nested under the active Body. You can double-click it at any time
+to modify the number of occurrences, the angle, or the rotation
+axis.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-create-a-polar-array-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

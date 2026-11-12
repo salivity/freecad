@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Optimize Large FreeCAD Part Design Models - freecad</title>
+    <meta name="description" content="Working with complex Part Design models in FreeCAD can lead to noticeable slowdowns, unresponsive viewports, and prolonged recomputation times. This guide covers essential optimization strategies to maintain high software performance, including adjusting">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-optimize-large-free-cad-part-design-models">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Optimize Large FreeCAD Part Design Models - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-optimize-large-free-cad-part-design-models" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Working with complex Part Design models in FreeCAD can lead to noticeable slowdowns, unresponsive viewports, and prolonged recomputation times. This guide covers essential optimization strategies to maintain high software performance, including adjusting" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-optimize-large-freecad-part-design-models">How to
+Optimize Large FreeCAD Part Design Models</h1>
+<p>Working with complex Part Design models in FreeCAD can lead to
+noticeable slowdowns, unresponsive viewports, and prolonged
+recomputation times. This guide covers essential optimization strategies
+to maintain high software performance, including adjusting visual
+tessellation settings, managing the dependency tree, deferring
+recomputations, and streamlining sketch and feature structures.</p>
+<h2 id="lower-mesh-tessellation-settings">Lower Mesh Tessellation
+Settings</h2>
+<p>FreeCAD uses the OpenCASCADE kernel to compute exact geometric
+shapes, which it then converts into a display mesh using Coin3D.
+High-detail display meshes are a primary cause of viewport lag.</p>
+<ul>
+<li>Navigate to <strong>Edit &gt; Preferences &gt; Display &gt; 3D
+View</strong>.</li>
+<li>Adjust <strong>Linear Deflection</strong> and <strong>Angular
+Deflection</strong>. Increasing the linear deflection (for example, from
+<code>0.1%</code> to <code>0.5%</code> or higher) decreases the polygon
+count of curved surfaces.</li>
+<li>You can also adjust this per object: select the Body in the tree
+view, go to the <strong>View</strong> tab in the Property panel, and
+increase <strong>Deviation</strong>.</li>
+</ul>
+<h2 id="postpone-fillets-chamfers-and-decorative-details">Postpone
+Fillets, Chamfers, and Decorative Details</h2>
+<p>Dress-up features such as fillets, chamfers, and draft angles
+significantly increase topological complexity. Every subsequent feature
+must recalculate these complex surfaces.</p>
+<ul>
+<li>Place all fillets and chamfers at the very end of the Part Design
+tree.</li>
+<li>Suppress these features while continuing to model other functional
+geometry by right-clicking them and toggling <strong>Set active
+status</strong> or toggling their visibility/suppression.</li>
+<li>Avoid modeling actual cosmetic screw threads; use cosmetic texture
+representations or leave shafts/holes at their nominal diameters.</li>
+</ul>
+<h2 id="optimize-and-simplify-sketches">Optimize and Simplify
+Sketches</h2>
+<p>Sketches with dozens of constraints and dense geometries place high
+demands on the planar solver.</p>
+<ul>
+<li>Avoid adding fillets and chamfers directly inside sketches; create
+them as 3D features instead.</li>
+<li>Minimize the use of complex splines (BSplines) where basic arcs and
+lines suffice.</li>
+<li>Prevent circular references and keep external geometry links to an
+absolute minimum to avoid triggering cascading recalculations throughout
+the tree.</li>
+</ul>
+<h2 id="defer-automatic-recomputations">Defer Automatic
+Recomputations</h2>
+<p>By default, FreeCAD attempts to recalculate the model after every
+minor parameter edit.</p>
+<ul>
+<li>Right-click the active document in the Model tree and select
+<strong>Skip recomputations</strong>.</li>
+<li>Make multiple changes across sketches and parameters without waiting
+for each one to render.</li>
+<li>Press <strong>Ctrl + R</strong> (or <strong>F5</strong>) to trigger
+a single manual recompute once all edits are complete.</li>
+</ul>
+<h2 id="break-models-into-multi-body-systems-or-assemblies">Break Models
+into Multi-Body Systems or Assemblies</h2>
+<p>Building an entire mechanical device within a single Part Design Body
+creates a deep dependency tree where every modification forces the
+entire model to recalculate sequentially.</p>
+<ul>
+<li>Divide large systems into multiple independent Bodies within the
+same document or across multiple documents.</li>
+<li>Utilize dedicated assembly environments (such as the integrated
+Assembly Workbench, Assembly3, or Assembly4) to position parts relative
+to one another rather than modeling everything in place.</li>
+<li>Use the <strong>Sub-object Shape Binder</strong> selectively to
+reference only the minimal geometry required between components.</li>
+</ul>
+<h2 id="manage-feature-tree-depth-with-shape-binders">Manage Feature
+Tree Depth with Shape Binders</h2>
+<p>If a single body must remain complex, break the dependency chain:</p>
+<ul>
+<li>Export stable baseline geometry as a non-parametric shape or use a
+<strong>ShapeBinder</strong> detached from continuous
+recalculation.</li>
+<li>Use the <strong>Roll to marker</strong> feature in the context menu
+to hide downstream features while working on earlier stages of the
+model, preventing subsequent features from solving prematurely.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-optimize-large-free-cad-part-design-models';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

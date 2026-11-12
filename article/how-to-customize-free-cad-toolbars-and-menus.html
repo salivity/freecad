@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Customize FreeCAD Toolbars and Menus - freecad</title>
+    <meta name="description" content="FreeCAD provides deep interface flexibility, allowing you to streamline your 3D modeling workflow by personalizing your workspace. This guide explains how to customize toolbars and menus across different workbenches, create your own dedicated tool sets, a">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-customize-free-cad-toolbars-and-menus">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Customize FreeCAD Toolbars and Menus - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-customize-free-cad-toolbars-and-menus" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FreeCAD provides deep interface flexibility, allowing you to streamline your 3D modeling workflow by personalizing your workspace. This guide explains how to customize toolbars and menus across different workbenches, create your own dedicated tool sets, a" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-customize-freecad-toolbars-and-menus">How to Customize
+FreeCAD Toolbars and Menus</h1>
+<p>FreeCAD provides deep interface flexibility, allowing you to
+streamline your 3D modeling workflow by personalizing your workspace.
+This guide explains how to customize toolbars and menus across different
+workbenches, create your own dedicated tool sets, add macro shortcuts,
+and manage command layouts efficiently.</p>
+<h3 id="accessing-the-customization-menu">Accessing the Customization
+Menu</h3>
+<p>All interface adjustments for menus and toolbars take place in the
+central customization dialog.</p>
+<ol type="1">
+<li>Launch FreeCAD and open any document or start a new project.</li>
+<li>In the top application menu, click <strong>Tools</strong>.</li>
+<li>Select <strong>Customize...</strong> from the dropdown menu.</li>
+<li>A dialog window will appear with several tabs: <em>Keyboard</em>,
+<em>Toolbars</em>, <em>Macros</em>, <em>Spaceball</em>, and
+<em>Themes</em>.</li>
+</ol>
+<hr />
+<h3 id="creating-and-modifying-toolbars">Creating and Modifying
+Toolbars</h3>
+<p>You can create new toolbars or add commands to specific workbenches
+using the <strong>Toolbars</strong> tab.</p>
+<ol type="1">
+<li>Click on the <strong>Toolbars</strong> tab in the Customize
+window.</li>
+<li>In the upper-right dropdown menu, select the workbench where you
+want your custom toolbar to appear (e.g., <em>PartDesign</em>,
+<em>Sketcher</em>, or <em>Global</em> to make it visible across all
+workbenches).</li>
+<li>Click the <strong>New...</strong> button on the right side.</li>
+<li>Enter a name for your custom toolbar in the prompt and click
+<strong>OK</strong>.</li>
+<li>In the left panel, use the <strong>Category</strong> dropdown to
+browse available commands (e.g., <em>Part Design</em>, <em>Draft</em>,
+or <em>View</em>).</li>
+<li>Select the command you want to add, then click the
+<strong>right-arrow (<code>-&gt;</code>)</strong> button to move it into
+your custom toolbar list on the right.</li>
+<li>To remove a command, select it in the right panel and click the
+<strong>left-arrow (<code>&lt;-</code>)</strong> button.</li>
+<li>Click <strong>Close</strong> when you are finished. Your new toolbar
+will immediately appear in the interface.</li>
+</ol>
+<hr />
+<h3 id="adding-macros-to-menus-and-toolbars">Adding Macros to Menus and
+Toolbars</h3>
+<p>If you frequently run custom Python scripts, you can assign them
+custom icons and place them directly into your workbench menus and
+toolbars.</p>
+<ol type="1">
+<li>Open <strong>Tools</strong> &gt; <strong>Customize...</strong> and
+select the <strong>Macros</strong> tab.</li>
+<li>Select your script from the <strong>Macro</strong> dropdown
+list.</li>
+<li>Fill in the required metadata:
+<ul>
+<li><strong>Menu text</strong>: The name displayed in menus.</li>
+<li><strong>Tool tip</strong>: The helper text shown when hovering over
+the button.</li>
+<li><strong>Pixmap</strong>: Click the <code>...</code> button to choose
+an icon for the toolbar button.</li>
+</ul></li>
+<li>Click <strong>Add</strong> to register the macro as an accessible
+command.</li>
+<li>Switch to the <strong>Toolbars</strong> tab, set the left category
+to <strong>Macros</strong>, and add your new command to any custom
+toolbar.</li>
+</ol>
+<hr />
+<h3 id="managing-and-repositioning-toolbars">Managing and Repositioning
+Toolbars</h3>
+<p>Once your toolbars are configured:</p>
+<ul>
+<li><strong>Move toolbars</strong>: Click and drag the dotted handle on
+the left edge of any toolbar to dock it at the top, bottom, or sides of
+the viewport, or leave it floating.</li>
+<li><strong>Toggle visibility</strong>: Right-click any empty space on
+the toolbar area to view a list of all active toolbars, then check or
+uncheck them to show or hide them.</li>
+</ul>
+<p>All toolbar and menu configurations are saved automatically to your
+local <code>user.cfg</code> file and persist across sessions.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-customize-free-cad-toolbars-and-menus';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

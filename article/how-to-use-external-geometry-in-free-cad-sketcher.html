@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use External Geometry in FreeCAD Sketcher - freecad</title>
+    <meta name="description" content="The External Geometry tool in FreeCAD allows you to reference edges, vertices, and curves from an existing 3D body directly within an active sketch. This guide provides a direct, step-by-step walkthrough explaining how to locate the tool, project outside">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-use-external-geometry-in-free-cad-sketcher">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Use External Geometry in FreeCAD Sketcher - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-use-external-geometry-in-free-cad-sketcher" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The External Geometry tool in FreeCAD allows you to reference edges, vertices, and curves from an existing 3D body directly within an active sketch. This guide provides a direct, step-by-step walkthrough explaining how to locate the tool, project outside" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-use-external-geometry-in-freecad-sketcher">How to Use
+External Geometry in FreeCAD Sketcher</h1>
+<p>The External Geometry tool in FreeCAD allows you to reference edges,
+vertices, and curves from an existing 3D body directly within an active
+sketch. This guide provides a direct, step-by-step walkthrough
+explaining how to locate the tool, project outside features into your
+sketch as construction geometry, and use those references to create
+accurate parametric constraints.</p>
+<h3 id="what-the-external-geometry-tool-does">What the External Geometry
+Tool Does</h3>
+<p>When modeling in the PartDesign or Sketcher workbenches, sketches
+often need to align with features already created on a 3D model. The
+External Geometry tool creates a linked copy of an existing 3D edge or
+vertex inside your active sketch. These linked elements appear in
+magenta and function as reference geometry. They do not form closed
+profiles for operations like pads or pockets, but they can be
+constrained to just like standard sketch elements.</p>
+<h3 id="step-by-step-guide-to-using-the-tool">Step-by-Step Guide to
+Using the Tool</h3>
+<ol type="1">
+<li><p><strong>Open or Create a Sketch:</strong> Select a planar face on
+an existing solid or choose a datum plane, then create a new sketch (or
+double-click an existing sketch in the tree view to open it).</p></li>
+<li><p><strong>Activate the External Geometry Tool:</strong> In the
+Sketcher toolbar, locate and click the <strong>Create an edge linked to
+external geometry</strong> icon (represented by an icon showing a cube
+edge being projected to a sketch line). Alternatively, press the default
+keyboard shortcut <strong>X</strong>.</p></li>
+<li><p><strong>Select Geometry to Project:</strong> Hover your mouse
+cursor over the 3D model outside your sketch. Valid edges or vertices
+will highlight as you move over them. Left-click the specific edge, arc,
+or vertex you want to reference.</p></li>
+<li><p><strong>Verify the Linked Element:</strong> The selected feature
+will appear immediately inside your sketch as a magenta (purple) line or
+point. You can repeat the clicking process to add multiple external
+references while the tool remains active.</p></li>
+<li><p><strong>Exit the Tool:</strong> Press the <strong>Escape</strong>
+key or right-click anywhere in the 3D view to deactivate the External
+Geometry tool.</p></li>
+<li><p><strong>Apply Constraints:</strong> You can now apply standard
+geometric and dimensional constraints (such as Coincident, Distance, or
+Tangent) between your new sketch elements and the magenta reference
+geometry.</p></li>
+</ol>
+<h3 id="best-practices">Best Practices</h3>
+<ul>
+<li><strong>Topological Naming:</strong> Whenever possible, reference
+stable features such as datum planes, datum lines, or base coordinate
+axes rather than complex generated fillets or chamfers to prevent broken
+references if earlier model parameters change.</li>
+<li><strong>Deletion:</strong> If an external reference is no longer
+needed, simply click on the magenta line or point within the sketch and
+press <strong>Delete</strong>.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-use-external-geometry-in-free-cad-sketcher';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

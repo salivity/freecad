@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD FEM Thermal Heat Transfer Simulation Guide - freecad</title>
+    <meta name="description" content="Setting up a thermal heat transfer simulation in FreeCAD requires using the Finite Element Method (FEM) workbench paired with the default CalculiX solver. This guide covers the complete workflow for conducting steady-state and transient thermal analyses,">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-fem-thermal-heat-transfer-simulation-guide">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD FEM Thermal Heat Transfer Simulation Guide - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-fem-thermal-heat-transfer-simulation-guide" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Setting up a thermal heat transfer simulation in FreeCAD requires using the Finite Element Method (FEM) workbench paired with the default CalculiX solver. This guide covers the complete workflow for conducting steady-state and transient thermal analyses," />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-fem-thermal-heat-transfer-simulation-guide">FreeCAD FEM
+Thermal Heat Transfer Simulation Guide</h1>
+<p>Setting up a thermal heat transfer simulation in FreeCAD requires
+using the Finite Element Method (FEM) workbench paired with the default
+CalculiX solver. This guide covers the complete workflow for conducting
+steady-state and transient thermal analyses, from preparing your solid
+geometry and defining material thermal conductivity to applying thermal
+boundary conditions, generating a suitable mesh, running the solver, and
+visualizing the resulting temperature distribution and heat flux.</p>
+<h3 id="1-prepare-the-geometry">1. Prepare the Geometry</h3>
+<ol type="1">
+<li>Switch to the <strong>Part</strong> or <strong>Part Design</strong>
+workbench and create or import your 3D solid model.</li>
+<li>Ensure the geometry is a clean, single solid object. If using
+multiple intersecting parts, fuse them using a Boolean Union or a
+Compound to ensure continuous thermal conduction across interfaces.</li>
+</ol>
+<h3 id="2-create-the-fem-analysis-container">2. Create the FEM Analysis
+Container</h3>
+<ol type="1">
+<li>Switch to the <strong>FEM Workbench</strong> using the workbench
+selector.</li>
+<li>Click on the <strong>Analysis container</strong> button (yellow
+folder icon labeled "A") in the toolbar.</li>
+<li>This adds an <code>Analysis</code> container to your model tree,
+along with a default CalculiX solver object
+(<code>SolverCcxTools</code>).</li>
+</ol>
+<h3 id="3-assign-material-properties">3. Assign Material Properties</h3>
+<ol type="1">
+<li>Select your solid object in the tree view.</li>
+<li>Click the <strong>FEM material for solid</strong> button in the
+toolbar.</li>
+<li>Choose a predefined material (such as Aluminum or Steel) from the
+drop-down menu, or input custom values.</li>
+<li>Verify that thermal properties are defined:
+<ul>
+<li><strong>Thermal Conductivity (<span
+class="math inline">\(k\)</span>):</strong> Required for all thermal
+analyses (measured in <span
+class="math inline">\(\text{W/m}\cdot\text{K}\)</span>).</li>
+<li><strong>Specific Heat (<span
+class="math inline">\(c\)</span>):</strong> Required if you are running
+a transient (time-dependent) analysis (<span
+class="math inline">\(\text{J/kg}\cdot\text{K}\)</span>).</li>
+<li><strong>Density (<span
+class="math inline">\(\rho\)</span>):</strong> Required for transient
+analysis (<span class="math inline">\(\text{kg/m}^3\)</span>).</li>
+</ul></li>
+<li>Click <strong>OK</strong> to assign the material to the
+geometry.</li>
+</ol>
+<h3 id="4-apply-boundary-conditions">4. Apply Boundary Conditions</h3>
+<p>A thermal simulation requires defined constraints to calculate heat
+transfer:</p>
+<ul>
+<li><strong>Fixed Temperature:</strong> Select the <strong>Constraint
+temperature</strong> tool. Pick the faces, edges, or vertices that have
+a known, constant temperature, enter the value in Kelvin or Celsius, and
+click <strong>OK</strong>.</li>
+<li><strong>Heat Flux:</strong> Select the <strong>Constraint heat
+flux</strong> tool to specify a known heat load per unit area (<span
+class="math inline">\(\text{W/m}^2\)</span>) on selected surfaces, or
+define a convective film coefficient to simulate heat dissipation into
+surrounding air.</li>
+<li><strong>Initial Temperature (Transient Only):</strong> If running a
+time-dependent simulation, apply an <strong>Initial temperature
+constraint</strong> to define the starting temperature of the entire
+body.</li>
+</ul>
+<h3 id="5-generate-the-fem-mesh">5. Generate the FEM Mesh</h3>
+<ol type="1">
+<li>Select the solid geometry in the tree.</li>
+<li>Choose either <strong>Netgen</strong> or <strong>Gmsh</strong> from
+the toolbar to generate the finite element mesh.</li>
+<li>Set the <strong>Max element size</strong> based on the level of
+detail required. Use a finer mesh near sharp corners or regions with
+high temperature gradients.</li>
+<li>Click <strong>Apply</strong> to generate the mesh, inspect it for
+quality, and click <strong>OK</strong>.</li>
+</ol>
+<h3 id="6-configure-the-solver-and-run">6. Configure the Solver and
+Run</h3>
+<ol type="1">
+<li>Double-click the <strong>SolverCcxTools</strong> object inside the
+Analysis container.</li>
+<li>In the properties panel, change the <strong>Analysis type</strong>
+from <code>Static</code> to <strong>Frequency/Thermal</strong> or
+<strong>Steady state heat transfer</strong> (or <strong>Transient heat
+transfer</strong> if modeling time-dependent cooling/heating).</li>
+<li>In the task panel, click <strong>Write .inp file</strong> to
+generate the input deck for CalculiX.</li>
+<li>Click <strong>Run CalculiX</strong>. Monitor the status window until
+the solver displays a successful completion message.</li>
+</ol>
+<h3 id="7-post-process-the-results">7. Post-Process the Results</h3>
+<ol type="1">
+<li>Once the simulation finishes, a <code>CCX_Results</code> object will
+appear inside the Analysis container.</li>
+<li>Double-click the results object to open the post-processing
+panel.</li>
+<li>Under the display options, change the field to
+<strong>Temperature</strong> or <strong>Heat Flux</strong> to view the
+color-coded contour map across the mesh.</li>
+<li>Adjust visibility and scale ranges to identify hot spots, thermal
+gradients, and rate of dissipation across your model.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-fem-thermal-heat-transfer-simulation-guide';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

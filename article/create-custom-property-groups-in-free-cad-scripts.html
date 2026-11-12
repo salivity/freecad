@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Custom Property Groups in FreeCAD Scripts - freecad</title>
+    <meta name="description" content="Organizing custom parameters into logical property groups makes parametric objects in FreeCAD much easier to navigate and maintain. In FreeCAD&#39;s Python API, property groups are not separate containers that need explicit initialization; instead, they are c">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/create-custom-property-groups-in-free-cad-scripts">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Create Custom Property Groups in FreeCAD Scripts - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/create-custom-property-groups-in-free-cad-scripts" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Organizing custom parameters into logical property groups makes parametric objects in FreeCAD much easier to navigate and maintain. In FreeCAD&#39;s Python API, property groups are not separate containers that need explicit initialization; instead, they are c" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="create-custom-property-groups-in-freecad-scripts">Create Custom
+Property Groups in FreeCAD Scripts</h1>
+<p>Organizing custom parameters into logical property groups makes
+parametric objects in FreeCAD much easier to navigate and maintain. In
+FreeCAD's Python API, property groups are not separate containers that
+need explicit initialization; instead, they are created automatically
+when you specify a group name while attaching a property to an object.
+This guide covers how to define, group, and manage custom properties on
+document objects using FreeCAD Python scripts.</p>
+<h3 id="the-addproperty-method">The <code>addProperty</code> Method</h3>
+<p>To create a custom property and assign it to a group, use the
+<code>addProperty</code> method available on any FreeCAD document
+object. The syntax is:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>obj.addProperty(<span class="bu">type</span>, name, group<span class="op">=</span><span class="st">&quot;&quot;</span>, doc<span class="op">=</span><span class="st">&quot;&quot;</span>, attr<span class="op">=</span><span class="dv">0</span>, read_only<span class="op">=</span><span class="va">False</span>, hidden<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
+<ul>
+<li><strong><code>type</code></strong>: The C++ type of property to
+instantiate (e.g., <code>"App::PropertyLength"</code>,
+<code>"App::PropertyString"</code>,
+<code>"App::PropertyFloat"</code>).</li>
+<li><strong><code>name</code></strong>: The internal identifier for the
+property.</li>
+<li><strong><code>group</code></strong>: The string representing the
+group header in the FreeCAD Property View. If this group does not exist,
+FreeCAD creates it.</li>
+<li><strong><code>doc</code></strong>: The tooltip description displayed
+when hovering over the property in the GUI.</li>
+</ul>
+<h3 id="adding-grouped-properties-to-an-object">Adding Grouped
+Properties to an Object</h3>
+<p>The following script creates a generic Python feature, attaches
+properties under distinct groups (<code>Dimensions</code> and
+<code>Manufacturing</code>), and assigns default values to them.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure an active document exists</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> App.activeDocument()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> doc:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    doc <span class="op">=</span> App.newDocument(<span class="st">&quot;PropertyGroupDemo&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a generic FeaturePython object</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> doc.addObject(<span class="st">&quot;App::FeaturePython&quot;</span>, <span class="st">&quot;ParametricItem&quot;</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Add properties assigned to the &quot;Dimensions&quot; group</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>obj.addProperty(<span class="st">&quot;App::PropertyLength&quot;</span>, <span class="st">&quot;Length&quot;</span>, <span class="st">&quot;Dimensions&quot;</span>, <span class="st">&quot;Length of the object&quot;</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>obj.addProperty(<span class="st">&quot;App::PropertyLength&quot;</span>, <span class="st">&quot;Width&quot;</span>, <span class="st">&quot;Dimensions&quot;</span>, <span class="st">&quot;Width of the object&quot;</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>obj.addProperty(<span class="st">&quot;App::PropertyLength&quot;</span>, <span class="st">&quot;Height&quot;</span>, <span class="st">&quot;Dimensions&quot;</span>, <span class="st">&quot;Height of the object&quot;</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Add properties assigned to the &quot;Manufacturing&quot; group</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>obj.addProperty(<span class="st">&quot;App::PropertyString&quot;</span>, <span class="st">&quot;Material&quot;</span>, <span class="st">&quot;Manufacturing&quot;</span>, <span class="st">&quot;Material type&quot;</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>obj.addProperty(<span class="st">&quot;App::PropertyInteger&quot;</span>, <span class="st">&quot;BatchNumber&quot;</span>, <span class="st">&quot;Manufacturing&quot;</span>, <span class="st">&quot;Production batch ID&quot;</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>obj.addProperty(<span class="st">&quot;App::PropertyBool&quot;</span>, <span class="st">&quot;QualityPassed&quot;</span>, <span class="st">&quot;Manufacturing&quot;</span>, <span class="st">&quot;Inspection status&quot;</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign default values</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>obj.Length <span class="op">=</span> <span class="fl">100.0</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>obj.Width <span class="op">=</span> <span class="fl">50.0</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>obj.Height <span class="op">=</span> <span class="fl">25.0</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>obj.Material <span class="op">=</span> <span class="st">&quot;Aluminum 6061&quot;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>obj.BatchNumber <span class="op">=</span> <span class="dv">4021</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>obj.QualityPassed <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Recompute document to update the interface</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>doc.recompute()</span></code></pre></div>
+<h3
+id="implementing-groups-in-custom-featurepython-classes">Implementing
+Groups in Custom FeaturePython Classes</h3>
+<p>When building custom parametric objects with proxy classes, define
+property groups within the object initialization method:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CustomBox:</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, obj):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        obj.Proxy <span class="op">=</span> <span class="va">self</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Geometry Parameters</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        obj.addProperty(<span class="st">&quot;App::PropertyLength&quot;</span>, <span class="st">&quot;TotalLength&quot;</span>, <span class="st">&quot;Geometry&quot;</span>, <span class="st">&quot;Total length&quot;</span>).TotalLength <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        obj.addProperty(<span class="st">&quot;App::PropertyLength&quot;</span>, <span class="st">&quot;TotalWidth&quot;</span>, <span class="st">&quot;Geometry&quot;</span>, <span class="st">&quot;Total width&quot;</span>).TotalWidth <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display/Metadata Parameters</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        obj.addProperty(<span class="st">&quot;App::PropertyString&quot;</span>, <span class="st">&quot;PartID&quot;</span>, <span class="st">&quot;Identification&quot;</span>, <span class="st">&quot;Unique Part Number&quot;</span>).PartID <span class="op">=</span> <span class="st">&quot;PART-001&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> execute(<span class="va">self</span>, obj):</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Implementation logic for rebuilding geometry</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiation</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> App.ActiveDocument</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>box_obj <span class="op">=</span> doc.addObject(<span class="st">&quot;Part::FeaturePython&quot;</span>, <span class="st">&quot;BoxObject&quot;</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>CustomBox(box_obj)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>doc.recompute()</span></code></pre></div>
+<h3 id="adding-properties-to-the-view-tab">Adding Properties to the View
+Tab</h3>
+<p>By default, calling <code>addProperty</code> on <code>obj</code>
+places properties under the <strong>Data</strong> tab of the
+Tree/Property View. If you need custom property groups to appear under
+the <strong>View</strong> tab (for controlling visualization settings),
+attach them to <code>obj.ViewObject</code>:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> App.GuiUp:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    view_obj <span class="op">=</span> obj.ViewObject</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    view_obj.addProperty(<span class="st">&quot;App::PropertyColor&quot;</span>, <span class="st">&quot;HighlightColor&quot;</span>, <span class="st">&quot;Custom Visuals&quot;</span>, <span class="st">&quot;Color for selection&quot;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    view_obj.HighlightColor <span class="op">=</span> (<span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>)</span></code></pre></div>
+<h3 id="managing-existing-properties">Managing Existing Properties</h3>
+<ul>
+<li><strong>Listing Properties:</strong> You can query all properties on
+an object using <code>obj.PropertiesList</code>.</li>
+<li><strong>Finding the Group:</strong> To find which group a property
+belongs to, use
+<code>obj.getGroupOfProperty("PropertyName")</code>.</li>
+<li><strong>Removing Properties:</strong> Dynamically added properties
+can be removed using <code>obj.removeProperty("PropertyName")</code>.
+When all properties assigned to a custom group are removed, FreeCAD
+automatically removes the group header from the interface.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/create-custom-property-groups-in-free-cad-scripts';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

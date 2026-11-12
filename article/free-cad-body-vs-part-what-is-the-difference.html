@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Body vs Part: What Is the Difference? - freecad</title>
+    <meta name="description" content="In FreeCAD, understanding the distinction between a Body and a Part container is fundamental to building clean, manageable 3D models. While both act as organizational containers in the tree view, they serve entirely different purposes: a Body is a special">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-body-vs-part-what-is-the-difference">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Body vs Part: What Is the Difference? - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-body-vs-part-what-is-the-difference" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In FreeCAD, understanding the distinction between a Body and a Part container is fundamental to building clean, manageable 3D models. While both act as organizational containers in the tree view, they serve entirely different purposes: a Body is a special" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-body-vs-part-what-is-the-difference">FreeCAD Body vs
+Part: What Is the Difference?</h1>
+<p>In FreeCAD, understanding the distinction between a Body and a Part
+container is fundamental to building clean, manageable 3D models. While
+both act as organizational containers in the tree view, they serve
+entirely different purposes: a Body is a specialized tool within the
+PartDesign Workbench intended to generate a single, contiguous solid
+through a sequential modeling history, whereas a Part container is a
+generic assembly tool used to group, move, and organize multiple
+independent shapes, bodies, or components.</p>
+<h3 id="what-is-a-body-container">What Is a Body Container?</h3>
+<p>A Body (represented as <code>PartDesign::Body</code>) is the core
+building block of the PartDesign Workbench. Its primary rules and
+characteristics include:</p>
+<ul>
+<li><strong>Single Solid Principle:</strong> A Body is strictly designed
+to represent a single, continuous piece of material. Disjoint or
+disconnected solids are generally not permitted at the conclusion of a
+feature step.</li>
+<li><strong>Sequential Feature Tree:</strong> Modeling inside a Body
+relies on an additive and subtractive workflow (such as Pad, Pocket,
+Revolution, and Fillet). Each feature modifies the previous geometry
+sequentially, tracking a specific "Tip" feature that displays the
+current final state.</li>
+<li><strong>Local Origin:</strong> Every Body contains its own internal
+coordinate system (Origin), including base planes (XY, XZ, YZ) and axes
+(X, Y, Z), which act as reference geometry for its sketches and datum
+tools.</li>
+<li><strong>Real-World Equivalent:</strong> A Body represents a single
+component manufactured from a single piece of stock material, such as a
+cast bracket, a machined bolt, or a 3D-printed clip.</li>
+</ul>
+<h3 id="what-is-a-part-container">What Is a Part Container?</h3>
+<p>A Part container (represented as <code>App::Part</code> or
+<code>Std_Part</code>) is an assembly-level container used across
+various FreeCAD workbenches. Its primary characteristics include:</p>
+<ul>
+<li><strong>Multi-Object Grouping:</strong> A Part container can hold
+virtually any FreeCAD object, including multiple Bodies, Part Workbench
+primitives (like cylinders and boxes), sketches, meshes, or even other
+nested Part containers.</li>
+<li><strong>Disjoint Geometry:</strong> Objects inside a Part container
+do not merge into a single solid. They maintain their own independent
+shapes, topologies, and feature trees.</li>
+<li><strong>Spatial Transformation:</strong> A Part container has its
+own Placement property. Moving or rotating the Part container moves all
+of its contents together, making it ideal for creating assemblies and
+sub-assemblies.</li>
+<li><strong>Real-World Equivalent:</strong> A Part container represents
+an assembly or sub-assembly made of distinct components, such as a hinge
+made of two plates and a pin.</li>
+</ul>
+<h3 id="key-differences-at-a-glance">Key Differences at a Glance</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Body (<code>PartDesign::Body</code>)</th>
+<th style="text-align: left;">Part Container
+(<code>App::Part</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Primary Workbench</strong></td>
+<td style="text-align: left;">PartDesign</td>
+<td style="text-align: left;">Part, Assembly, General System</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Geometry Requirement</strong></td>
+<td style="text-align: left;">Single, contiguous solid</td>
+<td style="text-align: left;">Multiple disjoint objects allowed</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Workflow</strong></td>
+<td style="text-align: left;">Sequential history
+(Additive/Subtractive)</td>
+<td style="text-align: left;">Hierarchical grouping (Assembly)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hierarchy Rules</strong></td>
+<td style="text-align: left;">Cannot contain another Body or Part</td>
+<td style="text-align: left;">Can contain multiple Bodies and Parts</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Typical Use Case</strong></td>
+<td style="text-align: left;">Designing an individual part</td>
+<td style="text-align: left;">Assembling multiple parts together</td>
+</tr>
+</tbody>
+</table>
+<h3 id="how-to-use-them-together">How to Use Them Together</h3>
+<p>The recommended workflow in FreeCAD is to design individual
+components inside separate Body containers. Once the individual
+components are modeled, you place them inside a Part container to define
+their spatial relationships and manage them as a unified assembly.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-body-vs-part-what-is-the-difference';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

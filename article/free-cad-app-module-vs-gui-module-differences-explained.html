@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD App Module vs Gui Module Differences Explained - freecad</title>
+    <meta name="description" content="FreeCAD operates on a strictly decoupled architecture that separates underlying engineering data from its visual representation. This article explains the fundamental differences between FreeCAD’s App module and Gui module, detailing their respective role">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-app-module-vs-gui-module-differences-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD App Module vs Gui Module Differences Explained - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-app-module-vs-gui-module-differences-explained" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FreeCAD operates on a strictly decoupled architecture that separates underlying engineering data from its visual representation. This article explains the fundamental differences between FreeCAD’s App module and Gui module, detailing their respective role" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-app-module-vs-gui-module-differences-explained">FreeCAD
+App Module vs Gui Module Differences Explained</h1>
+<p>FreeCAD operates on a strictly decoupled architecture that separates
+underlying engineering data from its visual representation. This article
+explains the fundamental differences between FreeCAD’s <code>App</code>
+module and <code>Gui</code> module, detailing their respective roles
+within the software's Model-View-Controller (MVC) design, their
+operational dependencies, and when to use each in Python scripting and
+workbench development.</p>
+<h3 id="core-architectural-distinction">Core Architectural
+Distinction</h3>
+<p>FreeCAD is built using a dual-layer architecture where the data model
+and the user interface are completely isolated from one another.</p>
+<ul>
+<li><strong><code>App</code> (The Model):</strong> Represents the data,
+geometry engine, and business logic. It handles parametric objects,
+geometric definitions, calculation trees, and document structures. It
+operates entirely independently of any user interface.</li>
+<li><strong><code>Gui</code> (The View and Controller):</strong>
+Represents the presentation layer and user interaction. It manages the
+graphical interface, handles 3D rendering (using Coin3D), and processes
+user input via the Qt framework.</li>
+</ul>
+<h3 id="the-app-module-freecad--app">The App Module
+(<code>FreeCAD</code> / <code>App</code>)</h3>
+<p>The <code>App</code> module, typically accessed in Python via
+<code>import FreeCAD</code> or <code>import App</code>, contains the
+non-graphical core of the software.</p>
+<p>Key characteristics include:</p>
+<ul>
+<li><strong>Headless Execution:</strong> The <code>App</code> module has
+no dependencies on display servers (like X11, Wayland, or Windows GDI)
+or GUI libraries like Qt. It can run in pure command-line environments,
+automated continuous integration (CI) pipelines, Docker containers, and
+web backends.</li>
+<li><strong>Document and Geometry Management:</strong> It creates and
+controls <code>App::Document</code> and <code>App::DocumentObject</code>
+instances. All mathematical modeling, shape generation via the Open
+CASCADE Technology (OCCT) kernel, and object properties (such as length,
+radius, and placement) are defined and calculated here.</li>
+<li><strong>Persistence:</strong> Saving and loading the actual
+geometric and parametric data of <code>.FCStd</code> files is
+coordinated through the <code>App</code> module.</li>
+</ul>
+<h3 id="the-gui-module-freecadgui--gui">The Gui Module
+(<code>FreeCADGui</code> / <code>Gui</code>)</h3>
+<p>The <code>Gui</code> module, accessed in Python via
+<code>import FreeCADGui</code> or <code>import Gui</code>, attaches to
+the <code>App</code> module when FreeCAD runs in visual desktop
+mode.</p>
+<p>Key characteristics include:</p>
+<ul>
+<li><strong>Display Requirement:</strong> The <code>Gui</code> module
+depends directly on Qt for interface rendering and Coin3D for scene
+graph and 3D Open Inventor rendering. It cannot be initialized in a
+strictly headless environment without a virtual framebuffer.</li>
+<li><strong>Visual Representation:</strong> For almost every object
+created in the <code>App</code> module, the <code>Gui</code> module
+creates an associated <code>ViewProvider</code>. The
+<code>ViewProvider</code> handles how the object looks in the 3D
+viewport, including its color, transparency, line width, draw style, and
+visibility.</li>
+<li><strong>User Interaction:</strong> The <code>Gui</code> module
+handles user events such as mouse clicks, object selections, camera
+movements, workbench switching, task panels, and custom dialog
+windows.</li>
+</ul>
+<h3 id="object-coupling-documentobject-vs-viewprovider">Object Coupling:
+<code>DocumentObject</code> vs. <code>ViewProvider</code></h3>
+<p>The relationship between the two modules is best observed in how
+objects exist within a FreeCAD session:</p>
+<ol type="1">
+<li><strong><code>App::DocumentObject</code>:</strong> Created via
+<code>App.ActiveDocument.addObject(...)</code>. This object stores
+parameters (such as <code>Length = 10mm</code>) and computes the
+resulting topological shape. It knows nothing about screen color or
+rendering nodes.</li>
+<li><strong><code>Gui::ViewProvider</code>:</strong> Accessed via
+<code>Gui.ActiveDocument.getObject(...)</code>. This object listens to
+changes in the <code>App::DocumentObject</code> and updates the 3D scene
+graph accordingly. Changing a display color via
+<code>obj.ViewObject.ShapeColor = (1.0, 0.0, 0.0)</code> manipulates the
+<code>Gui</code> layer, leaving the underlying geometry unaltered.</li>
+</ol>
+<h3 id="practical-guidelines-for-developers">Practical Guidelines for
+Developers</h3>
+<ul>
+<li><strong>Use the <code>App</code> module when:</strong> Writing
+automation scripts, generating parametric geometry programmatically,
+processing batch conversions, running simulations, or building
+standalone command-line tools. Modifying geometry exclusively through
+<code>App</code> makes scripts portable and executable without a desktop
+interface.</li>
+<li><strong>Use the <code>Gui</code> module when:</strong> Creating
+interactive workbenches, capturing user selections from the 3D viewport,
+prompting users with dialogs, adjusting viewports/cameras, or modifying
+visual attributes like highlighting and transparency.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-app-module-vs-gui-module-differences-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

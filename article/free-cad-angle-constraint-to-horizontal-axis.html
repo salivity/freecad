@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Angle Constraint to Horizontal Axis - freecad</title>
+    <meta name="description" content="Controlling the angular orientation of geometry relative to the horizontal plane is a fundamental step when creating fully defined sketches in FreeCAD. This guide explains how to quickly apply an angle constraint between any sketch line and the Sketcher w">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-angle-constraint-to-horizontal-axis">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Angle Constraint to Horizontal Axis - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-angle-constraint-to-horizontal-axis" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Controlling the angular orientation of geometry relative to the horizontal plane is a fundamental step when creating fully defined sketches in FreeCAD. This guide explains how to quickly apply an angle constraint between any sketch line and the Sketcher w" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-angle-constraint-to-horizontal-axis">FreeCAD Angle
+Constraint to Horizontal Axis</h1>
+<p>Controlling the angular orientation of geometry relative to the
+horizontal plane is a fundamental step when creating fully defined
+sketches in FreeCAD. This guide explains how to quickly apply an angle
+constraint between any sketch line and the Sketcher workbench's
+horizontal axis or reference geometry, ensuring your parametric models
+remain stable and predictable.</p>
+<h3
+id="method-1-constraining-directly-to-the-sketch-horizontal-axis">Method
+1: Constraining Directly to the Sketch Horizontal Axis</h3>
+<p>The most direct way to measure an angle against the horizontal plane
+is to select the base horizontal axis provided by the sketch coordinate
+system.</p>
+<ol type="1">
+<li>Open your sketch in the <strong>Sketcher Workbench</strong>.</li>
+<li>Click on the line you wish to constrain.</li>
+<li>Click on the <strong>Horizontal Sketch Axis</strong> (the solid
+horizontal red or green reference line running through the origin). Both
+the line and the axis should now be highlighted.</li>
+<li>Click the <strong>Constrain angle</strong> icon in the toolbar, or
+press the keyboard shortcut <strong>K</strong> followed by
+<strong>A</strong> (or simply <strong>A</strong> depending on your
+FreeCAD version and keybindings).</li>
+<li>A dialog box will appear. Enter your desired angle in degrees and
+click <strong>OK</strong>.</li>
+</ol>
+<h3
+id="method-2-constraining-using-a-horizontal-construction-line">Method
+2: Constraining Using a Horizontal Construction Line</h3>
+<p>If the global horizontal axis is far from your geometry or causes
+reference flipping, using a dedicated horizontal construction line is
+the standard alternative.</p>
+<ol type="1">
+<li>In the Sketcher toolbar, click the <strong>Toggle construction
+geometry</strong> icon (which turns the drawing tools blue).</li>
+<li>Select the <strong>Create a line</strong> tool and draw a line near
+or connected to the endpoint of your geometry.</li>
+<li>Select this new line and click the <strong>Constrain
+horizontally</strong> tool (shortcut <strong>H</strong>) to lock it
+flat.</li>
+<li>Switch construction mode off by clicking the <strong>Toggle
+construction geometry</strong> icon again.</li>
+<li>Select the geometry line you want to angle, then select the
+horizontal construction line.</li>
+<li>Click the <strong>Constrain angle</strong> tool, input your angle
+value, and confirm with <strong>OK</strong>.</li>
+</ol>
+<h3 id="managing-angle-direction-and-quadrants">Managing Angle Direction
+and Quadrants</h3>
+<ul>
+<li><strong>Selection Order:</strong> FreeCAD calculates angles based on
+vertex points and selection order. If the angle appears in the
+supplementary or opposite quadrant (e.g., measuring 150° instead of
+30°), undo the operation, deselect everything, and select the elements
+in reverse order.</li>
+<li><strong>Reference Angles:</strong> To track angles dynamically
+without locking the geometry, select the line and the horizontal axis,
+then click the <strong>Toggle to/from reference constraint</strong> tool
+before applying the angle. This measures the current angle without
+making the sketch over-constrained.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-angle-constraint-to-horizontal-axis';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Horizontal Distance Constraint Explained - freecad</title>
+    <meta name="description" content="This article provides an overview of the horizontal distance constraint in FreeCAD’s Sketcher workbench, explaining its primary functions, practical applications, and behavior. You will learn how this tool locks horizontal dimensions between sketch elemen">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-horizontal-distance-constraint-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Horizontal Distance Constraint Explained - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-horizontal-distance-constraint-explained" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of the horizontal distance constraint in FreeCAD’s Sketcher workbench, explaining its primary functions, practical applications, and behavior. You will learn how this tool locks horizontal dimensions between sketch elemen" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-horizontal-distance-constraint-explained">FreeCAD
+Horizontal Distance Constraint Explained</h1>
+<p>This article provides an overview of the horizontal distance
+constraint in FreeCAD’s Sketcher workbench, explaining its primary
+functions, practical applications, and behavior. You will learn how this
+tool locks horizontal dimensions between sketch elements, how it differs
+from standard distance constraints, and how it helps eliminate degrees
+of freedom to achieve fully constrained sketches in parametric 3D
+modeling.</p>
+<h2 id="what-is-the-horizontal-distance-constraint">What Is the
+Horizontal Distance Constraint?</h2>
+<p>The horizontal distance constraint in FreeCAD restricts the distance
+between two points, or the horizontal span of a line, strictly along the
+sketch's horizontal (X) axis. Regardless of how far apart the selected
+points are vertically, this constraint forces their horizontal
+separation to remain at a fixed numerical value or parametric
+formula.</p>
+<p>In the FreeCAD interface, it is represented by a red dimensional line
+marked with a horizontal dimension symbol (shortcut key: <strong>Shift +
+H</strong>).</p>
+<h2 id="primary-functions-and-use-cases">Primary Functions and Use
+Cases</h2>
+<h3 id="1-dimensioning-horizontal-lengths">1. Dimensioning Horizontal
+Lengths</h3>
+<p>When applied to a single line, the horizontal distance constraint
+fixes the line's length along the horizontal plane. If the line is
+already constrained to be horizontal, this functions as the total length
+of the line. If the line is angled, the constraint fixes the width of
+its bounding box rather than its actual Euclidean length.</p>
+<h3 id="2-spacing-between-distinct-points">2. Spacing Between Distinct
+Points</h3>
+<p>The tool can be applied to any two points, such as:</p>
+<ul>
+<li>The endpoints of two separate lines.</li>
+<li>The centers of circles or arcs (useful for defining center-to-center
+hole spacing).</li>
+<li>A sketch vertex and the sketch origin or a reference axis.</li>
+</ul>
+<p>This ensures that the two entities maintain a precise horizontal
+offset, even if their vertical positions shift during editing.</p>
+<h3 id="3-positioning-elements-relative-to-the-origin">3. Positioning
+Elements Relative to the Origin</h3>
+<p>To fully constrain a sketch, features must be anchored in space.
+Applying a horizontal distance constraint between a feature’s vertex and
+the vertical sketch axis (or origin) locks the feature’s horizontal
+coordinate without restricting its vertical movement.</p>
+<h2
+id="difference-between-horizontal-distance-and-other-constraints">Difference
+Between Horizontal Distance and Other Constraints</h2>
+<p>Understanding how the horizontal distance constraint compares to
+related constraints helps avoid over-constraining or distorting a
+sketch:</p>
+<ul>
+<li><strong>Standard Distance Constraint (Length):</strong> Measures the
+direct, straight-line distance between two points, regardless of angle.
+If the points move vertically or horizontally, the overall diagonal
+distance remains unchanged.</li>
+<li><strong>Horizontal Distance Constraint:</strong> Ignores vertical
+separation entirely and only measures the projected distance along the
+X-axis.</li>
+<li><strong>Horizontal Constraint:</strong> Simply forces an existing
+line segment to be parallel to the horizontal axis without defining how
+long it is.</li>
+</ul>
+<h2 id="parametric-flexibility">Parametric Flexibility</h2>
+<p>Like most dimensional constraints in FreeCAD, the value assigned to a
+horizontal distance constraint does not need to be a static number. It
+supports:</p>
+<ul>
+<li><strong>Mathematical formulas:</strong> Calculating spacing
+dynamically (e.g., <code>Length / 2</code>).</li>
+<li><strong>Spreadsheet aliases:</strong> Driving dimensions externally
+from a FreeCAD Spreadsheet workbench.</li>
+<li><strong>Named parameters:</strong> Linking to dimensions from other
+sketches or 3D features.</li>
+</ul>
+<p>Using the horizontal distance constraint properly ensures that
+sketches remain predictable, stable, and easily adjustable throughout
+the design process.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-horizontal-distance-constraint-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

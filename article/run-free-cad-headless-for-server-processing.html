@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run FreeCAD Headless for Server Processing - freecad</title>
+    <meta name="description" content="FreeCAD can be run in a headless environment for server-side processing, automated workflows, and cloud-based CAD pipelines. This guide explains how to execute FreeCAD without a graphical user interface (GUI), covering the native command-line binaries, ut">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/run-free-cad-headless-for-server-processing">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Run FreeCAD Headless for Server Processing - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/run-free-cad-headless-for-server-processing" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FreeCAD can be run in a headless environment for server-side processing, automated workflows, and cloud-based CAD pipelines. This guide explains how to execute FreeCAD without a graphical user interface (GUI), covering the native command-line binaries, ut" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="run-freecad-headless-for-server-processing">Run FreeCAD Headless
+for Server Processing</h1>
+<p>FreeCAD can be run in a headless environment for server-side
+processing, automated workflows, and cloud-based CAD pipelines. This
+guide explains how to execute FreeCAD without a graphical user interface
+(GUI), covering the native command-line binaries, utilizing FreeCAD as a
+standalone Python module, managing virtual framebuffers for off-screen
+rendering, and deploying workloads via Docker.</p>
+<h3 id="running-freecad-without-a-gui">Running FreeCAD Without a
+GUI</h3>
+<p>FreeCAD provides built-in mechanisms to operate entirely without a
+desktop environment. This capability makes it suitable for automated CAD
+conversions, parametric model generation via web APIs, and continuous
+integration testing.</p>
+<p>Depending on your distribution and installation method, there are
+three primary ways to interact with FreeCAD in a headless setup:</p>
+<h4 id="1-using-the-freecadcmd-executable">1. Using the
+<code>freecadcmd</code> Executable</h4>
+<p>Most Linux and Windows distributions of FreeCAD include a separate
+executable specifically designed for command-line execution:
+<code>freecadcmd</code>.</p>
+<p>To run an interactive Python shell inside the FreeCAD
+environment:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">freecadcmd</span></span></code></pre></div>
+<p>To execute a non-interactive Python script and exit automatically
+upon completion:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">freecadcmd</span> script.py</span></code></pre></div>
+<p>This executable does not load the GUI libraries (such as Qt or
+FreeCADGui), drastically reducing memory overhead and eliminating the
+need for an active X11 or Wayland display server.</p>
+<h4 id="2-using-command-line-flags-with-the-main-executable">2. Using
+Command-Line Flags with the Main Executable</h4>
+<p>If <code>freecadcmd</code> is unavailable, the standard
+<code>freecad</code> binary provides flags to suppress GUI
+initialization:</p>
+<ul>
+<li><strong>Console Mode:</strong> <code>freecad --console</code>
+launches an interactive terminal prompt without a GUI window.</li>
+<li><strong>Script Execution:</strong> <code>freecad script.py</code>
+runs a specified script. If the script does not call
+<code>FreeCADGui</code>, it executes in the background without drawing a
+window.</li>
+</ul>
+<h4 id="3-importing-freecad-as-a-python-module">3. Importing FreeCAD as
+a Python Module</h4>
+<p>FreeCAD's core architecture allows it to be imported directly into
+any external Python 3 interpreter. This approach is ideal for
+integrating FreeCAD into existing web services (such as Flask, FastAPI,
+or Django) or background task workers (such as Celery).</p>
+<p>To use FreeCAD as a library:</p>
+<ol type="1">
+<li>Locate your FreeCAD <code>bin</code> and <code>lib</code>
+directories.</li>
+<li>Add these paths to your system's <code>PYTHONPATH</code> environment
+variable or append them using <code>sys.path.append()</code>.</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">&quot;/usr/lib/freecad/lib&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> Part</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a simple box and export it</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> FreeCAD.newDocument(<span class="st">&quot;HeadlessDoc&quot;</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>box <span class="op">=</span> doc.addObject(<span class="st">&quot;Part::Box&quot;</span>, <span class="st">&quot;MyBox&quot;</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>box.Length <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>box.Width <span class="op">=</span> <span class="fl">20.0</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>box.Height <span class="op">=</span> <span class="fl">30.0</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>doc.recompute()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>Part.export([box], <span class="st">&quot;output.step&quot;</span>)</span></code></pre></div>
+<h3 id="handling-off-screen-rendering-and-freecadgui">Handling
+Off-Screen Rendering and <code>FreeCADGui</code></h3>
+<p>While geometry creation, Boolean operations, and file conversions
+(e.g., STEP to STL) require only the core <code>FreeCAD</code> and
+<code>Part</code> modules, certain operations—such as generating
+technical drawings or rendering 3D preview images—depend on the
+<code>FreeCADGui</code> and Coin3D modules.</p>
+<p>If your script requires <code>FreeCADGui</code> on a headless
+server:</p>
+<ol type="1">
+<li><p><strong>Use a Virtual Framebuffer:</strong> Install
+<code>xvfb</code> (X Virtual FrameBuffer) to emulate a display server in
+system memory.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install xvfb</span></code></pre></div></li>
+<li><p><strong>Execute within <code>xvfb-run</code>:</strong> Wrap your
+execution command with <code>xvfb-run</code>:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xvfb-run</span> <span class="at">-a</span> freecad script.py</span></code></pre></div>
+<p>This provides the necessary display context to initialize Qt and
+OpenGL without physical graphics hardware.</p></li>
+</ol>
+<h3 id="containerization-with-docker">Containerization with Docker</h3>
+<p>Running FreeCAD headless inside Docker is the industry standard for
+production deployments. A minimal Ubuntu or Debian base image can be
+configured with FreeCAD and executed on demand:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ubuntu:22.04</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ENV</span> DEBIAN_FRONTEND=noninteractive</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install <span class="at">-y</span> <span class="dt">\</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    freecad <span class="dt">\</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    xvfb <span class="dt">\</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    python3 <span class="dt">\</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&amp;&amp;</span> <span class="fu">rm</span> <span class="at">-rf</span> /var/lib/apt/lists/<span class="pp">*</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">WORKDIR</span> /app</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> . /app</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">&quot;freecadcmd&quot;</span>, <span class="st">&quot;main.py&quot;</span>]</span></code></pre></div>
+<h3 id="common-server-side-use-cases">Common Server-Side Use Cases</h3>
+<ul>
+<li><strong>File Format Conversion:</strong> Automatically converting
+uploaded CAD files (STEP, IGES, BREP) into lightweight web formats (STL,
+OBJ, GLTF).</li>
+<li><strong>Parametric Web Configurators:</strong> Modifying spreadsheet
+parameters inside a template FreeCAD document based on user input,
+recomputing the geometry, and serving the output file dynamically.</li>
+<li><strong>Automated Validation:</strong> Checking parts for volumetric
+consistency, interference, or bounding box constraints inside continuous
+integration (CI) environments.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/run-free-cad-headless-for-server-processing';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

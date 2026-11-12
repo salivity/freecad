@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export Robot Motion Programs From FreeCAD - freecad</title>
+    <meta name="description" content="Exporting robot motion programs from FreeCAD allows you to translate CAD-designed toolpaths and waypoints into machine-readable code for industrial robotic arms. By utilizing FreeCAD&#39;s built-in Robot Workbench alongside custom Python post-processors, you">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/export-robot-motion-programs-from-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Export Robot Motion Programs From FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/export-robot-motion-programs-from-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Exporting robot motion programs from FreeCAD allows you to translate CAD-designed toolpaths and waypoints into machine-readable code for industrial robotic arms. By utilizing FreeCAD&#39;s built-in Robot Workbench alongside custom Python post-processors, you" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="export-robot-motion-programs-from-freecad">Export Robot Motion
+Programs From FreeCAD</h1>
+<p>Exporting robot motion programs from FreeCAD allows you to translate
+CAD-designed toolpaths and waypoints into machine-readable code for
+industrial robotic arms. By utilizing FreeCAD's built-in Robot Workbench
+alongside custom Python post-processors, you can generate kinematic
+trajectories and export them into native controller languages such as
+KUKA KRL, or extract coordinate data for brands like ABB, Fanuc, and
+Yaskawa. This guide explains how to prepare your trajectory, export
+standard motion files, and adapt code for your specific robot
+controller.</p>
+<h3 id="1-set-up-the-robot-workbench">1. Set Up the Robot Workbench</h3>
+<ol type="1">
+<li>Open FreeCAD and switch to the <strong>Robot Workbench</strong>
+using the workbench dropdown menu.</li>
+<li>Insert your robot model into the project by selecting <strong>Robot
+&gt; Insert Robot</strong> and choosing a supported kinematic definition
+(such as a standard six-axis KUKA model).</li>
+<li>Position your CAD workpiece relative to the robot base within the 3D
+space to ensure all target points fall within the robot's reachable work
+envelope.</li>
+</ol>
+<h3 id="2-create-the-motion-trajectory">2. Create the Motion
+Trajectory</h3>
+<p>Before exporting, you must define the sequence of waypoints the robot
+will execute:</p>
+<ul>
+<li><strong>Manual Waypoints:</strong> Move the robot to desired
+positions using the kinematic control panel, then click <strong>Robot
+&gt; Insert waypoint preselected</strong> to store target
+coordinates.</li>
+<li><strong>Edge-to-Trajectory:</strong> To follow geometry directly
+from a part, select the desired edges on your 3D model and use the
+<strong>Edge2Trac</strong> tool. This automatically generates a
+continuous path of waypoints oriented along the contour.</li>
+<li>Group your waypoints into a single <strong>Trajectory</strong>
+object within the tree view.</li>
+</ul>
+<h3 id="3-export-to-kuka-robot-language-krl">3. Export to KUKA Robot
+Language (KRL)</h3>
+<p>FreeCAD includes native post-processing support for KUKA controllers
+out of the box:</p>
+<ol type="1">
+<li>In the tree view, select the <strong>Trajectory</strong> object you
+want to export.</li>
+<li>Navigate to the top menu and select <strong>Robot &gt; Export
+trajectory</strong>.</li>
+<li>Choose the export format as a KRL program file
+(<code>.src</code>).</li>
+<li>Select a destination folder and click <strong>Save</strong>.</li>
+</ol>
+<p>The generated <code>.src</code> file contains the motion commands
+(such as <code>PTP</code> and <code>LIN</code> movements) along with
+axis orientations and Cartesian positions readable by KUKA KRC
+controllers.</p>
+<h3 id="4-exporting-for-other-robot-brands-via-python">4. Exporting for
+Other Robot Brands via Python</h3>
+<p>If you use a controller other than KUKA (such as ABB RAPID, Fanuc
+Karel, or universal G-code), use FreeCAD’s internal Python API to
+extract the trajectory coordinates and write them to your required
+syntax:</p>
+<ol type="1">
+<li><p>Open the Python console in FreeCAD (<strong>View &gt; Panels &gt;
+Python console</strong>).</p></li>
+<li><p>Access the trajectory waypoints programmatically:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>trajectory <span class="op">=</span> FreeCAD.ActiveDocument.Trajectory.Trajectory</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> waypoint <span class="kw">in</span> trajectory.Waypoints:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> waypoint.Pos</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    rot <span class="op">=</span> waypoint.Rot</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f&quot;X: </span><span class="sc">{</span>pos<span class="sc">.</span>x<span class="sc">}</span><span class="ss">, Y: </span><span class="sc">{</span>pos<span class="sc">.</span>y<span class="sc">}</span><span class="ss">, Z: </span><span class="sc">{</span>pos<span class="sc">.</span>z<span class="sc">}</span><span class="ss"> | Q: </span><span class="sc">{</span>rot<span class="sc">.</span>Q[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">,</span><span class="sc">{</span>rot<span class="sc">.</span>Q[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">,</span><span class="sc">{</span>rot<span class="sc">.</span>Q[<span class="dv">2</span>]<span class="sc">}</span><span class="ss">,</span><span class="sc">{</span>rot<span class="sc">.</span>Q[<span class="dv">3</span>]<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div></li>
+<li><p>Loop through the extracted coordinates within a Python script to
+write standard text files formatted for your controller's syntax (e.g.,
+<code>MoveL</code> commands for ABB or <code>J P[]</code> instructions
+for Fanuc).</p></li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/export-robot-motion-programs-from-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

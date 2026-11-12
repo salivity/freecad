@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Create 2D Drawings in FreeCAD TechDraw - freecad</title>
+    <meta name="description" content="This guide explains how to convert a 3D CAD model into a standardized 2D engineering drawing using FreeCAD’s native TechDraw Workbench. You will learn the complete workflow, including selecting drawing templates, inserting primary and secondary orthograph">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-create-2-d-drawings-in-free-cad-tech-draw">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Create 2D Drawings in FreeCAD TechDraw - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-create-2-d-drawings-in-free-cad-tech-draw" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to convert a 3D CAD model into a standardized 2D engineering drawing using FreeCAD’s native TechDraw Workbench. You will learn the complete workflow, including selecting drawing templates, inserting primary and secondary orthograph" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-create-2d-drawings-in-freecad-techdraw">How to Create 2D
+Drawings in FreeCAD TechDraw</h1>
+<p>This guide explains how to convert a 3D CAD model into a standardized
+2D engineering drawing using FreeCAD’s native TechDraw Workbench. You
+will learn the complete workflow, including selecting drawing templates,
+inserting primary and secondary orthographic projections, adding
+accurate dimensions, editing title blocks, and exporting the finished
+sheet to industry-standard formats like PDF and DXF.</p>
+<h2 id="1-prepare-your-model-and-switch-workbenches">1. Prepare Your
+Model and Switch Workbenches</h2>
+<p>Ensure your 3D model is fully designed and saved. In the FreeCAD
+interface, open the workbench dropdown menu in the top toolbar and
+switch from your current workbench (such as Part Design or Part) to the
+<strong>TechDraw Workbench</strong>.</p>
+<h2 id="2-insert-a-drawing-page-template">2. Insert a Drawing Page
+Template</h2>
+<p>To start a drawing, you must create a blank sheet using a
+pre-formatted standard template.</p>
+<ul>
+<li>In the toolbar, click <strong>Insert Page using Template</strong>
+(represented by an orange page with a folder icon).</li>
+<li>A file dialog opens displaying the default FreeCAD templates
+directory.</li>
+<li>Select an appropriate sheet size and standard (e.g.,
+<code>A4_Landscape_ISO.svg</code> or <code>A3_Landscape_ASME.svg</code>)
+and click <strong>Open</strong>.</li>
+<li>A new page tab will appear below the 3D viewport, and a
+<code>Page</code> object will be added to the Model Tree.</li>
+</ul>
+<h2 id="3-insert-base-views-and-orthographic-projections">3. Insert Base
+Views and Orthographic Projections</h2>
+<p>To project your 3D geometry onto the 2D sheet, you can insert either
+a single view or an orthographic projection group.</p>
+<h3 id="method-a-projection-group-recommended">Method A: Projection
+Group (Recommended)</h3>
+<ol type="1">
+<li>In the Model Tree, click to highlight the 3D body or part you want
+to project.</li>
+<li>Click the <strong>Insert Projection Group</strong> tool.</li>
+<li>In the Task panel on the left, choose the primary projection
+direction (e.g., Front).</li>
+<li>Check the boxes for the adjacent views you need, such as Top, Right,
+and Isometric.</li>
+<li>Adjust the scale settings (e.g., 1:1, 1:2) and click
+<strong>OK</strong>.</li>
+</ol>
+<h3 id="method-b-single-view">Method B: Single View</h3>
+<ol type="1">
+<li>Switch back to your 3D view tab and orient the camera to the angle
+you want.</li>
+<li>Select the body in the Model Tree.</li>
+<li>Switch to the drawing page tab and click <strong>Insert
+View</strong>.</li>
+<li>With the view selected in the tree, modify the <code>Scale</code>,
+<code>Direction</code>, and <code>Rotation</code> properties in the Data
+tab.</li>
+</ol>
+<h2 id="4-add-dimensions-and-annotations">4. Add Dimensions and
+Annotations</h2>
+<p>Once your views are positioned on the sheet, you can dimension the
+geometry.</p>
+<ul>
+<li><strong>Linear Dimensions:</strong> Hold <code>Ctrl</code> and
+select two vertices, or click a single edge, then click the
+<strong>Insert Length Dimension</strong>, <strong>Horizontal
+Dimension</strong>, or <strong>Vertical Dimension</strong> button.</li>
+<li><strong>Radius and Diameter:</strong> Select a circular edge and
+click <strong>Insert Radius Dimension</strong> or <strong>Insert
+Diameter Dimension</strong>.</li>
+<li><strong>Angle Dimensions:</strong> Select two intersecting edges and
+click <strong>Insert Angle Dimension</strong>.</li>
+<li><strong>Text Labels:</strong> Click <strong>Insert
+Annotation</strong> to place arbitrary notes, revision data, or
+manufacturing callouts onto the sheet.</li>
+</ul>
+<p>To reposition dimensions, click and drag the dimension text directly
+on the page.</p>
+<h2 id="5-populate-the-title-block">5. Populate the Title Block</h2>
+<p>Most built-in templates have editable text fields in the title
+block.</p>
+<ul>
+<li>Click the green text fields within the title block to edit them
+directly.</li>
+<li>Alternatively, select the <code>Template</code> item under the
+<code>Page</code> object in the Model Tree, go to the
+<strong>Data</strong> tab, and edit the editable field properties
+directly in the list.</li>
+</ul>
+<h2 id="6-toggle-element-frames-and-export">6. Toggle Element Frames and
+Export</h2>
+<ul>
+<li>Click the <strong>Turn View Frames On/Off</strong> button on the
+toolbar to hide the dashed boundary boxes and point markers around views
+and dimensions, ensuring a clean preview.</li>
+<li>To generate your final documentation, select the <code>Page</code>
+object in the Model Tree.</li>
+<li>Go to <strong>File &gt; Export</strong> to save the drawing as a DXF
+or SVG, or click <strong>TechDraw &gt; Export Page as PDF</strong> to
+generate a print-ready document.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-create-2-d-drawings-in-free-cad-tech-draw';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Combine Multiple Bodies in FreeCAD - freecad</title>
+    <meta name="description" content="Combining multiple independent bodies into a single model in FreeCAD is a common task required for 3D printing, CNC machining, or simplifying your project tree. Depending on whether you want a seamless solid fusion or a grouped assembly, FreeCAD provides">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-combine-multiple-bodies-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Combine Multiple Bodies in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-combine-multiple-bodies-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Combining multiple independent bodies into a single model in FreeCAD is a common task required for 3D printing, CNC machining, or simplifying your project tree. Depending on whether you want a seamless solid fusion or a grouped assembly, FreeCAD provides" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-combine-multiple-bodies-in-freecad">How to Combine
+Multiple Bodies in FreeCAD</h1>
+<p>Combining multiple independent bodies into a single model in FreeCAD
+is a common task required for 3D printing, CNC machining, or simplifying
+your project tree. Depending on whether you want a seamless solid fusion
+or a grouped assembly, FreeCAD provides dedicated tools in both the Part
+and PartDesign workbenches. This guide walks you through the most
+effective methods to merge separate bodies into a unified object.</p>
+<h3 id="method-1-boolean-union-in-the-part-workbench-recommended">Method
+1: Boolean Union in the Part Workbench (Recommended)</h3>
+<p>The most direct way to merge independent bodies—especially those
+created in different workbenches or separate PartDesign containers—is
+using the Part Workbench.</p>
+<ol type="1">
+<li><strong>Switch Workbenches:</strong> In the workbench dropdown menu
+at the top of the interface, select <strong>Part</strong>.</li>
+<li><strong>Select the Bodies:</strong> In the Model tree view on the
+left, hold down the <code>Ctrl</code> key (or <code>Cmd</code> on macOS)
+and click on each body you wish to combine. Ensure the bodies intersect
+or touch if you intend to create a single continuous manifold
+solid.</li>
+<li><strong>Apply the Union:</strong> Click the <strong>Union</strong>
+icon in the toolbar (represented by two overlapping blue spheres) or
+navigate to <strong>Part &gt; Boolean &gt; Union</strong> in the top
+menu.</li>
+<li><strong>Result:</strong> A new object named <code>Fusion</code> will
+appear in your tree view containing the selected bodies. The original
+bodies will be hidden automatically under this new node.</li>
+</ol>
+<h3 id="method-2-boolean-operation-in-the-partdesign-workbench">Method
+2: Boolean Operation in the PartDesign Workbench</h3>
+<p>If you are strictly working inside the PartDesign environment and
+want to integrate external bodies into an active design body, use the
+PartDesign Boolean tool.</p>
+<ol type="1">
+<li><strong>Activate the Target Body:</strong> Double-click the main
+Body in the tree view that will absorb the other parts. It will become
+bold, indicating it is active.</li>
+<li><strong>Launch the Boolean Tool:</strong> Click on the
+<strong>Boolean operation</strong> icon in the PartDesign toolbar (two
+overlapping blue solids) or go to <strong>PartDesign &gt; Boolean
+operation</strong>.</li>
+<li><strong>Set the Operation:</strong> In the Tasks panel, ensure the
+operation type is set to <strong>Fuse</strong>.</li>
+<li><strong>Add Bodies:</strong> Click the <strong>Add body</strong>
+button, then click the independent body in the 3D viewport or the tree
+view. Repeat this for any additional bodies you want to include.</li>
+<li><strong>Confirm:</strong> Click <strong>OK</strong>. The selected
+geometry is now fused directly into your active Body feature tree.</li>
+</ol>
+<h3 id="method-3-creating-a-compound-non-destructive-grouping">Method 3:
+Creating a Compound (Non-Destructive Grouping)</h3>
+<p>If your bodies do not physically touch or you want them saved as a
+single entity without recalculating their intersecting geometry, you can
+create a Compound.</p>
+<ol type="1">
+<li>Open the <strong>Part</strong> workbench.</li>
+<li>Select all the independent bodies you want to group.</li>
+<li>Go to the top menu and select <strong>Part &gt; Compound &gt; Make
+Compound</strong>.</li>
+<li>A <code>Compound</code> object will be generated. This behaves as a
+single model for exporting to formats like STEP or STL, while keeping
+individual sub-shapes distinct.</li>
+</ol>
+<h3 id="exporting-your-unified-model">Exporting Your Unified Model</h3>
+<p>Once your bodies are combined using either a Fusion, PartDesign
+Boolean, or Compound:</p>
+<ol type="1">
+<li>Click on the resulting parent object (<code>Fusion</code>,
+<code>Body</code>, or <code>Compound</code>) in the tree view.</li>
+<li>Go to <strong>File &gt; Export</strong>.</li>
+<li>Choose your desired format (such as <strong>STL Mesh</strong> for 3D
+printing or <strong>STEP with colors</strong> for CAD exchange) and save
+the file.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-combine-multiple-bodies-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

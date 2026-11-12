@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Manage Part Hierarchies in FreeCAD Assembly4 - freecad</title>
+    <meta name="description" content="Managing part hierarchies in the FreeCAD Assembly4 workbench allows you to organize complex mechanical assemblies into logical, maintainable sub-assemblies and individual components. This article explains how Assembly4 handles hierarchical structures usin">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-manage-part-hierarchies-in-free-cad-assembly-4">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Manage Part Hierarchies in FreeCAD Assembly4 - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-manage-part-hierarchies-in-free-cad-assembly-4" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Managing part hierarchies in the FreeCAD Assembly4 workbench allows you to organize complex mechanical assemblies into logical, maintainable sub-assemblies and individual components. This article explains how Assembly4 handles hierarchical structures usin" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-manage-part-hierarchies-in-freecad-assembly4">How to
+Manage Part Hierarchies in FreeCAD Assembly4</h1>
+<p>Managing part hierarchies in the FreeCAD Assembly4 workbench allows
+you to organize complex mechanical assemblies into logical, maintainable
+sub-assemblies and individual components. This article explains how
+Assembly4 handles hierarchical structures using App::Part containers,
+how to establish parent-child relationships through Local Coordinate
+Systems (LCS), and the best practices for inserting, updating, and
+structuring nested assemblies within your FreeCAD document tree.</p>
+<h3 id="understanding-assembly4-architecture">Understanding Assembly4
+Architecture</h3>
+<p>Assembly4 does not use a traditional physics-based constraint solver.
+Instead, it positions parts geometrically by mapping a Local Coordinate
+System (LCS) on a child part directly to an LCS on a parent part or
+assembly.</p>
+<p>In this structure:</p>
+<ul>
+<li><strong>Root Assembly (<code>Model</code>):</strong> The primary
+container that holds the global coordinate system and top-level
+sub-assemblies or parts.</li>
+<li><strong>App::Part Containers:</strong> Standard FreeCAD Part
+containers used to encapsulate solid bodies, sketches, and their
+associated coordinate systems.</li>
+<li><strong>Sub-Assemblies:</strong> Standalone Assembly4
+<code>Model</code> containers that can be nested inside a parent
+<code>Model</code> to create multi-tiered hierarchies.</li>
+</ul>
+<h3 id="step-1-create-independent-sub-assemblies">Step 1: Create
+Independent Sub-Assemblies</h3>
+<p>To build a clean hierarchy, start from the bottom up by creating
+self-contained sub-assemblies in their own FreeCAD document files:</p>
+<ol type="1">
+<li>Create a new document and switch to the <strong>Assembly4</strong>
+workbench.</li>
+<li>Click <strong>New Model</strong> to insert the root
+<code>Model</code> container.</li>
+<li>Import or model individual parts within this document, placing each
+distinct solid in an <strong>App::Part</strong> container.</li>
+<li>Add a designated attachment LCS to the root of the sub-assembly
+(<code>Model</code>) or directly to the constituent parts using the
+<strong>New Coordinate System</strong> tool.</li>
+<li>Save the document with a descriptive name (e.g.,
+<code>Gearbox_SubAssembly.FCStd</code>).</li>
+</ol>
+<h3 id="step-2-establish-attachment-points-lcs">Step 2: Establish
+Attachment Points (LCS)</h3>
+<p>Proper hierarchy management relies entirely on defining intentional
+datum points:</p>
+<ol type="1">
+<li>Select the target face, vertex, or datum plane where components will
+connect.</li>
+<li>Click the <strong>New Coordinate System</strong> button in
+Assembly4.</li>
+<li>Use the coordinate system properties dialog to orient the LCS axes
+(X, Y, Z) so they align with your intended mating orientation.</li>
+<li>Name the LCS clearly (e.g., <code>LCS_Mounting_Hole</code> or
+<code>LCS_Base_Connection</code>) to avoid confusion when mapping links
+later.</li>
+</ol>
+<h3 id="step-3-insert-sub-assemblies-into-the-main-assembly">Step 3:
+Insert Sub-Assemblies into the Main Assembly</h3>
+<p>Once sub-assemblies are prepared, create the top-level assembly:</p>
+<ol type="1">
+<li>Create a new FreeCAD document and insert a <strong>New
+Model</strong> container.</li>
+<li>Save this document in the same working directory as your
+sub-assemblies.</li>
+<li>Click <strong>Insert a Part from an external file</strong>.</li>
+<li>Browse to your sub-assembly file and select the primary
+<code>Model</code> container to import.</li>
+<li>In the placement dialogue that appears:
+<ul>
+<li>Under <strong>Attachment Engine</strong>, choose
+<code>Asm4EE</code>.</li>
+<li>Under <strong>Attach to</strong>, select the parent LCS (such as the
+default <code>LCS_0</code> of the main assembly).</li>
+<li>Under <strong>Attachment LCS</strong>, select the corresponding LCS
+from your inserted sub-assembly.</li>
+</ul></li>
+<li>Click <strong>OK</strong>. The sub-assembly will now appear nested
+under the main assembly tree.</li>
+</ol>
+<h3 id="step-4-nesting-and-deep-hierarchies">Step 4: Nesting and Deep
+Hierarchies</h3>
+<p>To add further depth to your hierarchy:</p>
+<ul>
+<li><strong>Part within Sub-Assembly:</strong> You can insert parts
+directly inside a nested sub-assembly by opening the sub-assembly's
+native file, modifying the hierarchy there, and saving.</li>
+<li><strong>Sub-Assembly within Sub-Assembly:</strong> Assembly4
+supports importing sub-assemblies into other sub-assemblies before
+inserting that entire unit into the top-level model.</li>
+<li><strong>Document Tree Organization:</strong> Expand the
+<code>Model</code> tree view in the FreeCAD Combo View. You will see
+linked containers (App::Link). Expanding these links exposes the
+internal hierarchy of coordinate systems and bodies without cluttering
+the top-level workspace.</li>
+</ul>
+<h3 id="step-5-updating-and-maintaining-hierarchical-links">Step 5:
+Updating and Maintaining Hierarchical Links</h3>
+<p>When modifying parts within a hierarchy:</p>
+<ul>
+<li><strong>Propagating Changes:</strong> If you edit a part in a
+sub-assembly, return to the master assembly and click <strong>Recompute
+assembly</strong> (or use the shortcut <code>Ctrl+R</code>) to refresh
+the links.</li>
+<li><strong>Changing Attachments:</strong> To change where a nested
+component attaches, right-click the component link in the tree, select
+<strong>Edit Placement</strong>, and pick a new target LCS from the
+parent.</li>
+<li><strong>Managing File Paths:</strong> Assembly4 uses FreeCAD's
+<code>App::Link</code> mechanism. Keep all related files in the same
+directory or a structured sub-folder structure to ensure relative file
+paths remain intact across different machines.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-manage-part-hierarchies-in-free-cad-assembly-4';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

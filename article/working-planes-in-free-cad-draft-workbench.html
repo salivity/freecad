@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working Planes in FreeCAD Draft Workbench - freecad</title>
+    <meta name="description" content="In FreeCAD&#39;s Draft workbench, working planes are virtual two-dimensional surfaces placed within the three-dimensional environment to define where new geometric elements are drawn and manipulated. This article explains what working planes are, why they are">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/working-planes-in-free-cad-draft-workbench">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Working Planes in FreeCAD Draft Workbench - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/working-planes-in-free-cad-draft-workbench" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In FreeCAD&#39;s Draft workbench, working planes are virtual two-dimensional surfaces placed within the three-dimensional environment to define where new geometric elements are drawn and manipulated. This article explains what working planes are, why they are" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="working-planes-in-freecad-draft-workbench">Working Planes in
+FreeCAD Draft Workbench</h1>
+<p>In FreeCAD's Draft workbench, working planes are virtual
+two-dimensional surfaces placed within the three-dimensional environment
+to define where new geometric elements are drawn and manipulated. This
+article explains what working planes are, why they are essential for 2D
+drafting in a 3D CAD space, how to switch and align them to standard
+views or custom geometry, and how they interact with FreeCAD's snapping
+and coordinate systems.</p>
+<h2 id="what-is-a-working-plane">What is a Working Plane?</h2>
+<p>A working plane is a dynamic reference frame that establishes a local
+2D coordinate system—with its own X and Y axes—anywhere inside the 3D
+modeling space. When using drafting tools such as lines, wires,
+rectangles, or circles, the geometry needs an orientation to define its
+flat plane. The working plane serves as this drawing canvas, ensuring
+that clicks in the 3D view are translated accurately onto a designated
+2D orientation rather than floating ambiguously in 3D space.</p>
+<h2 id="how-working-planes-function">How Working Planes Function</h2>
+<p>When a Draft tool is active, FreeCAD projects user input directly
+onto the active working plane. Even if the camera view is rotated at an
+arbitrary angle, standard mouse clicks will snap to this virtual surface
+unless explicitly snapping to an off-plane object vertex.</p>
+<p>The active working plane is controlled via the Working Plane button
+located in the Draft tray (or the Draft toolbar). It dictates:</p>
+<ul>
+<li><strong>Drawing Coordinates:</strong> The coordinates shown in the
+numerical input fields (X, Y, Z) correspond to the active plane's local
+coordinate system.</li>
+<li><strong>Snapping Projection:</strong> If the "Snap to working plane"
+option is enabled, geometry snapped to existing points outside the plane
+will project flat onto the working plane.</li>
+<li><strong>Grid Placement:</strong> The visual drafting grid aligns
+directly with the currently active working plane, providing a visual cue
+for orientation and scale.</li>
+</ul>
+<h2 id="working-plane-modes-and-alignment">Working Plane Modes and
+Alignment</h2>
+<p>The Draft workbench provides several ways to define the working
+plane:</p>
+<ul>
+<li><strong>Auto:</strong> Automatically adjusts the plane based on user
+interactions. If you look straight at a standard view (Top, Front,
+Side), the plane aligns to that view. If you select a planar face before
+activating a tool, the plane snaps to that face.</li>
+<li><strong>Standard Orthographic Planes (Top, Front, Side):</strong>
+Locks the drawing surface to global planes: Top (XY), Front (XZ), or
+Side (YZ).</li>
+<li><strong>Align to Selection:</strong> Positions the working plane
+directly on a selected planar face of an existing 3D solid or mesh. The
+origin and orientation of the plane match the normal vector and edges of
+the selected face.</li>
+<li><strong>Align to View:</strong> Sets the working plane perpendicular
+to the current camera angle, using the screen's center as the coordinate
+origin.</li>
+<li><strong>Three Points:</strong> Defines a custom plane by picking
+three points in space: the first sets the origin, the second defines the
+X-axis, and the third defines the direction of the Y-axis.</li>
+</ul>
+<h2 id="working-plane-proxies">Working Plane Proxies</h2>
+<p>For complex projects requiring frequent shifts between custom angles,
+FreeCAD provides the <strong>Draft Working Plane Proxy</strong>. This
+tool saves the current position, orientation, and camera state of an
+active working plane as an object in the model tree. Clicking a proxy
+instantly restores its saved plane and alignment, eliminating the need
+to repeatedly reselect faces or reference points.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/working-planes-in-free-cad-draft-workbench';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

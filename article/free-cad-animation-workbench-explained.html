@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Animation Workbench Explained - freecad</title>
+    <meta name="description" content="The FreeCAD Animation workbench is an external add-on designed to create dynamic, timeline-based motion and kinematic simulations using parametric 3D CAD models. This article explores the primary purpose of the workbench, its key functionalities, and how">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-animation-workbench-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Animation Workbench Explained - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-animation-workbench-explained" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The FreeCAD Animation workbench is an external add-on designed to create dynamic, timeline-based motion and kinematic simulations using parametric 3D CAD models. This article explores the primary purpose of the workbench, its key functionalities, and how" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-animation-workbench-explained">FreeCAD Animation
+Workbench Explained</h1>
+<p>The FreeCAD Animation workbench is an external add-on designed to
+create dynamic, timeline-based motion and kinematic simulations using
+parametric 3D CAD models. This article explores the primary purpose of
+the workbench, its key functionalities, and how engineers and designers
+use it to visualize mechanical movements, simulate assemblies, and
+present design concepts.</p>
+<h3 id="primary-purpose-of-the-animation-workbench">Primary Purpose of
+the Animation Workbench</h3>
+<p>The main objective of the Animation workbench is to transform static
+CAD models into moving, functional representations. While standard
+FreeCAD workbenches focus on geometric modeling, parametric design, and
+static assemblies, the Animation workbench introduces the dimension of
+time. It allows users to define trajectories, rotations, and
+transformations for individual components or groups over a specified
+sequence.</p>
+<h3 id="key-capabilities-and-use-cases">Key Capabilities and Use
+Cases</h3>
+<h4 id="1-kinematic-and-motion-verification">1. Kinematic and Motion
+Verification</h4>
+<p>Engineers use the Animation workbench to test how parts interact when
+moving. By defining linear translations, rotational joints, or custom
+paths, users can check for mechanical interferences, evaluate ranges of
+motion, and confirm that moving linkages operate as intended without
+unexpected collisions.</p>
+<h4 id="2-assembly-and-disassembly-sequences">2. Assembly and
+Disassembly Sequences</h4>
+<p>The workbench is commonly used to create animated assembly guides and
+exploded views. By reversing the assembly steps along a timeline, users
+can clearly illustrate how complex machines are put together or
+serviced, making it a valuable tool for technical documentation and
+manufacturing instructions.</p>
+<h4 id="3-timeline-and-keyframe-management">3. Timeline and Keyframe
+Management</h4>
+<p>At the core of the workbench is a timeline-based control system.
+Users set keyframes to define specific positions, orientations, or
+states of an object at designated moments. The software calculates the
+intermediate frames using interpolation, producing smooth transitions
+and coordinated multi-part movement.</p>
+<h4 id="4-camera-paths-and-visual-presentations">4. Camera Paths and
+Visual Presentations</h4>
+<p>Beyond moving parts, the Animation workbench allows control over the
+virtual camera. Designers can animate camera orbits, pans, and
+fly-throughs to showcase a product from multiple angles. This feature is
+particularly useful for generating high-quality visual presentations and
+video exports for clients and non-technical stakeholders.</p>
+<h3 id="how-it-fits-into-the-freecad-ecosystem">How It Fits into the
+FreeCAD Ecosystem</h3>
+<p>Unlike constraint-heavy assembly workbenches (such as Assembly3 or
+Assembly4), the Animation workbench focuses heavily on choreographing
+motion for visual inspection, presentation, and functional playback. It
+bridges the gap between pure mechanical design and dynamic digital
+prototyping, providing FreeCAD users with an integrated way to
+demonstrate real-world behavior directly from their 3D CAD data.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-animation-workbench-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

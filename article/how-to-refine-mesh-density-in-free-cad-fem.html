@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Refine Mesh Density in FreeCAD FEM - freecad</title>
+    <meta name="description" content="Refining the mesh density around high-stress concentrations—such as holes, fillets, notches, and sharp corners—is essential for obtaining accurate stress results in FreeCAD&#39;s Finite Element Method (FEM) workbench without unnecessarily increasing computati">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-refine-mesh-density-in-free-cad-fem">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Refine Mesh Density in FreeCAD FEM - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-refine-mesh-density-in-free-cad-fem" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Refining the mesh density around high-stress concentrations—such as holes, fillets, notches, and sharp corners—is essential for obtaining accurate stress results in FreeCAD&#39;s Finite Element Method (FEM) workbench without unnecessarily increasing computati" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-refine-mesh-density-in-freecad-fem">How to Refine Mesh
+Density in FreeCAD FEM</h1>
+<p>Refining the mesh density around high-stress concentrations—such as
+holes, fillets, notches, and sharp corners—is essential for obtaining
+accurate stress results in FreeCAD's Finite Element Method (FEM)
+workbench without unnecessarily increasing computational time. This
+guide explains how to use local mesh refinement tools, primarily through
+the Gmsh mesher and the "FEM Mesh Region" feature, to target critical
+areas and achieve precise convergence in your stress analysis.</p>
+<h3 id="step-1-set-up-the-base-fem-mesh-with-gmsh">Step 1: Set Up the
+Base FEM Mesh with Gmsh</h3>
+<p>While FreeCAD supports both Netgen and Gmsh, <strong>Gmsh</strong>
+offers the most reliable and flexible control over local mesh
+sizing.</p>
+<ol type="1">
+<li>Switch to the <strong>FEM Workbench</strong>.</li>
+<li>Select your 3D solid model in the tree view.</li>
+<li>Click the <strong>FEM mesh from shape by Gmsh</strong> button in the
+toolbar.</li>
+<li>Set an appropriate <strong>Max element size</strong> for the overall
+part to keep the baseline node count reasonable.</li>
+<li>Click <strong>Apply</strong> to generate the initial global
+mesh.</li>
+</ol>
+<h3 id="step-2-create-a-local-mesh-refinement-object">Step 2: Create a
+Local Mesh Refinement Object</h3>
+<p>To refine specific areas, use the <strong>FEM Mesh Region</strong>
+tool.</p>
+<ol type="1">
+<li>In the tree view, select the Gmsh mesh object you just created.</li>
+<li>Click the <strong>FEM mesh region</strong> icon (or go to
+<code>Mesh &gt; FEM mesh region</code>).</li>
+<li>In the Task panel, you will see a field for <strong>Characteristic
+length</strong> (element size). Enter a value significantly smaller than
+the global mesh size (e.g., half to one-quarter of the global size,
+depending on the severity of the stress gradient).</li>
+</ol>
+<h3 id="step-3-assign-geometry-to-the-refinement-region">Step 3: Assign
+Geometry to the Refinement Region</h3>
+<ol type="1">
+<li>With the Mesh Region Task panel still open, click the
+<strong>Add</strong> button.</li>
+<li>In the 3D viewport, select the specific geometric elements located
+in the high-stress zone:
+<ul>
+<li><strong>Faces:</strong> Ideal for internal cylindrical surfaces of
+holes or the curved surfaces of fillets.</li>
+<li><strong>Edges:</strong> Ideal for sharp transitions or perimeter
+areas where stress peaks.</li>
+<li><strong>Vertices:</strong> Useful for localized point-load
+applications or extreme corners.</li>
+</ul></li>
+<li>Click <strong>OK</strong> to confirm the selection and close the
+panel.</li>
+</ol>
+<h3 id="step-4-re-evaluate-and-regenerate-the-mesh">Step 4: Re-evaluate
+and Regenerate the Mesh</h3>
+<ol type="1">
+<li>Double-click the parent <strong>Gmsh</strong> object in the tree
+view to reopen its settings.</li>
+<li>Click <strong>Apply</strong> to re-run the meshing algorithm.</li>
+<li>FreeCAD and Gmsh will regenerate the mesh, creating a smooth size
+transition from the fine elements around the selected features to the
+coarser elements in the bulk of the component.</li>
+<li>Inspect the mesh visually in the viewport to ensure the transition
+is gradual and that no distorted (high aspect ratio) elements are
+present.</li>
+</ol>
+<h3 id="step-5-verify-mesh-quality-and-convergence">Step 5: Verify Mesh
+Quality and Convergence</h3>
+<ol type="1">
+<li>Run your FEM solver (CalculiX) with the refined mesh.</li>
+<li>Check the equivalent von Mises stress distribution around the
+refined zones.</li>
+<li>Perform a <strong>mesh convergence study</strong>: Reduce the
+element size in the Mesh Region tool by an additional 25–50% and
+re-solve. If the peak stress value changes by less than 2–5%, your mesh
+density is sufficiently refined for engineering accuracy.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-refine-mesh-density-in-free-cad-fem';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

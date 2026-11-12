@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD A2plus Fixed and Floating Constraints Guide - freecad</title>
+    <meta name="description" content="This guide explains how to define and manage fixed and floating components within the FreeCAD A2plus workbench to create fully defined, error-free mechanical assemblies. You will learn the conceptual difference between fixed and floating parts, how to loc">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-a-2-plus-fixed-and-floating-constraints-guide">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD A2plus Fixed and Floating Constraints Guide - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-a-2-plus-fixed-and-floating-constraints-guide" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to define and manage fixed and floating components within the FreeCAD A2plus workbench to create fully defined, error-free mechanical assemblies. You will learn the conceptual difference between fixed and floating parts, how to loc" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-a2plus-fixed-and-floating-constraints-guide">FreeCAD
+A2plus Fixed and Floating Constraints Guide</h1>
+<p>This guide explains how to define and manage fixed and floating
+components within the FreeCAD A2plus workbench to create fully defined,
+error-free mechanical assemblies. You will learn the conceptual
+difference between fixed and floating parts, how to lock a base part's
+position in 3D space, how to assign geometric constraints to movable
+components, and how to resolve common solver conflicts.</p>
+<h3 id="understanding-fixed-vs-floating-in-a2plus">Understanding Fixed
+vs. Floating in A2plus</h3>
+<p>In the A2plus assembly environment, rigid bodies are treated as
+either fixed or floating:</p>
+<ul>
+<li><strong>Fixed Parts:</strong> These act as the ground reference for
+the entire assembly. A fixed part has all six degrees of freedom
+(translation along and rotation around the X, Y, and Z axes) locked
+relative to the global coordinate system. Every assembly requires at
+least one fixed component to prevent the solver from shifting the entire
+model arbitrarily in 3D space.</li>
+<li><strong>Floating Parts:</strong> These components enter the assembly
+with six degrees of freedom. They move dynamically when you apply
+geometric constraints (such as point-to-point, plane-to-plane, or
+axis-to-axis) connecting them to fixed parts or other constrained
+components.</li>
+</ul>
+<h3 id="how-to-define-a-fixed-part">How to Define a Fixed Part</h3>
+<p>When creating an assembly, establish your root or chassis component
+as fixed before adding other parts.</p>
+<ol type="1">
+<li>Import your part into the A2plus assembly container using the
+<strong>Add a part from external file</strong> tool.</li>
+<li>Select the part either in the <strong>Tree View</strong> or by
+clicking directly on it in the <strong>3D View</strong>.</li>
+<li>Open the <strong>Data</strong> tab in the <strong>Property
+View</strong> panel (usually located at the bottom left).</li>
+<li>Locate the property named <code>fixedPosition</code>.</li>
+<li>Change the value from <code>false</code> to <code>true</code>.</li>
+<li>Alternatively, select the part and click the <strong>Toggle
+freeze/fix status of selected part</strong> button (represented by a
+padlock icon) in the A2plus toolbar.</li>
+</ol>
+<p>A small lock icon will appear next to the part in the Tree View,
+confirming that its position is static.</p>
+<h3 id="how-to-define-and-constrain-floating-parts">How to Define and
+Constrain Floating Parts</h3>
+<p>All newly imported components are floating by default
+(<code>fixedPosition</code> set to <code>false</code>). To position
+floating parts correctly relative to fixed parts:</p>
+<ol type="1">
+<li><strong>Pre-position the part:</strong> Click the floating part and
+use the A2plus <strong>Move/Rotate part</strong> tool to roughly orient
+it near its intended location. This helps the solver find the correct
+mathematical solution when multiple geometric orientations are
+possible.</li>
+<li><strong>Select geometry:</strong> Hold <code>Ctrl</code> and select
+the reference geometries on both parts (e.g., two circular edges for a
+concentric alignment, or two planar faces for a flush mate). One
+selection must belong to a fixed/already constrained part, and the other
+must belong to the floating part.</li>
+<li><strong>Apply the constraint:</strong> Click the appropriate
+constraint button on the A2plus toolbar (such as
+<strong>PointIdentity</strong>, <strong>PlaneCoincident</strong>, or
+<strong>CircleCenterIdentity</strong>).</li>
+<li><strong>Configure properties:</strong> In the constraint dialog that
+appears, adjust options like offset distance, constraint flip/direction,
+or angle, then click <strong>Accept</strong>.</li>
+<li><strong>Solve the assembly:</strong> Click the <strong>Solve
+assembly</strong> button (the orange calculator icon) to calculate and
+update the floating part’s position.</li>
+</ol>
+<h3 id="best-practices-to-prevent-solver-failures">Best Practices to
+Prevent Solver Failures</h3>
+<ul>
+<li><strong>Only fix one base part:</strong> Avoid setting multiple
+parts to <code>fixedPosition = true</code> unless they have zero
+constraints between them. Constraining two fixed parts to each other
+will cause an over-constraint error.</li>
+<li><strong>Apply constraints progressively:</strong> Add one constraint
+at a time and run the solver. This makes it immediately obvious which
+constraint caused a failure if the solver throws an inconsistency
+warning.</li>
+<li><strong>Check remaining degrees of freedom:</strong> If a floating
+part moves unexpectedly or fails to update, check the Tree View for
+missing constraints. A part must be fully constrained by restricting all
+six degrees of freedom, or left partially floating if it represents a
+movable kinematic mechanism.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-a-2-plus-fixed-and-floating-constraints-guide';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

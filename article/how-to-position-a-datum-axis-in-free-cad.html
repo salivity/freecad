@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Position a Datum Axis in FreeCAD - freecad</title>
+    <meta name="description" content="A Datum Axis in FreeCAD is an essential reference geometry tool used in the PartDesign Workbench to guide modeling operations, create rotational features, and position complex objects. This guide explains what a Datum Axis is, why it is critical for robus">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-position-a-datum-axis-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Position a Datum Axis in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-position-a-datum-axis-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="A Datum Axis in FreeCAD is an essential reference geometry tool used in the PartDesign Workbench to guide modeling operations, create rotational features, and position complex objects. This guide explains what a Datum Axis is, why it is critical for robus" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-position-a-datum-axis-in-freecad">How to Position a Datum
+Axis in FreeCAD</h1>
+<p>A Datum Axis in FreeCAD is an essential reference geometry tool used
+in the PartDesign Workbench to guide modeling operations, create
+rotational features, and position complex objects. This guide explains
+what a Datum Axis is, why it is critical for robust parametric modeling,
+and the step-by-step process to create, align, and position one
+accurately using references and attachment offsets.</p>
+<h3 id="what-is-a-datum-axis">What is a Datum Axis?</h3>
+<p>A Datum Axis is an independent, non-physical reference line tied to
+an active body in FreeCAD's PartDesign workbench. Unlike physical edges,
+a Datum Axis extends infinitely in parametric space, though it is
+visualized as a bounded line segment in the 3D viewport.</p>
+<p>Engineers and modelers use Datum Axes as:</p>
+<ul>
+<li>Rotation axes for Revolutions and Grooves.</li>
+<li>Central reference lines for Polar Patterns.</li>
+<li>Direction vectors for linear extensions, lofts, or sweeps.</li>
+<li>Alignment references to avoid the Topological Naming Problem (TNP),
+ensuring that downstream features reference stable parametric geometry
+rather than fragile generated edges.</li>
+</ul>
+<h3 id="how-to-create-a-datum-axis">How to Create a Datum Axis</h3>
+<p>Before positioning a Datum Axis, you must initialize it within your
+active working body:</p>
+<ol type="1">
+<li>Open your project in the <strong>PartDesign Workbench</strong>.</li>
+<li>Ensure the target <strong>Body</strong> is active (double-click the
+Body in the tree view so its text turns bold).</li>
+<li>Optionally, select existing geometry (a vertex, edge, or face) in
+the 3D view to use as an initial reference.</li>
+<li>Click the <strong>Create a datum axis</strong> button (represented
+by a yellow line with an arrow) on the PartDesign toolbar, or navigate
+to <strong>Part Design &gt; Create a datum axis</strong> from the top
+menu.</li>
+</ol>
+<h3 id="positioning-the-datum-axis-using-references">Positioning the
+Datum Axis Using References</h3>
+<p>Once created, FreeCAD opens the <strong>Datum Axis
+parameters</strong> dialog in the Combo View Tasks panel. The axis
+positions itself automatically based on the selected references and the
+chosen <strong>Attachment Mode</strong>.</p>
+<p>You can select up to four references (faces, edges, vertices, or
+coordinate planes) to determine its placement:</p>
+<ul>
+<li><strong>Two Vertices:</strong> Selecting two points draws the axis
+directly through both vertices.</li>
+<li><strong>Cylindrical Face:</strong> Selecting a cylinder or hole
+automatically aligns the axis along the centerline/axis of revolution of
+that feature.</li>
+<li><strong>Planar Face:</strong> Selecting a flat plane creates an axis
+perpendicular (normal) to that surface.</li>
+<li><strong>Edge:</strong> Selecting a straight line or circular edge
+aligns the axis either collinearly along the edge or concentric to the
+circle.</li>
+</ul>
+<p>If FreeCAD does not choose your intended orientation automatically,
+open the <strong>Attachment mode</strong> dropdown in the task panel and
+manually select the appropriate alignment method (such as <em>Two
+points</em>, <em>Concentric</em>, or <em>Normal to face</em>).</p>
+<h3 id="fine-tuning-position-with-attachment-offsets">Fine-Tuning
+Position with Attachment Offsets</h3>
+<p>If your reference geometry places the axis nearby but not at the
+exact target location, use Attachment Offsets:</p>
+<ol type="1">
+<li>In the <strong>Datum Axis parameters</strong> panel, expand the
+<strong>Attachment Offset</strong> section.</li>
+<li>Enter precise numeric adjustments for translation along the local
+<strong>X, Y, and Z</strong> axes to shift the axis into place.</li>
+<li>Enter angular values for <strong>Yaw, Pitch, and Roll</strong> to
+tilt or rotate the axis relative to its attached position.</li>
+<li>Click <strong>OK</strong> to confirm and lock the positioning.</li>
+</ol>
+<p>To modify the position later, double-click the Datum Axis in the Tree
+View to reopen the parameters panel, or modify the
+<code>Attachment Offset</code> values directly under the
+<strong>Data</strong> tab in the Property View.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-position-a-datum-axis-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

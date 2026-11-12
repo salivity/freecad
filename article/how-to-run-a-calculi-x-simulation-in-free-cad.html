@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Run a CalculiX Simulation in FreeCAD - freecad</title>
+    <meta name="description" content="This article provides a concise, step-by-step guide to setting up and executing a Finite Element Analysis (FEA) using the CalculiX solver directly within FreeCAD. By utilizing FreeCAD&#39;s built-in FEM (Finite Element Method) workbench, you will learn how to">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-run-a-calculi-x-simulation-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Run a CalculiX Simulation in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-run-a-calculi-x-simulation-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a concise, step-by-step guide to setting up and executing a Finite Element Analysis (FEA) using the CalculiX solver directly within FreeCAD. By utilizing FreeCAD&#39;s built-in FEM (Finite Element Method) workbench, you will learn how to" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-run-a-calculix-simulation-in-freecad">How to Run a
+CalculiX Simulation in FreeCAD</h1>
+<p>This article provides a concise, step-by-step guide to setting up and
+executing a Finite Element Analysis (FEA) using the CalculiX solver
+directly within FreeCAD. By utilizing FreeCAD's built-in FEM (Finite
+Element Method) workbench, you will learn how to prepare a 3D CAD model,
+define materials, apply mechanical constraints and loads, generate a
+mesh, run the CalculiX solver, and inspect the resulting stresses and
+displacements.</p>
+<h2 id="1-prepare-the-model-and-open-the-fem-workbench">1. Prepare the
+Model and Open the FEM Workbench</h2>
+<ol type="1">
+<li>Open your 3D model in FreeCAD. Ensure your model is a clean, single
+solid object (typically created via the <strong>Part Design</strong> or
+<strong>Part</strong> workbench).</li>
+<li>In the workbench dropdown menu at the top of the interface, switch
+to the <strong>FEM</strong> workbench.</li>
+</ol>
+<h2 id="2-create-an-analysis-container">2. Create an Analysis
+Container</h2>
+<ol type="1">
+<li>Click on the <strong>Analysis container</strong> icon (a yellow
+folder with a red "A") or select <strong>Model &gt; Analysis
+container</strong> from the top menu.</li>
+<li>An <strong>Analysis</strong> container will appear in your tree
+view. All subsequent materials, constraints, meshes, and solver objects
+must reside inside this container to function properly.</li>
+</ol>
+<h2 id="3-assign-material-properties">3. Assign Material Properties</h2>
+<ol type="1">
+<li>Select your 3D part in the tree view.</li>
+<li>Click the <strong>Material for solid</strong> button (looks like a
+red ball with an "M").</li>
+<li>Choose a predefined material (such as Steel-Generic or
+Aluminum-Generic) from the dropdown list, or manually enter the Young's
+Modulus and Poisson's Ratio.</li>
+<li>Click <strong>OK</strong> to add the material to the Analysis
+container.</li>
+</ol>
+<h2 id="4-apply-boundary-conditions-constraints-and-loads">4. Apply
+Boundary Conditions (Constraints and Loads)</h2>
+<p>You must secure the part and apply external forces to run a static
+structural simulation:</p>
+<ul>
+<li><strong>Fixed Constraint:</strong> Select the face, edge, or vertex
+you want to lock in place, then click <strong>Constraint fixed</strong>
+(padlock icon). Click <strong>Add</strong> to confirm the geometry
+selection, then click <strong>OK</strong>.</li>
+<li><strong>Force / Load:</strong> Select the face where the load is
+applied, then click <strong>Constraint force</strong> (arrow icon).
+Enter the load magnitude in Newtons, set the direction (or reverse it if
+needed), click <strong>Add</strong> to include the selected face, and
+click <strong>OK</strong>.</li>
+</ul>
+<h2 id="5-mesh-the-geometry">5. Mesh the Geometry</h2>
+<ol type="1">
+<li>Select your solid part in the tree view.</li>
+<li>Click <strong>FEM mesh from shape by Netgen</strong> (or use the
+Gmsh tool if configured).</li>
+<li>In the task panel, choose the element order (typically
+<strong>Second Order</strong> for structural analysis) and adjust the
+<strong>Max size</strong> of the elements based on the model
+dimensions.</li>
+<li>Click <strong>Apply</strong> to generate the mesh, then click
+<strong>OK</strong>.</li>
+</ol>
+<h2 id="6-run-the-calculix-solver">6. Run the CalculiX Solver</h2>
+<ol type="1">
+<li>Expand your <strong>Analysis</strong> container in the tree view.
+FreeCAD automatically includes a default <strong>CalculiX</strong>
+solver object (typically named <code>CalculiXccxTools</code>).</li>
+<li>Double-click the <strong>CalculiX</strong> object in the tree view
+to open its task panel.</li>
+<li>Choose your <strong>Analysis type</strong> (e.g., Static).</li>
+<li>Click <strong>Write .inp file</strong> to generate the input deck
+for CalculiX.</li>
+<li>Click <strong>Run CalculiX</strong>. The console output will display
+the solver's progress. Once it outputs "CalculiX done without error,"
+click <strong>Close</strong>.</li>
+</ol>
+<h2 id="7-view-and-interpret-results">7. View and Interpret Results</h2>
+<ol type="1">
+<li>Once the run completes, a new results object (e.g.,
+<code>CCX_Results</code> or a pipeline object) will appear in the tree
+view inside the Analysis container.</li>
+<li>Double-click the results object to view the results panel.</li>
+<li>Select which output field to display, such as <strong>Von Mises
+stress</strong> or <strong>Displacement magnitude</strong>.</li>
+<li>Adjust the visual scaling to view exaggerated deformations or
+display contour plots across the surface of the mesh.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-run-a-calculi-x-simulation-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

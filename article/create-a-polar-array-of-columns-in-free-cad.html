@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Polar Array of Columns in FreeCAD - freecad</title>
+    <meta name="description" content="Creating a circular arrangement of architectural columns in FreeCAD is a straightforward process that combines the BIM (or Arch) Workbench with the Draft Workbench. This guide walks you through modeling an initial column, positioning it relative to a cent">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/create-a-polar-array-of-columns-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Create a Polar Array of Columns in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/create-a-polar-array-of-columns-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Creating a circular arrangement of architectural columns in FreeCAD is a straightforward process that combines the BIM (or Arch) Workbench with the Draft Workbench. This guide walks you through modeling an initial column, positioning it relative to a cent" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="create-a-polar-array-of-columns-in-freecad">Create a Polar Array
+of Columns in FreeCAD</h1>
+<p>Creating a circular arrangement of architectural columns in FreeCAD
+is a straightforward process that combines the BIM (or Arch) Workbench
+with the Draft Workbench. This guide walks you through modeling an
+initial column, positioning it relative to a central rotation point, and
+applying the Draft Polar Array tool to generate evenly spaced duplicates
+around a full or partial circle.</p>
+<h3 id="step-1-create-the-base-column">Step 1: Create the Base
+Column</h3>
+<ol type="1">
+<li>Open FreeCAD and create a new document.</li>
+<li>Switch to the <strong>BIM Workbench</strong> (or <strong>Arch
+Workbench</strong> in older FreeCAD versions).</li>
+<li>Click the <strong>Column</strong> tool to place an architectural
+column into your 3D view.</li>
+<li>Select the newly created column in the Tree view and use the
+<strong>Data</strong> tab in the Property panel to set its dimensions,
+such as <strong>Height</strong>, <strong>Length</strong>, and
+<strong>Width</strong> (or diameter if using a circular profile).</li>
+</ol>
+<h3 id="step-2-offset-the-column-from-the-center">Step 2: Offset the
+Column from the Center</h3>
+<p>The Polar Array tool rotates objects around a center point
+(defaulting to the origin: (0, 0, 0)). To set the radius of your
+circular array:</p>
+<ol type="1">
+<li>Select the column in the Tree view.</li>
+<li>In the <strong>Data</strong> tab, expand the
+<strong>Placement</strong> property, then expand
+<strong>Base</strong>.</li>
+<li>Set the <strong>X</strong> or <strong>Y</strong> coordinate to your
+desired radius (for example, set <code>X = 3000 mm</code> to place the
+column 3 meters away from the center). Leave the center point at (0, 0,
+0).</li>
+</ol>
+<h3 id="step-3-generate-the-polar-array">Step 3: Generate the Polar
+Array</h3>
+<ol type="1">
+<li>Switch to the <strong>Draft Workbench</strong>.</li>
+<li>Select your column in the Tree view.</li>
+<li>Click the <strong>Array</strong> dropdown menu in the toolbar and
+select <strong>Polar Array</strong> (or click the dedicated Polar Array
+icon).</li>
+<li>A dialog or task panel may appear prompting you to enter settings,
+or it will generate a default array immediately:
+<ul>
+<li><strong>Polar Angle</strong>: Set the total span of the circle
+(enter <code>360</code> for a complete circular layout).</li>
+<li><strong>Number of Elements</strong>: Enter the total number of
+columns you want in the array.</li>
+<li><strong>Center</strong>: Set the coordinates around which the array
+rotates (usually <code>(0, 0, 0)</code>).</li>
+</ul></li>
+</ol>
+<h3 id="step-4-fine-tune-the-array-properties">Step 4: Fine-Tune the
+Array Properties</h3>
+<p>Once created, the array remains fully parametric. You can modify it
+at any time:</p>
+<ol type="1">
+<li>Select the <strong>Array</strong> object in the Tree view.</li>
+<li>In the <strong>Data</strong> tab below, locate the array properties:
+<ul>
+<li><strong>Number Polar</strong>: Change the total count of
+columns.</li>
+<li><strong>Interval Angle</strong>: Adjust the angle spacing if using
+custom increments.</li>
+<li><strong>Axis</strong>: Ensure the rotation axis is set to the Z-axis
+(<code>(0, 0, 1)</code>) for horizontal circular arrangements.</li>
+</ul></li>
+<li>If you edit the dimensions of the original column inside the array,
+all instances will update automatically.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/create-a-polar-array-of-columns-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

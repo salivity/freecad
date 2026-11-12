@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Custom Parametric Features in FreeCAD Python - freecad</title>
+    <meta name="description" content="This guide provides a practical walkthrough for building custom parametric features in FreeCAD using its Python Feature framework (FeaturePython). You will learn how to create a custom document object, attach a Python proxy class to define dynamic propert">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/create-custom-parametric-features-in-free-cad-python">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Create Custom Parametric Features in FreeCAD Python - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/create-custom-parametric-features-in-free-cad-python" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide provides a practical walkthrough for building custom parametric features in FreeCAD using its Python Feature framework (FeaturePython). You will learn how to create a custom document object, attach a Python proxy class to define dynamic propert" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="create-custom-parametric-features-in-freecad-python">Create
+Custom Parametric Features in FreeCAD Python</h1>
+<p>This guide provides a practical walkthrough for building custom
+parametric features in FreeCAD using its Python Feature framework
+(<code>FeaturePython</code>). You will learn how to create a custom
+document object, attach a Python proxy class to define dynamic
+properties, implement recompute algorithms using the <code>Part</code>
+module, and bind view providers to handle 3D visualization inside
+FreeCAD.</p>
+<hr />
+<h3 id="understanding-the-featurepython-architecture">Understanding the
+FeaturePython Architecture</h3>
+<p>FreeCAD separates an object's functional data from its graphical
+representation. A custom parametric feature relies on two core
+components:</p>
+<ol type="1">
+<li><strong>Document Object (<code>Part::FeaturePython</code>)</strong>:
+The C++ object that lives inside the FreeCAD document tree, holds data
+properties, and serializes to the file.</li>
+<li><strong>Proxy Class</strong>: A standard Python class attached to
+the document object's <code>Proxy</code> attribute. It handles property
+definitions, state changes, and geometry calculation during document
+recomputations.</li>
+</ol>
+<p>To support the graphical interface, a corresponding
+<strong>ViewProvider Proxy</strong> attaches to the object's graphical
+node (<code>ViewObject</code>) to define icons, display modes, and color
+properties.</p>
+<hr />
+<h3 id="step-1-define-the-feature-proxy-class">Step 1: Define the
+Feature Proxy Class</h3>
+<p>The proxy class requires an initialization method to define
+user-editable properties and an <code>execute</code> method that FreeCAD
+runs whenever a property changes.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> Part</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ParametricBox:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, obj):</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Initialize the custom object and attach properties.&quot;&quot;&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        obj.Proxy <span class="op">=</span> <span class="va">self</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add custom parametric properties: (Type, Name, Group, Tooltip)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        obj.addProperty(<span class="st">&quot;App::PropertyLength&quot;</span>, <span class="st">&quot;Length&quot;</span>, <span class="st">&quot;Dimensions&quot;</span>, <span class="st">&quot;Length of the box&quot;</span>).Length <span class="op">=</span> <span class="fl">20.0</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        obj.addProperty(<span class="st">&quot;App::PropertyLength&quot;</span>, <span class="st">&quot;Width&quot;</span>, <span class="st">&quot;Dimensions&quot;</span>, <span class="st">&quot;Width of the box&quot;</span>).Width <span class="op">=</span> <span class="fl">15.0</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        obj.addProperty(<span class="st">&quot;App::PropertyLength&quot;</span>, <span class="st">&quot;Height&quot;</span>, <span class="st">&quot;Dimensions&quot;</span>, <span class="st">&quot;Height of the box&quot;</span>).Height <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> execute(<span class="va">self</span>, obj):</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Called by FreeCAD whenever the object or its dependencies recompute.&quot;&quot;&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Validate values to prevent invalid geometry</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> obj.Length <span class="op">&lt;=</span> <span class="dv">0</span> <span class="kw">or</span> obj.Width <span class="op">&lt;=</span> <span class="dv">0</span> <span class="kw">or</span> obj.Height <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Generate geometry using the Part kernel</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        obj.Shape <span class="op">=</span> Part.makeBox(obj.Length, obj.Width, obj.Height)</span></code></pre></div>
+<hr />
+<h3 id="step-2-define-the-viewprovider-proxy">Step 2: Define the
+ViewProvider Proxy</h3>
+<p>To integrate with the 3D scene and the tree view, define a view
+provider class:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ViewProviderParametricBox:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, vobj):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Initialize the view provider.&quot;&quot;&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        vobj.Proxy <span class="op">=</span> <span class="va">self</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> getIcon(<span class="va">self</span>):</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Return the XPM or path to an SVG icon (optional).&quot;&quot;&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;&quot;&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">            /* XPM */</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="st">            static const char *box_icon[] = {</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;16 16 2 1&quot;,</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;  c None&quot;,</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;. c #0000FF&quot;,</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;   ..........   &quot;,</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;  .        ..   &quot;,</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot; .        . .   &quot;,</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;..........  .   &quot;,</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;.        .  .   &quot;,</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;.        .  .   &quot;,</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;.        . ..   &quot;,</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;.        .. .   &quot;,</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;..........  .   &quot;,</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot; .        . .   &quot;,</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;  .        ..   &quot;,</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;   ..........   &quot;,</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;                &quot;,</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;                &quot;,</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;                &quot;,</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;                &quot;</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="st">            };</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="st">        &quot;&quot;&quot;</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> attach(<span class="va">self</span>, vobj):</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Setup default display modes.&quot;&quot;&quot;</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ViewObject <span class="op">=</span> vobj</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> updateData(<span class="va">self</span>, fp, prop):</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Called when a property of the data object changes.&quot;&quot;&quot;</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> getDisplayModes(<span class="va">self</span>, vobj):</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Return available display modes.&quot;&quot;&quot;</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [<span class="st">&quot;Shaded&quot;</span>, <span class="st">&quot;Wireframe&quot;</span>, <span class="st">&quot;Points&quot;</span>]</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> getDefaultDisplayMode(<span class="va">self</span>):</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;Shaded&quot;</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> setDisplayMode(<span class="va">self</span>, mode):</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> mode</span></code></pre></div>
+<hr />
+<h3 id="step-3-instantiate-and-register-the-feature">Step 3: Instantiate
+and Register the Feature</h3>
+<p>Combine the data object and view provider inside an execution script
+or workbench tool:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_parametric_box(doc<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> doc <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        doc <span class="op">=</span> App.ActiveDocument <span class="kw">or</span> App.newDocument()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the core geometry object</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    obj <span class="op">=</span> doc.addObject(<span class="st">&quot;Part::FeaturePython&quot;</span>, <span class="st">&quot;ParametricBox&quot;</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    ParametricBox(obj)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Attach the GUI view provider if running with graphical interface</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> App.GuiUp:</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="im">import</span> FreeCADGui <span class="im">as</span> Gui</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        ViewProviderParametricBox(obj.ViewObject)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    doc.recompute()</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> obj</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the creation</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    create_parametric_box()</span></code></pre></div>
+<hr />
+<h3 id="key-properties-reference">Key Properties Reference</h3>
+<p>FreeCAD provides standard property types that determine how values
+appear in the Data tab:</p>
+<ul>
+<li><code>App::PropertyLength</code>: Floating-point value rendered with
+unit suffixes (e.g., <code>mm</code>, <code>in</code>).</li>
+<li><code>App::PropertyAngle</code>: Value representing an angle,
+automatically converted to degrees/radians.</li>
+<li><code>App::PropertyInteger</code>: Standard integer property.</li>
+<li><code>App::PropertyBool</code>: Boolean checkbox.</li>
+<li><code>App::PropertyString</code>: Text input field.</li>
+<li><code>App::PropertyLink</code>: Allows the feature to reference
+another document object as an input.</li>
+<li><code>App::PropertyEnumeration</code>: Dropdown list of string
+choices.</li>
+</ul>
+<h3 id="serialization-and-persistence">Serialization and
+Persistence</h3>
+<p>When saving and reloading documents, Python objects must handle
+serialization:</p>
+<ol type="1">
+<li>Ensure the Python module containing your class is in FreeCAD's
+Python path (e.g., standard macros folder or an active Workbench
+directory).</li>
+<li>Avoid storing non-serializable objects (such as open file handles or
+complex transient states) directly in <code>self</code>. Always read
+from and write to the <code>obj</code> properties, as FreeCAD
+automatically serializes <code>obj.PropertiesList</code>.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/create-custom-parametric-features-in-free-cad-python';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

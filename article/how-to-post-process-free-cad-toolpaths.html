@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Post-Process FreeCAD Toolpaths - freecad</title>
+    <meta name="description" content="Post-processing in FreeCAD converts generic internal toolpaths generated in the CAM (formerly Path) workbench into machine-specific G-code dialects tailored to your CNC controller, such as GRBL, LinuxCNC, Mach3, or Fanuc. This guide explains how to select">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-post-process-free-cad-toolpaths">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Post-Process FreeCAD Toolpaths - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-post-process-free-cad-toolpaths" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Post-processing in FreeCAD converts generic internal toolpaths generated in the CAM (formerly Path) workbench into machine-specific G-code dialects tailored to your CNC controller, such as GRBL, LinuxCNC, Mach3, or Fanuc. This guide explains how to select" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-post-process-freecad-toolpaths">How to Post-Process
+FreeCAD Toolpaths</h1>
+<p>Post-processing in FreeCAD converts generic internal toolpaths
+generated in the CAM (formerly Path) workbench into machine-specific
+G-code dialects tailored to your CNC controller, such as GRBL, LinuxCNC,
+Mach3, or Fanuc. This guide explains how to select the correct
+post-processor for your machine, configure custom export arguments, run
+the post-processing engine to output ready-to-run G-code files, and
+locate the underlying Python scripts for deeper customization.</p>
+<h3 id="1-select-the-post-processor-in-the-job-setup">1. Select the
+Post-Processor in the Job Setup</h3>
+<p>Machine dialect configuration is primarily controlled within the
+FreeCAD Job object:</p>
+<ol type="1">
+<li>Open your project containing completed CAM operations and
+double-click the <strong>Job</strong> object in the tree view to open
+the <strong>Job Edit</strong> panel.</li>
+<li>Navigate to the <strong>Output</strong> tab.</li>
+<li>Locate the <strong>Processor</strong> dropdown menu. FreeCAD
+includes numerous pre-installed post-processors for various platforms
+(e.g., <code>grbl</code>, <code>linuxcnc</code>, <code>centroid</code>,
+<code>marlin</code>, <code>haas</code>, <code>mach3_4</code>).</li>
+<li>Select the script corresponding to your controller hardware and
+firmware.</li>
+<li>In the <strong>Output File</strong> field, define a default output
+destination and file extension (such as <code>.nc</code>,
+<code>.gcode</code>, <code>.tap</code>, or <code>.ngc</code>) required
+by your machine control software.</li>
+<li>Click <strong>OK</strong> to save the job settings.</li>
+</ol>
+<h3 id="2-configure-processor-arguments">2. Configure Processor
+Arguments</h3>
+<p>Many FreeCAD post-processors accept optional arguments to alter the
+generated code structure:</p>
+<ol type="1">
+<li>Return to the <strong>Output</strong> tab of your
+<strong>Job</strong> settings.</li>
+<li>In the <strong>Arguments</strong> field, enter any flags supported
+by your chosen processor. Common arguments include:
+<ul>
+<li><code>--no-show-editor</code>: Prevents FreeCAD from opening the
+generated G-code in an integrated text editor upon completion.</li>
+<li><code>--precision=N</code>: Sets floating-point coordinate precision
+to <code>N</code> decimal places.</li>
+<li><code>--inches</code> or <code>--metric</code>: Forces units
+regardless of the document's native display units.</li>
+<li><code>--no-comments</code>: Strips human-readable comments to save
+memory on older controllers.</li>
+</ul></li>
+<li>Multiple arguments can be separated by spaces.</li>
+</ol>
+<h3 id="3-generate-the-machine-dialect-code">3. Generate the Machine
+Dialect Code</h3>
+<p>Once the operations and processor settings are defined:</p>
+<ol type="1">
+<li>Select the <strong>Job</strong> object or select specific operations
+within the Job in the Tree view.</li>
+<li>Click the <strong>Post Process</strong> button on the CAM workbench
+toolbar (represented by a green page icon with a yellow gear or sheet of
+code). Alternatively, choose <strong>CAM &gt; Post Process</strong> from
+the top menu.</li>
+<li>A file save dialog will appear. Confirm the file destination, name,
+and file extension.</li>
+<li>Click <strong>Save</strong>. FreeCAD parses the internal motion
+vectors and tool commands, translating them into the chosen controller
+dialect.</li>
+<li>If the editor was not suppressed, review the generated G-code in the
+pop-up window to verify header commands (e.g., <code>G17</code>,
+<code>G21</code>, <code>G90</code>), tool changes (<code>M6</code>), and
+spindle triggers (<code>M3</code>).</li>
+</ol>
+<h3 id="4-customizing-post-processor-scripts">4. Customizing
+Post-Processor Scripts</h3>
+<p>FreeCAD's post-processors are written in Python, allowing full access
+to edit existing dialects or develop custom machine scripts:</p>
+<ol type="1">
+<li>Locate the default post-processor scripts in the FreeCAD
+installation directory under <code>Mod/CAM/Path/Post/scripts</code> (or
+<code>Mod/Path/PathScripts/post</code> in older versions).</li>
+<li>Custom or modified scripts should be placed inside your local
+FreeCAD user directory:
+<ul>
+<li><strong>Linux:</strong>
+<code>~/.local/share/FreeCAD/CAM/Post/</code></li>
+<li><strong>Windows:</strong>
+<code>%APPDATA%\FreeCAD\CAM\Post\</code></li>
+<li><strong>macOS:</strong>
+<code>~/Library/Application Support/FreeCAD/CAM/Post/</code></li>
+</ul></li>
+<li>Any <code>.py</code> file placed in the user directory will
+automatically appear in the Job setup processor selection list,
+overriding system defaults with the same name.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-post-process-free-cad-toolpaths';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

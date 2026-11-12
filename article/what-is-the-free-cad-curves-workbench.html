@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is the FreeCAD Curves Workbench? - freecad</title>
+    <meta name="description" content="This article provides an overview of the FreeCAD Curves workbench, an advanced community-developed add-on tailored for complex surface modeling and Non-Uniform Rational B-Splines (NURBS) curve manipulation. It explores the workbench&#39;s primary purpose, key">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/what-is-the-free-cad-curves-workbench">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Is the FreeCAD Curves Workbench? - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/what-is-the-free-cad-curves-workbench" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of the FreeCAD Curves workbench, an advanced community-developed add-on tailored for complex surface modeling and Non-Uniform Rational B-Splines (NURBS) curve manipulation. It explores the workbench&#39;s primary purpose, key" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-is-the-freecad-curves-workbench">What Is the FreeCAD Curves
+Workbench?</h1>
+<p>This article provides an overview of the FreeCAD Curves workbench, an
+advanced community-developed add-on tailored for complex surface
+modeling and Non-Uniform Rational B-Splines (NURBS) curve manipulation.
+It explores the workbench's primary purpose, key features, and how it
+bridges the gap between traditional parametric solid modeling and
+complex freeform shape generation.</p>
+<h2 id="the-core-purpose-of-the-curves-workbench">The Core Purpose of
+the Curves Workbench</h2>
+<p>FreeCAD’s built-in workbenches, such as PartDesign and Part, are
+optimized for prismatic, parametric solid modeling—operations based on
+standard extrusions, pockets, revolves, and basic chamfers. However,
+designing aerodynamic surfaces, ergonomic consumer products, or organic
+shapes requires sophisticated mathematical curve and surface
+control.</p>
+<p>The Curves workbench was created to bring advanced NURBS curve
+generation and complex boundary surface design to FreeCAD. It gives
+designers fine control over continuous mathematical curves, enabling the
+creation of smooth, aesthetically pleasing, and aerodynamically
+efficient shapes that default solid modeling tools cannot achieve.</p>
+<h2 id="key-features-and-capabilities">Key Features and
+Capabilities</h2>
+<p>The Curves workbench provides a specialized toolkit categorized into
+curve manipulation, surface creation, and surface analysis:</p>
+<ul>
+<li><strong>Gordon Surfaces:</strong> One of the most powerful features
+of the workbench is the Gordon surface tool. It allows users to generate
+a continuous, smooth 3D surface from an intersecting network (grid) of
+guide curves, maintaining curvature continuity across the entire surface
+patch.</li>
+<li><strong>Curve Creation and Modification:</strong> The workbench
+includes tools to interpolate points, draw parameterized B-splines,
+approximate complex geometries, split or join existing curves, and
+generate curves by intersecting faces.</li>
+<li><strong>Curve Projection:</strong> Users can project 2D or 3D curves
+directly onto complex curved faces, an essential operation for laying
+out trim lines, decals, or secondary features on curved hulls and
+bodies.</li>
+<li><strong>Surface Blending and Continuity:</strong> It provides
+functions to blend distinct surfaces while preserving continuity (G1
+tangency and G2 curvature), preventing visible seams and structural
+stress concentrations.</li>
+<li><strong>Profile Sweeping and Skinning:</strong> Unlike basic lofting
+tools, the Curves workbench supports advanced sweeping methods, such as
+swept surfaces guided by multiple rails and spines with precise
+orientation controls.</li>
+<li><strong>Discretization and Analysis:</strong> The workbench includes
+curvature comb tools to visually inspect curve and surface quality,
+ensuring there are no unwanted inflections or flattening in critical
+regions.</li>
+</ul>
+<h2 id="common-use-cases">Common Use Cases</h2>
+<p>The Curves workbench is widely used across engineering and design
+fields that demand organic or fluid geometry:</p>
+<ul>
+<li><strong>Automotive and Aerospace Design:</strong> Crafting body
+panels, fairings, wings, and aerofoil geometries that require strict
+aerodynamic profiles.</li>
+<li><strong>Marine Architecture:</strong> Lofting smooth ship and boat
+hulls from waterlines, buttocks, and station curves.</li>
+<li><strong>Ergonomic Product Design:</strong> Developing comfortable
+handgrips, mouse housings, and wearable technology.</li>
+<li><strong>Reverse Engineering:</strong> Converting raw point clouds or
+mesh cross-sections into editable, high-quality CAD surfaces.</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<p>The FreeCAD Curves workbench transforms FreeCAD from a purely
+mechanical solid modeler into a viable tool for industrial design and
+complex surface styling. By providing intuitive access to advanced NURBS
+math, it enables creators to build flowing, high-continuity surfaces
+that seamlessly integrate into wider parametric assemblies.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/what-is-the-free-cad-curves-workbench';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

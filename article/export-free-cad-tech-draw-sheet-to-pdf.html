@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export FreeCAD TechDraw Sheet to PDF - freecad</title>
+    <meta name="description" content="This guide provides a quick and reliable walkthrough for exporting technical drawings created in FreeCAD&#39;s TechDraw workbench into a standard PDF format. Converting your TechDraw sheets to PDF ensures your technical layouts, dimensions, and annotations ar">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/export-free-cad-tech-draw-sheet-to-pdf">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Export FreeCAD TechDraw Sheet to PDF - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/export-free-cad-tech-draw-sheet-to-pdf" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide provides a quick and reliable walkthrough for exporting technical drawings created in FreeCAD&#39;s TechDraw workbench into a standard PDF format. Converting your TechDraw sheets to PDF ensures your technical layouts, dimensions, and annotations ar" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="export-freecad-techdraw-sheet-to-pdf">Export FreeCAD TechDraw
+Sheet to PDF</h1>
+<p>This guide provides a quick and reliable walkthrough for exporting
+technical drawings created in FreeCAD's TechDraw workbench into a
+standard PDF format. Converting your TechDraw sheets to PDF ensures your
+technical layouts, dimensions, and annotations are locked into a
+universally accessible format suitable for manufacturing, archiving, or
+sharing with clients.</p>
+<h3 id="method-1-using-the-techdraw-export-tool-recommended">Method 1:
+Using the TechDraw Export Tool (Recommended)</h3>
+<p>The most direct way to export a drawing is using the dedicated
+TechDraw export function, which preserves exact vector quality and
+scale.</p>
+<ol type="1">
+<li><strong>Open your document</strong> in FreeCAD and ensure the
+<strong>TechDraw Workbench</strong> is active.</li>
+<li>In the <strong>Tree View</strong> (left-hand panel), select the
+specific <strong>Page</strong> object you want to export. Double-click
+it to make sure it is currently displayed in the main viewport.</li>
+<li>Click the <strong>Export Page as PDF</strong> icon on the TechDraw
+toolbar (represented by a document icon with a red PDF label).
+Alternatively, navigate to the top menu and select <strong>TechDraw &gt;
+Export Page as PDF</strong>.</li>
+<li>In the file dialog box, choose the folder where you want to save the
+document.</li>
+<li>Enter a file name and click <strong>Save</strong>.</li>
+</ol>
+<h3 id="method-2-using-the-main-menu-export">Method 2: Using the Main
+Menu Export</h3>
+<p>If the TechDraw toolbar is hidden, you can achieve the same result
+via the standard application menu.</p>
+<ol type="1">
+<li>Select the drawing <strong>Page</strong> in the Tree View.</li>
+<li>Go to <strong>File &gt; Export PDF...</strong> in the top navigation
+bar.</li>
+<li>Choose your destination directory, name the file, and confirm by
+clicking <strong>Save</strong>.</li>
+</ol>
+<h3 id="method-3-using-print-to-pdf">Method 3: Using Print to PDF</h3>
+<p>If you need custom print resolution, page margins, or color
+adjustments not handled automatically by direct export, use the print
+engine.</p>
+<ol type="1">
+<li>Make sure your TechDraw sheet is open and in focus.</li>
+<li>Go to <strong>File &gt; Print...</strong> or press
+<code>Ctrl + P</code> (<code>Cmd + P</code> on macOS).</li>
+<li>Select your system's <strong>Print to PDF</strong> driver (such as
+<em>Microsoft Print to PDF</em> on Windows, or the native PDF dropdown
+on macOS/Linux).</li>
+<li>Verify that the paper size matches your TechDraw sheet template (for
+example, A4, A3, or ANSI Letter).</li>
+<li>Click <strong>Print</strong> and specify the output file
+location.</li>
+</ol>
+<h3 id="tips-for-best-results">Tips for Best Results</h3>
+<ul>
+<li><strong>Update Views Before Exporting:</strong> Ensure all
+projection views, dimensions, and section cuts are up to date by
+clicking the <strong>Redraw Page</strong> button
+(<code>TechDraw &gt; Redraw Page</code>) before exporting.</li>
+<li><strong>Line Weights and Colors:</strong> Verify your line width
+settings in <strong>Edit &gt; Preferences &gt; TechDraw &gt; Dimensions
+/ Colors</strong> prior to export so line weights render legibly in the
+final document.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/export-free-cad-tech-draw-sheet-to-pdf';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

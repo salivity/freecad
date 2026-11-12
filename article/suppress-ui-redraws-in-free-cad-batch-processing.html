@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suppress UI Redraws in FreeCAD Batch Processing - freecad</title>
+    <meta name="description" content="Executing heavy automated modeling or batch operations in FreeCAD can cause severe performance bottlenecks if the graphical interface redraws after every change. This article explains how to temporarily disable user interface updates in FreeCAD using Pyth">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/suppress-ui-redraws-in-free-cad-batch-processing">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Suppress UI Redraws in FreeCAD Batch Processing - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/suppress-ui-redraws-in-free-cad-batch-processing" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Executing heavy automated modeling or batch operations in FreeCAD can cause severe performance bottlenecks if the graphical interface redraws after every change. This article explains how to temporarily disable user interface updates in FreeCAD using Pyth" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="suppress-ui-redraws-in-freecad-batch-processing">Suppress UI
+Redraws in FreeCAD Batch Processing</h1>
+<p>Executing heavy automated modeling or batch operations in FreeCAD can
+cause severe performance bottlenecks if the graphical interface redraws
+after every change. This article explains how to temporarily disable
+user interface updates in FreeCAD using Python, defer document
+recalculations, and run scripts in headless mode to maximize processing
+speed.</p>
+<h3 id="method-1-disable-qt-window-updates">Method 1: Disable Qt Window
+Updates</h3>
+<p>FreeCAD’s user interface is built on Qt. You can directly disable
+painting events on the main application window through Python using
+FreeCAD's built-in Qt binding. Always wrap your processing loop inside a
+<code>try...finally</code> block to ensure that interface updates are
+re-enabled even if an error terminates the script prematurely.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCADGui</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>main_window <span class="op">=</span> FreeCADGui.getMainWindow()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Disable all UI repaints</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>main_window.setUpdatesEnabled(<span class="va">False</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Run heavy batch processing loop here</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Perform geometry generation or modification</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Re-enable repaints and force an update</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    main_window.setUpdatesEnabled(<span class="va">True</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    main_window.update()</span></code></pre></div>
+<h3 id="method-2-defer-document-recomputes">Method 2: Defer Document
+Recomputes</h3>
+<p>A common cause of automatic viewport and tree view redraws is calling
+<code>doc.recompute()</code> inside a loop. Each recompute forces
+FreeCAD to update dependencies, visual representations, and 3D Coin3D
+scenegraphs.</p>
+<p>To prevent unnecessary overhead:</p>
+<ol type="1">
+<li>Add or modify all geometry, properties, and constraints inside your
+loop without calling <code>recompute()</code>.</li>
+<li>Call <code>doc.recompute()</code> a single time outside the loop
+after all batch items are processed.</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> App.ActiveDocument</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Avoid doc.recompute() inside the loop</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    box <span class="op">=</span> doc.addObject(<span class="st">&quot;Part::Box&quot;</span>, <span class="ss">f&quot;Box_</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    box.Length <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    box.Width <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    box.Height <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Recompute once at the end</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>doc.recompute()</span></code></pre></div>
+<h3 id="method-3-run-scripts-in-headless-mode">Method 3: Run Scripts in
+Headless Mode</h3>
+<p>If the batch process does not require user interaction, the most
+efficient approach is to bypass the graphical user interface
+entirely:</p>
+<ul>
+<li><p><strong>Command-line executable:</strong> Run your script using
+<code>freecadcmd</code> (on Linux/macOS) or <code>FreeCADCmd.exe</code>
+(on Windows) instead of the standard FreeCAD binary:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">freecadcmd</span> my_batch_script.py</span></code></pre></div></li>
+<li><p><strong>Python module import:</strong> When using FreeCAD as a
+library in standard Python scripts, import only the core module
+<code>FreeCAD</code> (often aliased as <code>App</code>). Avoid
+importing <code>FreeCADGui</code>. Without the GUI module initialized,
+FreeCAD operates entirely in memory with zero rendering
+overhead.</p></li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/suppress-ui-redraws-in-free-cad-batch-processing';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

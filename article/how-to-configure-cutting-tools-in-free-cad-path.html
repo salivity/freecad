@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Configure Cutting Tools in FreeCAD Path - freecad</title>
+    <meta name="description" content="This guide explains the function of Tool Controllers in FreeCAD&#39;s Path (CAM) workbench and details how to define, configure, and assign cutting tools for CNC machining projects. You will learn the difference between physical tool geometry and operational">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-configure-cutting-tools-in-free-cad-path">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Configure Cutting Tools in FreeCAD Path - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-configure-cutting-tools-in-free-cad-path" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains the function of Tool Controllers in FreeCAD&#39;s Path (CAM) workbench and details how to define, configure, and assign cutting tools for CNC machining projects. You will learn the difference between physical tool geometry and operational" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-configure-cutting-tools-in-freecad-path">How to Configure
+Cutting Tools in FreeCAD Path</h1>
+<p>This guide explains the function of Tool Controllers in FreeCAD's
+Path (CAM) workbench and details how to define, configure, and assign
+cutting tools for CNC machining projects. You will learn the difference
+between physical tool geometry and operational cutting parameters,
+followed by a step-by-step procedure to set up tools, feeds, and speeds
+inside your machining jobs.</p>
+<h3 id="what-is-a-tool-controller">What is a Tool Controller?</h3>
+<p>In FreeCAD Path, a <strong>Tool Controller</strong> acts as the
+operational bridge between a physical cutting tool (a ToolBit) and a
+machining operation. While a ToolBit defines only the physical
+dimensions of the cutter—such as diameter, flute length, and tool
+shape—the Tool Controller defines how that tool is run during a specific
+job.</p>
+<p>This separation allows you to use a single physical tool under
+multiple conditions. For example, a 6mm flat endmill can have one Tool
+Controller configured with aggressive feeds and speeds for roughing, and
+another Tool Controller configured with slower feeds for fine finishing,
+or different settings tailored for cutting aluminum versus wood.</p>
+<h3 id="understanding-toolbits-and-the-toolbit-library">Understanding
+ToolBits and the ToolBit Library</h3>
+<p>FreeCAD uses a modern system called <strong>ToolBits</strong> to
+store tool geometry:</p>
+<ul>
+<li><strong>Shapes:</strong> Parametric models (e.g., endmill, ballnose,
+v-bit) defining the cutter's profile.</li>
+<li><strong>ToolBits:</strong> Specific instances of a shape with set
+dimensions (e.g., a 1/4" flat endmill with a 20mm cutting edge).</li>
+<li><strong>ToolBit Libraries:</strong> Collections of ToolBits
+organized into directories or projects.</li>
+</ul>
+<h3 id="step-by-step-creating-and-configuring-a-tool">Step-by-Step:
+Creating and Configuring a Tool</h3>
+<h4 id="1-create-a-new-toolbit">1. Create a New ToolBit</h4>
+<ol type="1">
+<li>Switch to the <strong>Path</strong> (or <strong>CAM</strong>)
+workbench in FreeCAD.</li>
+<li>Open the <strong>ToolBit Dock</strong> via the menu:
+<code>CAM</code> &gt; <code>ToolBit Dock</code> (or click the ToolBit
+Library Manager icon).</li>
+<li>Click the <strong>Create ToolBit</strong> button.</li>
+<li>Select a template shape that matches your cutter (such as
+<code>endmill.fcstd</code>).</li>
+<li>Enter a clear name for the tool (e.g.,
+<code>6mm_2Flute_FlatEndmill</code>).</li>
+<li>Adjust the geometric properties in the property panel:
+<ul>
+<li><strong>Diameter:</strong> The outer cutting diameter.</li>
+<li><strong>CuttingEdgeHeight:</strong> The length of the flutes.</li>
+<li><strong>Length:</strong> The overall extension of the tool from the
+collet.</li>
+<li><strong>Flutes:</strong> Number of flutes (used for chip load
+calculations).</li>
+</ul></li>
+<li>Save the ToolBit to your local library.</li>
+</ol>
+<h4 id="2-add-the-tool-to-a-job-via-a-tool-controller">2. Add the Tool
+to a Job via a Tool Controller</h4>
+<ol type="1">
+<li>Create or open a <strong>Path Job</strong> (<code>CAM</code> &gt;
+<code>Job</code>).</li>
+<li>In the Job Edit dialog, navigate to the <strong>Tools</strong>
+tab.</li>
+<li>Click <strong>Add</strong> to browse your ToolBit Library.</li>
+<li>Select the ToolBit you created and confirm. FreeCAD will
+automatically generate a <strong>Tool Controller</strong> for this tool
+inside your Job tree.</li>
+</ol>
+<h4 id="3-configure-machining-parameters-in-the-tool-controller">3.
+Configure Machining Parameters in the Tool Controller</h4>
+<p>Once the Tool Controller is added to your job:</p>
+<ol type="1">
+<li>Double-click the newly created <strong>Tool Controller</strong> in
+the Model tree (located under your Job).</li>
+<li>Set the operational machining parameters:
+<ul>
+<li><strong>Spindle Speed:</strong> The rotational speed in RPM.</li>
+<li><strong>Spindle Direction:</strong> Forward (clockwise) or
+Reverse.</li>
+<li><strong>Horizontal Feed (Feed Rate):</strong> The speed at which the
+tool moves across the X/Y plane during cutting moves.</li>
+<li><strong>Vertical Feed (Plunge Rate):</strong> The speed at which the
+tool moves downward into the material along the Z-axis.</li>
+<li><strong>Tool Number:</strong> The slot number corresponding to your
+CNC machine's automatic tool changer (ATC) or manual tool-change
+routine.</li>
+</ul></li>
+<li>Click <strong>OK</strong> to save the settings.</li>
+</ol>
+<h3 id="assigning-tool-controllers-to-operations">Assigning Tool
+Controllers to Operations</h3>
+<p>When you create a machining operation (such as Profile, Pocket Shape,
+or Adaptive):</p>
+<ol type="1">
+<li>Open the operation settings panel.</li>
+<li>In the <strong>Tool Controller</strong> drop-down menu, select the
+configured controller for the task.</li>
+<li>The operation will inherit the feeds, speeds, and tool geometry
+specified by that controller, ensuring the generated G-code accurately
+reflects your cutting parameters.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-configure-cutting-tools-in-free-cad-path';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

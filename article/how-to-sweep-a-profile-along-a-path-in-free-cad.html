@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Sweep a Profile Along a Path in FreeCAD - freecad</title>
+    <meta name="description" content="Sweeping in FreeCAD allows you to generate complex 3D geometry by extruding a 2D profile along an open or closed trajectory path. This guide covers the complete process of preparing your sketches, using the primary sweep tools in both the Part Design and">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-sweep-a-profile-along-a-path-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Sweep a Profile Along a Path in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-sweep-a-profile-along-a-path-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Sweeping in FreeCAD allows you to generate complex 3D geometry by extruding a 2D profile along an open or closed trajectory path. This guide covers the complete process of preparing your sketches, using the primary sweep tools in both the Part Design and" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-sweep-a-profile-along-a-path-in-freecad">How to Sweep a
+Profile Along a Path in FreeCAD</h1>
+<p>Sweeping in FreeCAD allows you to generate complex 3D geometry by
+extruding a 2D profile along an open or closed trajectory path. This
+guide covers the complete process of preparing your sketches, using the
+primary sweep tools in both the Part Design and Part workbenches, and
+resolving common errors like self-intersections.</p>
+<h2 id="1-prepare-the-sketches">1. Prepare the Sketches</h2>
+<p>To create a clean sweep, you must construct two separate sketches on
+intersecting or perpendicular planes: the cross-section profile and the
+trajectory path.</p>
+<ol type="1">
+<li><strong>Create the Trajectory (Path):</strong>
+<ul>
+<li>Create a new sketch on a standard plane (e.g., the XY-plane).</li>
+<li>Draw the path using lines, arcs, or B-splines.</li>
+<li>Ensure there are no sharp, acute corners that could cause geometry
+to overlap. Close the sketch.</li>
+</ul></li>
+<li><strong>Create the Cross-Section (Profile):</strong>
+<ul>
+<li>Create a second sketch on a plane perpendicular to the start of the
+path (e.g., the XZ-plane).</li>
+<li>Draw the closed shape you wish to sweep (such as a circle,
+rectangle, or custom shape).</li>
+<li>Constrain the center or an edge of the profile directly to the
+starting vertex of the path sketch using the <strong>Coincident</strong>
+constraint or external geometry.</li>
+<li>Close the sketch.</li>
+</ul></li>
+</ol>
+<h2 id="2-method-1-using-the-part-design-workbench-additive-pipe">2.
+Method 1: Using the Part Design Workbench (Additive Pipe)</h2>
+<p>In parametric modeling with the Part Design workbench, the sweep
+operation is called the <strong>Additive Pipe</strong>.</p>
+<ol type="1">
+<li>In the tree view, select the sketch representing your
+<strong>profile</strong>.</li>
+<li>Click the <strong>Additive Pipe</strong> icon on the toolbar (or
+select <strong>Part Design &gt; Create an additive feature &gt; Additive
+Pipe</strong>).</li>
+<li>In the Task panel on the left, locate the <strong>Path along to
+sweep</strong> section.</li>
+<li>Click the <strong>Object</strong> button, then select the sketch
+representing your <strong>path</strong> from the 3D view or the tree
+view.</li>
+<li>Choose your <strong>Orientation mode</strong>:
+<ul>
+<li><strong>Standard:</strong> Keeps the profile at a constant angle
+relative to the path.</li>
+<li><strong>Fixed:</strong> Maintains the original orientation of the
+sketch plane along the sweep.</li>
+<li><strong>Frenet:</strong> Calculates orientation based on path
+curvature (best for 3D splines).</li>
+</ul></li>
+<li>Click <strong>OK</strong> to generate the solid.</li>
+</ol>
+<h2 id="3-method-2-using-the-part-workbench-sweep-utility">3. Method 2:
+Using the Part Workbench (Sweep Utility)</h2>
+<p>If you are not working inside a Part Design Body, you can use the
+direct <strong>Sweep</strong> tool in the Part workbench.</p>
+<ol type="1">
+<li>Switch to the <strong>Part Workbench</strong>.</li>
+<li>Click the <strong>Utility to sweep</strong> icon (or choose
+<strong>Part &gt; Sweep...</strong>).</li>
+<li>In the Sweep dialog:
+<ul>
+<li>Select your profile sketch from the <strong>Available
+profiles</strong> list and click the right arrow (<code>&gt;</code>) to
+move it to the <strong>Selected profiles</strong> box.</li>
+<li>Click the <strong>Sweep Path</strong> button, then click on the path
+lines directly in the 3D view.</li>
+<li>Check the <strong>Create solid</strong> checkbox to ensure a solid
+object is generated instead of a hollow shell.</li>
+<li>Check <strong>Frenet</strong> if following a 3D curved path to
+prevent twisting.</li>
+</ul></li>
+<li>Click <strong>OK</strong> to execute the sweep.</li>
+</ol>
+<h2 id="4-best-practices-and-troubleshooting">4. Best Practices and
+Troubleshooting</h2>
+<ul>
+<li><strong>Avoid Self-Intersection:</strong> If the profile is wider
+than the radius of a curve along the path, the geometry will overlap on
+the inside corner, causing the operation to fail. Increase your bend
+radiuses or reduce the profile dimensions.</li>
+<li><strong>Anchor the Profile:</strong> Ensure the profile is
+physically attached to the path at the start point. A disconnected
+profile can cause unexpected warping or orientation errors.</li>
+<li><strong>Keep Profiles Closed:</strong> If your cross-section is not
+a closed wire, FreeCAD will generate a surface sheet instead of a solid
+object.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-sweep-a-profile-along-a-path-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

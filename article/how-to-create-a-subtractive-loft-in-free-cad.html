@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Create a Subtractive Loft in FreeCAD - freecad</title>
+    <meta name="description" content="A subtractive loft in FreeCAD allows you to carve a complex, transitioning cavity out of an existing solid body by interpolating between two or more cross-sectional profiles. This guide covers the essential steps to prepare your base geometry, position yo">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-create-a-subtractive-loft-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Create a Subtractive Loft in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-create-a-subtractive-loft-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="A subtractive loft in FreeCAD allows you to carve a complex, transitioning cavity out of an existing solid body by interpolating between two or more cross-sectional profiles. This guide covers the essential steps to prepare your base geometry, position yo" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-create-a-subtractive-loft-in-freecad">How to Create a
+Subtractive Loft in FreeCAD</h1>
+<p>A subtractive loft in FreeCAD allows you to carve a complex,
+transitioning cavity out of an existing solid body by interpolating
+between two or more cross-sectional profiles. This guide covers the
+essential steps to prepare your base geometry, position your sketch
+profiles, and use the Subtractive Loft tool in the Part Design workbench
+to generate a clean, customized cut through your model.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Before generating a subtractive loft, ensure you meet the following
+conditions:</p>
+<ul>
+<li>You are working within the <strong>Part Design</strong>
+workbench.</li>
+<li>You have an active <strong>Body</strong> containing a base solid
+(such as a Pad or Revolution) to cut into.</li>
+<li>You have at least two closed, non-intersecting
+<strong>Sketches</strong> positioned on different planes or faces along
+the intended path of the cut.</li>
+</ul>
+<hr />
+<h3 id="step-1-prepare-the-cross-section-sketches">Step 1: Prepare the
+Cross-Section Sketches</h3>
+<ol type="1">
+<li>Create or select your first sketch on a face or datum plane where
+the cut will begin. Ensure the sketch geometry is fully closed.</li>
+<li>Create a second sketch (and any subsequent sketches) along the path
+where the loft should travel. You can place these sketches on parallel
+faces, offset datum planes, or angled datum planes.</li>
+<li>Exit the sketcher for all profiles so that only the 3D model view is
+active.</li>
+</ol>
+<hr />
+<h3 id="step-2-initialize-the-subtractive-loft">Step 2: Initialize the
+Subtractive Loft</h3>
+<ol type="1">
+<li>In the <strong>Tree View</strong>, select the first sketch you want
+to use as the start of the cut.</li>
+<li>In the top toolbar, click the <strong>Subtractive Loft</strong> icon
+(represented by an orange transitional shape being cut away from a
+block), or go to <strong>Part Design &gt; Subtractive Loft</strong> from
+the top menu.</li>
+<li>The <strong>Loft Parameters</strong> dialog will appear in the
+<strong>Tasks</strong> panel on the left.</li>
+</ol>
+<hr />
+<h3 id="step-3-add-profile-sections">Step 3: Add Profile Sections</h3>
+<ol type="1">
+<li>Under the <strong>Sections</strong> list in the Tasks panel, click
+the <strong>Add Section</strong> button.</li>
+<li>In the 3D view, click an edge of the second sketch you want the loft
+to transition into. Its name will now appear in the list.</li>
+<li>Repeat this process for any additional sketches along the path,
+selecting them in sequential order.</li>
+<li>If you accidentally select the wrong sketch, highlight it in the
+list and click <strong>Remove Section</strong>.</li>
+</ol>
+<hr />
+<h3 id="step-4-configure-loft-settings-and-finalize">Step 4: Configure
+Loft Settings and Finalize</h3>
+<ol type="1">
+<li><strong>Ruled Surface:</strong> Check this option if you want
+straight, linear transitions between sketches instead of smooth, curved
+transitions.</li>
+<li><strong>Closed:</strong> Check this if you are creating a
+closed-loop cut that loops back from the final sketch to the first.</li>
+<li>Preview the cut in the 3D view to verify that the geometry does not
+self-intersect or invert.</li>
+<li>Click <strong>OK</strong> to apply the feature.</li>
+</ol>
+<hr />
+<h3 id="best-practices-for-error-free-lofts">Best Practices for
+Error-Free Lofts</h3>
+<ul>
+<li><strong>Vertex Counts:</strong> Lofts generate most reliably when
+the connecting sketches share a similar number of vertices and a similar
+overall shape.</li>
+<li><strong>Orientation:</strong> Ensure that sketches are oriented
+logically along the direction of the cut; extreme twisting between
+profiles can cause geometry kernel errors.</li>
+<li><strong>Datum Planes:</strong> Use datum planes rather than model
+faces to attach your secondary sketches to prevent topological naming
+issues if the underlying base solid changes.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-create-a-subtractive-loft-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

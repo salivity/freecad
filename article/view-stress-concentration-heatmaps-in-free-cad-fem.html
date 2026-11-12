@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Stress Concentration Heatmaps in FreeCAD FEM - freecad</title>
+    <meta name="description" content="Viewing stress concentration heatmaps in FreeCAD FEM involves running your finite element analysis, accessing the post-processing tools, and displaying the stress tensor fields—most commonly von Mises stress—on a color-mapped 3D gradient. This guide expla">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/view-stress-concentration-heatmaps-in-free-cad-fem">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="View Stress Concentration Heatmaps in FreeCAD FEM - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/view-stress-concentration-heatmaps-in-free-cad-fem" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Viewing stress concentration heatmaps in FreeCAD FEM involves running your finite element analysis, accessing the post-processing tools, and displaying the stress tensor fields—most commonly von Mises stress—on a color-mapped 3D gradient. This guide expla" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="view-stress-concentration-heatmaps-in-freecad-fem">View Stress
+Concentration Heatmaps in FreeCAD FEM</h1>
+<p>Viewing stress concentration heatmaps in FreeCAD FEM involves running
+your finite element analysis, accessing the post-processing tools, and
+displaying the stress tensor fields—most commonly von Mises stress—on a
+color-mapped 3D gradient. This guide explains how to transition from a
+solved simulation to a clear visual heatmap, customize the stress range
+to highlight critical stress concentrations, and use post-processing
+pipelines for advanced data visualization.</p>
+<h3 id="step-1-run-the-solver-and-generate-results">Step 1: Run the
+Solver and Generate Results</h3>
+<ol type="1">
+<li>Switch to the <strong>FEM Workbench</strong> using the workbench
+dropdown menu.</li>
+<li>In the tree view, locate your analysis container.</li>
+<li>Select your solver object (such as <strong>SolverCalculiX</strong>)
+and click the <strong>Run Solver</strong> button (yellow icon with a
+green play arrow) in the toolbar.</li>
+<li>Click <strong>Write .inp file</strong>, then click <strong>Run
+CalculiX</strong>. Once finished, close the solver control dialog.</li>
+<li>A result object (typically named <code>CCX_Results</code>) will
+appear in the tree view under your analysis container.</li>
+</ol>
+<h3 id="step-2-display-the-built-in-result-object">Step 2: Display the
+Built-In Result Object</h3>
+<p>The quickest way to view a stress heatmap is through the standard
+result object:</p>
+<ol type="1">
+<li>Double-click the <strong>CCX_Results</strong> object in the tree
+view to open the <strong>Result</strong> panel in the Tasks tab.</li>
+<li>Under the <strong>Display</strong> section, change the field to
+<strong>von Mises stress</strong> (or <strong>Tresca</strong>, depending
+on your criteria).</li>
+<li>Check the <strong>Show</strong> box to overlay the colored contour
+plot onto your mesh.</li>
+<li>Use the slider or input fields under <strong>Plot</strong> to
+manually define the minimum and maximum stress values. Clamping the
+maximum value lower can help highlight local stress concentrations that
+might otherwise blend into a single color band.</li>
+</ol>
+<h3
+id="step-3-use-the-post-processing-pipeline-for-advanced-heatmaps">Step
+3: Use the Post-Processing Pipeline for Advanced Heatmaps</h3>
+<p>For higher quality and more flexible heatmaps, use FreeCAD's
+VTK-based post-processing tools:</p>
+<ol type="1">
+<li>Select the <strong>CCX_Results</strong> object in the tree
+view.</li>
+<li>Click the <strong>Post Pipeline from Result</strong> button in the
+toolbar (or navigate to <strong>FEM &gt; Post Processing &gt; Post
+Pipeline from Result</strong>).</li>
+<li>With the newly created <code>Pipeline</code> object selected, click
+the <strong>Scalar Clip Filter</strong> or <strong>Warp Filter</strong>
+if you wish to see deformation alongside stress.</li>
+<li>In the <strong>Property</strong> tab (Data tab) of the
+<code>Pipeline</code> object:
+<ul>
+<li>Set <strong>Field</strong> to <code>von Mises</code>.</li>
+<li>Set <strong>Vector Mode</strong> to <code>Magnitude</code> (if
+applicable).</li>
+</ul></li>
+<li>In the <strong>View</strong> tab of the <code>Pipeline</code>
+object:
+<ul>
+<li>Set <strong>Display Mode</strong> to <code>Surface</code>.</li>
+<li>Adjust <strong>Color Map</strong> to your preferred gradient (e.g.,
+<em>Rainbow</em>, <em>Cool to Warm</em>, or <em>Jet</em>).</li>
+</ul></li>
+</ol>
+<h3 id="step-4-isolate-stress-concentrations">Step 4: Isolate Stress
+Concentrations</h3>
+<p>Stress concentrations around sharp corners, holes, or boundary
+conditions can create extreme peaks that skew the color scale across the
+rest of the model.</p>
+<ul>
+<li><strong>Limit the Scalar Range:</strong> In the pipeline's
+properties, switch the scalar range mode from automatic to custom. Set
+an upper limit slightly below peak singular values so subtle stress
+gradients become visible across the rest of the geometry.</li>
+<li><strong>Enable the Color Bar:</strong> Toggle the color legend
+display in the View properties to read exact numerical values
+corresponding to the heatmap colors.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/view-stress-concentration-heatmaps-in-free-cad-fem';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

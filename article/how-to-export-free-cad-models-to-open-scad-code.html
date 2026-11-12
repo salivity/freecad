@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Export FreeCAD Models to OpenSCAD Code - freecad</title>
+    <meta name="description" content="Exporting 3D designs from FreeCAD into OpenSCAD code allows you to convert visual, boundary-representation (B-Rep) models into programmatic, script-based geometry. This guide outlines the direct process for exporting parts into .scad and .csg formats usin">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-export-free-cad-models-to-open-scad-code">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Export FreeCAD Models to OpenSCAD Code - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-export-free-cad-models-to-open-scad-code" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Exporting 3D designs from FreeCAD into OpenSCAD code allows you to convert visual, boundary-representation (B-Rep) models into programmatic, script-based geometry. This guide outlines the direct process for exporting parts into .scad and .csg formats usin" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-export-freecad-models-to-openscad-code">How to Export
+FreeCAD Models to OpenSCAD Code</h1>
+<p>Exporting 3D designs from FreeCAD into OpenSCAD code allows you to
+convert visual, boundary-representation (B-Rep) models into
+programmatic, script-based geometry. This guide outlines the direct
+process for exporting parts into <code>.scad</code> and
+<code>.csg</code> formats using FreeCAD’s native tools, explains how
+geometry translates into code, and details best practices to ensure your
+generated scripts remain clean and editable.</p>
+<h2 id="1-prepare-your-model-in-freecad">1. Prepare Your Model in
+FreeCAD</h2>
+<p>OpenSCAD is a Constructive Solid Geometry (CSG) modeling engine. It
+constructs shapes using primitive solids (cubes, cylinders, spheres)
+combined through boolean operations (union, difference,
+intersection).</p>
+<ul>
+<li><strong>CSG-Friendly Modeling:</strong> If you want recognizable
+OpenSCAD code (such as <code>cube()</code> and
+<code>translate()</code>), build your model using basic shapes and
+boolean operations in the <strong>Part Workbench</strong>.</li>
+<li><strong>Complex Geometry:</strong> Models created with the
+<strong>Part Design Workbench</strong> (using sketches, pads, lofts, or
+complex fillets) can still be exported, but FreeCAD will convert complex
+faces into raw <code>polyhedron()</code> data rather than compact
+parametric code.</li>
+</ul>
+<p>Ensure your entire model is fused into a single compound or selected
+as a single active body before exporting.</p>
+<h2 id="2-configure-the-openscad-workbench-optional-but-recommended">2.
+Configure the OpenSCAD Workbench (Optional but Recommended)</h2>
+<p>FreeCAD includes a dedicated OpenSCAD workbench that improves
+compatibility.</p>
+<ol type="1">
+<li>Go to <strong>Edit &gt; Preferences</strong>.</li>
+<li>Select <strong>OpenSCAD</strong> from the sidebar.</li>
+<li>Under the <strong>OpenSCAD executable</strong> field, browse and
+link the path to your installed <code>openscad.exe</code> (Windows) or
+OpenSCAD binary (macOS/Linux).</li>
+<li>This integration allows FreeCAD to process CSG trees more accurately
+when converting shapes.</li>
+</ol>
+<h2 id="3-direct-export-to-openscad-format">3. Direct Export to OpenSCAD
+Format</h2>
+<p>The fastest way to convert your model into code is using FreeCAD’s
+standard export menu:</p>
+<ol type="1">
+<li>In the <strong>Tree View</strong>, click on the final solid object
+or body you wish to export.</li>
+<li>Navigate to <strong>File &gt; Export</strong>.</li>
+<li>In the file dialogue, click the <strong>Files of type</strong>
+dropdown.</li>
+<li>Select either:
+<ul>
+<li>**OpenSCAD (*.scad)**: Creates a script containing native OpenSCAD
+code.</li>
+<li>**CSG format (*.csg)**: Creates OpenSCAD’s internal representation
+of the CSG tree.</li>
+</ul></li>
+<li>Choose your destination folder, enter a file name, and click
+<strong>Save</strong>.</li>
+</ol>
+<h2 id="4-understanding-the-exported-output">4. Understanding the
+Exported Output</h2>
+<p>Open the newly created <code>.scad</code> file in OpenSCAD or any
+text editor to review the generated code:</p>
+<ul>
+<li><p><strong>Parametric/CSG Output:</strong> If your model was built
+with standard primitives and booleans, FreeCAD writes modules using
+standard commands:</p>
+<pre class="openscad"><code>difference() {
+    cube(size = [10, 20, 30], center = false);
+    translate([5, 10, 15]) cylinder(h = 20, r = 2);
+}</code></pre></li>
+<li><p><strong>Mesh/Polyhedron Output:</strong> If your model contains
+complex curves, chamfers, or sketch-based sweeps, FreeCAD approximates
+the surfaces using a triangular mesh via the <code>polyhedron()</code>
+module:</p>
+<pre class="openscad"><code>polyhedron(
+    points = [[0,0,0], [10,0,0], ...],
+    faces = [[0,1,2], [2,3,0], ...]
+);</code></pre></li>
+</ul>
+<h2 id="5-tips-for-clean-code-generation">5. Tips for Clean Code
+Generation</h2>
+<ul>
+<li><strong>Avoid Fillets and Chamfers Early:</strong> Adding edge
+fillets in FreeCAD forces the exporter to generate large coordinate
+arrays via <code>polyhedron()</code>. If parametric script readability
+is your goal, apply rounding in OpenSCAD using the
+<code>minkowski()</code> function instead.</li>
+<li><strong>Keep Part Hierarchies Shallow:</strong> Deeply nested Part
+Design features can create bloated transformation blocks. Simplify your
+operations in FreeCAD before initiating the export.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-export-free-cad-models-to-open-scad-code';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

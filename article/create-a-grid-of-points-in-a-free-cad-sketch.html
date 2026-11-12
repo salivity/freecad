@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Grid of Points in a FreeCAD Sketch - freecad</title>
+    <meta name="description" content="Creating a grid of points within a FreeCAD sketch is a straightforward process achieved by using the Sketcher workbench&#39;s native Rectangular Array tool. This guide provides a direct, step-by-step walkthrough for placing an initial point, utilizing the arr">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/create-a-grid-of-points-in-a-free-cad-sketch">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Create a Grid of Points in a FreeCAD Sketch - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/create-a-grid-of-points-in-a-free-cad-sketch" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Creating a grid of points within a FreeCAD sketch is a straightforward process achieved by using the Sketcher workbench&#39;s native Rectangular Array tool. This guide provides a direct, step-by-step walkthrough for placing an initial point, utilizing the arr" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="create-a-grid-of-points-in-a-freecad-sketch">Create a Grid of
+Points in a FreeCAD Sketch</h1>
+<p>Creating a grid of points within a FreeCAD sketch is a
+straightforward process achieved by using the Sketcher workbench's
+native Rectangular Array tool. This guide provides a direct,
+step-by-step walkthrough for placing an initial point, utilizing the
+array feature to define rows and columns, and adjusting the spacing to
+produce a fully constrained, precise point grid directly on your sketch
+plane.</p>
+<h3 id="step-1-create-or-open-a-sketch">Step 1: Create or Open a
+Sketch</h3>
+<ol type="1">
+<li>Open your project in FreeCAD and switch to the <strong>Part
+Design</strong> or <strong>Sketcher</strong> workbench.</li>
+<li>Create a new sketch on your desired plane (e.g., XY-Plane) or
+double-click an existing sketch in the model tree to enter edit
+mode.</li>
+</ol>
+<h3 id="step-2-place-the-initial-point">Step 2: Place the Initial
+Point</h3>
+<ol type="1">
+<li>Select the <strong>Create a point</strong> tool from the toolbar (or
+press the <code>G</code> then <code>I</code> shortcut keys).</li>
+<li>If you want the points to serve only as alignment references rather
+than geometry that affects features like pads or pockets, toggle the
+<strong>Construction Mode</strong> icon (blue geometry) before placing
+the point.</li>
+<li>Click anywhere in the sketch area to drop your first point. This
+will serve as the origin of your grid.</li>
+</ol>
+<h3 id="step-3-use-the-rectangular-array-tool">Step 3: Use the
+Rectangular Array Tool</h3>
+<ol type="1">
+<li>Switch back to normal selection mode and select the point you just
+created by clicking on it.</li>
+<li>In the toolbar, locate and click the <strong>Rectangular
+Array</strong> tool (found under the array/transform dropdown in the
+Sketcher tools).</li>
+<li>A dialog box will appear asking for the array parameters:
+<ul>
+<li><strong>Columns:</strong> Enter the number of points you want
+horizontally.</li>
+<li><strong>Rows:</strong> Enter the number of points you want
+vertically.</li>
+<li><strong>Equal vertical/horizontal spacing:</strong> Check this
+option if you want the distance between rows and columns to be
+identical.</li>
+<li><strong>Constrain inter-element distance:</strong> Check this box so
+FreeCAD automatically creates dimensional constraints between the
+points.</li>
+<li><strong>Clone:</strong> Uncheck if you want individual points, or
+keep checked based on your preference.</li>
+</ul></li>
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<h3 id="step-4-position-and-size-the-grid">Step 4: Position and Size the
+Grid</h3>
+<ol type="1">
+<li>Move your cursor to the sketch area. You will see a preview of the
+grid attached to your cursor.</li>
+<li>Click once to set the direction and initial spacing of the
+array.</li>
+<li>Double-click the automatically generated dimensional constraint
+values to set the exact distance between columns (horizontal pitch) and
+rows (vertical pitch).</li>
+<li>Apply standard geometric constraints (such as fixing the first point
+to the sketch origin or using horizontal/vertical distances from
+reference axes) to fully constrain the grid.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/create-a-grid-of-points-in-a-free-cad-sketch';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulate Industrial Robots in FreeCAD - freecad</title>
+    <meta name="description" content="Simulating industrial robot trajectories and pick-and-place tasks in FreeCAD requires using the dedicated Robot Workbench to model kinematic chains, define motion trajectories, and script event-driven tasks. This guide walks you through setting up a stand">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/simulate-industrial-robots-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Simulate Industrial Robots in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/simulate-industrial-robots-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Simulating industrial robot trajectories and pick-and-place tasks in FreeCAD requires using the dedicated Robot Workbench to model kinematic chains, define motion trajectories, and script event-driven tasks. This guide walks you through setting up a stand" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="simulate-industrial-robots-in-freecad">Simulate Industrial
+Robots in FreeCAD</h1>
+<p>Simulating industrial robot trajectories and pick-and-place tasks in
+FreeCAD requires using the dedicated Robot Workbench to model kinematic
+chains, define motion trajectories, and script event-driven tasks. This
+guide walks you through setting up a standard six-axis manipulator,
+creating Waypoints for the Tool Center Point (TCP), verifying
+reachability and collision-free paths, and using Python scripts to
+execute realistic pick-and-place sequences.</p>
+<h2 id="1-enable-the-robot-workbench-and-load-a-manipulator">1. Enable
+the Robot Workbench and Load a Manipulator</h2>
+<p>FreeCAD includes a native <strong>Robot Workbench</strong> tailored
+for six-axis industrial arms such as KUKA models.</p>
+<ol type="1">
+<li>Open FreeCAD and switch to the <strong>Robot</strong> workbench
+using the workbench dropdown menu.</li>
+<li>In the top toolbar, click <strong>Insert a Robot</strong> to choose
+a predefined robot model (such as a KUKA KR-16 or KR-500).</li>
+<li>FreeCAD creates a kinematic definition and loads the visual 3D mesh
+representation into your document tree.</li>
+<li>Position your workpiece and target bins in the 3D view using the
+<strong>Part Workbench</strong> or standard transform tools to define
+your physical environment.</li>
+</ol>
+<h2 id="2-define-waypoints-and-generate-trajectories">2. Define
+Waypoints and Generate Trajectories</h2>
+<p>A robot trajectory consists of a series of spatial targets
+(Waypoints) that define the position and orientation of the Tool Center
+Point (TCP).</p>
+<ol type="1">
+<li><strong>Set the Tool Center Point:</strong> Select your robot in the
+tree view and assign a TCP offset under the robot's data properties if
+you are using an attached gripper.</li>
+<li><strong>Create a Trajectory Object:</strong> Click <strong>Insert a
+Trajectory</strong> in the Robot toolbar. This creates an empty path
+container.</li>
+<li><strong>Insert Waypoints:</strong>
+<ul>
+<li>Move the robot's TCP manually using the joint controllers in the
+Tasks panel, or align the TCP to specific geometric vertices on your
+pick/place objects.</li>
+<li>Click <strong>Insert Waypoint</strong> to record the current
+position and orientation into the active trajectory.</li>
+<li>Repeat this for the Home position, Pre-Pick, Pick, Retract,
+Pre-Place, Place, and Return steps.</li>
+</ul></li>
+<li><strong>Trajectory Interpolation:</strong> FreeCAD automatically
+interpolates between these waypoints. Verify that the motion parameters
+(linear vs. joint-interpolated movement) and target velocities match
+your application needs.</li>
+</ol>
+<h2 id="3-implement-pick-and-place-logic">3. Implement Pick-and-Place
+Logic</h2>
+<p>FreeCAD’s basic graphical interface simulates continuous trajectory
+motion, but dynamic gripping (attaching and detaching workpieces)
+requires using the integrated Python console.</p>
+<ol type="1">
+<li><strong>Set Up the Scene Hierarchy:</strong> Place the part to be
+moved inside the main document. Ensure its coordinates match the "Pick"
+waypoint location.</li>
+<li><strong>Script the Attachment Event:</strong> Open the FreeCAD
+Python console (<code>View &gt; Panels &gt; Python Console</code>). When
+the trajectory reaches the "Pick" waypoint timestamp, dynamically
+re-parent the object to the robot end-effector:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> FreeCAD.ActiveDocument</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>robot <span class="op">=</span> doc.getObject(<span class="st">&quot;Robot&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>part <span class="op">=</span> doc.getObject(<span class="st">&quot;Workpiece&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Attach the workpiece to the robot end-effector link</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>robot.Group <span class="op">+=</span> [part]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>doc.recompute()</span></code></pre></div>
+<ol start="3" type="1">
+<li><strong>Script the Release Event:</strong> When the trajectory
+reaches the "Place" position, decouple the workpiece from the robot link
+and place it back into the global coordinate space:</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Detach the workpiece from the robot</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>robot.Group.remove(part)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>part.Placement <span class="op">=</span> (</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    robot.Placement.multiply(robot.getLinkPlacement(<span class="st">&quot;Link6&quot;</span>))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span> part.Placement</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>doc.recompute()</span></code></pre></div>
+<h2 id="4-run-and-validate-the-simulation">4. Run and Validate the
+Simulation</h2>
+<ol type="1">
+<li>Double-click the trajectory object in the Model tree to open the
+trajectory control panel.</li>
+<li>Press <strong>Play</strong> to visually inspect the motion
+path.</li>
+<li>Observe the robot axes in the Task panel to verify that none of the
+six joints exceed their minimum or maximum rotation limits during the
+cycle.</li>
+<li>Check for singularities where the arm cannot compute an inverse
+kinematic solution. Adjust waypoint positions or part layouts if any
+joint warnings occur.</li>
+</ol>
+<h2 id="5-export-trajectory-data">5. Export Trajectory Data</h2>
+<p>Once validated, the simulated trajectory can be exported for
+downstream programming:</p>
+<ol type="1">
+<li>Select the trajectory object in the document tree.</li>
+<li>Click <strong>Export Trajectory</strong> in the Robot menu.</li>
+<li>Save the path as a standard robot language file (such as KUKA KRL
+format) for deployment or further post-processing.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/simulate-industrial-robots-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

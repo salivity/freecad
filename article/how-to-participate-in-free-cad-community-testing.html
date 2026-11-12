@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Participate in FreeCAD Community Testing - freecad</title>
+    <meta name="description" content="Participating in community testing for upcoming FreeCAD releases is essential for catching regressions, improving stability, and ensuring new features work across diverse operating systems before official release. This guide outlines how you can contribut">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-participate-in-free-cad-community-testing">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Participate in FreeCAD Community Testing - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-participate-in-free-cad-community-testing" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Participating in community testing for upcoming FreeCAD releases is essential for catching regressions, improving stability, and ensuring new features work across diverse operating systems before official release. This guide outlines how you can contribut" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-participate-in-freecad-community-testing">How to
+Participate in FreeCAD Community Testing</h1>
+<p>Participating in community testing for upcoming FreeCAD releases is
+essential for catching regressions, improving stability, and ensuring
+new features work across diverse operating systems before official
+release. This guide outlines how you can contribute by downloading
+pre-release builds, testing your regular workflows, gathering necessary
+system diagnostic data, and submitting actionable bug reports to the
+development team.</p>
+<h2 id="download-pre-release-and-weekly-builds">Download Pre-Release and
+Weekly Builds</h2>
+<p>To test upcoming releases, you need to run pre-release builds, such
+as Release Candidates (RC) or weekly development snapshots, rather than
+the stable version.</p>
+<ul>
+<li><strong>GitHub Releases:</strong> Visit the official FreeCAD GitHub
+repository under the "Releases" section. Major upcoming versions publish
+"Release Candidate" builds here for Windows, macOS, and Linux.</li>
+<li><strong>Weekly Development Builds:</strong> FreeCAD provides
+automated weekly builds that showcase the latest code merges. These are
+available in portable formats (such as 7z archives for Windows or
+AppImages for Linux), which means they can run alongside your stable
+installation without overwriting it.</li>
+<li><strong>Package Managers:</strong> On Linux, you can use development
+channels such as the FreeCAD Daily PPA for Ubuntu-based distributions or
+Flatpak/Snap beta branches.</li>
+</ul>
+<h2 id="test-workflows-and-workbenches">Test Workflows and
+Workbenches</h2>
+<p>You do not need to be a programmer to test FreeCAD. Testing mainly
+involves using the software as you normally would and observing
+unexpected behavior.</p>
+<ul>
+<li><strong>Model Compatibility:</strong> Open complex models created in
+older versions of FreeCAD to verify that they open correctly and do not
+suffer from geometry breaking or broken parametric trees.</li>
+<li><strong>Core Workbench Operations:</strong> Exercise core tools in
+the Sketcher, Part Design, TechDraw, and Draft workbenches. Look for
+calculation errors, visual glitches, or unexpected crashes.</li>
+<li><strong>New Features:</strong> Review the release notes or roadmap
+for the upcoming version to identify newly added tools and test their
+edge cases.</li>
+<li><strong>UI and Translation:</strong> Check for layout overlapping,
+theme inconsistencies, or missing translations in your native
+language.</li>
+</ul>
+<h2 id="gather-system-information">Gather System Information</h2>
+<p>When you encounter a crash, bug, or unexpected behavior, collect your
+exact build information:</p>
+<ol type="1">
+<li>Open FreeCAD.</li>
+<li>Go to the top menu and select <strong>Help</strong> &gt;
+<strong>About FreeCAD</strong>.</li>
+<li>Click the <strong>Copy to clipboard</strong> button.</li>
+</ol>
+<p>This captures your exact FreeCAD build number, Python version, Qt
+version, operating system, and graphics drivers, which developers need
+to reproduce the problem.</p>
+<h2 id="report-issues-correctly">Report Issues Correctly</h2>
+<p>Clear reporting ensures that developers can diagnose and fix issues
+quickly.</p>
+<ol type="1">
+<li><strong>Search Existing Issues:</strong> Before reporting, search
+the FreeCAD GitHub Issue Tracker and the official FreeCAD forum to see
+if the bug has already been logged.</li>
+<li><strong>Use the Forum for Triage:</strong> If you are unsure whether
+an issue is a bug or a user configuration error, post in the "Open
+discussion" or dedicated "Release Candidate Testing" threads on the
+FreeCAD forum first.</li>
+<li><strong>Submit a GitHub Issue:</strong> If the problem is confirmed,
+submit a ticket on the GitHub Issue Tracker.
+<ul>
+<li>Paste the system information you copied from <strong>Help</strong>
+&gt; <strong>About FreeCAD</strong>.</li>
+<li>Provide step-by-step instructions to reproduce the issue from a
+blank file.</li>
+<li>Attach a minimal reproducible <code>.FCStd</code> file that
+demonstrates the failure.</li>
+<li>Attach screenshots or terminal error outputs if applicable.</li>
+</ul></li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-participate-in-free-cad-community-testing';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

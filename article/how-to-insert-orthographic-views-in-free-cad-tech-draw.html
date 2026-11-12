@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Insert Orthographic Views in FreeCAD TechDraw - freecad</title>
+    <meta name="description" content="Inserting orthographic views into FreeCAD is essential for generating standard multi-view engineering drawings from your 3D CAD models. This guide outlines the exact steps to create a drawing sheet, use TechDraw&#39;s Projection Group tool to generate primary">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-insert-orthographic-views-in-free-cad-tech-draw">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Insert Orthographic Views in FreeCAD TechDraw - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-insert-orthographic-views-in-free-cad-tech-draw" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Inserting orthographic views into FreeCAD is essential for generating standard multi-view engineering drawings from your 3D CAD models. This guide outlines the exact steps to create a drawing sheet, use TechDraw&#39;s Projection Group tool to generate primary" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-insert-orthographic-views-in-freecad-techdraw">How to
+Insert Orthographic Views in FreeCAD TechDraw</h1>
+<p>Inserting orthographic views into FreeCAD is essential for generating
+standard multi-view engineering drawings from your 3D CAD models. This
+guide outlines the exact steps to create a drawing sheet, use TechDraw's
+Projection Group tool to generate primary and secondary orthographic
+projections, configure projection angles (First vs. Third Angle), and
+adjust scale and layout.</p>
+<h3 id="step-1-open-the-techdraw-workbench-and-create-a-page">Step 1:
+Open the TechDraw Workbench and Create a Page</h3>
+<ol type="1">
+<li>Open your 3D model in FreeCAD.</li>
+<li>In the workbench selector dropdown, switch from your current
+workbench (such as Part Design) to <strong>TechDraw</strong>.</li>
+<li>In the toolbar, click <strong>Insert Default Page</strong> (or
+select <strong>Insert Page using Template</strong> if you want to use a
+custom title block). A new page tab will appear below your 3D
+viewport.</li>
+</ol>
+<h3 id="step-2-select-the-source-geometry">Step 2: Select the Source
+Geometry</h3>
+<ol type="1">
+<li>Click the 3D model tab to view your design, or navigate to the
+<strong>Model</strong> tree view panel on the left.</li>
+<li>Click on the 3D object, <strong>Body</strong>, or component you want
+to display on the drawing sheet to highlight it.</li>
+</ol>
+<h3 id="step-3-insert-the-projection-group">Step 3: Insert the
+Projection Group</h3>
+<ol type="1">
+<li>With the object selected, click the drawing page tab to display the
+blank sheet.</li>
+<li>In the TechDraw toolbar, click the <strong>Insert Projection
+Group</strong> button (icon displaying a central drawing view with
+arrows pointing outward).</li>
+<li>The <strong>Projection Group</strong> task panel will open on the
+left side of the screen.</li>
+</ol>
+<h3 id="step-4-configure-orthographic-views-and-settings">Step 4:
+Configure Orthographic Views and Settings</h3>
+<ol type="1">
+<li><strong>Choose Projection Type:</strong> Select either <strong>First
+Angle</strong> (standard in Europe/ISO) or <strong>Third Angle</strong>
+(standard in North America/ANSI) based on your drafting
+requirements.</li>
+<li><strong>Set Primary View Direction:</strong> Under the
+<strong>Anchor</strong> settings, choose the primary camera direction
+(e.g., Front, Top, Right) that serves as the base for the projected
+views.</li>
+<li><strong>Select Views to Display:</strong> In the secondary views
+grid, check the boxes corresponding to the orthographic views you need
+(such as Top, Right, Left, Bottom, and Isometric).</li>
+<li><strong>Adjust Scale:</strong> Set the <strong>Scale Type</strong>
+to <em>Custom</em> or <em>Page</em> to resize the views so they fit
+cleanly onto your sheet.</li>
+</ol>
+<h3 id="step-5-finalize-and-position">Step 5: Finalize and Position</h3>
+<ol type="1">
+<li>Click <strong>OK</strong> in the task panel to generate the
+projections on the sheet.</li>
+<li>Click and drag the central anchor view to move the entire projection
+group across the page. Secondary views will automatically maintain their
+alignment relative to the anchor view.</li>
+<li>If the views do not update after modifying the 3D model, click the
+<strong>Redraw Page</strong> icon in the TechDraw toolbar.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-insert-orthographic-views-in-free-cad-tech-draw';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

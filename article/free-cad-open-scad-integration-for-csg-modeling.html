@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD OpenSCAD Integration for CSG Modeling - freecad</title>
+    <meta name="description" content="This article explores the purpose and advantages of integrating OpenSCAD into FreeCAD for Constructive Solid Geometry (CSG) modeling. It covers how this integration bridges procedural, code-based 3D design with a graphical parametric modeling environment,">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-open-scad-integration-for-csg-modeling">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD OpenSCAD Integration for CSG Modeling - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-open-scad-integration-for-csg-modeling" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the purpose and advantages of integrating OpenSCAD into FreeCAD for Constructive Solid Geometry (CSG) modeling. It covers how this integration bridges procedural, code-based 3D design with a graphical parametric modeling environment," />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-openscad-integration-for-csg-modeling">FreeCAD OpenSCAD
+Integration for CSG Modeling</h1>
+<p>This article explores the purpose and advantages of integrating
+OpenSCAD into FreeCAD for Constructive Solid Geometry (CSG) modeling. It
+covers how this integration bridges procedural, code-based 3D design
+with a graphical parametric modeling environment, the technical benefits
+of utilizing OpenSCAD's robust Boolean engine, and how users can
+manipulate CSG operations interchangeably across both platforms.</p>
+<p>Constructive Solid Geometry (CSG) is a fundamental 3D modeling
+technique that builds complex solid models by combining basic primitive
+shapes—such as cubes, cylinders, and spheres—using Boolean operations
+like union, difference, and intersection. OpenSCAD is widely recognized
+as a premier CSG tool because it relies on a purely script-based,
+procedural workflow. The FreeCAD OpenSCAD integration, delivered
+primarily through the OpenSCAD Workbench, serves several targeted
+purposes to enhance CAD workflows.</p>
+<h3 id="seamless-import-and-code-execution">Seamless Import and Code
+Execution</h3>
+<p>The primary objective of the integration is to allow FreeCAD to read,
+parse, and execute native OpenSCAD code (<code>.scad</code> files).
+Instead of converting script-based models into static polygon meshes
+(such as STL files), the integration translates OpenSCAD commands into
+FreeCAD's native geometric representations. This maintains the
+mathematical precision of the geometry rather than approximating
+surfaces with faceted meshes.</p>
+<h3 id="native-csg-feature-tree-reconstruction">Native CSG Feature Tree
+Reconstruction</h3>
+<p>When OpenSCAD code is imported through the integration, FreeCAD
+constructs a complete CSG feature tree within its graphical user
+interface. Every primitive shape, translation, rotation, and Boolean cut
+or union defined in the script appears as an editable object in the
+FreeCAD tree view. This allows users who prefer visual modeling to alter
+dimensions, toggle operations, and reorder features without having to
+write or modify raw code.</p>
+<h3 id="robust-mesh-and-boolean-processing-via-cgal">Robust Mesh and
+Boolean Processing via CGAL</h3>
+<p>OpenSCAD relies on the Computational Geometry Algorithms Library
+(CGAL) to compute Boolean operations. While FreeCAD uses the Open
+CASCADE Technology (OCCT) kernel for standard boundary representation
+(B-Rep) modeling, OCCT can occasionally struggle with certain coplanar
+or non-manifold Boolean operations. The OpenSCAD integration provides
+FreeCAD users access to OpenSCAD's backend to execute difficult Boolean
+operations and repair problematic meshes, using CGAL's reliable
+algorithms as an alternative processing pipeline.</p>
+<h3 id="bridging-programmatic-and-parametric-cad">Bridging Programmatic
+and Parametric CAD</h3>
+<p>Designers often face a divide between developer-centric workflows
+(code-based CAD) and mechanical engineering workflows (GUI-based CAD).
+FreeCAD's OpenSCAD integration eliminates this barrier. Programmers can
+write algorithmic components in OpenSCAD, and mechanical designers can
+import those components into FreeCAD to incorporate them into larger
+mechanical assemblies alongside standard Part and Part Design
+objects.</p>
+<h3 id="bi-directional-export-and-interoperability">Bi-directional
+Export and Interoperability</h3>
+<p>The integration is not strictly a one-way import tool. FreeCAD can
+also export CSG-based shapes back into valid OpenSCAD code. This feature
+enables parametric designs created in FreeCAD's visual environment to be
+shared with users who rely solely on OpenSCAD or need lightweight,
+script-driven models for automated build pipelines, parametric web
+customizers, and version-controlled repositories.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-open-scad-integration-for-csg-modeling';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

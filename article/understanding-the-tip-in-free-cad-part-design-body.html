@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding the Tip in FreeCAD PartDesign Body - freecad</title>
+    <meta name="description" content="In FreeCAD’s PartDesign workbench, the &quot;Tip&quot; is the specific feature within a Body that represents its active, final output state. This article explains what the Tip is, how it controls the sequential modeling history, why moving it is useful for editing,">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/understanding-the-tip-in-free-cad-part-design-body">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding the Tip in FreeCAD PartDesign Body - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/understanding-the-tip-in-free-cad-part-design-body" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In FreeCAD’s PartDesign workbench, the &quot;Tip&quot; is the specific feature within a Body that represents its active, final output state. This article explains what the Tip is, how it controls the sequential modeling history, why moving it is useful for editing," />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-the-tip-in-freecad-partdesign-body">Understanding
+the Tip in FreeCAD PartDesign Body</h1>
+<p>In FreeCAD’s PartDesign workbench, the "Tip" is the specific feature
+within a Body that represents its active, final output state. This
+article explains what the Tip is, how it controls the sequential
+modeling history, why moving it is useful for editing, and how it
+affects downstream operations in other workbenches.</p>
+<h2 id="the-core-concept-of-the-tip">The Core Concept of the Tip</h2>
+<p>A PartDesign Body is built using a strict single-solid, feature-based
+modeling sequence. Each operation—such as a Pad, Pocket, Revolution, or
+Fillet—builds directly upon the result of the previous operation.</p>
+<p>The Tip marks the end of this active build sequence. It indicates to
+FreeCAD which operation in the tree represents the completed state of
+the solid. Even if a Body contains dozens of features, only the geometry
+up to the designated Tip is rendered as the current solid.</p>
+<h2 id="automatic-tip-advancement">Automatic Tip Advancement</h2>
+<p>By default, FreeCAD automatically manages the Tip. Whenever you
+create a new additive or subtractive feature, the software places that
+feature at the bottom of the tree and automatically sets it as the new
+Tip. A small icon overlay or bold text in the tree view typically
+designates which feature is currently the Tip.</p>
+<h2 id="manually-setting-the-tip">Manually Setting the Tip</h2>
+<p>You can override the automatic behavior by right-clicking any feature
+in the tree view and selecting <strong>Set tip</strong>. Setting an
+earlier feature as the Tip acts like a rollback mechanism.</p>
+<p>When you set the Tip to an earlier feature:</p>
+<ul>
+<li><strong>Features below the Tip become inactive:</strong> Any
+features located after the Tip in the tree will no longer be visible in
+the 3D view. They are not deleted; their computation is simply
+suspended.</li>
+<li><strong>Inserting new features:</strong> If you create a new sketch
+or feature while the Tip is set to an intermediate step, the new feature
+is inserted directly after that Tip, rather than at the very end of the
+tree.</li>
+<li><strong>Debugging errors:</strong> If a feature fails to compute
+(turns red in the tree), setting the Tip to the feature immediately
+before the failure lets you inspect the valid geometry and resolve the
+root cause.</li>
+</ul>
+<p>Once changes are complete, you can restore the full model by
+right-clicking the last feature in the list and selecting <strong>Set
+tip</strong> again.</p>
+<h2 id="impact-on-external-workbenches">Impact on External
+Workbenches</h2>
+<p>External workbenches—such as TechDraw, Assembly, FEM, and Path
+(CAM)—interact exclusively with the Body's Tip. When you create a 2D
+technical drawing or insert a part into an assembly, FreeCAD references
+the shape provided by the Tip. If the Tip is mistakenly left on an
+earlier operation, external tools will show an incomplete model.
+Ensuring the Tip is placed on the intended final feature guarantees that
+all downstream references stay accurate.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/understanding-the-tip-in-free-cad-part-design-body';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

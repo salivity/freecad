@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Set Up Lighting and Camera in FreeCAD - freecad</title>
+    <meta name="description" content="Rendering a 3D model in FreeCAD requires configuring a dedicated camera view and an appropriate lighting environment using external rendering engines integrated via the Render Workbench. This guide covers how to install the necessary tools, establish prec">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-set-up-lighting-and-camera-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Set Up Lighting and Camera in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-set-up-lighting-and-camera-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Rendering a 3D model in FreeCAD requires configuring a dedicated camera view and an appropriate lighting environment using external rendering engines integrated via the Render Workbench. This guide covers how to install the necessary tools, establish prec" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-set-up-lighting-and-camera-in-freecad">How to Set Up
+Lighting and Camera in FreeCAD</h1>
+<p>Rendering a 3D model in FreeCAD requires configuring a dedicated
+camera view and an appropriate lighting environment using external
+rendering engines integrated via the Render Workbench. This guide covers
+how to install the necessary tools, establish precise camera angles and
+perspective settings, and position various light sources—including point
+lights, directional lights, and HDRIs—to produce clean, realistic
+visualizations directly from your CAD workspace.</p>
+<h2 id="1-install-and-activate-the-render-workbench">1. Install and
+Activate the Render Workbench</h2>
+<p>FreeCAD’s built-in Raytracing workbench is largely deprecated. Modern
+rendering relies on the <strong>Render Workbench</strong>, which
+supports open-source external render engines like LuxCoreRender,
+Appleseed, and POV-Ray.</p>
+<ol type="1">
+<li>Go to <strong>Tools</strong> &gt; <strong>Addon
+manager</strong>.</li>
+<li>Search for and install the <strong>Render</strong> workbench.</li>
+<li>Restart FreeCAD, open your project, and switch to the
+<strong>Render</strong> workbench from the workbench dropdown.</li>
+</ol>
+<h2 id="2-setting-up-the-camera">2. Setting Up the Camera</h2>
+<p>The camera defines the viewpoint, focal length, and perspective of
+the rendered image.</p>
+<h3 id="aligning-the-viewport">Aligning the Viewport</h3>
+<ol type="1">
+<li>Rotate, pan, and zoom in the FreeCAD 3D viewport until you find your
+desired composition.</li>
+<li>Ensure the view mode is set to perspective rather than orthographic
+by pressing <strong>V</strong> then <strong>P</strong>, or selecting
+<strong>View</strong> &gt; <strong>Perspective view</strong>.
+Orthographic views lack natural depth and can make renders look
+flat.</li>
+</ol>
+<h3 id="creating-and-adjusting-the-camera-object">Creating and Adjusting
+the Camera Object</h3>
+<ol type="1">
+<li>Create a new Render project using the engine of your choice (e.g.,
+LuxCoreRender or Appleseed) by clicking the <strong>Create a
+Project</strong> icon.</li>
+<li>Click the <strong>Create Camera</strong> icon. FreeCAD generates a
+camera matching your current viewport angle and places it in the model
+tree inside your project container.</li>
+<li>Select the newly created <strong>Camera</strong> object in the Tree
+view and review the <strong>Property view</strong> (Data tab):
+<ul>
+<li><strong>Position / Placement</strong>: Fine-tune the X, Y, and Z
+coordinates of the camera.</li>
+<li><strong>LookAt</strong>: Define the precise point in 3D space the
+camera is focused on.</li>
+<li><strong>Focal Length</strong>: Set the lens focal length (e.g., 35mm
+for standard wide-angle, 50mm for human eye perspective, 85mm+ for
+product shots with minimal distortion).</li>
+</ul></li>
+</ol>
+<h2 id="3-setting-up-lighting">3. Setting Up Lighting</h2>
+<p>Proper lighting creates depth, highlights edges, and casts realistic
+shadows. The Render workbench provides tools to insert specific light
+types.</p>
+<h3 id="choosing-light-types">Choosing Light Types</h3>
+<ul>
+<li><strong>Point Light</strong>: Emits light in all directions from a
+single point. Useful for interior fixtures, lightbulbs, or local fill
+lighting.</li>
+<li><strong>Directional (Sun) Light</strong>: Emits parallel rays of
+light from an infinitely distant source. Ideal for outdoor scenes and
+strong, uniform cast shadows.</li>
+<li><strong>Area Light</strong>: Emits soft, diffuse light from a
+rectangular surface. Best for studio product renders and soft shadow
+transitions.</li>
+<li><strong>Environment / HDRI Map</strong>: Wraps the scene in an
+image-based high-dynamic-range light source, providing realistic ambient
+reflections and global illumination.</li>
+</ul>
+<h3 id="implementing-a-standard-three-point-lighting-setup">Implementing
+a Standard Three-Point Lighting Setup</h3>
+<p>For general product rendering, use three directional or area
+lights:</p>
+<ol type="1">
+<li><strong>Key Light (Primary)</strong>:
+<ul>
+<li>Insert a light using the workbench lighting tools.</li>
+<li>Position it roughly 45 degrees to the side and 45 degrees above the
+subject.</li>
+<li>Set its intensity/power higher than all other lights. This defines
+the main form and shadows.</li>
+</ul></li>
+<li><strong>Fill Light (Secondary)</strong>:
+<ul>
+<li>Position a second light on the opposite side of the camera, roughly
+30 degrees to the side.</li>
+<li>Set the intensity to roughly 30% to 50% of the key light to soften
+harsh shadows without creating competing dark areas.</li>
+</ul></li>
+<li><strong>Rim / Backlight</strong>:
+<ul>
+<li>Position a light behind and slightly above the object, pointing
+toward the back edges facing the camera.</li>
+<li>This creates an edge highlight that visually separates the model
+from the background.</li>
+</ul></li>
+</ol>
+<h3 id="configuring-light-properties">Configuring Light Properties</h3>
+<p>Select any light object in the Tree view to modify its attributes in
+the <strong>Data</strong> tab:</p>
+<ul>
+<li><strong>Color</strong>: Shift slightly off-white (e.g., slight
+yellow for warm sunlight, pale blue for ambient sky/fill) to avoid
+sterile results.</li>
+<li><strong>Power / Flux / Intensity</strong>: Adjust based on the
+engine scale (different render engines calculate lumens and watts
+differently).</li>
+<li><strong>Placement</strong>: Use the Placement dialog to alter
+position and aim vectors.</li>
+</ul>
+<h2 id="4-final-render-preview">4. Final Render Preview</h2>
+<ol type="1">
+<li>Ensure the camera and all created lights reside inside your active
+<strong>Render Project</strong> folder in the Tree view.</li>
+<li>Select the Render project item.</li>
+<li>Click the <strong>Render</strong> button in the toolbar to launch
+the external engine process.</li>
+<li>If highlights are blown out or shadows are too dark, cancel the
+render, adjust the individual light intensities or camera exposure
+settings in the Property view, and re-render.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-set-up-lighting-and-camera-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

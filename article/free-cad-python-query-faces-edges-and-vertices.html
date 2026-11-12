@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Python: Query Faces, Edges, and Vertices - freecad</title>
+    <meta name="description" content="This guide explains how to inspect and query a 3D model&#39;s topological elements—faces, edges, and vertices—using FreeCAD’s built-in Python console and the Part module. By accessing the boundary representation (B-Rep) stored within an object&#39;s Shape propert">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-python-query-faces-edges-and-vertices">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Python: Query Faces, Edges, and Vertices - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-python-query-faces-edges-and-vertices" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This guide explains how to inspect and query a 3D model&#39;s topological elements—faces, edges, and vertices—using FreeCAD’s built-in Python console and the Part module. By accessing the boundary representation (B-Rep) stored within an object&#39;s Shape propert" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-python-query-faces-edges-and-vertices">FreeCAD Python:
+Query Faces, Edges, and Vertices</h1>
+<p>This guide explains how to inspect and query a 3D model's topological
+elements—faces, edges, and vertices—using FreeCAD’s built-in Python
+console and the <code>Part</code> module. By accessing the boundary
+representation (B-Rep) stored within an object's <code>Shape</code>
+property, you can extract geometric properties such as coordinates,
+lengths, surface areas, and sub-element relationships for automated
+modeling and analysis.</p>
+<h2 id="accessing-an-objects-shape">Accessing an Object's Shape</h2>
+<p>Every solid object in FreeCAD stores its geometric definition in its
+<code>Shape</code> attribute. Before querying sub-elements, access the
+active document and retrieve the target object:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> FreeCAD <span class="im">as</span> App</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the active document</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> App.ActiveDocument</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve a specific object by its label or name</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> doc.getObject(<span class="st">&quot;Box&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Access the top-level shape</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>shape <span class="op">=</span> obj.Shape</span></code></pre></div>
+<h2 id="querying-vertices">Querying Vertices</h2>
+<p>Vertices represent 0D points in 3D space. You can access the list of
+all vertices in a shape using <code>shape.Vertexes</code>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Total count of vertices</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Total vertices: </span><span class="sc">{</span><span class="bu">len</span>(shape.Vertexes)<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate through vertices and print coordinates</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(shape.Vertexes):</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    point <span class="op">=</span> v.Point</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Vertex </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">: X=</span><span class="sc">{</span>point<span class="sc">.</span>x<span class="sc">:.2f}</span><span class="ss">, Y=</span><span class="sc">{</span>point<span class="sc">.</span>y<span class="sc">:.2f}</span><span class="ss">, Z=</span><span class="sc">{</span>point<span class="sc">.</span>z<span class="sc">:.2f}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<p>Key properties of a <code>Vertex</code>:</p>
+<ul>
+<li><code>v.Point</code>: Returns the <code>Base.Vector</code>
+representing the 3D coordinates.</li>
+<li><code>v.X</code>, <code>v.Y</code>, <code>v.Z</code>: Direct access
+to individual axis coordinates.</li>
+</ul>
+<h2 id="querying-edges">Querying Edges</h2>
+<p>Edges represent 1D curves or segments bounded by vertices. Access
+them using <code>shape.Edges</code>:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Total count of edges</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Total edges: </span><span class="sc">{</span><span class="bu">len</span>(shape.Edges)<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect edge geometry</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, edge <span class="kw">in</span> <span class="bu">enumerate</span>(shape.Edges):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    length <span class="op">=</span> edge.Length</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    curve_type <span class="op">=</span> edge.Curve</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    is_closed <span class="op">=</span> edge.isClosed()</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Edge </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">: Length=</span><span class="sc">{</span>length<span class="sc">:.2f}</span><span class="ss">, Closed=</span><span class="sc">{</span>is_closed<span class="sc">}</span><span class="ss">, Type=</span><span class="sc">{</span><span class="bu">type</span>(curve_type)<span class="sc">.</span><span class="va">__name__</span><span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<p>Key properties and methods of an <code>Edge</code>:</p>
+<ul>
+<li><code>edge.Length</code>: Returns the scalar length of the
+edge.</li>
+<li><code>edge.Vertexes</code>: Returns the vertices bounding the edge
+(usually start and end points).</li>
+<li><code>edge.Curve</code>: Returns the underlying mathematical curve
+object (e.g., <code>Line</code>, <code>Circle</code>,
+<code>BSplineCurve</code>).</li>
+</ul>
+<h2 id="querying-faces">Querying Faces</h2>
+<p>Faces represent 2D bounded surfaces. Access them using
+<code>shape.Faces</code>:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Total count of faces</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Total faces: </span><span class="sc">{</span><span class="bu">len</span>(shape.Faces)<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect face properties</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, face <span class="kw">in</span> <span class="bu">enumerate</span>(shape.Faces):</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    area <span class="op">=</span> face.Area</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    surface_type <span class="op">=</span> face.Surface</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    center_of_mass <span class="op">=</span> face.CenterOfMass</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Face </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">: Area=</span><span class="sc">{</span>area<span class="sc">:.2f}</span><span class="ss">, Center=</span><span class="sc">{</span>center_of_mass<span class="sc">}</span><span class="ss">, Surface=</span><span class="sc">{</span><span class="bu">type</span>(surface_type)<span class="sc">.</span><span class="va">__name__</span><span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+<p>Key properties and methods of a <code>Face</code>:</p>
+<ul>
+<li><code>face.Area</code>: Returns the surface area.</li>
+<li><code>face.CenterOfMass</code>: Returns the <code>Base.Vector</code>
+of the face's centroid.</li>
+<li><code>face.Surface</code>: Returns the underlying mathematical
+surface (e.g., <code>Plane</code>, <code>Cylinder</code>,
+<code>Toroid</code>).</li>
+<li><code>face.normalAt(u, v)</code>: Returns the normal vector at the
+specified UV parameter coordinates.</li>
+</ul>
+<h2 id="traversing-hierarchical-relationships">Traversing Hierarchical
+Relationships</h2>
+<p>FreeCAD allows topological navigation across levels. You can query
+sub-elements directly from parent elements:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the first face of the shape</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>first_face <span class="op">=</span> shape.Faces[<span class="dv">0</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve all edges belonging to this specific face</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>face_edges <span class="op">=</span> first_face.Edges</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve all vertices belonging to this specific face</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>face_vertices <span class="op">=</span> first_face.Vertexes</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;The selected face contains </span><span class="sc">{</span><span class="bu">len</span>(face_edges)<span class="sc">}</span><span class="ss"> edges and </span><span class="sc">{</span><span class="bu">len</span>(face_vertices)<span class="sc">}</span><span class="ss"> vertices.&quot;</span>)</span></code></pre></div>
+<p>Similarly, you can retrieve the bounding vertices of a single
+edge:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>first_edge <span class="op">=</span> shape.Edges[<span class="dv">0</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>start_vertex <span class="op">=</span> first_edge.Vertexes[<span class="dv">0</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>end_vertex <span class="op">=</span> first_edge.Vertexes[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Edge Start: </span><span class="sc">{</span>start_vertex<span class="sc">.</span>Point<span class="sc">}</span><span class="ss">, Edge End: </span><span class="sc">{</span>end_vertex<span class="sc">.</span>Point<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-python-query-faces-edges-and-vertices';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

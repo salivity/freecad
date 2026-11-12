@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Risks of FreeCAD Macros - freecad</title>
+    <meta name="description" content="FreeCAD macros are powerful Python-based automation scripts that streamline 3D modeling workflows, but executing untrusted macros exposes your system to severe cybersecurity risks. Because FreeCAD executes these scripts with the user&#39;s full operating syst">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/security-risks-of-free-cad-macros">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Security Risks of FreeCAD Macros - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/security-risks-of-free-cad-macros" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="FreeCAD macros are powerful Python-based automation scripts that streamline 3D modeling workflows, but executing untrusted macros exposes your system to severe cybersecurity risks. Because FreeCAD executes these scripts with the user&#39;s full operating syst" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="security-risks-of-freecad-macros">Security Risks of FreeCAD
+Macros</h1>
+<p>FreeCAD macros are powerful Python-based automation scripts that
+streamline 3D modeling workflows, but executing untrusted macros exposes
+your system to severe cybersecurity risks. Because FreeCAD executes
+these scripts with the user's full operating system privileges without
+native sandboxing, malicious macros can compromise personal data,
+install malware, or compromise corporate networks. This article breaks
+down the technical mechanisms behind these vulnerabilities, the specific
+threats posed by unverified scripts, and essential defensive practices
+to keep your environment secure.</p>
+<h3 id="the-mechanism-behind-the-threat">The Mechanism Behind the
+Threat</h3>
+<p>FreeCAD macros are written in standard Python and run directly within
+FreeCAD’s embedded Python interpreter. When you execute a
+<code>.FCMacro</code> or <code>.py</code> file, the script gains the
+exact same permissions and system access rights as the FreeCAD
+application itself.</p>
+<p>Unlike web browsers, which isolate scripts within restrictive
+sandboxes, FreeCAD does not restrict access to low-level system
+resources. A macro has unrestricted access to Python’s standard library,
+including modules such as <code>os</code>, <code>sys</code>,
+<code>subprocess</code>, <code>socket</code>, and <code>urllib</code>.
+Consequently, an external macro is not merely manipulating geometric
+shapes; it is a full-fledged program capable of interacting with your
+operating system, file system, and local network.</p>
+<h3 id="primary-security-implications">Primary Security
+Implications</h3>
+<h4 id="1-arbitrary-code-execution-and-malware-delivery">1. Arbitrary
+Code Execution and Malware Delivery</h4>
+<p>A malicious macro can leverage Python’s <code>subprocess</code> or
+<code>os.system</code> functions to execute terminal commands or launch
+background processes. Attackers can use this capability to:</p>
+<ul>
+<li>Download and execute secondary payloads such as ransomware,
+keyloggers, or info-stealers.</li>
+<li>Execute living-off-the-land binaries (like PowerShell on Windows or
+Bash on Linux/macOS) to bypass basic endpoint protections.</li>
+<li>Establish reverse shells, granting an attacker remote control over
+the host machine.</li>
+</ul>
+<h4 id="2-data-exfiltration-and-intellectual-property-theft">2. Data
+Exfiltration and Intellectual Property Theft</h4>
+<p>CAD workstations often house high-value intellectual property,
+including proprietary designs, patents, and engineering schematics. An
+untrusted macro can scan local and network-attached drives for specific
+file extensions (such as <code>.FCStd</code>, <code>.step</code>,
+<code>.dxf</code>, or <code>.dwg</code>) and silently transmit them to a
+remote server using basic HTTP requests or raw sockets. Additionally, it
+can target browser cookies, saved passwords, and SSH keys stored in the
+user directory.</p>
+<h4 id="3-persistence-and-tampering">3. Persistence and Tampering</h4>
+<p>Malicious scripts can establish persistence to survive system reboots
+or FreeCAD updates. By altering FreeCAD’s configuration files, startup
+scripts, or global Python paths, a macro can ensure malicious code runs
+every time FreeCAD opens. More advanced threats may modify system
+startup entries, cron jobs, or registry keys.</p>
+<h4 id="4-supply-chain-risks-in-collaborative-environments">4. Supply
+Chain Risks in Collaborative Environments</h4>
+<p>Macros are frequently shared within design communities, forums, and
+public repositories like GitHub. Attackers can compromise legitimate
+accounts or distribute "useful" modeling tools that conceal malicious
+payloads through code obfuscation (such as base64-encoded strings
+executed via <code>exec()</code> or <code>eval()</code>). If an employee
+downloads such a script onto a corporate machine, the threat can spread
+laterally across the enterprise network.</p>
+<h3 id="how-to-mitigate-macro-security-risks">How to Mitigate Macro
+Security Risks</h3>
+<ul>
+<li><strong>Inspect Code Before Execution:</strong> Because Python is
+human-readable, open any third-party macro in a text editor prior to
+running it. Scan for suspicious imports such as <code>subprocess</code>,
+<code>urllib</code>, <code>requests</code>, <code>socket</code>, or any
+heavily obfuscated, encoded text blocks.</li>
+<li><strong>Verify the Source:</strong> Only use macros distributed
+through official FreeCAD repositories or well-reputed developers. Avoid
+downloading macros from unverified forum posts or anonymous cloud
+storage links.</li>
+<li><strong>Use Virtual Machines or Containers:</strong> When reviewing
+or testing community-developed macros and third-party
+<code>.FCStd</code> files that include embedded scripts, run FreeCAD
+within an isolated virtual machine or container environment disconnected
+from sensitive internal networks.</li>
+<li><strong>Apply the Principle of Least Privilege:</strong> Never run
+FreeCAD as an administrator or with root privileges. Running with
+standard user accounts limits the potential damage a malicious script
+can inflict on the core operating system.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/security-risks-of-free-cad-macros';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Sketcher Elements Filter Explained - freecad</title>
+    <meta name="description" content="The Elements filter in the FreeCAD Sketcher dialog is a workflow tool designed to organize and manage the geometric components of a sketch. In complex designs containing dozens or hundreds of lines, arcs, and points, finding specific items in the 3D viewp">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-sketcher-elements-filter-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Sketcher Elements Filter Explained - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-sketcher-elements-filter-explained" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Elements filter in the FreeCAD Sketcher dialog is a workflow tool designed to organize and manage the geometric components of a sketch. In complex designs containing dozens or hundreds of lines, arcs, and points, finding specific items in the 3D viewp" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-sketcher-elements-filter-explained">FreeCAD Sketcher
+Elements Filter Explained</h1>
+<p>The Elements filter in the FreeCAD Sketcher dialog is a workflow tool
+designed to organize and manage the geometric components of a sketch. In
+complex designs containing dozens or hundreds of lines, arcs, and
+points, finding specific items in the 3D viewport can be difficult. The
+Elements filter allows you to narrow down the list of sketch entities
+displayed in the Sketcher task panel, making it easy to identify,
+select, troubleshoot, and modify specific geometry.</p>
+<h3 id="purpose-of-the-elements-list">Purpose of the Elements List</h3>
+<p>Whenever you draw geometry in FreeCAD's Sketcher workbench, each
+item—whether it is a line, circle, arc, B-spline, or point—is
+automatically cataloged in the "Elements" list within the Tasks panel.
+Alongside the geometry type, each element is assigned an internal index
+number and an optional custom name.</p>
+<h3 id="what-the-filter-does">What the Filter Does</h3>
+<p>The filter feature located above or within the Elements list
+dynamically refines which geometric items are displayed in the dialog
+based on specific criteria. Its primary functions include:</p>
+<ul>
+<li><strong>Filtering by Geometry Type:</strong> You can isolate
+specific categories of geometry, such as normal geometry (which forms
+the final solid features), construction geometry (used strictly for
+alignment and dimensioning), and external geometry (linked from external
+edges or faces).</li>
+<li><strong>Text-Based Searching:</strong> By typing a name or an
+element index (such as <code>Edge12</code> or a custom label) into the
+search field, the list instantly filters down to matching results.</li>
+<li><strong>Isolating Problem Areas:</strong> In sketches with
+topological naming issues or broken references, filtering allows you to
+quickly locate missing, unconstrained, or orphaned elements that prevent
+the sketch from fully solving.</li>
+</ul>
+<h3 id="how-it-improves-sketch-management">How It Improves Sketch
+Management</h3>
+<p>Using the Elements filter significantly speeds up editing in several
+ways:</p>
+<ol type="1">
+<li><strong>Bidirectional Selection:</strong> Clicking an element in the
+filtered list immediately highlights that element in the 3D viewport.
+Conversely, selecting an entity in the viewport automatically highlights
+it in the Elements list, provided it matches the active filter.</li>
+<li><strong>Accessing Overlapping Geometry:</strong> When multiple
+lines, points, or coincident constraints overlap visually in the 3D
+view, clicking the exact entity you want can be nearly impossible.
+Filtering the Elements list lets you click the exact element name
+directly from the panel.</li>
+<li><strong>Bulk Operations:</strong> With a filtered list, you can
+easily select multiple elements of the same type to change their
+properties at once, such as converting a group of normal lines into
+construction lines or deleting redundant references.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-sketcher-elements-filter-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

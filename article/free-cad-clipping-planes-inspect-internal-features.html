@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Clipping Planes: Inspect Internal Features - freecad</title>
+    <meta name="description" content="Clipping planes in FreeCAD allow you to cut away portions of a 3D model non-destructively to inspect internal cavities, clearances, and hidden geometries without altering the underlying CAD data. This guide provides a straightforward walkthrough on how to">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-clipping-planes-inspect-internal-features">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Clipping Planes: Inspect Internal Features - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-clipping-planes-inspect-internal-features" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Clipping planes in FreeCAD allow you to cut away portions of a 3D model non-destructively to inspect internal cavities, clearances, and hidden geometries without altering the underlying CAD data. This guide provides a straightforward walkthrough on how to" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-clipping-planes-inspect-internal-features">FreeCAD
+Clipping Planes: Inspect Internal Features</h1>
+<p>Clipping planes in FreeCAD allow you to cut away portions of a 3D
+model non-destructively to inspect internal cavities, clearances, and
+hidden geometries without altering the underlying CAD data. This guide
+provides a straightforward walkthrough on how to activate, configure,
+and manipulate clipping planes in FreeCAD to perform detailed visual
+cross-section analyses on your parts and assemblies.</p>
+<h3 id="accessing-the-clipping-tool">Accessing the Clipping Tool</h3>
+<p>To activate clipping planes in FreeCAD:</p>
+<ol type="1">
+<li>Open the document containing the 3D model you want to inspect.</li>
+<li>Navigate to the top menu and select <strong>View</strong>.</li>
+<li>Click on <strong>Clipping...</strong> from the dropdown menu.</li>
+</ol>
+<p>A <strong>Clipping</strong> panel will appear in the Combo View on
+the left side of your screen (or as a floating dialog depending on your
+layout settings).</p>
+<h3 id="setting-up-standard-clipping-planes">Setting Up Standard
+Clipping Planes</h3>
+<p>The Clipping panel allows you to cut your model along the global
+coordinate axes:</p>
+<ul>
+<li><strong>Clipping X, Y, or Z:</strong> Check the box next to
+<strong>Clipping X</strong>, <strong>Clipping Y</strong>, or
+<strong>Clipping Z</strong> to activate a plane perpendicular to that
+axis.</li>
+<li><strong>Adjusting Position:</strong> Use the <strong>Offset</strong>
+numerical input (or the step arrows) next to the active axis to slide
+the plane forward or backward through your model.</li>
+<li><strong>Flipping Direction:</strong> Check the <strong>Flip</strong>
+box next to an active axis if the tool cuts away the side of the model
+you want to keep. This inverts the visible side of the cut.</li>
+</ul>
+<h3 id="using-view-based-and-custom-clipping">Using View-Based and
+Custom Clipping</h3>
+<p>If standard axes do not align with the internal features you need to
+inspect:</p>
+<ul>
+<li><strong>Clip view:</strong> Check the <strong>Clip view</strong>
+option to align a cut plane directly with your current camera angle.
+This cuts the geometry based on how you are currently looking at the
+model in the 3D viewport.</li>
+<li><strong>Combining Planes:</strong> You can enable multiple clipping
+planes simultaneously (for example, combining Clipping X and Clipping
+Y). This creates quarter-sections or complex box cutaways to reveal
+nested components in an assembly.</li>
+</ul>
+<h3 id="inspecting-and-exiting">Inspecting and Exiting</h3>
+<p>While the clipping planes are active, you can still rotate, pan, and
+zoom around the model using standard navigation controls. You can also
+measure distances between exposed internal faces using the measurement
+tools in the Part Workbench.</p>
+<p>To return to your normal view:</p>
+<ol type="1">
+<li>Uncheck the active clipping plane boxes in the Clipping panel, or
+simply click the <strong>Close</strong> button at the bottom of the
+panel.</li>
+<li>The model will instantly restore to its uncut, full visual state
+without any modifications made to the original geometry.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-clipping-planes-inspect-internal-features';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

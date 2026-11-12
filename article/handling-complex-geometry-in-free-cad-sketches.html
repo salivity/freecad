@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handling Complex Geometry in FreeCAD Sketches - freecad</title>
+    <meta name="description" content="Working with dense, intricate profiles within a single FreeCAD sketch often introduces performance lag, redundant constraint warnings, and unexpected geometry flipping. While FreeCAD generally encourages modular modeling across multiple features, masterin">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/handling-complex-geometry-in-free-cad-sketches">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Handling Complex Geometry in FreeCAD Sketches - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/handling-complex-geometry-in-free-cad-sketches" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Working with dense, intricate profiles within a single FreeCAD sketch often introduces performance lag, redundant constraint warnings, and unexpected geometry flipping. While FreeCAD generally encourages modular modeling across multiple features, masterin" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="handling-complex-geometry-in-freecad-sketches">Handling Complex
+Geometry in FreeCAD Sketches</h1>
+<p>Working with dense, intricate profiles within a single FreeCAD sketch
+often introduces performance lag, redundant constraint warnings, and
+unexpected geometry flipping. While FreeCAD generally encourages modular
+modeling across multiple features, mastering single-sketch complexity
+requires a structured methodology: establishing a construction geometry
+skeleton, constraining iteratively, favoring geometric relationships
+over dimensional values, and managing solver overhead directly.</p>
+<h3 id="1-build-a-construction-geometry-skeleton">1. Build a
+Construction Geometry Skeleton</h3>
+<p>The most effective way to anchor a complex sketch is to define its
+framework using construction mode (the blue geometry toggle). Instead of
+drawing actual profile lines immediately, sketch out centerlines, pitch
+circles, and structural bounding boxes using construction geometry.</p>
+<p>Constrain this skeleton completely before drawing any visible
+geometry. Once the construction framework is fully constrained and
+stable, snap your real profile lines to construction intersections,
+midpoints, and endpoints. This prevents the FreeCAD solver from
+misinterpreting the overall topology when you apply dimensions.</p>
+<h3 id="2-draw-and-constrain-iteratively">2. Draw and Constrain
+Iteratively</h3>
+<p>A common failure pattern in FreeCAD is drawing the entire complex
+shape at once and attempting to constrain it afterward. This frequently
+causes lines to invert, cross over each other, or crash the solver.</p>
+<ul>
+<li>Draw one logical segment of the profile at a time (e.g., three to
+four connected segments).</li>
+<li>Constrain that segment immediately—both internally and to your
+construction skeleton.</li>
+<li>Test the stability by dragging unconstrained vertices to ensure they
+behave predictably.</li>
+<li>Repeat the process for the next segment.</li>
+</ul>
+<h3
+id="3-prioritize-geometric-constraints-over-dimensional-constraints">3.
+Prioritize Geometric Constraints Over Dimensional Constraints</h3>
+<p>Solvers compute geometric constraints (coincident, horizontal,
+vertical, tangent, parallel, symmetric, equal) significantly faster than
+numeric dimensional constraints.</p>
+<ul>
+<li>Replace redundant dimensional constraints with
+<strong>Equal</strong> (<code>E</code>) constraints for repeated radii,
+slot widths, or offsets.</li>
+<li>Use <strong>Symmetry</strong> (<code>S</code>) constraints anchored
+to construction axes or the origin to eliminate half of your positional
+constraints in symmetrical parts.</li>
+<li>Use <strong>Tangency</strong> (<code>T</code>) to smoothly join arcs
+and lines without needing complex angular dimensions.</li>
+</ul>
+<p>Minimizing the total number of numeric parameters directly reduces
+the algebraic complexity the Sketcher solver must process at each
+step.</p>
+<h3 id="4-manage-solver-performance-and-diagnostic-tools">4. Manage
+Solver Performance and Diagnostic Tools</h3>
+<p>As entity counts grow, solver delays can make live sketching
+frustrating. Take advantage of the Sketcher's diagnostic and performance
+tools:</p>
+<ul>
+<li><strong>Deactivate "Auto update"</strong>: In sketches with hundreds
+of elements, disable auto-update in the solver settings. Apply multiple
+constraints in batch, then manually trigger a recompute (<code>F5</code>
+or the solve button).</li>
+<li><strong>Use the Elements &amp; Constraints Lists</strong>: The
+<em>Tasks</em> panel lists all constraints. If a conflict occurs,
+FreeCAD highlights conflicting or redundant constraints in red or
+orange; click them directly in the list to remove them quickly.</li>
+<li><strong>Remove Redundant Constraints Promptly</strong>: Keep the
+solver status panel clear. A sketch with auto-removed or conflicting
+constraints becomes volatile very quickly.</li>
+</ul>
+<h3 id="5-utilize-the-carbon-copy-tool">5. Utilize the Carbon Copy
+Tool</h3>
+<p>If your complex sketch shares sub-profiles with another part of the
+model, do not redraw it. Use the <strong>Carbon Copy</strong> tool to
+import geometry and constraints from an existing sketch into your active
+sketch. You can then convert non-essential imported lines to
+construction lines to serve as local references, drastically cutting
+down manual sketching time while keeping geometry precise.</p>
+<h3 id="6-know-the-limit-when-to-use-a-master-sketch-instead">6. Know
+the Limit: When to Use a Master Sketch Instead</h3>
+<p>If a sketch becomes so complex that the solver regularly hangs or
+produces unsolvable topologies, convert the single sketch into a
+<strong>Master Sketch</strong>. Keep the complete wireframe as
+construction-only reference geometry in this sketch, then create
+lightweight secondary sketches referencing the master geometry via the
+<strong>External Geometry</strong> tool (<code>X</code>) or
+<strong>SubShapeBinder</strong>. This yields the visual clarity of a
+single layout without overloading the FreeCAD 2D solver.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/handling-complex-geometry-in-free-cad-sketches';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

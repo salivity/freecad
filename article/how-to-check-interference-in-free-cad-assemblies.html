@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Check Interference in FreeCAD Assemblies - freecad</title>
+    <meta name="description" content="Checking for mechanical interference between components is a crucial step in mechanical design to ensure that parts fit together without colliding in the physical world. This guide outlines the most reliable methods to detect and analyze collisions betwee">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-check-interference-in-free-cad-assemblies">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Check Interference in FreeCAD Assemblies - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-check-interference-in-free-cad-assemblies" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Checking for mechanical interference between components is a crucial step in mechanical design to ensure that parts fit together without colliding in the physical world. This guide outlines the most reliable methods to detect and analyze collisions betwee" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-check-interference-in-freecad-assemblies">How to Check
+Interference in FreeCAD Assemblies</h1>
+<p>Checking for mechanical interference between components is a crucial
+step in mechanical design to ensure that parts fit together without
+colliding in the physical world. This guide outlines the most reliable
+methods to detect and analyze collisions between parts in FreeCAD,
+covering the native Boolean Intersection method in the Part Workbench as
+well as the automated interference detection tools found in popular
+assembly environments like A2plus and the official FreeCAD Assembly
+Workbench.</p>
+<h3 id="method-1-the-universal-boolean-common-method">Method 1: The
+Universal Boolean Common Method</h3>
+<p>The most dependable way to detect interference without relying on
+third-party workbenches is using a Boolean Intersection in the
+<strong>Part Workbench</strong>. This approach works in any version of
+FreeCAD.</p>
+<ol type="1">
+<li>Switch to the <strong>Part Workbench</strong> using the workbench
+dropdown selector.</li>
+<li>Hold <code>Ctrl</code> (or <code>Cmd</code> on macOS) and select the
+two parts in the Tree View that you want to test for interference.</li>
+<li>Click the <strong>Intersection (Common)</strong> tool in the toolbar
+(or select <strong>Part &gt; Boolean &gt; Common</strong>).</li>
+<li>Inspect the 3D view and Tree View:
+<ul>
+<li><strong>No Interference:</strong> The operation produces an empty
+shape with a volume of <code>0 mm³</code>, or FreeCAD displays an empty
+result.</li>
+<li><strong>Interference Detected:</strong> A new <code>Common</code>
+solid is created at the exact intersection. This solid represents the
+overlapping material.</li>
+</ul></li>
+<li>Select the resulting <code>Common</code> object and check its
+<strong>Shape &gt; Volume</strong> property under the
+<strong>Data</strong> tab to see the exact volume of the collision.</li>
+<li>Press <code>Ctrl + Z</code> to undo the operation once verified, or
+delete the <code>Common</code> feature to revert your assembly to its
+original state.</li>
+</ol>
+<h3 id="method-2-using-the-a2plus-assembly-workbench">Method 2: Using
+the A2plus Assembly Workbench</h3>
+<p>If you use the <strong>A2plus</strong> add-on workbench to assemble
+your models, you can run automated interference checks across two parts
+or the entire assembly.</p>
+<ol type="1">
+<li>Open your assembly in the <strong>A2plus Workbench</strong>.</li>
+<li>Select the two parts you want to test, or deselect all objects to
+run a global check across the entire model.</li>
+<li>Click the <strong>Check all parts for interference</strong> button
+on the A2plus toolbar (or choose it from the <strong>A2plus</strong>
+menu).</li>
+<li>FreeCAD will calculate the intersections:
+<ul>
+<li>If collisions are found, A2plus highlights the overlapping volumes
+directly in the 3D viewport and lists the conflicting part pairs in a
+dialog box or in the Report View.</li>
+<li>If no interference is found, a prompt will confirm that no
+overlapping solids exist.</li>
+</ul></li>
+</ol>
+<h3
+id="method-3-using-the-integrated-assembly-workbench-freecad-10">Method
+3: Using the Integrated Assembly Workbench (FreeCAD 1.0+)</h3>
+<p>In FreeCAD version 1.0 and later, the native <strong>Assembly
+Workbench</strong> includes integrated clash and clearance
+inspection.</p>
+<ol type="1">
+<li>Switch to the <strong>Assembly Workbench</strong>.</li>
+<li>In the Tree View, select the components you want to evaluate.</li>
+<li>Locate and click the <strong>Check Interference</strong> or
+<strong>Collision Detection</strong> icon on the toolbar.</li>
+<li>Review the collision report generated in the Task panel, which
+displays pairs of intersecting objects along with the severity and
+location of the overlaps.</li>
+</ol>
+<h3 id="tips-for-accurate-collision-detection">Tips for Accurate
+Collision Detection</h3>
+<ul>
+<li><strong>Ignore Fastener Threads:</strong> Modeled cosmetic threads
+often trigger false interferences. Suppress complex thread geometry or
+use nominal cylinder diameters when testing for collisions.</li>
+<li><strong>Refine Mesh/Tolerance Settings:</strong> If FreeCAD produces
+errors during Boolean operations on complex curved surfaces, navigate to
+<strong>Edit &gt; Preferences &gt; Part Design &gt; Shape view</strong>
+and adjust the deflection settings to generate a more precise shape
+representation.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-check-interference-in-free-cad-assemblies';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

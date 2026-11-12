@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCAD Toggle Driving Reference Mode Explained - freecad</title>
+    <meta name="description" content="The &quot;Toggle Driving/Reference Mode&quot; in FreeCAD&#39;s Sketcher workbench is a tool that switches dimensional constraints between active controllers of geometry and passive measurement indicators. This article explains the difference between driving and referen">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/free-cad-toggle-driving-reference-mode-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FreeCAD Toggle Driving Reference Mode Explained - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/free-cad-toggle-driving-reference-mode-explained" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The &quot;Toggle Driving/Reference Mode&quot; in FreeCAD&#39;s Sketcher workbench is a tool that switches dimensional constraints between active controllers of geometry and passive measurement indicators. This article explains the difference between driving and referen" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="freecad-toggle-driving-reference-mode-explained">FreeCAD Toggle
+Driving Reference Mode Explained</h1>
+<p>The "Toggle Driving/Reference Mode" in FreeCAD's Sketcher workbench
+is a tool that switches dimensional constraints between active
+controllers of geometry and passive measurement indicators. This article
+explains the difference between driving and reference constraints,
+outlines why and when to switch between them, and highlights how this
+feature prevents over-constraining while preserving critical design
+data.</p>
+<h3 id="understanding-driving-vs-reference-constraints">Understanding
+Driving vs. Reference Constraints</h3>
+<p>In FreeCAD sketches, dimensional constraints define distances,
+lengths, radii, and angles. They operate in one of two modes:</p>
+<ul>
+<li><strong>Driving Constraints:</strong> These actively control and
+limit the geometry. When you set a driving length of 50 mm on a line,
+FreeCAD locks the line to that exact length and consumes a degree of
+freedom. If you alter the value, the geometry moves to reflect the
+change.</li>
+<li><strong>Reference Constraints:</strong> These act purely as
+measurements or readouts. They report the current dimension of the
+selected geometry without restricting its movement or consuming degrees
+of freedom. If the geometry is modified by other constraints, the
+reference constraint updates automatically to show the new value.</li>
+</ul>
+<h3 id="the-purpose-of-the-toggle-feature">The Purpose of the Toggle
+Feature</h3>
+<p>The primary purpose of the "Toggle Driving/Reference Mode" tool is to
+prevent over-constraining a sketch while still allowing you to monitor
+and use critical dimensions. FreeCAD does not allow sketches to be
+over-constrained; adding one driving constraint too many causes the
+solver to fail and throws an error.</p>
+<p>By toggling a constraint to reference mode, you can:</p>
+<ol type="1">
+<li><strong>Inspect Dimensions:</strong> Read real-time measurements
+across complex, fully constrained geometry without breaking the sketch
+solver.</li>
+<li><strong>Drive External Parameters:</strong> Use the reference
+dimension's internal name as an input for mathematical expressions,
+spreadsheets, or other features elsewhere in your model without
+restricting the source sketch.</li>
+<li><strong>Resolve Over-Constraint Conflicts:</strong> Quickly demote
+an existing driving constraint that is causing redundancy into an
+informative reference dimension instead of deleting it.</li>
+</ol>
+<h3 id="how-the-mode-works-in-practice">How the Mode Works in
+Practice</h3>
+<p>The toggle tool operates in two ways depending on your current
+workflow:</p>
+<ul>
+<li><strong>Before Creating a Constraint:</strong> Clicking the toggle
+button changes the active mode in the Sketcher toolbar. Any dimensional
+constraints placed afterward will automatically be created as reference
+constraints (typically displayed in a distinct color, such as orange or
+light blue, depending on your UI theme).</li>
+<li><strong>On Existing Constraints:</strong> Selecting an already
+placed constraint and clicking the toggle button converts it instantly
+between driving and reference status.</li>
+</ul>
+<p>Using reference constraints keeps sketches robust and solver-friendly
+while maintaining the full dimensional visibility required for precision
+CAD modeling.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/free-cad-toggle-driving-reference-mode-explained';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

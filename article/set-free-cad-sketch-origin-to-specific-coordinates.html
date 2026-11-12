@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set FreeCAD Sketch Origin to Specific Coordinates - freecad</title>
+    <meta name="description" content="In FreeCAD, anchoring a sketch origin to specific 3D coordinates is accomplished by defining the sketch’s placement in the 3D space rather than moving the origin point inside the sketch editor itself. Because a sketch’s internal origin is permanently fixe">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/set-free-cad-sketch-origin-to-specific-coordinates">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Set FreeCAD Sketch Origin to Specific Coordinates - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/set-free-cad-sketch-origin-to-specific-coordinates" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In FreeCAD, anchoring a sketch origin to specific 3D coordinates is accomplished by defining the sketch’s placement in the 3D space rather than moving the origin point inside the sketch editor itself. Because a sketch’s internal origin is permanently fixe" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="set-freecad-sketch-origin-to-specific-coordinates">Set FreeCAD
+Sketch Origin to Specific Coordinates</h1>
+<p>In FreeCAD, anchoring a sketch origin to specific 3D coordinates is
+accomplished by defining the sketch’s placement in the 3D space rather
+than moving the origin point inside the sketch editor itself. Because a
+sketch’s internal origin is permanently fixed at (0,0) on its local 2D
+plane, positioning that origin requires either editing the sketch’s
+<code>Placement</code> properties, adjusting its
+<code>Attachment Offset</code>, or binding the sketch to a parametric
+Datum Point.</p>
+<h3 id="method-1-using-the-placement-property">Method 1: Using the
+Placement Property</h3>
+<p>This is the fastest method to position an unattached (floating)
+sketch at specific global coordinates.</p>
+<ol type="1">
+<li>Close the Sketcher workbench if you currently have the sketch
+open.</li>
+<li>In the <strong>Tree view</strong>, select your sketch.</li>
+<li>Switch to the <strong>Data</strong> tab in the <strong>Property
+view</strong> (located in the lower-left panel by default).</li>
+<li>Locate the <strong>Placement</strong> property and click the small
+arrow to expand it.</li>
+<li>Expand the <strong>Position</strong> sub-property.</li>
+<li>Enter your desired values into the <strong>x</strong>,
+<strong>y</strong>, and <strong>z</strong> fields. The sketch origin
+will immediately shift to these exact 3D coordinates.</li>
+</ol>
+<p>Alternatively, you can click the ellipsis button (<code>...</code>)
+next to the <strong>Placement</strong> row to open the Placement task
+panel, where you can define both position coordinates and axial
+rotations simultaneously.</p>
+<hr />
+<h3 id="method-2-using-attachment-offset-part-design">Method 2: Using
+Attachment Offset (Part Design)</h3>
+<p>If your sketch is created inside a Part Design Body and attached to a
+standard plane (such as the XY-Plane), modifying the direct
+<code>Placement</code> property might be overridden by the attachment
+engine. Instead, use the <strong>Attachment Offset</strong>.</p>
+<ol type="1">
+<li>Select the sketch in the <strong>Tree view</strong>.</li>
+<li>In the <strong>Data</strong> tab, locate <strong>Attachment
+Offset</strong>.</li>
+<li>Expand <strong>Attachment Offset</strong>, then expand
+<strong>Position</strong>.</li>
+<li>Enter the required X, Y, and Z coordinate offsets.</li>
+<li>If necessary, adjust the rotation angles under the same menu to
+orient the sketch plane properly.</li>
+</ol>
+<hr />
+<h3 id="method-3-anchoring-to-a-datum-point-parametric-approach">Method
+3: Anchoring to a Datum Point (Parametric Approach)</h3>
+<p>For complex parametric models, anchoring a sketch to a dedicated
+Datum Point ensures that changes to model dimensions propagate
+cleanly.</p>
+<ol type="1">
+<li>Ensure you are in the <strong>Part Design</strong> workbench.</li>
+<li>Click the <strong>Create a datum point</strong> tool in the
+toolbar.</li>
+<li>In the Combo View, enter the specific X, Y, and Z coordinates for
+the datum point in the attachment/offset parameters, then click
+<strong>OK</strong>.</li>
+<li>Select the newly created Datum Point in the Tree view.</li>
+<li>Click <strong>Create a new sketch</strong>. FreeCAD will
+automatically anchor the sketch origin to the coordinate position of the
+Datum Point.</li>
+</ol>
+<hr />
+<h3 id="anchoring-internal-geometry-to-the-origin">Anchoring Internal
+Geometry to the Origin</h3>
+<p>If your sketch origin is already at the correct 3D coordinates and
+you want to anchor drawing elements directly to it:</p>
+<ol type="1">
+<li>Double-click the sketch to open the Sketcher.</li>
+<li>Select the point or vertex of your drawn geometry.</li>
+<li>Select the red dot at the center of the grid (the sketch
+origin).</li>
+<li>Click the <strong>Coincident Constraint</strong> tool (or press the
+<code>C</code> key). This locks your geometry directly to the
+coordinate-anchored origin.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/set-free-cad-sketch-origin-to-specific-coordinates';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

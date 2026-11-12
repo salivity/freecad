@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Automatic Roofs in FreeCAD Arch - freecad</title>
+    <meta name="description" content="Generating a roof automatically in FreeCAD requires using the parametric Roof tool found in the BIM or Arch Workbench. By defining a closed base outline using a Draft wire or existing wall faces, FreeCAD can instantly calculate and generate standard roof">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/create-automatic-roofs-in-free-cad-arch">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Create Automatic Roofs in FreeCAD Arch - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/create-automatic-roofs-in-free-cad-arch" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Generating a roof automatically in FreeCAD requires using the parametric Roof tool found in the BIM or Arch Workbench. By defining a closed base outline using a Draft wire or existing wall faces, FreeCAD can instantly calculate and generate standard roof" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="create-automatic-roofs-in-freecad-arch">Create Automatic Roofs
+in FreeCAD Arch</h1>
+<p>Generating a roof automatically in FreeCAD requires using the
+parametric Roof tool found in the BIM or Arch Workbench. By defining a
+closed base outline using a Draft wire or existing wall faces, FreeCAD
+can instantly calculate and generate standard roof geometry, such as hip
+or gable designs. This guide outlines the exact steps to create the base
+outline, generate the roof structure, and customize key parameters like
+slope angles, thickness, and overhangs.</p>
+<h3 id="step-1-switch-to-the-bim-or-arch-workbench">Step 1: Switch to
+the BIM or Arch Workbench</h3>
+<ol type="1">
+<li>Open your model in FreeCAD.</li>
+<li>In the workbench dropdown menu, select <strong>BIM</strong> (or
+<strong>Arch</strong> in older FreeCAD versions).</li>
+</ol>
+<h3 id="step-2-create-a-base-profile">Step 2: Create a Base Profile</h3>
+<p>The Roof tool requires a closed 2D shape (a planar face or closed
+wire) to determine the perimeter and layout of the roof:</p>
+<ol type="1">
+<li>Switch to the top view (press <code>2</code> on the numeric
+keypad).</li>
+<li>Using the <strong>Draft Wire</strong> tool, draw a closed polygon
+representing the outer boundary of your building or walls. Ensure the
+wire is completely closed (press <code>Close</code> or snap to the first
+point).</li>
+<li>Alternatively, if you already have 3D walls, select the top
+horizontal face of the wall assembly.</li>
+</ol>
+<h3 id="step-3-run-the-roof-generator">Step 3: Run the Roof
+Generator</h3>
+<ol type="1">
+<li>In the tree view or 3D viewport, select the closed Draft wire or top
+wall face.</li>
+<li>Click the <strong>Roof</strong> tool icon in the toolbar (or
+navigate to <strong>3D/BIM &gt; Roof</strong> from the top menu).</li>
+<li>FreeCAD will automatically generate a default hip roof matching the
+shape of the selected footprint.</li>
+</ol>
+<h3 id="step-4-adjust-global-dimensions">Step 4: Adjust Global
+Dimensions</h3>
+<p>To modify the overall geometry of the generated roof:</p>
+<ol type="1">
+<li>Select the new <strong>Roof</strong> object in the Tree view.</li>
+<li>Go to the <strong>Property</strong> panel on the lower-left and
+select the <strong>Data</strong> tab.</li>
+<li>Edit the following basic properties:
+<ul>
+<li><strong>Thickness:</strong> Sets the depth of the roof slab.</li>
+<li><strong>Overhang:</strong> Extends the roof eaves beyond the base
+wire perimeter.</li>
+<li><strong>Height:</strong> Adjusts the default elevation of the roof
+ridge.</li>
+</ul></li>
+</ol>
+<h3 id="step-5-customize-roof-profiles-hip-to-gable">Step 5: Customize
+Roof Profiles (Hip to Gable)</h3>
+<p>By default, FreeCAD creates a hip roof where all sides slope inward.
+To change specific sides to a vertical gable:</p>
+<ol type="1">
+<li>Select the <strong>Roof</strong> object in the Tree view.</li>
+<li>In the <strong>Data</strong> tab, locate the <strong>Angles</strong>
+list property. This list contains an entry for each edge of your base
+polygon (e.g., <code>[45.0, 45.0, 45.0, 45.0]</code>).</li>
+<li>Click the ellipsis (<code>...</code>) next to
+<strong>Angles</strong>.</li>
+<li>Change the angle of the desired end faces from <code>45.0</code> to
+<code>90.0</code>. A 90-degree angle creates a vertical gable wall
+instead of a sloped facet.</li>
+<li>Click <strong>OK</strong> to update the model.</li>
+</ol>
+<h3 id="step-6-generate-internal-structural-framing-optional">Step 6:
+Generate Internal Structural Framing (Optional)</h3>
+<p>If you require a timber or steel rafter framework rather than a solid
+roof volume:</p>
+<ol type="1">
+<li>Select the individual faces of your generated roof.</li>
+<li>Use the <strong>BIM Structure</strong> or <strong>Arch
+Frame</strong> tool to array framing elements across the roof
+planes.</li>
+<li>In the Property view of the frame, set the structural profile (e.g.,
+standard lumber or I-beam) to build rafters automatically beneath the
+roof shell.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/create-automatic-roofs-in-free-cad-arch';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

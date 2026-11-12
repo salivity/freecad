@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Spindle Speed and Feed Rate in FreeCAD Path - freecad</title>
+    <meta name="description" content="Configuring accurate spindle speeds and feed rates in FreeCAD&#39;s Path (CAM) Workbench is essential for achieving clean cuts, protecting cutting tools, and preventing machine damage. This guide explains how to set and adjust these cutting parameters directl">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/set-spindle-speed-and-feed-rate-in-free-cad-path">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Set Spindle Speed and Feed Rate in FreeCAD Path - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/set-spindle-speed-and-feed-rate-in-free-cad-path" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Configuring accurate spindle speeds and feed rates in FreeCAD&#39;s Path (CAM) Workbench is essential for achieving clean cuts, protecting cutting tools, and preventing machine damage. This guide explains how to set and adjust these cutting parameters directl" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="set-spindle-speed-and-feed-rate-in-freecad-path">Set Spindle
+Speed and Feed Rate in FreeCAD Path</h1>
+<p>Configuring accurate spindle speeds and feed rates in FreeCAD's Path
+(CAM) Workbench is essential for achieving clean cuts, protecting
+cutting tools, and preventing machine damage. This guide explains how to
+set and adjust these cutting parameters directly through the Tool
+Controller, modify them for specific machining operations, and
+understand the core speed and feed values required by your CNC
+machine.</p>
+<h2 id="setting-parameters-in-the-tool-controller">Setting Parameters in
+the Tool Controller</h2>
+<p>In FreeCAD Path, feed rates and spindle speeds are primarily managed
+by the <strong>Tool Controller</strong> assigned to your Job.</p>
+<ol type="1">
+<li><strong>Open your CAM Job:</strong> Expand your active Job in the
+Tree view on the left-hand panel.</li>
+<li><strong>Locate the Tool Controller:</strong> Look for the Tool
+Controller associated with the tool you are using (e.g.,
+<code>TC: Default Tool</code> or a custom-named controller).</li>
+<li><strong>Open the Controller Properties:</strong> Double-click the
+Tool Controller, or select it and review the <strong>Data</strong> tab
+in the Property View below the tree.</li>
+<li><strong>Adjust the Values:</strong>
+<ul>
+<li><strong>Spindle Speed:</strong> Set the rotational speed of your
+spindle in revolutions per minute (RPM).</li>
+<li><strong>Spindle Direction:</strong> Choose between Forward
+(clockwise) or Reverse (counter-clockwise).</li>
+<li><strong>Horizontal Feed (<code>HorizFeed</code>):</strong> Set the
+cutting feed rate for horizontal movements along the X and Y axes
+(typically measured in mm/min or in/min).</li>
+<li><strong>Vertical Feed (<code>VertFeed</code>):</strong> Set the
+plunge rate for vertical movements along the Z axis into the stock
+material.</li>
+<li><strong>Rapid Speeds:</strong> Adjust horizontal and vertical rapid
+positioning speeds if your post-processor or machine requires
+software-defined rapid travel instead of G0 defaults.</li>
+</ul></li>
+<li>Click <strong>OK</strong> to apply the changes.</li>
+</ol>
+<h2 id="overriding-speeds-and-feeds-for-specific-operations">Overriding
+Speeds and Feeds for Specific Operations</h2>
+<p>If a single tool needs to run at different speeds or feeds for
+distinct operations (such as roughing versus finishing), you can assign
+dedicated controllers or adjust parameters per operation.</p>
+<ol type="1">
+<li><strong>Add an Additional Tool Controller:</strong> Right-click your
+Tool in the Job's Tool list or use the Path menu to create another Tool
+Controller referencing the same physical tool bit.</li>
+<li><strong>Differentiate Parameters:</strong> Set one controller with
+aggressive feeds for roughing (e.g., a high horizontal feed rate) and
+another with lower feeds and higher RPM for finishing passes.</li>
+<li><strong>Assign to the Operation:</strong>
+<ul>
+<li>Click on the specific Path operation (e.g., Pocketing, Profiling, or
+Adaptive).</li>
+<li>In the <strong>Data</strong> tab, find the <strong>Tool
+Controller</strong> property.</li>
+<li>Use the drop-down menu to select the specific controller configured
+for that operation.</li>
+</ul></li>
+</ol>
+<h2 id="core-speed-and-feed-parameters-explained">Core Speed and Feed
+Parameters Explained</h2>
+<ul>
+<li><strong>Spindle Speed (RPM):</strong> Determines how fast the
+cutting tool rotates. Calculated using the recommended surface speed
+(SFM or m/min) for the material and the cutter's diameter.</li>
+<li><strong>Horizontal Cutting Feed (<code>HorizFeed</code>):</strong>
+The linear speed at which the tool moves sideways through the stock. It
+is calculated by multiplying the spindle RPM by the number of flutes and
+the recommended chip load per tooth.</li>
+<li><strong>Vertical Plunge Feed (<code>VertFeed</code>):</strong> The
+downward entry rate into the material. Because endmills are less
+efficient at drilling downwards than cutting sideways, plunge rates are
+typically set between 25% and 50% of the horizontal feed rate, unless
+using dedicated ramping or helix entries.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/set-spindle-speed-and-feed-rate-in-free-cad-path';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

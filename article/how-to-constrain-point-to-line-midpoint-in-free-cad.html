@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Constrain Point to Line Midpoint in FreeCAD - freecad</title>
+    <meta name="description" content="Constraining a point to the exact midpoint of a line is a fundamental operation in FreeCAD&#39;s Sketcher workbench. While older versions relied exclusively on a three-point symmetry constraint, modern versions of FreeCAD (v0.21 and newer) feature a dedicated">
+    <link rel="canonical" href="https://salivity.github.io/freecad/article/how-to-constrain-point-to-line-midpoint-in-free-cad">
+    <link rel="search" type="application/opensearchdescription+xml" title="freecad" href="/freecad/opensearch.xml">
+    <link rel="icon" href="/freecad/favicon.ico">
+    <link rel="stylesheet" href="/freecad/css/style.css">
+    <link media="print" rel="stylesheet" href="/freecad/css/print.css">
+    <script src="/freecad/js/fuse.min.js"></script>
+    <script src="/freecad/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Constrain Point to Line Midpoint in FreeCAD - freecad" />
+    <meta property="og:url" content="https://salivity.github.io/freecad/article/how-to-constrain-point-to-line-midpoint-in-free-cad" />
+    <meta property="og:image" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/freecad/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Constraining a point to the exact midpoint of a line is a fundamental operation in FreeCAD&#39;s Sketcher workbench. While older versions relied exclusively on a three-point symmetry constraint, modern versions of FreeCAD (v0.21 and newer) feature a dedicated" />
+    <link rel="manifest" href="/freecad/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/freecad/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>freecad</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/freecad/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-constrain-point-to-line-midpoint-in-freecad">How to
+Constrain Point to Line Midpoint in FreeCAD</h1>
+<p>Constraining a point to the exact midpoint of a line is a fundamental
+operation in FreeCAD's Sketcher workbench. While older versions relied
+exclusively on a three-point symmetry constraint, modern versions of
+FreeCAD (v0.21 and newer) feature a dedicated workflow to snap a point
+directly to a line's center. This guide outlines the fastest methods to
+lock any point to the midpoint of a line segment.</p>
+<h3 id="method-1-direct-midpoint-constraint-freecad-021-and-10">Method
+1: Direct Midpoint Constraint (FreeCAD 0.21 and 1.0+)</h3>
+<p>Recent versions of FreeCAD allow you to constrain a point to a line
+segment's center using just two clicks.</p>
+<ol type="1">
+<li>Open your sketch in the <strong>Sketcher Workbench</strong>.</li>
+<li>Click the <strong>point</strong> you wish to center.</li>
+<li>Click the <strong>line segment</strong> (the line itself, not its
+endpoints).</li>
+<li>Click the <strong>Constrain symmetrical</strong> tool in the toolbar
+(or press the <code>S</code> shortcut key).</li>
+<li>The point will automatically lock to the exact geometric midpoint of
+the line.</li>
+</ol>
+<h3
+id="method-2-three-point-symmetry-constraint-universal-method">Method 2:
+Three-Point Symmetry Constraint (Universal Method)</h3>
+<p>If you are using an older version of FreeCAD or need to center a
+point between two independent vertices, use the classic three-point
+selection sequence.</p>
+<ol type="1">
+<li>Select the <strong>first endpoint</strong> of the line segment.</li>
+<li>Select the <strong>second endpoint</strong> of the line
+segment.</li>
+<li>Select the <strong>target point</strong> you want located at the
+midpoint.</li>
+<li>Click the <strong>Constrain symmetrical</strong> tool or press the
+<code>S</code> shortcut.</li>
+</ol>
+<p><em>Note: Selection order is critical for this method. The target
+point that will move to the center must always be selected
+last.</em></p>
+<h3 id="verifying-the-constraint">Verifying the Constraint</h3>
+<p>Once applied, FreeCAD will display a symmetry constraint icon near
+the point. You can verify the constraint by clicking and dragging one of
+the line's endpoints; the constrained point will dynamically adjust its
+position to remain precisely centered along the line segment.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/freecad/article/how-to-constrain-point-to-line-midpoint-in-free-cad';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/freecad/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/freecad/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>
